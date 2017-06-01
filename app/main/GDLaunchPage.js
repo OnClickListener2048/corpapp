@@ -28,7 +28,7 @@ export default class GDLaunchPage extends Component {
     render() {
         return(
             // 启动页
-            <Image source={{uri:'launchimage'}} style={styles.imageStyle} />
+            <Image source={{uri:'launch_screen'}} style={styles.imageStyle} />
         );
     }
 }

@@ -416,6 +416,7 @@ export default class GDHome extends Component {
                     onEndReachedThreshold={60}                  // 当接近底部60时调用
                     renderFooter={this.renderFooter}            // 设置尾部视图
                     removeClippedSubviews={true}                // 优化
+                          enableEmptySections={true}
                 />
             );
         }

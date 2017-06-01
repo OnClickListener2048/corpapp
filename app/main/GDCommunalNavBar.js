@@ -1,7 +1,3 @@
-/**
- * Created by yeshaojian on 17/3/14.
- */
-
 import React, { Component, PropTypes } from 'react';
 import {
     StyleSheet,
@@ -13,6 +9,9 @@ import {
 
 const {width, height} = Dimensions.get('window');
 
+/**
+ * 顶部导航栏, 带左右按钮和中间定制.
+ */
 export default class GDCommunalNavBar extends Component {
 
     static propTypes = {
@@ -63,7 +62,7 @@ const styles = StyleSheet.create({
     container: {
         width:width,
         height:Platform.OS === 'ios' ? 64 : 44,
-        backgroundColor:'white',
+        backgroundColor:'transparent',
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',

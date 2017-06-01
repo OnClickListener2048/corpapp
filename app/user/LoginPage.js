@@ -20,6 +20,7 @@ import ProgressiveInput from '../view/ClearFocusEdit';
 import CommunalNavBar from '../main/GDCommunalNavBar';
 import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
+import px2dp from '../util'
 
 export default class LoginPage extends Component {
 
@@ -41,7 +42,10 @@ export default class LoginPage extends Component {
 
     // 返回
     pop() {
-        this.props.navigator.pop();
+        if(this.props.navigator) {
+            this.props.navigator.pop();
+        }
+
     }
 
     // 返回左边按钮
@@ -81,39 +85,22 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            <Image source={require('../img/login_bg_new.png')} style={commonStyles.fullScreen}>
+            <Image source={require('../img/bg.png')} style={commonStyles.fullScreen}>
                 {/* 导航栏 */}
-                <CommunalNavBar
-                    leftItem={() => this.renderLeftItem()}
-                    titleItem={() => this.renderTitleItem()}
-                />
+                {/*<CommunalNavBar*/}
+                    {/*leftItem={() => this.renderLeftItem()}*/}
+                    {/*titleItem={() => this.renderTitleItem()}*/}
+                {/*/>*/}
 
                 {/*<View style={styles.header}>*/}
                 {/*<Text style={styles.headtitle}>添加账号</Text>*/}
                 {/*</View>*/}
                 {/*<View style={styles.marginTopview}/>*/}
-                {/*<Image source={require('../img/login_bg_new.png')} style={styles.container}>*/}
+                <Image source={require('../img/logo_white.png')} style={styles.bzLogo} />
+
                     <KeyboardAvoidingView behavior='padding' style={styles.containerKeyboard}
                                           keyboardVerticalOffset={10}>
-                        {/*<ProgressiveInput*/}
-                        {/*value={this.state.value}*/}
-                        {/*style={styles.progressiveInput}*/}
-                        {/*isLoading={this.state.isLoading}*/}
-                        {/*onInputCleared={this.onInputCleared}*/}
-                        {/*placeholder='手机号'*/}
-                        {/*underlineColorAndroid='transparent'*/}
-                        {/*keyboardType='phone-pad'*/}
-                        {/*onChangeText={*/}
-                        {/*(userName) => {*/}
-                        {/*this.setState({*/}
-                        {/*userName: userName*/}
-                        {/*});*/}
-                        {/*console.log('aaa', this.state.userName)*/}
-                        {/*}*/}
-                        {/*}*/}
-                        {/*/>*/}
-                        {/*<View style={{width: 100, height: 200}}>*/}
-                        {/*</View>*/}
+
 
                         <View style={styles.inputview}>
                             <TimerButton enable={true}
@@ -172,12 +159,21 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
 
-    containerKeyboard: {flex: 1, justifyContent: 'center', paddingHorizontal: 20, paddingTop: 20,},
-    progressiveInput: {
-        marginTop: 20,
-        marginLeft: 10,
-        marginRight: 10,
+    // 登录图标
+    bzLogo: {
+        resizeMode: "contain",
+        borderWidth: 0,
+        borderColor: "#f9f9f9",
+        alignSelf: 'center',
+        marginTop: px2dp(238),
+        // width: px2dp(60),
+        // height: px2dp(60)
     },
+
+    containerKeyboard: {
+        flex: 1, justifyContent: 'center', paddingHorizontal: 20, paddingTop: 20,
+    },
+
     navBarLeftItemStyle: {
         width: 20,
         height: 20,

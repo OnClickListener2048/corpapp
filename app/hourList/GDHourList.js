@@ -184,6 +184,7 @@ export default class GDHourList extends Component {
                     showsHorizontalScrollIndicator={false}
                     style={styles.listViewStyle}
                     initialListSize={5}
+                    enableEmptySections={true}
                 />
             );
         }

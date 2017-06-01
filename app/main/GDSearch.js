@@ -223,6 +223,7 @@ export default class GDHome extends Component {
                     onEndReached={this.loadMore}                // 当接近底部特定距离时调用
                     onEndReachedThreshold={60}                  // 当接近底部60时调用
                     renderFooter={this.renderFooter}            // 设置尾部视图
+                    enableEmptySections={true}
                 />
             );
         }

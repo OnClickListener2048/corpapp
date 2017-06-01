@@ -1,5 +1,5 @@
 /**
- * Created by yeshaojian on 2017/4/15.
+ *  顶部通用带返回导航标题栏.
  */
 import React, { Component } from 'react';
 import {

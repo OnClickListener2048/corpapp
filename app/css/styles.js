@@ -9,10 +9,14 @@ export default StyleSheet.create({
     fullScreen: {
         height: SCREEN_HEIGHT,
         width: SCREEN_WIDTH,
-        resizeMode: 'cover',
+        resizeMode: 'cover',// cover stretch
         marginBottom: 0,
         flex: 1,
         backgroundColor: '#FFFFFF',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        // // 设置子项目在主轴上的对齐方式
+        // justifyContent:'center',
+        // 单个子项在侧轴上的排列方式
+        // alignItems:'center'
     },
 });

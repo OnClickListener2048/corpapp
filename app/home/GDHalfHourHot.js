@@ -117,6 +117,7 @@ export default class GDHalfHourHot extends Component {
                     style={styles.listViewStyle}                // 样式
                     initialListSize={7}                         // 优化:一次渲染几条数据
                     renderHeader={this.renderHeader}            // 设置头部视图
+                    enableEmptySections={true}
                 />
             );
         }
