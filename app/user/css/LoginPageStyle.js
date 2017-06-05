@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     // phone input box
     textInputContainer: {
         height: px2dp(88),
+        // width: SCREEN_WIDTH,
         // backgroundColor: '#FFDDFF',
         flexDirection: 'row',
         justifyContent:'center'
@@ -38,8 +39,10 @@ const styles = StyleSheet.create({
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,
         backgroundColor: 'transparent',
-        position: 'relative',
+        // position: 'relative',
         marginLeft: px2dp(20),
+        flexDirection: 'row',
+        justifyContent: 'center',
     },
 
     // 输入框之前的logo图标
@@ -101,6 +104,18 @@ const styles = StyleSheet.create({
         color: '#1A1A1A',
     },
 
+    codeInput: {
+        flex: 1,
+        height: 30,
+        width: px2dp(148),
+        fontSize: 15,
+        marginLeft: px2dp(0),
+        padding: 0,
+        fontSize: px2dp(28),
+        color: '#1A1A1A',
+        alignSelf: 'center',
+    },
+
     underline: {
         height: 1,
         backgroundColor: '#dcdcdc',
@@ -118,17 +133,21 @@ const styles = StyleSheet.create({
         backgroundColor: 'transparent',
     },
     buttonview: {
-        backgroundColor: '#1DBAF1',
-        margin: 10,
+        backgroundColor: '#e6e6e6',
+        margin: 0,
         borderRadius: 6,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent:'center',
+        alignSelf:'center',
+        height: px2dp(88),
+        width: px2dp(500),
+        marginTop: px2dp(45)
     },
     logintext: {
-        fontSize: 17,
+        fontSize: 15,
         color: '#FFFFFF',
         marginTop: 10,
         marginBottom: 10,
+        textAlign:'center'
     },
     emptyview: {
         flex: 1,

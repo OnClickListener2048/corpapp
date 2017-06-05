@@ -60,7 +60,7 @@ export default class TimerButton extends React.Component {
                 console.log("---- timer ", timer);
                 this.setState({
                     timerCount: timer,
-                    timerTitle: `重新获取(${timer}s)`,
+                    timerTitle: `剩余(${timer}s)`,
                 })
             }
         }, 1000)
@@ -97,9 +97,10 @@ export default class TimerButton extends React.Component {
                 ;
             }}>
                 <View
-                    style={[{width: 100, height: 44,  justifyContent: 'center', alignItems: 'center'}, style]}>
+                    style={[{width: 70, height: 44,  justifyContent: 'center', alignItems: 'flex-end'}, style]}>
                     <Text
-                        style={[{fontSize: 16}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || 'gray')}]}>{timerTitle}</Text>
+                        textAlign='right'
+                        style={[{fontSize: 12}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || 'gray')}]}>{timerTitle}</Text>
                 </View>
             </TouchableOpacity>
         )

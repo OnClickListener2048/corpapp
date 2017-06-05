@@ -102,11 +102,11 @@ export default class LoginPage extends Component {
                     {backgroundColor: 'white'}]}
                                       keyboardVerticalOffset={10}>
                     <View style={{height: 40,}}/>
-
+                    {/*   手机号 */}
                     <View style={styles.textInputContainer}>
                         <Image source={require('../img/account_red.png')} style={styles.inputLogo}/>
                         <View style={styles.textInputWrapper}>
-                            <TextInput underlineColorAndroid='#000000'
+                            <TextInput underlineColorAndroid='transparent'
                                        style={styles.textInput} placeholder='手机号码' returnKeyType='next'
                                        onChangeText={
                                            (userName) => {
@@ -117,43 +117,51 @@ export default class LoginPage extends Component {
                         </View>
                     </View>
 
-                    <View style={styles.inputview}>
-                        {/*<TimerButton enable={true}*/}
-                        {/*style={{width: 110, marginRight: 10}}*/}
-                        {/*textStyle={{color: '#1784DA'}}*/}
-                        {/*timerCount={60}*/}
-                        {/*onClick={(shouldStartCountting) => {*/}
-                        {/*console.log('onClick', shouldStartCountting)*/}
-                        {/*shouldStartCountting(true);*/}
-                        {/*// this._requestSMSCode(shouldStartCountting)*/}
-                        {/*}}/>*/}
+                    <View style={{height: 0,}}/>
+                    {/*  验证码 */}
+                    <View style={styles.textInputContainer}>
+                        <Image source={require('../img/d123_red.png')} style={styles.inputLogo}/>
+                        <View style={styles.textInputWrapper}>
+                            <TextInput underlineColorAndroid='transparent'
+                                       secureTextEntry={true}
+                                       style={styles.codeInput} placeholder='短信验证码'
+                                       returnKeyType='next' returnKeyLabel='下一个'
+                                       onChangeText={(text) => this.setState({password})}
+                            />
 
-                        <View style={styles.dividerview}>
-                            <Text style={styles.divider}></Text>
+                            <View style={{height: 15, width: 1, backgroundColor: '#c8c8c8', alignSelf: 'center', marginRight: 1}}/>
+
+                            <TimerButton enable={true}
+                                         style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
+                                         textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                                         timerCount={60}
+                                         onClick={(shouldStartCountting) => {
+                                             console.log('onClick', shouldStartCountting)
+                                             shouldStartCountting(true);
+                                             // this._requestSMSCode(shouldStartCountting)
+                                         }}/>
                         </View>
-                        <TextInput underlineColorAndroid='transparent' style={styles.textInput} placeholder='密码'
-                                   onChangeText={(text) => this.setState({password})}
-                                   returnKeyType='done' returnKeyLabel='登录'
-                                   secureTextEntry={true}/>
+                    </View>
+
+                    {/*  验证码 */}
+                    <View style={[styles.textInputContainer,
+                        { marginTop: -2 }]}>
+                        <Image source={require('../img/choose_red.png')} style={styles.inputLogo}/>
+                        <View style={[styles.textInputWrapper,
+                            { justifyContent: 'flex-start', borderBottomWidth: 0}]}>
+                            <Text style={{color: '#c8c8c8', alignSelf: 'center', marginRight: 1, fontSize: 12}}
+                            >我已经阅读并同意</Text>
+                            <Text style={{fontSize: 12, color: '#c8c8c8', alignSelf: 'center', textDecorationLine: 'underline', marginRight: 1}}
+                            >《XXXX协议》</Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.buttonview}>
+                        <Text style={styles.logintext}>登录</Text>
                     </View>
 
                 </KeyboardAvoidingView>
 
-                <View style={styles.bottomview}>
-                    <View style={styles.buttonview}>
-                        <Text style={styles.logintext}>登 录</Text>
-                    </View>
-
-
-                    <View style={styles.bottombtnsview}>
-                        <View style={styles.bottomleftbtnview}>
-                            <Text style={styles.bottombtn}>无法登录？</Text>
-                        </View>
-                        <View style={styles.bottomrightbtnview}>
-                            <Text style={styles.bottombtn}>注册账号</Text>
-                        </View>
-                    </View>
-                </View>
 
             </Image>
         );
