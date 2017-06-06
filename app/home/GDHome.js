@@ -39,7 +39,7 @@ import HalfHourHot from './GDHalfHourHot';
 import Search from '../main/GDSearch';
 import NoDataView from '../main/GDNoDataView';
 import LoginPage from '../user/LoginPage';
-
+import MinePage from "../mine/MinePage";
 // 首页标签页
 export default class GDHome extends Component {
 
@@ -85,7 +85,7 @@ export default class GDHome extends Component {
 // 注意这个方法前面有async关键字
     async getMoviesFromApi() {
             // 注意这里的await语句，其所在的函数必须有async关键字声明
-            let response = await fetch('https://m2.helijia.com/customer/user/login/check?t=1495079097159');
+            let response = await fetch('https://m.helijia.com/customer/user/login/check?t=1495079097159');
                 //'https://facebook.github.io/react-native/movies.json');
             // let responseJson = await response.json();
             // return responseJson.movies;
@@ -261,7 +261,7 @@ export default class GDHome extends Component {
     pushToSearch() {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
-                component: Search,
+                component: MinePage,
             });
         });
     }

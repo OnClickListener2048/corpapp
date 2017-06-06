@@ -9,10 +9,9 @@ import {
     StyleSheet,
     Text,
     Image,
-    View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView
+    KeyboardAvoidingView, View
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -45,7 +44,6 @@ export default class LoginPage extends Component {
         if(this.props.navigator) {
             this.props.navigator.pop();
         }
-
     }
 
     // 返回左边按钮
@@ -63,7 +61,6 @@ export default class LoginPage extends Component {
             </TouchableOpacity>
         );
     }
-
     // 返回中间按钮
     renderTitleItem() {
         return (
@@ -87,20 +84,20 @@ export default class LoginPage extends Component {
         return (
             <Image source={require('../img/bg.png')} style={commonStyles.fullScreen}>
                 {/* 导航栏 */}
-                {/*<CommunalNavBar*/}
-                    {/*leftItem={() => this.renderLeftItem()}*/}
-                    {/*titleItem={() => this.renderTitleItem()}*/}
-                {/*/>*/}
+                <CommunalNavBar
+                    leftItem={() => this.renderLeftItem()}
+                    titleItem={() => this.renderTitleItem()}
+                />
 
                 {/*<View style={styles.header}>*/}
                 {/*<Text style={styles.headtitle}>添加账号</Text>*/}
                 {/*</View>*/}
-                {/*<View style={styles.marginTopview}/>*/}
+
                 <Image source={require('../img/logo_white.png')} style={styles.bzLogo} />
-
-                    <KeyboardAvoidingView behavior='padding' style={styles.containerKeyboard}
+                <View style={{height:100/2,}}/>
+                    <KeyboardAvoidingView behavior='padding' style={[styles.containerKeyboard,
+                        {backgroundColor: 'white'}]}
                                           keyboardVerticalOffset={10}>
-
 
                         <View style={styles.inputview}>
                             <TimerButton enable={true}
@@ -113,7 +110,7 @@ export default class LoginPage extends Component {
                                              // this._requestSMSCode(shouldStartCountting)
                                          }}/>
                             <TextInput underlineColorAndroid='transparent'
-                                       style={styles.textinput} placeholder='手机号' returnKeyType='next'
+                                       style={styles.textinput} placeholder='手机号码' returnKeyType='next'
                                        onChangeText={
                                            (userName) => {
                                                this.setState({userName});
@@ -159,19 +156,19 @@ const styles = StyleSheet.create({
         flexDirection: 'column'
     },
 
-    // 登录图标
+    // logo图标
     bzLogo: {
         resizeMode: "contain",
         borderWidth: 0,
         borderColor: "#f9f9f9",
         alignSelf: 'center',
         marginTop: px2dp(238),
-        // width: px2dp(60),
-        // height: px2dp(60)
+        width: px2dp(135),
+        height: px2dp(110)
     },
 
     containerKeyboard: {
-        flex: 1, justifyContent: 'center', paddingHorizontal: 20, paddingTop: 20,
+        flex: 1, justifyContent: 'center', paddingHorizontal: 20, paddingTop: 0,
     },
 
     navBarLeftItemStyle: {
