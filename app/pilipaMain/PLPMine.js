@@ -8,7 +8,9 @@ const {width, height} = Dimensions.get('window');
 
 import {
     Image,
-    StyleSheet, Text, View,
+    StyleSheet,
+    Text,
+    View,
     Dimensions,
 }from 'react-native';
 import CommunalNavBar from '../main/GDCommunalNavBar';
@@ -19,6 +21,9 @@ export default class PLPMine extends Component{
         return (
             <View style={styles.container}>
                 <Image source={require('../img/bg.png')} style={styles.head_background}>
+                    <View style={styles.headimagestyle}>
+                        <Image source={require('../img/logo_circle.png')} style={styles.headPortraint}/>
+                    </View>
                     <Text style={styles.textname}>王小二</Text>
                     <Text style={styles.textcontentview}>产品中心</Text>
                 </Image>
@@ -71,7 +76,22 @@ const styles = StyleSheet.create({
         height:height/3,
         width:width,
     },
+    headimagestyle:{
+        width:width,
+        height:80,
+        position:'absolute',
+        bottom:87,
+        backgroundColor:'transparent',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headPortraint:{
+        position:'absolute',
+        height:80,
+        width:80,
+    },
     textname:{
+        backgroundColor:'transparent',
         color:'white',
         fontSize:18,
         position:'absolute',
@@ -80,6 +100,7 @@ const styles = StyleSheet.create({
         textAlign:'center',
     },
     textcontentview:{
+        backgroundColor:'transparent',
         color:'white',
         fontSize:12,
         position:'absolute',
@@ -101,12 +122,12 @@ const styles = StyleSheet.create({
         marginRight:10,
     },
     lineview:{
-        backgroundColor:'#969696',
+        backgroundColor:'#dedede',
         marginLeft:15,
         height:0.5,
     },
     lineviewlast:{
-        backgroundColor:'#969696',
+        backgroundColor:'#dedede',
         height:0.5,
     },
     listtextstyle:{
