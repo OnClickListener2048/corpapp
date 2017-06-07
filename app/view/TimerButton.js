@@ -1,5 +1,5 @@
 /**
- *  使用
+ *  使用说明
 
  <TimerButton enable={phoneNumber.length}
  style={{width: 110,marginRight: 10}}
@@ -9,8 +9,6 @@
     //this._requestSMSCode(shouldStartCountting)
     其实应该调用shouldStartCountting(true/false)启停倒计时
   }}/>
-
-
 
  onClick：触发后按钮selfEnable会立即被置为false
  通过onClick中的一系列逻辑处理之后需要调用回调函数结束倒计时
@@ -64,6 +62,17 @@ export default class TimerButton extends React.Component {
                 })
             }
         }, 1000)
+    }
+
+    // 重置状态
+    reset() {
+        clearInterval(this.interval);
+        this.setState({
+            timerCount: this.props.timerCount || 90,
+            timerTitle: this.props.timerTitle || '获取验证码',
+            counting: false,
+            selfEnable: true,
+        })
     }
 
     _shouldStartCountting(shouldStart) {
