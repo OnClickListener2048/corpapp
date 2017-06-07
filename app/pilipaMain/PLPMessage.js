@@ -8,17 +8,6 @@ import {Text, View,StyleSheet
 
 export default class PLPMessage extends Component{
 
-    componentDidMount() {
-        // 注册通知
-        this.subscription = DeviceEventEmitter.addListener('clickMessageItem', () => this.render());
-    }
-
-    componentWillUnmount() {
-        // 注销通知
-        this.subscription.remove();
-    }
-
-
     render() {
         return (
             <View style={styles.container}>

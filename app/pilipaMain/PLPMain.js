@@ -49,23 +49,21 @@ export default class PLP extends Component {
     }
 
     // 点击了Item
-    clickItem(selectedTab,subscription) {
-        // 发送通知
-        DeviceEventEmitter.emit(subscription);
+    clickItem(selectedTab) {
         // 渲染页面
         this.setState({ selectedTab: selectedTab })
     }
 
     // 返回 TabBar 的 Item
-    renderTabBarItem(title, selectedTab, image, selectedImage, component,subscription) {
+    renderTabBarItem(title, selectedTab, image, selectedImage, component) {
         return(
             <TabNavigator.Item
                 selected={this.state.selectedTab === selectedTab}
                 title={title}
-                selectedTitleStyle={{color:'black'}}
+                selectedTitleStyle={{color:'red'}}
                 renderIcon={() => <Image source={image} style={styles.tabbarIconStyle} />}
                 renderSelectedIcon={() => <Image source={selectedImage} style={styles.tabbarIconStyle} />}
-                onPress={() => this.clickItem(selectedTab, subscription)}
+                onPress={() => this.clickItem(selectedTab)}
             >
 
                 <Navigator
@@ -76,28 +74,16 @@ export default class PLP extends Component {
 
                     configureScene={(route) => this.setNavAnimationType(route)}
 
-                    renderScene={(route,navigator)=>this.renderListingsScene(route,navigator)}
+                    renderScene={(route, navigator) => {
+                        let Component = route.component;
+                        return <Component {...route.params}
+                                          navigator={navigator}
+                                          />
+                    }}
 
                 />
             </TabNavigator.Item>
         );
-    }
-
-    renderListingsScene(route, navigator){
-        console.log("renderScene()", route);
-
-    }
-
-    // 组件加载完成
-    componentDidMount() {
-        // 注册通知
-        this.subscription = DeviceEventEmitter.addListener('isHiddenTabBar', (data)=>{this.hiddenTabBar(data)});
-    }
-
-    // 组件即将销毁
-    componentWillUnmount() {
-        // 销毁
-        this.subscription.remove();
     }
 
     render() {
@@ -107,11 +93,11 @@ export default class PLP extends Component {
                 sceneStyle={this.state.isHiddenTabBar !== true ? {} : {paddingBottom:0}}
             >
                 {/* 消息中心 */}
-                {this.renderTabBarItem("消息", 'message', require('../img/choose@2x.png'), require('../img/choose_red@2x.png'), Message,'clickMessageItem')}
+                {this.renderTabBarItem("消息", 'message', require('../img/message@3x.png'), require('../img/message_red@3x.png'), Message)}
                 {/* 应用中心 */}
-                {this.renderTabBarItem("应用", 'applit', require('../img/d123@2x.png'), require('../img/d123_red@2x.png'), Applit,'clickApplitItem')}
+                {this.renderTabBarItem("应用", 'applit', require('../img/application@3x.png'), require('../img/application_red@3x.png'), Applit)}
                 {/* 我的 */}
-                {this.renderTabBarItem("我的", 'mine', require('../img/account@2x.png'), require('../img/account_red@2x.png'), Mine,'clickMineItem')}
+                {this.renderTabBarItem("我的", 'mine', require('../img/account@3x.png'), require('../img/account_red@3x.png'), Mine)}
             </TabNavigator>
         );
     }
