@@ -12,7 +12,8 @@ import SplashScreen from 'react-native-splash-screen'
 // 引入外部文件
 import LaunchPage from './app/main/GDLaunchPage';
 // 引用外部文件
-import Main from './app/main/GDMain';
+import Main from './app/pilipaMain/PLPMain';
+import GMain from './app/main/GDMain';
 import LoginPage from './app/user/LoginPage';
 
 export default class CorpApp extends Component {
