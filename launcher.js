@@ -14,6 +14,7 @@ import LaunchPage from './app/main/GDLaunchPage';
 // 引用外部文件
 import Main from './app/main/GDMain';
 import LoginPage from './app/user/LoginPage';
+import Toast from 'react-native-root-toast';
 
 export default class CorpApp extends Component {
     render() {
@@ -62,9 +63,11 @@ export default class CorpApp extends Component {
             .then(
                 (responseData) => {
                     console.log("登录成功返回:" , responseData);
+                    Toast.show('登录成功返回' + JSON.stringify(responseData));
                 },
                 (e) => {
                     console.log("登录错误返回:" , e);
+                    Toast.show('登录错误返回' + JSON.stringify(e));
                 },
             )
             // .catch((error) => {

@@ -132,15 +132,9 @@ HTTPBase.get = async function (url, params, headers) {
  **/
 HTTPBase.post = async function (url, params, headers) {
     let paramsArray = this._commonParams(params);
-
-    if (paramsArray) {
-        // 初始化FormData
-        var formData = new FormData();
-
-        // 获取 params 内所有的 key
-        let paramsKeyArray = Object.keys(paramsArray);
-        // 通过 forEach 方法拿到数组中每个元素,将元素与参数的值进行拼接处理,并且放入 paramsArray 中
-        paramsKeyArray.forEach(key => formData.append(key, paramsArray[key]));
+    let formData = new FormData();
+    for (let [k, v] of Object.entries(paramsArray)) {
+        formData.append(k, v);
     }
 
     console.log("======> ", url, "\n");
