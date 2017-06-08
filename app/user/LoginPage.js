@@ -22,6 +22,8 @@ import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
 import styles from './css/LoginPageStyle';
 import px2dp from '../util'
+import Toast from 'react-native-root-toast';
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
 export default class LoginPage extends Component {
 
@@ -29,23 +31,25 @@ export default class LoginPage extends Component {
         super(props);
 
         this.state = {
-            mobile:'',     // 手机号
-            mobileValid:false,   // 手机号有效
-            smsCode:'',         // 短信验证码
-            smsCodeValid:false,          // 短信验证码有效
+            mobile: '',     // 手机号
+            mobileValid: false,   // 手机号有效
+            smsCode: '',         // 短信验证码
+            smsCodeValid: false,          // 短信验证码有效
             acceptLic: false,// 同意许可协议
         };
 
     }
 
-    // onInputCleared() {
-    //     this.setState({
-    //         mobile:'',     // 手机号
-    //         mobileValid:false,   // 手机号有效
-    //         smsCode:'',         // 短信验证码
-    //         smsCodeValid:''          // 短信验证码有效
-    //     });
-    // }
+    //debug only
+    _setupDebug() {
+        this.setState({
+            mobile: '18211137768',     // 手机号
+            mobileValid: true,   // 手机号有效
+            smsCode: '888888',         // 短信验证码
+            smsCodeValid: true,        // 短信验证码有效
+            acceptLic: true
+        });
+    }
 
     // 返回
     pop() {
@@ -81,6 +85,7 @@ export default class LoginPage extends Component {
     componentWillMount() {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', true);
+        this._setupDebug();
     }
 
     // 准备销毁组件
@@ -91,110 +96,142 @@ export default class LoginPage extends Component {
 
     // 请求验证码
     _requestSMSCode(shouldStartCountting) {
-        if(this.stage.mobileValid) {
-
+        if (this.state.mobileValid) {
+            Toast.show('TODO 请求验证码');
         }
+    }
+
+    _doLogin() {
+        Toast.show('TODO Login');
     }
 
     render() {
         return (
-            <Image source={require('../img/bg.png')} style={commonStyles.fullScreen}>
-                {/* 导航栏 */}
-                {/*<CommunalNavBar*/}
-                {/*leftItem={() => this.renderLeftItem()}*/}
-                {/*titleItem={() => this.renderTitleItem()}*/}
-                {/*/>*/}
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
+                <Image source={require('../img/bg.png')} style={commonStyles.fullScreen}>
+                    {/* 导航栏 */}
+                    {/*<CommunalNavBar*/}
+                    {/*leftItem={() => this.renderLeftItem()}*/}
+                    {/*titleItem={() => this.renderTitleItem()}*/}
+                    {/*/>*/}
 
-                <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
-                <View style={{height: px2dp(100),}}/>
-                <KeyboardAvoidingView behavior='padding' style={[styles.containerKeyboard,
-                    {backgroundColor: 'white'}]}
-                                      keyboardVerticalOffset={10}>
-                    <View style={{height: 40,}}/>
-                    {/*   手机号 */}
-                    <View style={styles.textInputContainer}>
-                        <Image source={ this.state.mobileValid? require( '../img/account_red.png') :
-                            require( '../img/account.png')} style={styles.inputLogo}/>
-                        <View style={styles.textInputWrapper}>
-                            <TextInput underlineColorAndroid='transparent' maxLength={11}
-                                       style={styles.textInput} placeholder='手机号码' returnKeyType='next'
-                                       onChangeText={
-                                           (mobile) => {
-                                               // 如果手机号改了, 马上就重置获取验证码?
-                                               if(this.refs.timerButton.state.counting) {
-                                                   this.refs.timerButton.reset();
+                    <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
+                    <View style={{height: px2dp(100),}}/>
+                    <KeyboardAvoidingView behavior='padding' style={[styles.containerKeyboard,
+                        {backgroundColor: 'white'}]}
+                                          keyboardVerticalOffset={10}>
+                        <View style={{height: 40,}}/>
+                        {/*   手机号 */}
+                        <View style={styles.textInputContainer}>
+                            <Image source={ this.state.mobileValid ? require('../img/account_red.png') :
+                                require('../img/account.png')} style={styles.inputLogo}/>
+                            <View style={styles.textInputWrapper}>
+                                <TextInput underlineColorAndroid='transparent' maxLength={11}
+                                           keyboardType='numeric' value={this.state.mobile}
+                                           style={styles.textInput} placeholder='手机号码' returnKeyType='next'
+                                           onChangeText={
+                                               (mobile) => {
+                                                   // 如果手机号改了, 马上就重置获取验证码?
+                                                   if (this.refs.timerButton.state.counting) {
+                                                       this.refs.timerButton.reset();
+                                                   }
+                                                   let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
+                                                   this.setState({mobile, mobileValid});
                                                }
-
-                                               let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
-                                               console.log('mobileValid', mobileValid);
-                                               this.setState({mobile, mobileValid});
-                                               console.log(mobile);
-                                           }
-                                       }/>
+                                           }/>
+                            </View>
                         </View>
-                    </View>
 
-                    {/*  验证码 */}
-                    <View style={styles.textInputContainer}>
-                        <Image
-                            source={ this.state.smsCodeValid? require( '../img/d123_red.png') :
-                                require( '../img/d123.png')}
-                             style={styles.inputLogo}/>
-                        <View style={styles.textInputWrapper}>
-                            <TextInput underlineColorAndroid='transparent'
-                                       secureTextEntry={true}
-                                       style={styles.codeInput} placeholder='短信验证码'
-                                       returnKeyType='next' returnKeyLabel='下一个'
-                                       onChangeText={(smsCode) => this.setState({smsCode})}
-                            />
+                        {/*  验证码 */}
+                        <View style={styles.textInputContainer}>
+                            <Image
+                                source={ this.state.smsCodeValid ? require('../img/d123_red.png') :
+                                    require('../img/d123.png')}
+                                style={styles.inputLogo}/>
+                            <View style={styles.textInputWrapper}>
+                                <TextInput underlineColorAndroid='transparent'
+                                           value={this.state.smsCode}
+                                           secureTextEntry={false} maxLength={6} keyboardType='numeric'
+                                           style={styles.codeInput} placeholder='短信验证码'
+                                           returnKeyType='done'
+                                           onChangeText={(smsCode) => {
+                                               this.setState({smsCode})
+                                               let smsCodeValid = (smsCode.length == 6);
+                                               this.setState({smsCode, smsCodeValid});
+                                           }}
 
-                            <View style={{height: 15, width: 1, backgroundColor: '#c8c8c8', alignSelf: 'center', marginRight: 1}}/>
+                                           onSubmitEditing={() => {
+                                               dismissKeyboard();
+                                           }}
+                                />
 
-                            <TimerButton enable={this.state.mobileValid}
-                                         ref="timerButton"
-                                         style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
-                                         textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
-                                         timerCount={60}
-                                         onClick={(shouldStartCountting) => {
-                                             shouldStartCountting(true);
-                                             // this._requestSMSCode(shouldStartCountting)
-                                         }}/>
+                                <View style={{
+                                    height: 15,
+                                    width: 1,
+                                    backgroundColor: '#c8c8c8',
+                                    alignSelf: 'center',
+                                    marginRight: 1
+                                }}/>
+
+                                <TimerButton enable={this.state.mobileValid}
+                                             ref="timerButton"
+                                             style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
+                                             textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
+                                             timerCount={60}
+                                             onClick={(shouldStartCountting) => {
+                                                 shouldStartCountting(true);
+                                                 this._requestSMSCode(shouldStartCountting);
+                                             }}/>
+                            </View>
                         </View>
-                    </View>
 
-                    {/*  协议 */}
-                    <View style={[styles.textInputContainer,
-                        { marginTop: -2 }]}>
-                        <TouchableOpacity
-                            style={{alignSelf: 'center'}} onPress={ () =>
-                        {
-                            let _acceptLic = !this.state.acceptLic;
-                            console.log('_acceptLic', _acceptLic);
-                            this.setState( {acceptLic: _acceptLic });
-                        }}>
-                        <Image
-                            source={ this.state.acceptLic? require( '../img/choose_red.png') :
-                                require( '../img/choose.png')}
-                            style={styles.inputLogo}/>
+                        {/*  协议 */}
+                        <View style={[styles.textInputContainer,
+                            {marginTop: -2}]}>
+                            <TouchableOpacity
+                                style={{alignSelf: 'center'}} onPress={ () => {
+                                let _acceptLic = !this.state.acceptLic;
+                                console.log('_acceptLic', _acceptLic);
+                                this.setState({acceptLic: _acceptLic});
+                            }}>
+                                <Image
+                                    source={ this.state.acceptLic ? require('../img/choose_red.png') :
+                                        require('../img/choose.png')}
+                                    style={styles.inputLogo}/>
+                            </TouchableOpacity>
+                            <View style={[styles.textInputWrapper,
+                                {justifyContent: 'flex-start', borderBottomWidth: 0}]}>
+                                <Text style={{
+                                    color: ( this.state.acceptLic ? '#ef0c35' : '#c8c8c8'),
+                                    alignSelf: 'center',
+                                    marginRight: 1,
+                                    fontSize: 12
+                                }}
+                                >我已经阅读并同意</Text>
+                                <Text style={{
+                                    color: ( this.state.acceptLic ? '#ef0c35' : '#c8c8c8'),
+                                    fontSize: 12,
+                                    alignSelf: 'center',
+                                    textDecorationLine: 'underline',
+                                    marginRight: 1
+                                }}
+                                >《XXXX协议》</Text>
+                            </View>
+
+                        </View>
+
+                        <TouchableOpacity onPress={this._doLogin}>
+                        <View style={[styles.buttonview,
+                            {backgroundColor: ( (this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')}]}>
+                            <Text style={styles.logintext}>登录</Text>
+                        </View>
                         </TouchableOpacity>
-                        <View style={[styles.textInputWrapper,
-                            { justifyContent: 'flex-start', borderBottomWidth: 0}]}>
-                            <Text style={{color: ( this.state.acceptLic? '#ef0c35' : '#c8c8c8'), alignSelf: 'center', marginRight: 1, fontSize: 12}}
-                            >我已经阅读并同意</Text>
-                            <Text style={{color: ( this.state.acceptLic? '#ef0c35' : '#c8c8c8'), fontSize: 12, alignSelf: 'center', textDecorationLine: 'underline', marginRight: 1}}
-                            >《XXXX协议》</Text>
-                        </View>
 
-                    </View>
-
-                    <View style={styles.buttonview}>
-                        <Text style={styles.logintext}>登录</Text>
-                    </View>
-
-                </KeyboardAvoidingView>
+                    </KeyboardAvoidingView>
 
 
-            </Image>
+                </Image>
+            </TouchableWithoutFeedback>
         );
     }
 }

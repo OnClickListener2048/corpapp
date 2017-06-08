@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(28),
-        color: '#1A1A1A',
+        color: '#ef0c35',
         alignSelf: 'center',
     },
 
