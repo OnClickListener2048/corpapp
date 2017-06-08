@@ -1,7 +1,3 @@
-/**
- * Created by yeshaojian on 17/3/14.
- */
-
 import React, { Component, PropTypes } from 'react';
 import {
     Alert,
@@ -63,33 +59,6 @@ export default class GDHome extends Component {
         // 绑定操作
         this.loadData = this.loadData.bind(this);
         this.loadMore = this.loadMore.bind(this);
-
-        // Debug async web request
-        // this.getMoviesFromApi = this.getMoviesFromApi.bind(this);
-
-        this.getMoviesFromApi().then(
-            v => console.log("返回数据===>", v),
-            e =>
-                Alert.alert(
-                    '网络错误',
-                    e.toString(),
-                    [
-                        {text: 'OK', onPress: () => console.log('OK Pressed!')},
-                    ]
-                )
-        )
-
-    }
-
-
-// 注意这个方法前面有async关键字
-    async getMoviesFromApi() {
-            // 注意这里的await语句，其所在的函数必须有async关键字声明
-            let response = await fetch('https://m2.helijia.com/customer/user/login/check?t=1495079097159');
-                //'https://facebook.github.io/react-native/movies.json');
-            // let responseJson = await response.json();
-            // return responseJson.movies;
-            return await response;
     }
 
     // 加载最新数据网络请求

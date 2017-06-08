@@ -1,4 +1,7 @@
 /**
+ *  原始代码和文章来自: http://www.jianshu.com/p/51736baead49
+ *  有改动.
+ *
  *  使用说明
 
  <TimerButton enable={phoneNumber.length}
