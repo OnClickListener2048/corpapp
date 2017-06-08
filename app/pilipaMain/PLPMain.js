@@ -93,9 +93,9 @@ export default class PLP extends Component {
                 sceneStyle={this.state.isHiddenTabBar !== true ? {} : {paddingBottom:0}}
             >
                 {/* 消息中心 */}
-                {this.renderTabBarItem("消息", 'message', require('../img/message@3x.png'), require('../img/message_red@3x.png'), Message)}
+                {this.renderTabBarItem("消息", 'message', require('../img/message@2x.png'), require('../img/message_red@2x.png'), Message)}
                 {/* 应用中心 */}
-                {this.renderTabBarItem("应用", 'applit', require('../img/application@3x.png'), require('../img/application_red@3x.png'), Applit)}
+                {this.renderTabBarItem("应用", 'applit', require('../img/application@2x.png'), require('../img/application_red@2x.png'), Applit)}
                 {/* 我的 */}
                 {this.renderTabBarItem("我的", 'mine', require('../img/account@3x.png'), require('../img/account_red@3x.png'), Mine)}
             </TabNavigator>
