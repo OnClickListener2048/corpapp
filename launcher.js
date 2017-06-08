@@ -15,6 +15,8 @@ import LaunchPage from './app/main/GDLaunchPage';
 import Main from './app/main/GDMain';
 import LoginPage from './app/user/LoginPage';
 import Toast from 'react-native-root-toast';
+import {API_BASE_URL} from './app/config';
+import * as apis from './app/apis';
 
 export default class CorpApp extends Component {
     render() {
@@ -30,6 +32,7 @@ export default class CorpApp extends Component {
         //     BackAndroid.exitApp(0)
         //     return true
         // })
+        Toast.show(API_BASE_URL);
     }
 
     // 构造
@@ -56,23 +59,34 @@ export default class CorpApp extends Component {
             "smsCode": '888888'
         };
 
-        HTTPBase.postEx(
-            'http://123.56.31.133:8081/api/v0/user/login/phone',
-            // 'http://rapapi.org/mockjsdata/19607/common_demo',
-            params)
-            .then(
-                (responseData) => {
-                    console.log("登录成功返回:" , responseData);
-                    Toast.show('登录成功返回' + JSON.stringify(responseData));
-                },
-                (e) => {
-                    console.log("登录错误返回:" , e);
-                    Toast.show('登录错误返回' + JSON.stringify(e));
-                },
-            )
+        // HTTPBase.postEx(
+        //     'http://123.56.31.133:8081/api/v0/user/login/phone',
+        //     // 'http://rapapi.org/mockjsdata/19607/common_demo',
+        //     params)
+        //     .then(
+        //         (responseData) => {
+        //             console.log("登录成功返回:" , responseData);
+        //             Toast.show('登录成功返回' + JSON.stringify(responseData));
+        //         },
+        //         (e) => {
+        //             console.log("登录错误返回:" , e);
+        //             Toast.show('登录错误返回' + JSON.stringify(e));
+        //         },
+        //     )
             // .catch((error) => {
             //     console.log("登录错误返回:" + error.message);
             // });
+        // apis.login('18211137768', '888888').then(
+        //     (responseData) => {
+        //         console.log("登录成功返回22:" , responseData);
+        //         Toast.show('登录成功返回22' + JSON.stringify(responseData));
+        //     },
+        //     (e) => {
+        //         console.log("登录错误返回22:" , e);
+        //         Toast.show('登录错误返回22' + JSON.stringify(e));
+        //     },
+        // );
+
     }
 
     // 注意这个方法前面有async关键字

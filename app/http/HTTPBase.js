@@ -137,7 +137,7 @@ HTTPBase.post = async function (url, params, headers) {
         formData.append(k, v);
     }
 
-    console.log("======> ", url, "\n");
+    console.log("======> ", url, "params", paramsArray, "\n");
     let response = await fetch(url, {
         method:'POST',
         headers:this._commonHeaders(headers),
