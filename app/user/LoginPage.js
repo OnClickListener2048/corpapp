@@ -105,6 +105,10 @@ export default class LoginPage extends Component {
     }
 
     _doLogin() {
+        if(!(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid)) {
+            // Toast.show('请输入正确的手机号, 验证码并同意许可协议.');
+            return;
+        }
         var loading = SActivityIndicator.show(true, "登录中");
         console.log(loading);
         apis.login(this.state.mobile, this.state.smsCode).then(
@@ -237,12 +241,13 @@ export default class LoginPage extends Component {
 
                         </View>
 
-                        <TouchableOpacity onPress={this._doLogin}>
+                        <TouchableWithoutFeedback onPress={this._doLogin}>
                         <View style={[styles.buttonview,
-                            {backgroundColor: ( (this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')}]}>
+                            {backgroundColor: (
+                                (this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')}]}>
                             <Text style={styles.logintext}>登录</Text>
                         </View>
-                        </TouchableOpacity>
+                        </TouchableWithoutFeedback>
 
                     </KeyboardAvoidingView>
 
