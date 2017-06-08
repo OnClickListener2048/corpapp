@@ -18,6 +18,7 @@ import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
 import styles from './css/ApplictionCenterPageStyle'
 import px2dp from '../util'
 const window = Dimensions.get('window');
+import Swiper from 'react-native-swiper'
 
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -38,6 +39,20 @@ export default class ApplicationCenterPage extends Component{
         );
     }
 
+    renderImg(){
+        var imageViews=[];
+        for(var i=0;i<4;i++){
+            imageViews.push(
+                <Image
+                    key={i}
+                    style={{flex:1}}
+                    source={require( '../img/account.png')}
+                />
+            );
+        }
+        return imageViews;
+    }
+
     render() {
         return(
         <View style={styles.container}>
@@ -46,6 +61,12 @@ export default class ApplicationCenterPage extends Component{
                 titleItem = {() => this.renderTitleItem()}
             />
 
+
+            <Swiper height={200}
+            >
+                {this.renderImg()}
+            </Swiper>
+            
 
             <View style={styles.applicationViewContainer}>
                 <TopcenterImgBottomTitleView applicationTitle='我的外勤'

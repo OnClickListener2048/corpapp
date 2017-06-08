@@ -42,7 +42,7 @@ export default class TopcenterImgBottomTitleView extends React.Component {
 
                     <Text
                         textAlign='center'
-                        style={[{fontSize: 12}] }>{applicationTitle}</Text>
+                        style={[{fontSize: 12,marginTop: 10}] }>{applicationTitle}</Text>
                 </View>
         )
     }
