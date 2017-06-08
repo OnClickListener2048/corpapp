@@ -7,19 +7,21 @@ export const SCREEN_WIDTH = window.width;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#FAFAFA',
         flexDirection: 'column'
     },
     // phone input box
     applicationViewContainer: {
-        height: (SCREEN_WIDTH - 45)/2,
-        width: (SCREEN_WIDTH - 45)/2,
-        backgroundColor: '#FFFFFF',
+        height: 250,
+        width: SCREEN_WIDTH,
+        backgroundColor: '#FAFAFA',
 
         // width: SCREEN_WIDTH,
         // backgroundColor: '#FFDDFF',
         flexDirection: 'row',
         //justifyContent:'center'
+        flexWrap:'wrap'
+
     }
     }
 );

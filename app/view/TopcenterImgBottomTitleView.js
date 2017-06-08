@@ -25,7 +25,7 @@ export default class TopcenterImgBottomTitleView extends React.Component {
         const {applicationTitle, applicationImg} = this.state
         return (
                 <View
-                    style={[{width: 70, height: 44, backgroundColor : '#FFC125', justifyContent: 'center', alignItems: 'flex-end'}, style]}>
+                    style={[{width: 70, height: 44, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center'}, style]}>
 
                     <Image
                         source={applicationImg}

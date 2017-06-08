@@ -100,10 +100,10 @@ export default class LoginPage extends Component {
         return (
             <Image source={require('../img/bg.png')} style={commonStyles.fullScreen}>
                 {/* 导航栏 */}
-                {/*<CommunalNavBar*/}
-                {/*leftItem={() => this.renderLeftItem()}*/}
-                {/*titleItem={() => this.renderTitleItem()}*/}
-                {/*/>*/}
+                <CommunalNavBar
+                leftItem={() => this.renderLeftItem()}
+                titleItem={() => this.renderTitleItem()}
+                />
 
                 <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                 <View style={{height: px2dp(100),}}/>
