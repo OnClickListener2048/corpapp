@@ -105,14 +105,14 @@ export default class LoginPage extends Component {
     }
 
     _doLogin() {
-        Toast.show('TODO Login');
         var loading = SActivityIndicator.show(true, "登录中");
         console.log(loading);
         apis.login(this.state.mobile, this.state.smsCode).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 console.log("登录成功返回:" , responseData);
-                Toast.show('登录成功返回' + JSON.stringify(responseData));
+                Toast.show('登录成功返回' + responseData.data.name + "token="
+                + responseData.data.token);
             },
             (e) => {
                 SActivityIndicator.hide(loading);
