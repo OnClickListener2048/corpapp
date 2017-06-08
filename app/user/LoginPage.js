@@ -24,6 +24,7 @@ import styles from './css/LoginPageStyle';
 import px2dp from '../util'
 import Toast from 'react-native-root-toast';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
+import SActivityIndicator from 'react-native-sww-activity-indicator';
 
 export default class LoginPage extends Component {
 
@@ -103,6 +104,7 @@ export default class LoginPage extends Component {
 
     _doLogin() {
         Toast.show('TODO Login');
+        SActivityIndicator.show(true, "登录中");
     }
 
     render() {

@@ -20,7 +20,8 @@
     "react-native-vector-icons": "^4.1.1",
     "react-native-root-toast": "^1.1.2",
     "react-navigation": "^1.0.0-beta.11",
-    "realm": "^1.2.0"
+    "realm": "^1.2.0",
+    "react-native-sww-activity-indicator": "^1.0.4"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
