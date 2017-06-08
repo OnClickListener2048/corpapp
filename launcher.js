@@ -14,11 +14,12 @@ import LaunchPage from './app/main/GDLaunchPage';
 // 引用外部文件
 import Main from './app/main/GDMain';
 import LoginPage from './app/user/LoginPage';
+import ApplicationCenterPage from './app/aplicationCenter/ApplicationCenterPage';
 
 export default class CorpApp extends Component {
     render() {
         return (
-            <LoginPage />
+            <ApplicationCenterPage />
         );
     }
 

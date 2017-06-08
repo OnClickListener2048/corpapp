@@ -1,5 +1,5 @@
 /**
- *  使用
+ *  使用说明
 
  <TimerButton enable={phoneNumber.length}
  style={{width: 110,marginRight: 10}}
@@ -9,8 +9,6 @@
     //this._requestSMSCode(shouldStartCountting)
     其实应该调用shouldStartCountting(true/false)启停倒计时
   }}/>
-
-
 
  onClick：触发后按钮selfEnable会立即被置为false
  通过onClick中的一系列逻辑处理之后需要调用回调函数结束倒计时
@@ -60,10 +58,21 @@ export default class TimerButton extends React.Component {
                 console.log("---- timer ", timer);
                 this.setState({
                     timerCount: timer,
-                    timerTitle: `重新获取(${timer}s)`,
+                    timerTitle: `剩余(${timer}s)`,
                 })
             }
         }, 1000)
+    }
+
+    // 重置状态
+    reset() {
+        clearInterval(this.interval);
+        this.setState({
+            timerCount: this.props.timerCount || 90,
+            timerTitle: this.props.timerTitle || '获取验证码',
+            counting: false,
+            selfEnable: true,
+        })
     }
 
     _shouldStartCountting(shouldStart) {
@@ -97,9 +106,10 @@ export default class TimerButton extends React.Component {
                 ;
             }}>
                 <View
-                    style={[{width: 100, height: 44,  justifyContent: 'center', alignItems: 'center'}, style]}>
+                    style={[{width: 70, height: 44,  justifyContent: 'center', alignItems: 'flex-end'}, style]}>
                     <Text
-                        style={[{fontSize: 16}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || 'gray')}]}>{timerTitle}</Text>
+                        textAlign='right'
+                        style={[{fontSize: 12}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || 'gray')}]}>{timerTitle}</Text>
                 </View>
             </TouchableOpacity>
         )
