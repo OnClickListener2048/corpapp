@@ -18,6 +18,7 @@ import {
 import ProgressiveInput from '../view/ClearFocusEdit';
 // 引入外部文件
 import CommunalNavBar from '../main/GDCommunalNavBar';
+import LaunchPage from '../main/GDLaunchPage';
 import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
 import styles from './css/LoginPageStyle';
@@ -118,30 +119,19 @@ export default class LoginPage extends Component {
                 Toast.show('登录成功返回' + responseData.data.name + "token="
                 + responseData.data.token);
                 if(responseData !== null && responseData.data !== null && responseData.data.token) {
+                    UserInfoStore.token = responseData.data.token;
                     UserInfoStore.setUserToken(responseData.data.token);
-                    this.readUserInfo();
+                    // this.readUserInfo();
+                    // 到载入页
+                    this.props.navigator.replace({
+                        component:LaunchPage
+                    });
                 }
             },
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("登录错误返回22:" , e);
                 Toast.show('登录错误返回22' + JSON.stringify(e));
-            },
-        );
-    }
-
-    readUserInfo() {
-        apis.userInfo().then(
-            (responseData) => {
-                console.log("用户信息读取成功返回:" , responseData);
-                Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
-                if(responseData !== null && responseData.data !== null) {
-                    UserInfoStore.setUserInfo(responseData.data);
-                }
-            },
-            (e) => {
-                console.log("用户信息读取错误返回:" , e);
-                Toast.show('用户信息读取错误返回' + JSON.stringify(e));
             },
         );
     }

@@ -11,8 +11,8 @@ export function login( phone = '', smsCode = '') {
   return postApi('/api/v0/user/login/phone', {phone, smsCode});
 }
 
-export async function sendVerifyCode({by, mobile, email}) {
-    return await postApi('/security/sendVerifyCode', {by, mobile, email});
+export async function sendVerifyCode(phone = '', verifyCode = '') {
+    return await postApi('api/v0/user/smscode/get', {phone, verifyCode});
 }
 
 // export function resetPassword({mobile = '', email = '', password = '', code}) {
@@ -23,6 +23,7 @@ export function userInfo() {
   return postApi('/api/v0/user/info');
 }
 
+// 退出登陆
 export function logout() {
-  return postApi('/logout');
+  return postApi('/api/v0/user/logout');
 }

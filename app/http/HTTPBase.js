@@ -135,7 +135,9 @@ HTTPBase.post = async function (url, params, headers) {
     let paramsArray = this._commonParams(params);
     let formData = new FormData();
     for (let [k, v] of Object.entries(paramsArray)) {
-        formData.append(k, v);
+        if(v !== null) {
+            formData.append(k, v);
+        }
     }
 
     console.log("POST======> ", url, "params", paramsArray, "\n");
@@ -182,7 +184,10 @@ HTTPBase._commonHeaders = function (headers) {
 HTTPBase._commonParams = function (params) {
     let paramsArray = {};
 
-    paramsArray.token = UserInfoStore.token;
+    if(UserInfoStore.token !== null) {
+        paramsArray.token = UserInfoStore.token;
+    }
+
     paramsArray.version = DeviceInfo.getVersion();
     paramsArray.deviceType = Platform.OS;
     paramsArray.deviceId = DeviceInfo.getUniqueID();
