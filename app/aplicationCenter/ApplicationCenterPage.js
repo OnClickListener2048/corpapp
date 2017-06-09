@@ -64,6 +64,7 @@ export default class ApplicationCenterPage extends Component{
 
 
             <View style={styles.applicationViewContainer}>
+
                 <TopcenterImgBottomTitleView applicationTitle='我的外勤'
                                              applicationImg = {require('../img/field.png')}
                                              style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,alignSelf: 'flex-start',}}
