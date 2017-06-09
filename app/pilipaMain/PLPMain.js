@@ -48,6 +48,19 @@ export default class PLP extends Component {
         })
     }
 
+    // 组件加载完成
+    componentDidMount() {
+        // 注册通知
+        this.subscription = DeviceEventEmitter.addListener('isHiddenTabBar', (data)=>{this.hiddenTabBar(data)});
+
+    }
+
+    // 组件即将销毁
+    componentWillUnmount() {
+        // 销毁
+        this.subscription.remove();
+    }
+
     // 点击了Item
     clickItem(selectedTab) {
         // 渲染页面
