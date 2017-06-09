@@ -119,13 +119,16 @@ export default class LoginPage extends Component {
                 Toast.show('登录成功返回' + responseData.data.name + "token="
                 + responseData.data.token);
                 if(responseData !== null && responseData.data !== null && responseData.data.token) {
-                    UserInfoStore.token = responseData.data.token;
-                    UserInfoStore.setUserToken(responseData.data.token);
-                    // this.readUserInfo();
-                    // 到载入页
-                    this.props.navigator.replace({
-                        component:LaunchPage
-                    });
+                    UserInfoStore.setUserToken(responseData.data.token).then(
+                        v => {
+                            // this.readUserInfo();
+                            // 到载入页
+                            this.props.navigator.replace({
+                                component:LaunchPage
+                            });
+                        },
+                        e => console.log(e.message)
+                    );
                 }
             },
             (e) => {

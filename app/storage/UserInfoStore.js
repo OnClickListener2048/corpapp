@@ -16,18 +16,15 @@ UserInfoStore.getUserInfo = function (): Object {
     return value;
 };
 
-UserInfoStore.token = null;// 临时措施存储token, 待解决
-
 UserInfoStore.setUserInfo = function (value: Object) {
     return Preferences.set(KEY_USER_INFO, JSON.stringify(value));
 }
 
-UserInfoStore.getUserToken = function (): string {
-    return Preferences.get(KEY_USER_TOKEN);
+UserInfoStore.getUserToken = async function () {
+    return await Preferences.get(KEY_USER_TOKEN);
 }
 
 UserInfoStore.setUserToken = function (value: string) {
-    UserInfoStore.token = value;
     return Preferences.set(KEY_USER_TOKEN, value);
 };
 global.UserInfoStore = UserInfoStore;// 全局可用

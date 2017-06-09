@@ -132,30 +132,35 @@ HTTPBase.get = async function (url, params, headers) {
  *
  **/
 HTTPBase.post = async function (url, params, headers) {
-    let paramsArray = this._commonParams(params);
+    let paramsArray = await this._commonParams(params);
     let formData = new FormData();
     for (let [k, v] of Object.entries(paramsArray)) {
         if(v !== null) {
             formData.append(k, v);
         }
     }
-
-    console.log("POST======> ", url, "params", paramsArray, "\n");
+    console.log("POST======> ", url, "params", formData, "\n");
     let response = await fetch(url, {
         method:'POST',
         headers:this._commonHeaders(headers),
         body:formData,
     });
 
+    return this._parseHttpResult(response);
+
+};
+
+HTTPBase._parseHttpResult = async function (response) {
     if (!response.ok) {
         // throw new Error(text);
         let text = await response.text();
-        console.log("post() will throw1", text);
+        console.log("error response text:", text);
         try {
-            let responseJson = await response.json();
-            console.log("post() will throw ", JSON.stringify(responseJson));
+            let responseJson = JSON.parse(text);
+            console.log("post() will throw2 ", JSON.stringify(responseJson));
             return Promise.reject(responseJson);
         } catch (e) {
+            console.log("post() will throw2 error ", e);
             return Promise.reject({'code':  response.status, 'msg':  response.statusText});
         }
     }
@@ -163,9 +168,9 @@ HTTPBase.post = async function (url, params, headers) {
     let responseJson = await response.json();
     console.log("response:",  responseJson, "\n");
     return responseJson;
-};
+}
 
-HTTPBase._commonHeaders = function (headers) {
+HTTPBase._commonHeaders =  function (headers) {
     let finalHeaders = new Headers();
     // finalHeaders.append('Cookie', '');
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
@@ -181,11 +186,16 @@ HTTPBase._commonHeaders = function (headers) {
 }
 
 // 添加App的公共表单参数
-HTTPBase._commonParams = function (params) {
+HTTPBase._commonParams = async function (params) {
     let paramsArray = {};
 
-    if(UserInfoStore.token !== null) {
-        paramsArray.token = UserInfoStore.token;
+    try {
+        let token = await UserInfoStore.getUserToken();
+        console.log('_commonParams token', token);
+        if (token !== null){
+            paramsArray.token = token;
+        }
+    } catch (error) {
     }
 
     paramsArray.version = DeviceInfo.getVersion();
