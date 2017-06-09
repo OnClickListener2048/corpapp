@@ -14,7 +14,7 @@ import {
     DeviceEventEmitter,
 } from 'react-native';
 
-import Message from '../pilipaMain/PLPMessage';
+import Message from '../message/MessageCenterPage';
 import Applit from '../aplicationCenter/ApplicationCenterPage';
 import Mine from '../pilipaMain/PLPMine';
 
