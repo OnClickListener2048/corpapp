@@ -109,8 +109,8 @@ export default class LoginPage extends Component {
             // Toast.show('请输入正确的手机号, 验证码并同意许可协议.');
             return;
         }
-        var loading = SActivityIndicator.show(true, "登录中");
-        console.log(loading);
+        let loading = SActivityIndicator.show(true, "登录中");
+
         apis.login(this.state.mobile, this.state.smsCode).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);

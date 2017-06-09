@@ -9,6 +9,8 @@ export const IN_DEBUGGER = DEBUG && !!window.navigator.userAgent;
 
 export const RN_VERSION = '1.3.0';
 
+
+// 获取屏幕尺寸
 let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;

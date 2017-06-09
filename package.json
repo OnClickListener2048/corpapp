@@ -13,15 +13,15 @@
     "react-native-device-info": "^0.10.2",
     "react-native-parabolic": "^1.1.1",
     "react-native-pull": "^2.0.2",
+    "react-native-root-toast": "^1.1.2",
     "react-native-scrollable-tab-view": "^0.7.1",
     "react-native-splash-screen": "^2.0.0",
     "react-native-swiper": "^1.5.4",
+    "react-native-sww-activity-indicator": "^1.0.4",
     "react-native-tab-navigator": "^0.3.3",
     "react-native-vector-icons": "^4.1.1",
-    "react-native-root-toast": "^1.1.2",
     "react-navigation": "^1.0.0-beta.11",
-    "realm": "^1.2.0",
-    "react-native-sww-activity-indicator": "^1.0.4"
+    "realm": "^1.2.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
