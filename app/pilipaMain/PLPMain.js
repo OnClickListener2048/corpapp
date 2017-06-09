@@ -15,7 +15,7 @@ import {
 } from 'react-native';
 
 import Message from '../pilipaMain/PLPMessage';
-import Applit from '../pilipaMain/PLPApplit';
+import Applit from '../aplicationCenter/ApplicationCenterPage';
 import Mine from '../pilipaMain/PLPMine';
 
 // 引用第三方框架
