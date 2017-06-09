@@ -5,22 +5,17 @@ import React, {Component} from 'react';
 import {Dimensions} from 'react-native';
 
 import {
-    AppRegistry,
-    StyleSheet,
     Text,
     Image,
     View
 } from 'react-native';
-import commonStyles from '../css/styles';
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
 import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
 import styles from './css/ApplictionCenterPageStyle'
-import px2dp from '../util'
 const window = Dimensions.get('window');
 import Swiper from 'react-native-swiper'
 
-export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
 
@@ -33,7 +28,7 @@ export default class ApplicationCenterPage extends Component{
 
     }
 
-    renderTitleItem() {
+    static renderTitleItem() {
         return(
             <Text style={styles.navbarTitleItemStyle}>应用中心</Text>
         );
@@ -58,7 +53,7 @@ export default class ApplicationCenterPage extends Component{
         <View style={styles.container}>
             <CommunalNavBar
 
-                titleItem = {() => this.renderTitleItem()}
+                titleItem = {() => ApplicationCenterPage.renderTitleItem()}
             />
 
 
@@ -66,7 +61,7 @@ export default class ApplicationCenterPage extends Component{
             >
                 {this.renderImg()}
             </Swiper>
-            
+
 
             <View style={styles.applicationViewContainer}>
                 <TopcenterImgBottomTitleView applicationTitle='我的外勤'
