@@ -117,11 +117,31 @@ export default class LoginPage extends Component {
                 console.log("登录成功返回:" , responseData);
                 Toast.show('登录成功返回' + responseData.data.name + "token="
                 + responseData.data.token);
+                if(responseData !== null && responseData.data !== null && responseData.data.token) {
+                    UserInfoStore.setUserToken(responseData.data.token);
+                    this.readUserInfo();
+                }
             },
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("登录错误返回22:" , e);
                 Toast.show('登录错误返回22' + JSON.stringify(e));
+            },
+        );
+    }
+
+    readUserInfo() {
+        apis.userInfo().then(
+            (responseData) => {
+                console.log("用户信息读取成功返回:" , responseData);
+                Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
+                if(responseData !== null && responseData.data !== null) {
+                    UserInfoStore.setUserInfo(responseData.data);
+                }
+            },
+            (e) => {
+                console.log("用户信息读取错误返回:" , e);
+                Toast.show('用户信息读取错误返回' + JSON.stringify(e));
             },
         );
     }

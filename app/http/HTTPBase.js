@@ -69,7 +69,8 @@ HTTPBase._handleResponse = async function(responseJson) {
  *
  * */
 HTTPBase.get = async function (url, params, headers) {
-    let paramsFinal = this._commonParams(params);
+    let paramsFinal = await this._commonParams(params);
+
     if (paramsFinal) {
         let paramsArray = [];
 
@@ -137,12 +138,26 @@ HTTPBase.post = async function (url, params, headers) {
         formData.append(k, v);
     }
 
-    console.log("======> ", url, "params", paramsArray, "\n");
+    console.log("POST======> ", url, "params", paramsArray, "\n");
     let response = await fetch(url, {
         method:'POST',
         headers:this._commonHeaders(headers),
         body:formData,
     });
+
+    if (!response.ok) {
+        // throw new Error(text);
+        let text = await response.text();
+        console.log("post() will throw1", text);
+        try {
+            let responseJson = await response.json();
+            console.log("post() will throw ", JSON.stringify(responseJson));
+            return Promise.reject(responseJson);
+        } catch (e) {
+            return Promise.reject({'code':  response.status, 'msg':  response.statusText});
+        }
+    }
+
     let responseJson = await response.json();
     console.log("response:",  responseJson, "\n");
     return responseJson;
@@ -166,7 +181,8 @@ HTTPBase._commonHeaders = function (headers) {
 // 添加App的公共表单参数
 HTTPBase._commonParams = function (params) {
     let paramsArray = {};
-    //TODO 暂时屏蔽掉
+
+    paramsArray.token = UserInfoStore.token;
     paramsArray.version = DeviceInfo.getVersion();
     paramsArray.deviceType = Platform.OS;
     paramsArray.deviceId = DeviceInfo.getUniqueID();

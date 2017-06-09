@@ -9,7 +9,6 @@ export const IN_DEBUGGER = DEBUG && !!window.navigator.userAgent;
 
 export const RN_VERSION = '1.3.0';
 
-
 // 获取屏幕尺寸
 let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
@@ -26,3 +25,5 @@ if(DEBUG) {// 测试环境变量, 上线时应删除
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
 // export let WWW_BASE_URL = `${SCHEME}://${DOMAIN_WWW}`;
 // export let WEB_BASE_URL = `${SCHEME}://${DOMAIN_WEB}`;
+export let KEY_USER_TOKEN = 'KEY_USER_TOKEN';// 用户登陆token
+export let KEY_USER_INFO = 'KEY_USER_INFO';// 用户基本信息

@@ -398,7 +398,7 @@ export default class GDHome extends Component {
 
         // 注册通知
         this.subscription = DeviceEventEmitter.addListener('clickHomeItem', () => this.clickTabBarItem());
-        this.pushToLogin();
+        // this.pushToLogin();
     }
 
     componentWillUnmount() {

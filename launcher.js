@@ -9,6 +9,9 @@ import SplashScreen from 'react-native-splash-screen'
 import LaunchPage from './app/main/GDLaunchPage';
 import Toast from 'react-native-root-toast';
 import {API_BASE_URL} from './app/config';
+import _UserInfoStore from './app/storage/UserInfoStore';
+import SActivityIndicator from './app/modules/react-native-sww-activity-indicator';
+import * as apis from './app/apis';
 
 export default class CorpApp extends Component {
     render() {
@@ -33,8 +36,10 @@ export default class CorpApp extends Component {
         //     BackAndroid.exitApp(0)
         //     return true
         // })
-        Toast.show(API_BASE_URL);
+        // Toast.show(API_BASE_URL);
     }
+
+
 }
 
 AppRegistry.registerComponent('corpapp', () => CorpApp);
