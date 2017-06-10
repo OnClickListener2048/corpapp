@@ -2,6 +2,7 @@
  * 通用请求的封装
  */
 import {API_BASE_URL} from '../config';
+import '../http/HTTPBase';
 
 export async function postApi(uri, params = {}, headers = {}) {
     return HTTPBase.postEx(API_BASE_URL + uri, params, headers);
