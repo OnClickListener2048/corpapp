@@ -12,7 +12,7 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import LoginPage from '../user/LoginPage';
 import Main from './GDMain';
-import _UserInfoStore from '../storage/UserInfoStore';
+import '../storage/UserInfoStore';
 import * as apis from '../apis';
 import Toast from 'react-native-root-toast';
 

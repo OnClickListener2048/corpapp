@@ -7,11 +7,8 @@ import {
 import SplashScreen from 'react-native-splash-screen'
 // 引入外部文件
 import LaunchPage from './app/main/GDLaunchPage';
-import Toast from 'react-native-root-toast';
-import {API_BASE_URL} from './app/config';
-import _UserInfoStore from './app/storage/UserInfoStore';
-import SActivityIndicator from './app/modules/react-native-sww-activity-indicator';
-import * as apis from './app/apis';
+import  './app/storage/UserInfoStore';
+
 
 export default class CorpApp extends Component {
     render() {
