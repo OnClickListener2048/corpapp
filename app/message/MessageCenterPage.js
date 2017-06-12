@@ -127,10 +127,10 @@ export default class MessageCenterPage extends Component {
                 {/*</View>*/}
 
 
-                <MessageCell messageTitle ='我的外勤'
+                <MessageCell messageTitle ='我的外勤标题外勤标'
                              messageSubTitle = 'sub标题'
-                              // messageTime = '11月11日'
-
+                             messageTime = '17/06/02'
+                             messageIcon = {require('../img/field.png')}
                 />
 
 
