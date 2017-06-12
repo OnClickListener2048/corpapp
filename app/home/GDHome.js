@@ -228,11 +228,11 @@ export default class GDHome extends Component {
 
     // 跳转到搜索
     pushToSearch() {
-        // InteractionManager.runAfterInteractions(() => {
-        //     this.props.navigator.push({
-        //         component: MinePage,
-        //     });
-        // });
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                component: Search,
+            });
+        });
     }
 
     // 跳转到登录页面

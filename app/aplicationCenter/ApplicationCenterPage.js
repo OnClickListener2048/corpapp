@@ -77,10 +77,12 @@ export default class ApplicationCenterPage extends Component{
 
                 <TouchableOpacity
                     onPress={() => {this.toMyOutSideWork()}}
+                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
                 >
                     <TopcenterImgBottomTitleView applicationTitle='我的外勤'
                                                  applicationImg = {require('../img/field.png')}
-                                                 style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+                                                 style={{height: 100, width: (SCREEN_WIDTH - 45)/2,}}
                                                  textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                     />
                 </TouchableOpacity>
