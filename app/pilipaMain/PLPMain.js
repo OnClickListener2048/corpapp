@@ -15,7 +15,6 @@ import {
 } from 'react-native';
 
 import Message from '../message/MessageCenterPage';
-import Message from '../pilipaMain/PLPMessage';
 import Applit from '../aplicationCenter/ApplicationCenterPage';
 import Mine from '../pilipaMain/PLPMine';
 
