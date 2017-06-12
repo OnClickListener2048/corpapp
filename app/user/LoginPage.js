@@ -9,10 +9,9 @@ import {
     StyleSheet,
     Text,
     Image,
-    View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView, TouchableWithoutFeedback
+    KeyboardAvoidingView, TouchableWithoutFeedback,View
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -21,7 +20,6 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import LaunchPage from '../main/GDLaunchPage';
 import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
-import styles from './css/LoginPageStyle';
 import px2dp from '../util'
 import Toast from 'react-native-root-toast';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
@@ -57,7 +55,7 @@ export default class LoginPage extends Component {
 
     // 返回
     pop() {
-        if (this.props.navigator) {
+        if(this.props.navigator) {
             this.props.navigator.pop();
         }
     }
@@ -77,7 +75,6 @@ export default class LoginPage extends Component {
             </TouchableOpacity>
         );
     }
-
     // 返回中间按钮
     renderTitleItem() {
         return (
@@ -271,5 +268,124 @@ export default class LoginPage extends Component {
     }
 }
 
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'column'
+    },
+
+    // logo图标
+    bzLogo: {
+        resizeMode: "contain",
+        borderWidth: 0,
+        borderColor: "#f9f9f9",
+        alignSelf: 'center',
+        marginTop: px2dp(238),
+        width: px2dp(135),
+        height: px2dp(110)
+    },
+
+    containerKeyboard: {
+        flex: 1, justifyContent: 'center', paddingHorizontal: 20, paddingTop: 0,
+    },
+
+    navBarLeftItemStyle: {
+        width: 20,
+        height: 20,
+        marginLeft: 15,
+    },
+    navbarTitleItemStyle: {
+        fontSize: 17,
+        color: 'black',
+        marginRight: 50
+    },
+    header: {
+        height: 50,
+        backgroundColor: '#12B7F5',
+        justifyContent: 'center',
+    },
+    headtitle: {
+        alignSelf: 'center',
+        fontSize: 20,
+        color: '#ffffff',
+    },
+    avatarview: {
+        height: 150,
+        backgroundColor: '#ECEDF1',
+        justifyContent: 'center',
+    },
+    avatarimage: {
+        width: 100,
+        height: 100,
+        alignSelf: 'center'
+    },
+    marginTopview: {
+        height: 15,
+        backgroundColor: '#F7F7F9'
+    },
+    inputview: {
+        height: 100,
+    },
+    textinput: {
+        flex: 1,
+        fontSize: 15,
+        marginLeft: 10,
+        marginRight: 10,
+        padding: 0,
+        color: '#1A1A1A',
+        borderRadius: 5,
+        borderWidth: 0.3,
+        borderColor: '#b5b5b9',
+    },
+    dividerview: {
+        flexDirection: 'row',
+    },
+    divider: {
+        flex: 1,
+        height: 10,
+        backgroundColor: 'transparent'
+    },
+    bottomview: {
+        backgroundColor: 'transparent',
+    },
+    buttonview: {
+        backgroundColor: '#1DBAF1',
+        margin: 10,
+        borderRadius: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    logintext: {
+        fontSize: 17,
+        color: '#FFFFFF',
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    emptyview: {
+        flex: 1,
+    },
+    bottombtnsview: {
+        flexDirection: 'row',
+    },
+    bottomleftbtnview: {
+        flex: 1,
+        height: 50,
+        paddingLeft: 10,
+        alignItems: 'flex-start',
+        justifyContent: 'center',
+    },
+    bottomrightbtnview: {
+        flex: 1,
+        height: 50,
+        paddingRight: 10,
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    bottombtn: {
+        fontSize: 15,
+        color: '#1DBAF1',
+    }
+});
 
 // AppRegistry.registerComponent('ReactDemo', () => ReactDemo);

@@ -4,9 +4,33 @@
 
 import React,{Component}from 'react';
 import {Text, View,StyleSheet
-,DeviceEventEmitter,} from "react-native";
+,DeviceEventEmitter,
+    InteractionManager,} from "react-native";
+import LoginPage from "../user/LoginPage";
 
 export default class PLPMessage extends Component{
+
+// 跳转到登录页面
+    pushToLogin() {
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                component: LoginPage,
+            });
+        });
+    }
+
+    // 组件加载完成
+    componentDidMount() {
+
+        // 注册通知
+        this.subscription = DeviceEventEmitter.addListener('clickMessageItem', () => this.clickTabBarItem());
+        this.pushToLogin();
+    }
+
+    componentWillUnmount() {
+        // 注销通知
+        this.subscription.remove();
+    }
 
     render() {
         return (

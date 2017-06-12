@@ -62,12 +62,12 @@ const styles = StyleSheet.create({
     container: {
         width:width,
         height:Platform.OS === 'ios' ? 64 : 44,
-        backgroundColor:'transparent',
+        backgroundColor:'#FAFAFA',
         flexDirection:'row',
         justifyContent:'space-between',
         alignItems:'center',
         borderBottomWidth:0.5,
-        borderBottomColor:'gray',
+        borderBottomColor:'#DCDCDC',
         paddingTop:Platform.OS === 'ios' ? 15 : 0,
     },
 });

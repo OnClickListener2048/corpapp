@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 
 import Message from '../message/MessageCenterPage';
+import Message from '../pilipaMain/PLPMessage';
 import Applit from '../aplicationCenter/ApplicationCenterPage';
 import Mine from '../pilipaMain/PLPMine';
 
@@ -46,6 +47,19 @@ export default class PLP extends Component {
         this.setState({
             isHiddenTabBar:data,
         })
+    }
+
+    // 组件加载完成
+    componentDidMount() {
+        // 注册通知
+        this.subscription = DeviceEventEmitter.addListener('isHiddenTabBar', (data)=>{this.hiddenTabBar(data)});
+
+    }
+
+    // 组件即将销毁
+    componentWillUnmount() {
+        // 销毁
+        this.subscription.remove();
     }
 
     // 点击了Item

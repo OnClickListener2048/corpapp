@@ -35,5 +35,10 @@
   "description": "噼里啪企业App",
   "main": "index.android.js",
   "author": "liuchangjiong",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/pilipa/corpapp.git"
+  },
+  "homepage": "https://bitbucket.org/pilipa/corpapp#readme"
 }

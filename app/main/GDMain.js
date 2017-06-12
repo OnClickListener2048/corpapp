@@ -29,7 +29,7 @@ export default class GD extends Component {
 
     // ES6
     // 构造
-    constructor(props) {
+    constructor(props) {   
         super(props);
         // 初始状态
         this.state = {
