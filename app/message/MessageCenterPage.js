@@ -43,6 +43,9 @@ import Swiper from 'react-native-swiper'
 
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
     dataBlob : {}
     sectionIDs : []
     rowIDs : []

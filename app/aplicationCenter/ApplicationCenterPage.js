@@ -20,7 +20,9 @@ import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
-
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
     constructor(props) {
         super(props);
 

@@ -27,8 +27,12 @@ import Toast from 'react-native-root-toast';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
+import {navToBootstrap, navToMainTab} from '../navigation';
 
 export default class LoginPage extends Component {
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
 
     constructor(props) {
         super(props);
@@ -123,9 +127,7 @@ export default class LoginPage extends Component {
                         v => {
                             // this.readUserInfo();
                             // 到载入页
-                            this.props.navigator.replace({
-                                component:LaunchPage
-                            });
+                            navToBootstrap();
                         },
                         e => console.log(e.message)
                     );

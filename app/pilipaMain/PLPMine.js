@@ -16,7 +16,9 @@ import {
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
 export default class PLPMine extends Component{
-
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
     render() {
         return (
             <View style={styles.container}>
