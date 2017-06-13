@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
          rowStyle: {
              marginTop: 15,
              height : 65,
-             backgroundColor: 'orange',
+             backgroundColor: '#FAFAFA',
              flexDirection: 'column'
 
          },
@@ -25,23 +25,37 @@ const styles = StyleSheet.create({
         marginLeft: 27.5,
         marginRight: 15,
         height : 65,
-
-        borderBottomColor: 'blue',
+        // justifyContent : 'space-between',
+        // borderBottomColor: 'blue',
         borderBottomWidth: 1,
         backgroundColor: '#FFFFFF',
-        flexDirection: 'row'
+        flexDirection: 'row',
+
+        borderColor: '#FAFAFA',
+        borderRadius: 6,
+        borderWidth: 1,
 
     },
     titleViewStyle: {
-        marginLeft: 22.5,
-        marginRight: 15,
+        marginLeft: 10,
+         marginRight: 22.5,
+        flex: 1,
         height : 65,
+        // maxWidth: SCREEN_WIDTH - 120,
         // width : 200,
-        flexDirection: 'column'
+        flexDirection: 'column',
 
     },
+    timeTitleStyle: {
+        fontSize: 12,
+        marginTop: 15,
+        marginLeft : 10,
+        marginRight : 15,
+        color : '#969696',
+        // marginRight: 22.5,
+        // width : 200,
 
-
+    },
     }
 );
 export default styles;

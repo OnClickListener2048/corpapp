@@ -19,48 +19,62 @@ export default class MessageCenterCell extends React.Component {
     }
 
     static propTypes = {
-        messageIcon: PropTypes.string,
+        messageIcon: PropTypes.number,
         messageTitle: PropTypes.string,
         messageSubTitle: PropTypes.string,
-        messageTime: PropTypes.number
+        messageTime: PropTypes.string
     };
 
 
     render() {
          // const { style} = this.props
-        const {messageTitle, messageSubTitle,messageTime} = this.state
+        const {messageTitle, messageSubTitle,messageTime,messageIcon} = this.state
         return (
             <View
                 style={styles.rowStyle}>
 
 
 
+
+
+
                 <View
                     style={styles.realRowStyle}>
+                    <Image
+                        source={messageIcon}
+                        style={[{
+                            resizeMode: "contain",
+                            width: 25,
+                            height:25,
+                            marginLeft: -12.5,
+                            alignSelf: 'center',
 
+                        }
+                        ]
+                        }
 
+                    />
 
                     <View
                         style={styles.titleViewStyle}>
 
 
-
+                        <Text
+                            textAlign='left'
+                            style={[{fontSize: 12,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{messageTitle}</Text>
 
                         <Text
-                            textAlign='center'
-                            style={[{fontSize: 12,marginTop: 15, marginLeft : 22.5}] }>{messageTitle}</Text>
-
-                        <Text
-                            textAlign='center'
-                            style={[{fontSize: 12,marginTop: 10, marginLeft : 22.5}] }>{messageSubTitle}</Text>
+                            textAlign='left'
+                            style={[{fontSize: 12,marginTop: 10, marginLeft :0 , color : '#969696'}] }>{messageSubTitle}</Text>
 
 
 
                     </View>
 
                     <Text
-                        textAlign='center'
-                        style={[{fontSize: 12,marginTop: 10, marginRight : 15}] }>{messageTime}</Text>
+                        textAlign='right'
+                        style={styles.timeTitleStyle}>{messageTime}</Text>
+
 
 
                 </View>
