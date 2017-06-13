@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import {Text} from "react-native";
+
 import {
     View
 } from 'react-native';
@@ -37,8 +38,10 @@ export default class SubViewTest extends Component{
                     titleItem = {() => SubViewTest.renderTitleItem()}
                 />
                 <CompanyInfoView companyName='CRM'
-                                             style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'green',alignSelf: 'flex-start'}}
-
+                                 ContactsName='野原新之助'
+                                 ContactsPhone='13256738495'
+                                 SalesName='销售员'
+                                 SalesPhone='11193834747'
                 />
 
             </View>
