@@ -34,7 +34,7 @@ const tabsMain = [{
 export function navToBootstrap({isReset = false} = {}) {
   Navigation.startSingleScreenApp({
     screen: {
-      screen: 'Main',
+      screen: 'main.LaunchPage',
     },
     passProps: {
       isReset,
@@ -61,25 +61,25 @@ export function navToMainTab() {
     Navigation.startTabBasedApp({
         tabs: tabsMain,
         tabsStyle: {
-            tabBarBackgroundColor: '#003a66',
-            navBarButtonColor: '#ffffff',
-            tabBarButtonColor: '#ffffff',
-            navBarTextColor: '#ffffff',
+            tabBarBackgroundColor: '#F5F5F5',
+            navBarButtonColor: '#c8c8c8',
+            tabBarButtonColor: '#c8c8c8',
+            navBarTextColor: '#c8c8c8',
             tabBarSelectedButtonColor: '#ff505c',
-            navigationBarColor: '#003a66',
-            navBarBackgroundColor: '#003a66',
-            statusBarColor: '#002b4c',
+            navigationBarColor: '#F5F5F5',
+            navBarBackgroundColor: '#F5F5F5',
+            statusBarColor: '#F5F5F5',
             tabFontFamily: 'BioRhyme-Bold',
         },
         appStyle: {
-            tabBarBackgroundColor: '#003a66',
+            tabBarBackgroundColor: '#F5F5F5',
             navBarButtonColor: '#ffffff',
             tabBarButtonColor: '#ffffff',
             navBarTextColor: '#ffffff',
             tabBarSelectedButtonColor: '#ff505c',
-            navigationBarColor: '#003a66',
-            navBarBackgroundColor: '#003a66',
-            statusBarColor: '#002b4c',
+            navigationBarColor: '#F5F5F5',
+            navBarBackgroundColor: '#F5F5F5',
+            statusBarColor: '#F5F5F5',
             tabFontFamily: 'BioRhyme-Bold',
         },
         animationType: 'fade',

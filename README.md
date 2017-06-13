@@ -164,6 +164,8 @@ Navigation.startTabBasedApp({
 
 navigator.replace/push等报错, 因为现在项目的写法都是直接传入组件, 而replace方法要改成用reset, push等则需要传入页面ID.
 
+更多例子参考: https://github.com/wix/react-native-navigation/tree/master/example
+
 
 
 # 全局遮罩组件的使用
