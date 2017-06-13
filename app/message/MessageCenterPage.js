@@ -133,7 +133,7 @@ export default class MessageCenterPage extends Component {
                 {/*</View>*/}
                     {/*onPress={() => {this.toMyOutSideWork()}}*/}
 
-                <MessageCell messageTitle ='我的外勤标题外勤标'
+                <MessageCell messageTitle ='我的消息标题外勤标'
                              messageSubTitle = 'sub标题'
                              messageTime = '17/06/02'
                              messageIcon = {require('../img/field.png')}
