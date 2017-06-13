@@ -30,11 +30,11 @@ const tabsMain = [{
     }
 ];
 
-// 转到初始化页面
+// 转到初始化页面 main.LaunchPage
 export function navToBootstrap({isReset = false} = {}) {
   Navigation.startSingleScreenApp({
     screen: {
-      screen: 'main.LaunchPage',
+      screen: 'Main',
     },
     passProps: {
       isReset,
