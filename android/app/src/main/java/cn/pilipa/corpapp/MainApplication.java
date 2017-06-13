@@ -1,9 +1,10 @@
 package cn.pilipa.corpapp;
 
 import android.app.Application;
+import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativenavigation.NavigationReactPackage;
+import com.reactnativenavigation.NavigationApplication;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -19,8 +20,12 @@ import java.util.List;
 
 public class MainApplication extends NavigationApplication {
 
-    @Nullable
     @Override
+    public boolean isDebug() {
+        return BuildConfig.DEBUG;
+    }
+
+    @Nullable
     public List<ReactPackage> createAdditionalReactPackages() {
               return Arrays.<ReactPackage>asList(
                   //new MainReactPackage(),

@@ -8,12 +8,15 @@ import LaunchPage from './main/GDLaunchPage';
 import MessageCenterPage from './message/MessageCenterPage';
 import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
+import SubViewTest from "./test/SubViewTest";
 
 export default function () {
-    Navigation.registerComponent('Main', () => Main);
-    Navigation.registerComponent('user.LoginPage', () => LoginPage);
-    Navigation.registerComponent('main.LaunchPage', () => LaunchPage);
-    Navigation.registerComponent('ApplicationCenterPage', () => ApplicationCenterPage);
-    Navigation.registerComponent('MessageCenterPage', () => MessageCenterPage);
-    Navigation.registerComponent('Mine', () => Mine);
+    let reg = Navigation.registerComponent;
+    reg('Main', () => Main);
+    reg('user.LoginPage', () => LoginPage);
+    reg('main.LaunchPage', () => LaunchPage);
+    reg('ApplicationCenterPage', () => ApplicationCenterPage);
+    reg('MessageCenterPage', () => MessageCenterPage);
+    reg('Mine', () => Mine);
+    reg('SubViewTest', () => SubViewTest);
 }

@@ -121,7 +121,9 @@ export default class MessageCenterPage extends Component {
     toMyOutSideWork(){
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
-                component: SubViewTest,
+                screen: 'SubViewTest',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });
         });
     }

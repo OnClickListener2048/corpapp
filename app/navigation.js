@@ -73,8 +73,8 @@ export function navToMainTab() {
         },
         appStyle: {
             tabBarBackgroundColor: '#F5F5F5',
-            navBarButtonColor: '#ffffff',
-            tabBarButtonColor: '#ffffff',
+            navBarButtonColor: '#c8c8c8',
+            tabBarButtonColor: '#c8c8c8',
             navBarTextColor: '#ffffff',
             tabBarSelectedButtonColor: '#ff505c',
             navigationBarColor: '#F5F5F5',

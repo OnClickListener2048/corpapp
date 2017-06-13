@@ -57,7 +57,7 @@
     [self.window makeKeyAndVisible];
     */
 
-  [SplashScreen show]; //show splash screen
+  // [SplashScreen show]; //show splash screen
   return YES;
 }
 
