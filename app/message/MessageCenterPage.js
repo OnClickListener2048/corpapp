@@ -64,6 +64,10 @@ export default class MessageCenterPage extends Component {
                 sectionHeaderHasChanged: (s1, s2) => s1 !== s2
             })
         }
+
+        this.props.navigator.setTabBadge({
+            badge: 88 // 数字气泡提示, 设置为null会删除
+        });
     }
 
 
