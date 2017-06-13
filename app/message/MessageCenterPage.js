@@ -2,7 +2,7 @@
  * Created by jinglan on 2017/6/9.
  */
 import React, {Component} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions,InteractionManager} from 'react-native';
 
 import {
     AppRegistry,
@@ -34,12 +34,10 @@ var stickyId = 3
 
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
-import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
+import SubViewTest from "../test/SubViewTest";
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
-
 const window = Dimensions.get('window');
-import Swiper from 'react-native-swiper'
 
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
@@ -113,6 +111,14 @@ export default class MessageCenterPage extends Component {
         });
     }
 
+    toMyOutSideWork(){
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                component: SubViewTest,
+            });
+        });
+    }
+
     static renderTitleItem() {
         return (
             <Text style={styles.navbarTitleItemStyle}>消息中心</Text>
@@ -121,11 +127,11 @@ export default class MessageCenterPage extends Component {
 
     _renderRow(rowData, sectionID, rowID) {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.toMyOutSideWork()}}>
                 {/*<View style={styles.rowStyle}>*/}
                     {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
                 {/*</View>*/}
-
+                    {/*onPress={() => {this.toMyOutSideWork()}}*/}
 
                 <MessageCell messageTitle ='我的外勤标题外勤标'
                              messageSubTitle = 'sub标题'
