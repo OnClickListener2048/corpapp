@@ -22,8 +22,6 @@ import Home from '../home/GDHome';
 import HT from '../ht/GDHt';
 import HourList from '../hourList/GDHourList';
 import '../http/HTTPBase';
-import RealmStorage from '../storage/realmStorage';
-import NavigationBar from './GDNavigationBar';
 
 export default class GD extends Component {
 

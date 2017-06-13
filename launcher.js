@@ -20,7 +20,7 @@ export default class CorpApp extends Component {
             <Navigator
                 initialRoute={{
                     name:'launchPage',
-                    component:LaunchPage
+                    component:LoginPage,
                 }}
 
                 renderScene={(route, navigator) => {

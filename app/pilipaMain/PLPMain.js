@@ -120,12 +120,6 @@ export default class PLP extends Component {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-    },
     tabbarIconStyle: {
         width:Platform.OS === 'ios' ? 30 : 25,
         height:Platform.OS === 'ios' ? 30 : 25,
