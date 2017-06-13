@@ -22,21 +22,17 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 const styles = StyleSheet.create({
   tab: {
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 15,
+    height:46,
     width: naviButtonWidth,
-    borderBottomWidth: 0,
-    borderTopWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 1,
-    borderRightColor: '#d2d2d2'
+
   },
   scrollContainer: {
-    paddingRight: 20
+    paddingRight: 20,
   },
   tabs: {
-    height:30,
-    marginTop:15,
+    height:46,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
@@ -48,11 +44,12 @@ const styles = StyleSheet.create({
   },
 
   badgeBubble: {
-    marginTop: 0,
-    marginLeft: 0,
-    height: 12,
-    width: 20,
-    borderRadius: 4.5,
+    position: 'absolute',
+    marginTop: 6,
+    marginLeft: 85,
+    width: 15,
+      height:15,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -75,6 +72,7 @@ class TabBar extends Component {
     backgroundColor: PropTypes.string,
     activeTextColor: PropTypes.string,
     inactiveTextColor: PropTypes.string,
+    tabBarTextStyle:PropTypes.object,
     scrollContainerStyle: PropTypes.object,
     tabStyles: PropTypes.object
   };
@@ -136,24 +134,34 @@ class TabBar extends Component {
 
   renderTab = (tab, page) => {
     const {activeTab, tabBadgeColor} = this.props;
-    const {label, badge, badgeColor} = tab;
+    const {label, badge, badgeColor,theLast} = tab;
     const isTabActive = activeTab === page;
     const activeTextColor = this.props.activeTextColor || "navy";
     const inactiveTextColor = this.props.inactiveTextColor || "black";
     const textStyle = this.props.tabBarTextStyle || {};
     return (
+        <View>
         <TouchableOpacity style={[styles.tab, this.props.tabStyles.tab]}
                           key={page}
                           onPress={() => this.props.goToPage(page)}
                           onLayout={(event) => this.onTabLayout(event, page)}>
+          <View style={{borderRightWidth:theLast,
+              borderBottomWidth: 0,
+              borderTopWidth: 0,
+              borderLeftWidth: 0,
+              borderRightColor: '#d2d2d2',
+          paddingRight:33,
+          paddingLeft:33}}>
            <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
+          </View>
+        </TouchableOpacity>
             {badge != null && badge > 0 &&
             <View style={[styles.badgeBubble,
-                          this.props.tabStyles.badgeBubble,
-                          {backgroundColor: badgeColor || activeTextColor}]}>
+                this.props.tabStyles.badgeBubble,
+                {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
               <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>{badge || 0}</Text>
             </View>}
-        </TouchableOpacity>
+        </View>
     );
   }
 

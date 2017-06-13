@@ -87,16 +87,18 @@ export default class MyOutSideWorkPage extends Component{
                 <ScrollableTabView
                     tabBarUnderlineColor="#FF0000"
                     tabBarActiveTextColor="#FF0000"
-                    renderTabBar={() => <TabBar underlineColor={'#FF0000'}/>}
+                    renderTabBar={() => <TabBar underlineColor={'#FF0000'}
+
+                                                tabBarTextStyle={{fontSize:18}}/>}
                 >
                     {/*
                      We have to use tabLabel to pass tab options to TabBar component,
                      because ScrollableTabView passing only this prop to tabs.
                      */}
-                    <Page tabLabel={{label: "待处理", badge: 2}}
+                    <Page tabLabel={{label: "待处理", badge: 2,theLast:1}}
                           label="Page #1"/>
-                    <Page tabLabel={{label: "进行中", badge: 700}} label="Page #2 aka Long!"/>
-                    <Page tabLabel={{label: "已完成", badge: 0}} label="Page #3"/>
+                    <Page tabLabel={{label: "进行中", badge: 700,theLast:1}} label="Page #2 aka Long!"/>
+                    <Page tabLabel={{label: "已完成", badge: 0,theLast:0}} label="Page #3"/>
                 </ScrollableTabView>
             </View>
         );
