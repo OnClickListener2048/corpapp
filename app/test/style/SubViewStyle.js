@@ -13,6 +13,32 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#FAFAFA',
         flexDirection: 'column'
-    }
+    },
+    companyInfoViewContainer: {
+        width: SCREEN_WIDTH,
+        height:90,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'column'
+        // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
+    },
+
+    companyInfoRowStyle: {
+        marginLeft : 15,
+        marginRight : 15,
+        width: SCREEN_WIDTH - 30,
+        // flex: 1,
+        height: 30,
+        flexDirection: 'row',
+        justifyContent:'space-between'
+    },
+    companyInfoRowSubViewStyle: {
+        maxWidth: SCREEN_WIDTH/2 - 15,
+        width: SCREEN_WIDTH/2 - 15,
+        height: 30,
+        marginLeft : 0,
+        marginRight : 0,
+        flexDirection: 'row',
+    },
+
 });
 export default styles;
