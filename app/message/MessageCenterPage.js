@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Dimensions,InteractionManager} from 'react-native';
-
+import JPushModule from 'jpush-react-native';
 import {
     AppRegistry,
     StyleSheet,
@@ -15,6 +15,7 @@ import {
     ActivityIndicatorIOS,
     AlertIOS,
 } from 'react-native';
+import Toast from 'react-native-root-toast';
 
 var data = (function(){
     var _arr = [];
@@ -107,7 +108,23 @@ export default class MessageCenterPage extends Component {
         }
     }
 
+    componentDidMount() {
+        Toast.show('componentDidMount ');
+        JPushModule.notifyJSDidLoad();
 
+        JPushModule.addReceiveCustomMsgListener((message) => {
+            this.setState({pushMsg: message});
+        });
+        JPushModule.addReceiveNotificationListener((message) => {
+            console.log("receive notification: " + JSON.stringify(message));
+            Toast.show('receive notification: ' +   JSON.stringify(message));
+        })
+    }
+
+    componentWillUnmount() {
+        JPushModule.removeReceiveCustomMsgListener();
+        JPushModule.removeReceiveNotificationListener();
+    }
 
     componentWillMount(){
         var res = this.listViewHandleData(data);

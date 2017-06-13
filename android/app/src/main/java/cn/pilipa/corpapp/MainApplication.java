@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import com.facebook.react.ReactApplication;
 import com.reactnativenavigation.NavigationApplication;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
+
+import cn.jpush.reactnativejpush.JPushPackage;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.cboy.rn.splashscreen.SplashScreenReactPackage;
@@ -19,6 +21,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainApplication extends NavigationApplication {
+    // 设置为 true 将不弹出 toast
+    private boolean SHUTDOWN_TOAST = false;
+    // 设置为 true 将不打印 log
+    private boolean SHUTDOWN_LOG = false;
 
     @Override
     public boolean isDebug() {
@@ -34,7 +40,8 @@ public class MainApplication extends NavigationApplication {
                     new RealmReactPackage(),
                     new VectorIconsPackage(),
                     new SplashScreenReactPackage(),
-                    new BlurViewPackage()
+                    new BlurViewPackage(),
+                      new JPushPackage(false, false)
               );
     }
 

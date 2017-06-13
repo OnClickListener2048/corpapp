@@ -53,6 +53,17 @@
 		F29D7CC2925A4496B1913BCB /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 640B128369894EABBAC72FB3 /* libRNVectorIcons.a */; };
 		F8CB077A3BC241A7AEA78783 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5BA19F05DDC94B27BF014480 /* libRNDeviceInfo.a */; };
 		711112B4FCA941C0850C8841 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3285B430641E4A70B33ECBF4 /* libReactNativeNavigation.a */; };
+		78939F4C359E4C0B8AF15107 /* libRCTJPushModule.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F5B65A9E8AA44BEAC6307E9 /* libRCTJPushModule.a */; };
+		CC61DBB250EB4D718226FC4E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C76485BF86C4964BE08A4EA /* UserNotifications.framework */; };
+		8BE7B07F46754585BEC43177 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 712127CBAFE4408085C55623 /* CoreTelephony.framework */; };
+		7DD478755F7F4300A262AE34 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9F55FAB37B44CBD958D6AB0 /* Security.framework */; };
+		F58728AF178E429ABB0DFB57 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4205A0316540A091B34D3E /* CFNetwork.framework */; };
+		7994E563EC8C4389BE5110A8 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B00F1384571448A8ECC6C2D /* CoreFoundation.framework */; };
+		64CB239B6EA94162AD450575 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00B1389467445BEBA946DA2 /* SystemConfiguration.framework */; };
+		074A3990333B4F9D9E7C0402 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AB1357852B84332BF5ABF55 /* Foundation.framework */; };
+		0BF6693DA4C040DAA2A556E7 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6364FBBB08214B63984EEAA1 /* UIKit.framework */; };
+		781B4849C07149BFAC0EFE59 /* libresolv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 445F39BCF10344A3B0B679B4 /* libresolv.tbd */; };
+		35BFB7DB03514790937103A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80FA943F36647FB91972A89 /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -331,6 +342,18 @@
 		F4407C51114F494BB58A32E0 /* SplashScreen.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = SplashScreen.xcodeproj; path = "../node_modules/react-native-splash-screen/ios/SplashScreen.xcodeproj"; sourceTree = "<group>"; };
 		EFB551CEB7F94865B4EF767B /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; name = "ReactNativeNavigation.xcodeproj"; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		3285B430641E4A70B33ECBF4 /* libReactNativeNavigation.a */ = {isa = PBXFileReference; name = "libReactNativeNavigation.a"; path = "libReactNativeNavigation.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		FE682726094E43ACAD36A1B6 /* RCTJPushModule.xcodeproj */ = {isa = PBXFileReference; name = "RCTJPushModule.xcodeproj"; path = "../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		9F5B65A9E8AA44BEAC6307E9 /* libRCTJPushModule.a */ = {isa = PBXFileReference; name = "libRCTJPushModule.a"; path = "libRCTJPushModule.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		5C76485BF86C4964BE08A4EA /* UserNotifications.framework */ = {isa = PBXFileReference; name = "UserNotifications.framework"; path = "System/Library/Frameworks/UserNotifications.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		712127CBAFE4408085C55623 /* CoreTelephony.framework */ = {isa = PBXFileReference; name = "CoreTelephony.framework"; path = "System/Library/Frameworks/CoreTelephony.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		C9F55FAB37B44CBD958D6AB0 /* Security.framework */ = {isa = PBXFileReference; name = "Security.framework"; path = "System/Library/Frameworks/Security.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		BC4205A0316540A091B34D3E /* CFNetwork.framework */ = {isa = PBXFileReference; name = "CFNetwork.framework"; path = "System/Library/Frameworks/CFNetwork.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		6B00F1384571448A8ECC6C2D /* CoreFoundation.framework */ = {isa = PBXFileReference; name = "CoreFoundation.framework"; path = "System/Library/Frameworks/CoreFoundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		F00B1389467445BEBA946DA2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; name = "SystemConfiguration.framework"; path = "System/Library/Frameworks/SystemConfiguration.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		1AB1357852B84332BF5ABF55 /* Foundation.framework */ = {isa = PBXFileReference; name = "Foundation.framework"; path = "System/Library/Frameworks/Foundation.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		6364FBBB08214B63984EEAA1 /* UIKit.framework */ = {isa = PBXFileReference; name = "UIKit.framework"; path = "System/Library/Frameworks/UIKit.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
+		445F39BCF10344A3B0B679B4 /* libresolv.tbd */ = {isa = PBXFileReference; name = "libresolv.tbd"; path = "usr/lib/libresolv.tbd"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = sourcecode.text-based-dylib-definition; explicitFileType = undefined; includeInIndex = 0; };
+		B80FA943F36647FB91972A89 /* CoreGraphics.framework */ = {isa = PBXFileReference; name = "CoreGraphics.framework"; path = "System/Library/Frameworks/CoreGraphics.framework"; sourceTree = SDKROOT; fileEncoding = undefined; lastKnownFileType = wrapper.framework; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +388,17 @@
 				B3FA13E95A5646C39C757110 /* libz.tbd in Frameworks */,
 				F8CB077A3BC241A7AEA78783 /* libRNDeviceInfo.a in Frameworks */,
 				711112B4FCA941C0850C8841 /* libReactNativeNavigation.a in Frameworks */,
+				78939F4C359E4C0B8AF15107 /* libRCTJPushModule.a in Frameworks */,
+				CC61DBB250EB4D718226FC4E /* UserNotifications.framework in Frameworks */,
+				8BE7B07F46754585BEC43177 /* CoreTelephony.framework in Frameworks */,
+				7DD478755F7F4300A262AE34 /* Security.framework in Frameworks */,
+				F58728AF178E429ABB0DFB57 /* CFNetwork.framework in Frameworks */,
+				7994E563EC8C4389BE5110A8 /* CoreFoundation.framework in Frameworks */,
+				64CB239B6EA94162AD450575 /* SystemConfiguration.framework in Frameworks */,
+				074A3990333B4F9D9E7C0402 /* Foundation.framework in Frameworks */,
+				0BF6693DA4C040DAA2A556E7 /* UIKit.framework in Frameworks */,
+				781B4849C07149BFAC0EFE59 /* libresolv.tbd in Frameworks */,
+				35BFB7DB03514790937103A0 /* CoreGraphics.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -537,6 +571,7 @@
 				9CB2E2DC110644D98AC07E3E /* RealmReact.xcodeproj */,
 				3E93F6B273514AAAAA80D9F5 /* RNDeviceInfo.xcodeproj */,
 				EFB551CEB7F94865B4EF767B /* ReactNativeNavigation.xcodeproj */,
+				FE682726094E43ACAD36A1B6 /* RCTJPushModule.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -580,6 +615,16 @@
 			children = (
 				1F41427D626C48109F82DDCD /* libc++.tbd */,
 				C3AB272067FB42379DF185B7 /* libz.tbd */,
+				5C76485BF86C4964BE08A4EA /* UserNotifications.framework */,
+				712127CBAFE4408085C55623 /* CoreTelephony.framework */,
+				C9F55FAB37B44CBD958D6AB0 /* Security.framework */,
+				BC4205A0316540A091B34D3E /* CFNetwork.framework */,
+				6B00F1384571448A8ECC6C2D /* CoreFoundation.framework */,
+				F00B1389467445BEBA946DA2 /* SystemConfiguration.framework */,
+				1AB1357852B84332BF5ABF55 /* Foundation.framework */,
+				6364FBBB08214B63984EEAA1 /* UIKit.framework */,
+				445F39BCF10344A3B0B679B4 /* libresolv.tbd */,
+				B80FA943F36647FB91972A89 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1198,12 +1243,14 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = corpappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1234,12 +1281,14 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = corpappTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1272,6 +1321,7 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = corpapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1301,6 +1351,7 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = corpapp/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1335,11 +1386,13 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "corpapp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1379,11 +1432,13 @@
 					"$(SRCROOT)/../node_modules/realm/src/**",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 					"$(SRCROOT)/../node_modules/react-native-navigation/ios/**",
+					"$(SRCROOT)/../node_modules/jpush-react-native/ios/RCTJPushModule/RCTJPushModule",
 				);
 				INFOPLIST_FILE = "corpapp-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -1424,6 +1479,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.corpapp-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1448,6 +1504,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
