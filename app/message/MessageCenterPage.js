@@ -34,7 +34,6 @@ var stickyId = 3
 
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
-import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 
@@ -122,10 +121,6 @@ export default class MessageCenterPage extends Component {
     _renderRow(rowData, sectionID, rowID) {
         return (
             <TouchableOpacity>
-                {/*<View style={styles.rowStyle}>*/}
-                    {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
-                {/*</View>*/}
-
 
                 <MessageCell messageTitle ='我的外勤'
                              messageSubTitle = 'sub标题'
