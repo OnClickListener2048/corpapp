@@ -2,7 +2,7 @@
  * Created by jinglan on 2017/6/9.
  */
 import React, {Component} from 'react';
-import {Dimensions,InteractionManager} from 'react-native';
+import {Dimensions, InteractionManager} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import {
     AppRegistry,
@@ -16,15 +16,21 @@ import {
     AlertIOS,
 } from 'react-native';
 import Toast from 'react-native-root-toast';
+import CommunalNavBar from '../main/GDCommunalNavBar';
 
-var data = (function(){
+import SubViewTest from "../test/SubViewTest";
+import styles from './css/MessageCenterStyle'
+import MessageCell from './view/MessageCenterCell'
+import Platform from "react-native";
+
+var data = (function () {
     var _arr = [];
-    for(var i = 0;i <= 10; i++){
+    for (var i = 0; i <= 10; i++) {
         _arr.push({
-            "userId" : i,
-            "user" : "hugo hua",
-            "blog" : "http://www.ghugo.com",
-            "github" : "https://github.com/hugohua"
+            "userId": i,
+            "user": "hugo hua",
+            "blog": "http://www.ghugo.com",
+            "github": "https://github.com/hugohua"
         })
     }
     return _arr;
@@ -33,11 +39,7 @@ var data = (function(){
 var stickyId = 3
 
 
-import CommunalNavBar from '../main/GDCommunalNavBar';
 
-import SubViewTest from "../test/SubViewTest";
-import styles from './css/MessageCenterStyle'
-import MessageCell from './view/MessageCenterCell'
 const window = Dimensions.get('window');
 
 export const SCREEN_WIDTH = window.width;
@@ -45,11 +47,11 @@ export default class MessageCenterPage extends Component {
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
     };
-    dataBlob : {}
-    sectionIDs : []
-    rowIDs : []
+    dataBlob: {}
+    sectionIDs: []
+    rowIDs: []
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
 
@@ -72,53 +74,60 @@ export default class MessageCenterPage extends Component {
     }
 
 
-    listViewHandleData(result){
+    listViewHandleData(result) {
         var me = this,
             dataBlob = {},
-            sectionIDs = ['s0','s1'],
-            rowIDs = [[],[]],
+            sectionIDs = ['s0', 's1'],
+            rowIDs = [[], []],
             key,
             //result = Util.sortResource(data),        //重新排序
             length = result.length,
             splitIdx;
 
         //将数据分隔成两段
-        for(var i = 0;i < length; i++){
+        for (var i = 0; i < length; i++) {
             key = result[i]['userId'];
-            if(key === stickyId){
+            if (key === stickyId) {
                 dataBlob['s1'] = result[i];
                 splitIdx = true;
-            }else{
-                if(splitIdx){
+            } else {
+                if (splitIdx) {
                     dataBlob['s1:' + key] = result[i];
                     rowIDs[1].push(key);
-                }else{
+                } else {
                     dataBlob['s0:' + key] = result[i];
                     rowIDs[0].push(key);
                 }
 
             }
         }
-        console.log(dataBlob,sectionIDs,rowIDs);
+        console.log(dataBlob, sectionIDs, rowIDs);
 
         return {
-            dataBlob : dataBlob,
-            sectionIDs : sectionIDs,
-            rowIDs : rowIDs
+            dataBlob: dataBlob,
+            sectionIDs: sectionIDs,
+            rowIDs: rowIDs
         }
     }
 
     componentDidMount() {
         Toast.show('componentDidMount ');
-        JPushModule.notifyJSDidLoad();
 
-        JPushModule.addReceiveCustomMsgListener((message) => {
-            this.setState({pushMsg: message});
-        });
-        JPushModule.addReceiveNotificationListener((message) => {
-            console.log("receive notification: " + JSON.stringify(message));
-            Toast.show('receive notification: ' +   JSON.stringify(message));
-        })
+        try {
+            if (Platform.OS === 'android') {
+                JPushModule.notifyJSDidLoad();
+
+                JPushModule.addReceiveCustomMsgListener((message) => {
+                    this.setState({pushMsg: message});
+                });
+                JPushModule.addReceiveNotificationListener((message) => {
+                    console.log("receive notification: " + JSON.stringify(message));
+                    Toast.show('receive notification: ' + JSON.stringify(message));
+                })
+            }
+        } catch (e) {
+            Toast.show('JPush error: ' + e.message);
+        }
     }
 
     componentWillUnmount() {
@@ -126,16 +135,16 @@ export default class MessageCenterPage extends Component {
         JPushModule.removeReceiveNotificationListener();
     }
 
-    componentWillMount(){
+    componentWillMount() {
         var res = this.listViewHandleData(data);
         console.log(res)
         this.setState({
-            dataSource: this.state.dataSource.cloneWithRowsAndSections(res.dataBlob,res.sectionIDs,res.rowIDs),
+            dataSource: this.state.dataSource.cloneWithRowsAndSections(res.dataBlob, res.sectionIDs, res.rowIDs),
             loaded: true
         });
     }
 
-    toMyOutSideWork(){
+    toMyOutSideWork() {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'SubViewTest',
@@ -153,16 +162,18 @@ export default class MessageCenterPage extends Component {
 
     _renderRow(rowData, sectionID, rowID) {
         return (
-            <TouchableOpacity onPress={() => {this.toMyOutSideWork()}}>
+            <TouchableOpacity onPress={() => {
+                this.toMyOutSideWork()
+            }}>
                 {/*<View style={styles.rowStyle}>*/}
-                    {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
+                {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
                 {/*</View>*/}
-                    {/*onPress={() => {this.toMyOutSideWork()}}*/}
+                {/*onPress={() => {this.toMyOutSideWork()}}*/}
 
-                <MessageCell messageTitle ='我的消息标题外勤标'
-                             messageSubTitle = 'sub标题'
-                             messageTime = '17/06/02'
-                             messageIcon = {require('../img/field.png')}
+                <MessageCell messageTitle='我的外勤标题外勤标'
+                             messageSubTitle='sub标题'
+                             messageTime='17/06/02'
+                             messageIcon={require('../img/field.png')}
                 />
 
 

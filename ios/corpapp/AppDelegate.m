@@ -28,6 +28,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  /** 极光推送, 暂时没有证书, 忽略.
     if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
  #ifdef NSFoundationVersionNumber_iOS_9_x_Max
     JPUSHRegisterEntity * entity = [[JPUSHRegisterEntity alloc] init];
@@ -49,6 +50,8 @@
   
   [JPUSHService setupWithOption:launchOptions appKey:@"e8f5ec679b9976aa36858ebb"
                         channel:nil apsForProduction:nil];
+   */
+  
 /*
   NSURL *jsCodeLocation;
 
@@ -60,7 +63,8 @@
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 #else
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
-
+#endif
+  
    // **********************************************
     // *** DON'T MISS: 启动App的方式发生了改变! *****
     // **********************************************
