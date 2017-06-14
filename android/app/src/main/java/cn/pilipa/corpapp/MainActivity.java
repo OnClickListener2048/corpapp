@@ -1,23 +1,18 @@
 package cn.pilipa.corpapp;
 
 import android.os.Bundle;
-import com.facebook.react.ReactActivity;
-import com.cboy.rn.splashscreen.SplashScreen;
+import android.support.annotation.LayoutRes;
 
-public class MainActivity extends ReactActivity {
+import com.reactnativenavigation.controllers.SplashActivity;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this,true);
-        super.onCreate(savedInstanceState);
-    }
+// 闪屏界面: R.layout.launch_screen
+public class MainActivity extends SplashActivity {
 
     /**
-     * Returns the name of the main component registered from JavaScript.
-     * This is used to schedule rendering of the component.
+     * @return xml layout res id
      */
-    @Override
-    protected String getMainComponentName() {
-        return "corpapp";
+    @LayoutRes
+    public int getSplashLayout() {
+        return R.layout.launch_screen;
     }
 }

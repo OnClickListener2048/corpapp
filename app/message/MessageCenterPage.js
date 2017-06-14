@@ -2,7 +2,7 @@
  * Created by jinglan on 2017/6/9.
  */
 import React, {Component} from 'react';
-import {Dimensions} from 'react-native';
+import {Dimensions,InteractionManager} from 'react-native';
 
 import {
     AppRegistry,
@@ -34,14 +34,16 @@ var stickyId = 3
 
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
+import SubViewTest from "../test/SubViewTest";
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
-
 const window = Dimensions.get('window');
-import Swiper from 'react-native-swiper'
 
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
     dataBlob : {}
     sectionIDs : []
     rowIDs : []
@@ -62,6 +64,10 @@ export default class MessageCenterPage extends Component {
                 sectionHeaderHasChanged: (s1, s2) => s1 !== s2
             })
         }
+
+        this.props.navigator.setTabBadge({
+            badge: 88 // 数字气泡提示, 设置为null会删除
+        });
     }
 
 
@@ -112,6 +118,16 @@ export default class MessageCenterPage extends Component {
         });
     }
 
+    toMyOutSideWork(){
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                screen: 'SubViewTest',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            });
+        });
+    }
+
     static renderTitleItem() {
         return (
             <Text style={styles.navbarTitleItemStyle}>消息中心</Text>
@@ -120,12 +136,16 @@ export default class MessageCenterPage extends Component {
 
     _renderRow(rowData, sectionID, rowID) {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.toMyOutSideWork()}}>
+                {/*<View style={styles.rowStyle}>*/}
+                    {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
+                {/*</View>*/}
+                    {/*onPress={() => {this.toMyOutSideWork()}}*/}
 
-                <MessageCell messageTitle ='我的外勤'
+                <MessageCell messageTitle ='我的消息标题外勤标'
                              messageSubTitle = 'sub标题'
-                              // messageTime = '11月11日'
-
+                             messageTime = '17/06/02'
+                             messageIcon = {require('../img/field.png')}
                 />
 
 

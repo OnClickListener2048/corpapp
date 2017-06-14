@@ -1,5 +1,5 @@
 /**
- * Created by yeshaojian on 2017/3/25.
+ * 启动初始化页面
  */
 import React, { Component } from 'react';
 import {
@@ -15,8 +15,14 @@ import Main from '../pilipaMain/PLPMain';
 import '../storage/UserInfoStore';
 import * as apis from '../apis';
 import Toast from 'react-native-root-toast';
+import {navToLogin, navToMainTab} from '../navigation';
 
 export default class GDLaunchPage extends Component {
+
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+        tabBarHidden: false, // 默认隐藏底部标签栏
+    };
 
     // 组件加载完成
     componentDidMount() {
@@ -28,6 +34,11 @@ export default class GDLaunchPage extends Component {
         //     });
         // }, 2000)
 
+        // this.props.navigator.toggleNavBar({
+        //     to: 'hidden',
+        //     animated: false,
+        // });
+
         UserInfoStore.getUserToken()
             .then((value) => {
                 UserInfoStore.token = value;
@@ -35,9 +46,7 @@ export default class GDLaunchPage extends Component {
                 if(value !== null) {
                     this.readUserInfo();
                 } else {
-                    this.props.navigator.replace({
-                        component:LoginPage
-                    });
+                    navToLogin();
                 }
             });
     }
@@ -52,30 +61,24 @@ export default class GDLaunchPage extends Component {
                 if(responseData !== null && responseData.data !== null) {
                     UserInfoStore.setUserInfo(responseData.data);
                     console.log("OK ===> Main:" );
-                    this.props.navigator.replace({
-                        component:Main
-                    });
+                    navToMainTab();
                 } else {
                     console.log("OK ===> LoginPage:" );
-                    this.props.navigator.replace({
-                        component:LoginPage
-                    });
+                    navToLogin();
                 }
             },
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("用户信息读取错误返回:" , e);
                 Toast.show('用户信息读取错误返回' + e.msg);
-                this.props.navigator.replace({
-                    component:LoginPage
-                });
+                navToLogin();
             },
         );
     }
 
     render() {
         return(
-            // 启动页
+            // 启动页背景图
             <Image source={require('../img/bg.png')} style={styles.imageStyle} />
         );
     }
