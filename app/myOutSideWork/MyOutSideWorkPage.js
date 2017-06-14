@@ -13,24 +13,25 @@ let naviButtonHeight = width * 0.75;   // 导航条每个高度
 const dismissKeyboard = require('dismissKeyboard');
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
-import CommunalNavBar from '../main/GDCommunalNavBar';
 
 const Page = ({label}) => (
     <View style={styles.container}>
+        <Image style={styles.noMessageImg}
+               source = {require('../img/no_message.png')}/>
         <Text style={styles.welcome}>
             {label}
         </Text>
-        <Text style={styles.instructions}>
-            To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-            Press Cmd+R to reload,{'\n'}
-            Cmd+D or shake for dev menu
-        </Text>
+
+
     </View>
 );
 
 export default class MyOutSideWorkPage extends Component{
+
+    static navigatorStyle = {
+        navBarHidden: false, // 隐藏默认的顶部导航栏
+        tabBarHidden: true, // 默认隐藏底部标签栏
+    };
 
     render(){
         return(
@@ -38,7 +39,7 @@ export default class MyOutSideWorkPage extends Component{
 
 
             <View style={{height:height,width:width}}>
-
+                {this.navigatorStyle}
                 <ScrollableTabView
                     tabBarUnderlineColor="#FF0000"
                     tabBarActiveTextColor="#FF0000"
@@ -51,9 +52,9 @@ export default class MyOutSideWorkPage extends Component{
                      because ScrollableTabView passing only this prop to tabs.
                      */}
                     <Page tabLabel={{label: "待处理", badge: 2,theLast:1}}
-                          label="Page #1"/>
-                    <Page tabLabel={{label: "进行中", badge: 700,theLast:1}} label="Page #2 aka Long!"/>
-                    <Page tabLabel={{label: "已完成", badge: 0,theLast:0}} label="Page #3"/>
+                          label="暂无消息"/>
+                    <Page tabLabel={{label: "进行中", badge: 700,theLast:1}} label="暂无消息!"/>
+                    <Page tabLabel={{label: "已完成", badge: 0,theLast:0}} label="暂无消息3"/>
                 </ScrollableTabView>
             </View>
         );
@@ -73,13 +74,16 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        justifyContent: 'center',
+        backgroundColor: '#FAFAFA',
+        flexDirection: 'column',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
     },
     welcome: {
-        fontSize: 20,
-        textAlign: 'center',
-        margin: 10,
+        fontSize: 18,
+        marginTop:20,
+        color:'#969696',
     },
+    noMessageImg:{
+        marginTop:160,
+    }
 });

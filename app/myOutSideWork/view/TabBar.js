@@ -140,28 +140,28 @@ class TabBar extends Component {
     const inactiveTextColor = this.props.inactiveTextColor || "black";
     const textStyle = this.props.tabBarTextStyle || {};
     return (
-        <View>
-        <TouchableOpacity style={[styles.tab, this.props.tabStyles.tab]}
-                          key={page}
+        <TouchableOpacity key={page}
                           onPress={() => this.props.goToPage(page)}
                           onLayout={(event) => this.onTabLayout(event, page)}>
-          <View style={{borderRightWidth:theLast,
-              borderBottomWidth: 0,
-              borderTopWidth: 0,
-              borderLeftWidth: 0,
-              borderRightColor: '#d2d2d2',
-          paddingRight:33,
-          paddingLeft:33}}>
-           <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
-          </View>
-        </TouchableOpacity>
+          <View style={[styles.tab, this.props.tabStyles.tab]}>
+            <View style={{borderRightWidth:theLast,
+                borderBottomWidth: 0,
+                borderTopWidth: 0,
+                borderLeftWidth: 0,
+                borderRightColor: '#d2d2d2',
+                paddingRight:33,
+                paddingLeft:33}}>
+              <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
+            </View>
+            </View>
             {badge != null && badge > 0 &&
             <View style={[styles.badgeBubble,
                 this.props.tabStyles.badgeBubble,
                 {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
               <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>{badge || 0}</Text>
             </View>}
-        </View>
+        </TouchableOpacity>
+
     );
   }
 
