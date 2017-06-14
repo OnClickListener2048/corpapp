@@ -35,7 +35,6 @@ import HalfHourHot from './GDHalfHourHot';
 import Search from '../main/GDSearch';
 import NoDataView from '../main/GDNoDataView';
 import LoginPage from '../user/LoginPage';
-// import MinePage from "../mine/MinePage";
 // 首页标签页
 export default class GDHome extends Component {
 
@@ -228,11 +227,11 @@ export default class GDHome extends Component {
 
     // 跳转到搜索
     pushToSearch() {
-        // InteractionManager.runAfterInteractions(() => {
-        //     this.props.navigator.push({
-        //         component: MinePage,
-        //     });
-        // });
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                component: Search,
+            });
+        });
     }
 
     // 跳转到登录页面
