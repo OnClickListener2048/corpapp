@@ -19,17 +19,113 @@ export const SCREEN_WIDTH = window.width;
 
 
 class RegisterCompanyCell extends Component{
+
+
+    constructor(props) {
+        super(props);
+        this.tabState = {};
+        this.state = {
+
+        };
+    }
+
+    static propTypes = {
+        isFirst: PropTypes.bool,
+        isLast: PropTypes.bool,
+    };
+
+
+    _leftTipViewNormalBottomLine(){
+        if(this.props.isLast){
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'white'}]}></View>
+
+        }else {
+
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'#e6e6e6'}]}></View>
+
+        }
+
+    }
+
+    _leftTipViewNormalTopLine(){
+        if(this.props.isFirst){
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'white'}]}></View>
+
+        }else {
+
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'#e6e6e6'}]}></View>
+
+        }
+
+    }
+
+    _leftTipViewHighBottomLine(){
+        if(this.props.isLast){
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'white'}]}></View>
+
+        }else {
+
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'#E5151d'}]}></View>
+
+        }
+
+    }
+
+    _leftTipViewHighTopLine(){
+        if(this.props.isFirst){
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'white'}]}></View>
+
+        }else {
+
+            return  <View style={[{width : 1 ,flex: 1,backgroundColor:'#E5151d'}]}></View>
+
+        }
+
+    }
+
+    _leftTipView() {
+
+        if (this.props.detail.processState == '进行中') {
+
+            return  <View style={[{width: 10, alignItems:'center'}]}>
+
+                {this._leftTipViewHighTopLine()}
+                       <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#E5151d'}]}></View>
+                {this._leftTipViewHighBottomLine()}
+                    </View>;
+        }else {
+            return   <View style={[{width: 10, alignItems:'center'}]}>
+
+                {this._leftTipViewNormalTopLine()}
+
+                <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#e6e6e6'}]}>
+
+                         </View>
+                        {this._leftTipViewNormalBottomLine()}
+
+                     </View>;
+
+
+        }
+
+
+    }
+
+
+
+
     render(){
+        const {isFirst, isLast} = this.state
+
         return(
+
             <View style={{backgroundColor:'#F8F8F8'}}>
                 {/*<TouchableOpacity activeOpacity={0.8} onPress={()=>this.onClick()}>*/}
                     <View style={styles.container}>
-                        {/*<View style={styles.left}>*/}
-                            {/*<Image style={styles.icon} source={this.props.detail.icon} />*/}
-                        {/*</View>*/}
 
                         <View style={styles.left}>
-                            <Text style={{fontSize:15,color:'#323232'}}>{this.props.detail.processName}</Text>
+                            {this._leftTipView()}
+                            <Text style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.processName}</Text>
 
                         </View>
 
@@ -39,10 +135,10 @@ class RegisterCompanyCell extends Component{
                         </View>
 
                         <View style={styles.right}>
-                            <Image style={{height:22,width:22,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
+                            <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
 
                             <Text textAlign='right'
-                                  style={{fontSize:15,color:'#323232',marginRight:4}}>{this.props.detail.processState}</Text>
+                                  style={{fontSize:15,color:'#323232',marginRight:10}}>{this.props.detail.processState}</Text>
 
                         </View>
                     </View>
@@ -69,7 +165,7 @@ class RegisterCompanyCell extends Component{
 
 var styles = StyleSheet.create({
     container:{
-        height:60,
+        height:50,
         backgroundColor:'#FFFFFF',
         flexDirection:'row'
     },
@@ -94,7 +190,7 @@ var styles = StyleSheet.create({
         flex:4,
         marginLeft:15,
 
-        justifyContent:'center',
+        flexDirection:'row',
         alignItems:'center'
     },
     center:{

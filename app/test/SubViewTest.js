@@ -1,12 +1,13 @@
 /**
  * Created by jinglan on 2017/6/12.
  */
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 
 import {
     Text,
     View,
-    ScrollView
+    ScrollView,
+    Dimensions
 } from 'react-native';
 
 import styles from './style/SubViewStyle'
@@ -54,8 +55,9 @@ export default class SubViewTest extends Component{
     constructor(props) {
         super(props);
 
-        this.state = {
 
+        this.state = {
+            renderUnderline: true,
         };
 
     }
@@ -66,10 +68,18 @@ export default class SubViewTest extends Component{
         );
     }
     renderExpenseItem(item , i) {
-        return <RegisterCompanyCell key={i} detail={item}/>;
+        return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
     }
 
+    renderTest() {
 
+        return  <CompanyInfoView companyName='CRM'
+                                 ContactsName='野原新之助'
+                                 ContactsPhone='13256738495'
+                                 SalesName='销售员'
+                                 SalesPhone='13522805747'
+        />
+    }
     render() {
         return(
             <View style={styles.container}>
@@ -80,25 +90,22 @@ export default class SubViewTest extends Component{
 
 
 
+                <ScrollView style={styles.container}>
 
+                    {/**/}
+{/*{ <CompanyInfoView companyName='CRM'*/}
+                   {/*ContactsName='野原新之助'*/}
+                   {/*ContactsPhone='13256738495'*/}
+                   {/*SalesName='销售员'*/}
+                   {/*SalesPhone='11193834747'*/}
+{/*/>}*/}
 
-                <CompanyInfoView companyName='CRM'
-                ContactsName='野原新之助'
-                ContactsPhone='13256738495'
-                SalesName='销售员'
-                SalesPhone='11193834747'
-                />
+                     {this.renderTest()}
 
-                <ScrollView>
-                    {
+                    {<View style={[{height:15}]}></View>}
 
+                    {details.map((item,i)=>this.renderExpenseItem(item,i))}
 
-                        
-
-
-
-                        details.map((item,i)=>this.renderExpenseItem(item,i))
-                    }
                 </ScrollView>
 
 

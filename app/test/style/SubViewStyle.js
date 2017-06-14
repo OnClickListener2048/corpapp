@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
-        height:90,
+        height:130,
         backgroundColor: '#FFFFFF',
         flexDirection: 'column'
         // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
@@ -25,6 +25,7 @@ const styles = StyleSheet.create({
     companyInfoRowStyle: {
         marginLeft : 15,
         marginRight : 15,
+        marginTop : 10,
         width: SCREEN_WIDTH - 30,
         // flex: 1,
         height: 30,
@@ -39,6 +40,16 @@ const styles = StyleSheet.create({
         marginRight : 0,
         flexDirection: 'row',
     },
+    companyInfoRowPhoneStyle: {
+        maxWidth: SCREEN_WIDTH/2 - 15,
+        width: SCREEN_WIDTH/2 - 15,
+        height: 30,
+        marginLeft : 0,
+        marginRight : 0,
+        flexDirection: 'row',
+        justifyContent:'flex-end'
+
+    }
 
 });
 export default styles;
