@@ -13,25 +13,7 @@ import {
 import styles from './style/SubViewStyle'
 import CompanyInfoView from './view/CompanyInfoView'
 import CommunalNavBar from '../main/GDCommunalNavBar';
-import RegisterCompnayProcessview from './view/RegisterCompanyProcessView'
 import RegisterCompanyCell from './view/RegisterCompanyCell'
-
-//
-// var dataArr = (function(){
-//     var _arr = [];
-//     for(var i = 0;i <= 10; i++){
-//         _arr.push({
-//             "processName" : '核实名称',
-//             "Name" : "野原小白",
-//             "processState" : "待处理"
-//         })
-//     }
-//
-//
-//
-//     return _arr;
-// })()
-
 
 var details = [
     {processName:'长途',workManName:'小白',processState:'待处理'},
@@ -57,16 +39,10 @@ export default class SubViewTest extends Component{
 
 
         this.state = {
-            renderUnderline: true,
         };
 
     }
 
-    static renderTitleItem() {
-        return(
-            <Text style={styles.navbarTitleItemStyle}>自定义View</Text>
-        );
-    }
     renderExpenseItem(item , i) {
         return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
     }
@@ -83,22 +59,9 @@ export default class SubViewTest extends Component{
     render() {
         return(
             <View style={styles.container}>
-                <CommunalNavBar
-
-                    titleItem = {() => SubViewTest.renderTitleItem()}
-                />
-
 
 
                 <ScrollView style={styles.container}>
-
-                    {/**/}
-{/*{ <CompanyInfoView companyName='CRM'*/}
-                   {/*ContactsName='野原新之助'*/}
-                   {/*ContactsPhone='13256738495'*/}
-                   {/*SalesName='销售员'*/}
-                   {/*SalesPhone='11193834747'*/}
-{/*/>}*/}
 
                      {this.renderTest()}
 
@@ -108,20 +71,6 @@ export default class SubViewTest extends Component{
 
                 </ScrollView>
 
-
-
-
-
-                {/*<Text*/}
-                    {/*textAlign='left'*/}
-                    {/*style={[{fontSize: 12,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{dataArr.length}</Text>*/}
-                {/*/!*<Text*!/*/}
-                    {/*/!*textAlign='left'*!/*/}
-                    {/*/!*style={[{fontSize: 12,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{dataArr}</Text>*!/*/}
-
-
-                {/*<RegisterCompnayProcessview registerCompanyProgressArr={dataArr}*/}
-                {/*/>*/}
 
             </View>
         );

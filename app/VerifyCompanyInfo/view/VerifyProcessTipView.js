@@ -1,8 +1,6 @@
 /**
- * Created by jinglan on 2017/6/13.
+ * Created by jinglan on 2017/6/14.
  */
-
-
 
 import React, {PropTypes,Component} from 'react';
 import {View, Text,Image,Dimensions,
@@ -18,7 +16,7 @@ export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
 
-class RegisterCompanyCell extends Component{
+class VerifyProcessTipView extends Component{
 
 
     constructor(props) {
@@ -90,9 +88,9 @@ class RegisterCompanyCell extends Component{
             return  <View style={[{width: 10, alignItems:'center'}]}>
 
                 {this._leftTipViewHighTopLine()}
-                       <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#E5151d'}]}></View>
+                <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#E5151d'}]}></View>
                 {this._leftTipViewHighBottomLine()}
-                    </View>;
+            </View>;
         }else {
             return   <View style={[{width: 10, alignItems:'center'}]}>
 
@@ -100,10 +98,10 @@ class RegisterCompanyCell extends Component{
 
                 <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#e6e6e6'}]}>
 
-                         </View>
-                        {this._leftTipViewNormalBottomLine()}
+                </View>
+                {this._leftTipViewNormalBottomLine()}
 
-                     </View>;
+            </View>;
 
 
         }
@@ -121,33 +119,33 @@ class RegisterCompanyCell extends Component{
 
             <View style={{backgroundColor:'#F8F8F8'}}>
                 {/*<TouchableOpacity activeOpacity={0.8} onPress={()=>this.onClick()}>*/}
-                    <View style={styles.container}>
+                <View style={styles.container}>
 
-                        <View style={styles.left}>
-                            {this._leftTipView()}
-                            <Text style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.processName}</Text>
+                    <View style={styles.left}>
+                        {this._leftTipView()}
+                        <Text style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.processName}</Text>
 
-                        </View>
-
-                        <View style={styles.center}>
-                            <Text style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{this.props.detail.workManName}</Text>
-
-                        </View>
-
-                        <View style={styles.right}>
-                            <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
-
-                            <Text textAlign='right'
-                                  style={{fontSize:15,color:'#323232',marginRight:10}}>{this.props.detail.processState}</Text>
-
-                        </View>
                     </View>
+
+                    <View style={styles.center}>
+                        <Text style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{this.props.detail.processName}</Text>
+
+                    </View>
+
+                    <View style={styles.right}>
+                        <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
+
+                        <Text textAlign='right'
+                              style={{fontSize:15,color:'#323232',marginRight:10}}>{this.props.detail.processName}</Text>
+
+                    </View>
+                </View>
                 {/*</TouchableOpacity>*/}
 
                 {/*<View style={styles.close}>*/}
-                    {/*<TouchableOpacity activeOpacity={0.5} onPress={()=>this.delete()}>*/}
-                        {/*<Image style={{height:22,width:22,resizeMode: 'stretch',}} source={require('../image/icon_close.png')}/>*/}
-                    {/*</TouchableOpacity>*/}
+                {/*<TouchableOpacity activeOpacity={0.5} onPress={()=>this.delete()}>*/}
+                {/*<Image style={{height:22,width:22,resizeMode: 'stretch',}} source={require('../image/icon_close.png')}/>*/}
+                {/*</TouchableOpacity>*/}
                 {/*</View>*/}
 
             </View>
@@ -206,4 +204,4 @@ var styles = StyleSheet.create({
     }
 });
 
-module.exports = RegisterCompanyCell;
+module.exports = VerifyProcessTipView;
