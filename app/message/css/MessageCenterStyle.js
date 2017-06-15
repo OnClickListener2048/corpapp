@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
 
     },
     timeTitleStyle: {
-        fontSize: 12,
+        fontSize: 14,
         marginTop: 15,
         marginLeft : 10,
         marginRight : 15,

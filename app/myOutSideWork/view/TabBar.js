@@ -154,12 +154,20 @@ class TabBar extends Component {
               <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
             </View>
             </View>
-            {badge != null && badge > 0 &&
+            {badge != null && badge > 0 && badge<100&&
             <View style={[styles.badgeBubble,
                 this.props.tabStyles.badgeBubble,
                 {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
               <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>{badge || 0}</Text>
             </View>}
+
+            {badge != null && badge > 99&&
+            <View style={[styles.badgeBubble,
+                this.props.tabStyles.badgeBubble,
+                {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
+              <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>99+</Text>
+            </View>}
+
         </TouchableOpacity>
 
     );

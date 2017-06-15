@@ -4,7 +4,8 @@
  */
 
 import React,{Component}from 'react';
-import {Text, View, Dimensions, TouchableOpacity, Image,StyleSheet,DeviceEventEmitter} from "react-native";
+import {Text, View, Dimensions, TouchableOpacity, Image,DeviceEventEmitter,ListView,} from "react-native";
+import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
@@ -14,17 +15,25 @@ const dismissKeyboard = require('dismissKeyboard');
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
 
-const Page = ({label}) => (
-    <View style={styles.container}>
-        <Image style={styles.noMessageImg}
-               source = {require('../img/no_message.png')}/>
-        <Text style={styles.welcome}>
-            {label}
-        </Text>
+// const Page = ({label}) => (
 
+        /*<View style={styles.container}>*/
+                /*<Image style={styles.noMessageImg}*/
+                       /*source = {require('../img/no_message.png')}/>*/
+                /*<Text style={styles.welcome}>*/
+                    /*{label}*/
+                /*</Text>*/
 
-    </View>
-);
+        /*</View>*/
+
+            {/*<View style={styles.container}>*/}
+            {/*<ListView*/}
+                {/*dataSource={this.state.dataSource}*/}
+                {/*renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}*/}
+            {/*/>*/}
+        {/*</View>*/}
+
+// );
 
 export default class MyOutSideWorkPage extends Component{
 
@@ -35,10 +44,7 @@ export default class MyOutSideWorkPage extends Component{
 
     render(){
         return(
-
-
-
-            <View style={{height:height,width:width}}>
+            <View style={{flex:1}}>
                 {this.navigatorStyle}
                 <ScrollableTabView
                     tabBarUnderlineColor="#FF0000"
@@ -51,39 +57,39 @@ export default class MyOutSideWorkPage extends Component{
                      We have to use tabLabel to pass tab options to TabBar component,
                      because ScrollableTabView passing only this prop to tabs.
                      */}
-                    <Page tabLabel={{label: "待处理", badge: 2,theLast:1}}
-                          label="暂无消息"/>
-                    <Page tabLabel={{label: "进行中", badge: 700,theLast:1}} label="暂无消息!"/>
-                    <Page tabLabel={{label: "已完成", badge: 0,theLast:0}} label="暂无消息3"/>
+                    <MyOutSideWorkItemPage tabLabel={{label: "待处理", badge: 2,theLast:1}}
+                          label="待处理"/>
+                    <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"/>
+                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="已完成"/>
                 </ScrollableTabView>
             </View>
         );
 }
 
 }
-const styles = StyleSheet.create({
-    navBarLeftItemStyle: {
-        width:20,
-        height:20,
-        marginLeft:15,
-    },
-    navBarTitleItemStyle: {
-        fontSize:17,
-        color:'black',
-        marginRight:50
-    },
-    container: {
-        flex: 1,
-        backgroundColor: '#FAFAFA',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    welcome: {
-        fontSize: 18,
-        marginTop:20,
-        color:'#969696',
-    },
-    noMessageImg:{
-        marginTop:160,
-    }
-});
+// const styles = StyleSheet.create({
+//     navBarLeftItemStyle: {
+//         width:20,
+//         height:20,
+//         marginLeft:15,
+//     },
+//     navBarTitleItemStyle: {
+//         fontSize:17,
+//         color:'black',
+//         marginRight:50
+//     },
+//     container: {
+//         flex: 1,
+//         backgroundColor: '#FAFAFA',
+//         flexDirection: 'column',
+//         alignItems: 'center',
+//     },
+//     welcome: {
+//         fontSize: 18,
+//         marginTop:20,
+//         color:'#969696',
+//     },
+//     noMessageImg:{
+//         marginTop:160,
+//     }
+// });

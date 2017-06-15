@@ -11,6 +11,7 @@ import Mine from './pilipaMain/PLPMine';
 import SubViewTest from "./test/SubViewTest";
 import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
 import VerifyCompanyName from  './VerifyCompanyInfo/VerifyCompanyName'
+import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -24,4 +25,5 @@ export default function () {
     reg('MyOutSideWorkPage', () => MyOutSideWorkPage);
     reg('VerifyCompanyName', () => VerifyCompanyName);
 
+    reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
 }
