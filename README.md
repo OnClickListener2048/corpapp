@@ -4,5 +4,5 @@ This is the repository for corp version of mobile apps of pilipa. It's powered b
 
 
 
-相关Wiki文档请浏览这里: [wiki/Home](wiki/Home)
+相关Wiki文档请浏览这里: [wiki/Home](https://bitbucket.org/pilipa/corpapp/wiki/Home)
 
