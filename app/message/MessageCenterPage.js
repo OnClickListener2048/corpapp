@@ -111,14 +111,17 @@ export default class MessageCenterPage extends Component {
     }
 
     componentDidMount() {
-        Toast.show('componentDidMount ');
+        Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'));
 
         try {
-            if (Platform.OS === 'android') {
+            if (Platform.OS !== 'ios') {
+                JPushModule.initPush();
                 JPushModule.notifyJSDidLoad();
 
                 JPushModule.addReceiveCustomMsgListener((message) => {
-                    this.setState({pushMsg: message});
+                    //this.setState({pushMsg: message});
+                    console.log("receive 自定义消息: " + JSON.stringify(message));
+                    Toast.show('receive 自定义消息: ' + JSON.stringify(message));
                 });
                 JPushModule.addReceiveNotificationListener((message) => {
                     console.log("receive notification: " + JSON.stringify(message));

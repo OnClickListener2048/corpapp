@@ -1,7 +1,7 @@
 
 import {Navigation} from 'react-native-navigation';
 
-import {TAB_BAR_STYLE} from './config';
+import {DEFAULT_NAVIGATOR_STYLE as navigatorStyle, tabsStyle, appStyle } from './config';
 import registerScreens from './screens';
 
 // screen related book keeping
@@ -14,12 +14,14 @@ const tabsMain = [{
     icon: require('./img/message.png'),
     selectedIcon: require('./img/message_red.png'),
     title: '消息中心',
+    navigatorStyle
 }, {
     label: '应用',
     screen: 'ApplicationCenterPage',
     icon: require('./img/application.png'),
     selectedIcon: require('./img/application_red.png'),
     title: '应用中心',
+    navigatorStyle
 },
     {
         label: '我的',
@@ -27,6 +29,7 @@ const tabsMain = [{
         icon: require('./img/account.png'),
         selectedIcon: require('./img/account_red.png'),
         title: '我的',
+        navigatorStyle
     }
 ];
 
@@ -35,6 +38,7 @@ export function navToBootstrap({isReset = false} = {}) {
   Navigation.startSingleScreenApp({
     screen: {
       screen: 'main.LaunchPage',
+        navigatorStyle
     },
     passProps: {
       isReset,
@@ -60,28 +64,8 @@ export function navToLogin({isReset = false} = {}) {
 export function navToMainTab() {
     Navigation.startTabBasedApp({
         tabs: tabsMain,
-        tabsStyle: {
-            tabBarBackgroundColor: '#F5F5F5',
-            navBarButtonColor: '#c8c8c8',
-            tabBarButtonColor: '#c8c8c8',
-            navBarTextColor: '#c8c8c8',
-            tabBarSelectedButtonColor: '#ff505c',
-            // navigationBarColor: '#F5F5F5',
-            // navBarBackgroundColor: '#F5F5F5',
-            // statusBarColor: '#002b4c',
-            // tabFontFamily: 'BioRhyme-Bold',
-        },
-        appStyle: {
-            tabBarBackgroundColor: '#F5F5F5',
-            navBarButtonColor: '#c8c8c8',
-            tabBarButtonColor: '#c8c8c8',
-            navBarTextColor: '#ffffff',
-            tabBarSelectedButtonColor: '#ff505c',
-            // navigationBarColor: '#F5F5F5',
-            // navBarBackgroundColor: '#F5F5F5',
-            statusBarColor: '#000000',
-            // tabFontFamily: 'BioRhyme-Bold',
-        },
+        tabsStyle,
+        appStyle,
         animationType: 'fade',
         portraitOnlyMode: true,
     });
