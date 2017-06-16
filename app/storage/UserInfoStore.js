@@ -3,12 +3,12 @@
  * Created by beansoft on 2017/6/9.
  */
 import {KEY_USER_TOKEN, KEY_USER_INFO} from '../config';
-import _Preferences from './Preferences';
+import './Preferences';
 
 var UserInfoStore = {};
 
-UserInfoStore.getUserInfo = function (): Object {
-    let value = Preferences.get(KEY_USER_INFO);
+UserInfoStore.getUserInfo = async function (): Object {
+    let value = await Preferences.get(KEY_USER_INFO);
     if (value !== null) {
         console.log('getUserInfo', value);
         return JSON.parse(value);
@@ -16,7 +16,7 @@ UserInfoStore.getUserInfo = function (): Object {
     return value;
 };
 
-UserInfoStore.setUserInfo = function (value: Object) {
+UserInfoStore.setUserInfo = async function (value: Object) {
     return Preferences.set(KEY_USER_INFO, JSON.stringify(value));
 }
 
@@ -24,7 +24,8 @@ UserInfoStore.getUserToken = async function () {
     return await Preferences.get(KEY_USER_TOKEN);
 }
 
-UserInfoStore.setUserToken = function (value: string) {
+UserInfoStore.setUserToken = async function (value: string) {
     return Preferences.set(KEY_USER_TOKEN, value);
 };
+
 global.UserInfoStore = UserInfoStore;// 全局可用

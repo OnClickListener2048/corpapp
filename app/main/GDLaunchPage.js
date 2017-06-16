@@ -17,6 +17,7 @@ import * as apis from '../apis';
 import Toast from 'react-native-root-toast';
 import {navToLogin, navToMainTab} from '../navigation';
 
+// 启动页
 export default class GDLaunchPage extends Component {
 
     static navigatorStyle = {
@@ -39,18 +40,31 @@ export default class GDLaunchPage extends Component {
         //     animated: false,
         // });
 
-        UserInfoStore.getUserToken()
-            .then((value) => {
-                UserInfoStore.token = value;
-                Toast.show('token=' + value);
-                if(value !== null) {
-                    this.readUserInfo();
-                } else {
-                    navToLogin();
-                }
-            });
+        let {isReset = false } = this.props;// 重置
+
+        if (isReset) {
+            this.reset();
+            navToLogin();
+        } else {
+            UserInfoStore.getUserToken()
+                .then((value) => {
+                    UserInfoStore.token = value;
+                    Toast.show('token=' + value);
+                    if(value !== null) {
+                        this.readUserInfo();
+                    } else {
+                        navToLogin();
+                    }
+                });
+        }
     }
 
+    reset() {
+        UserInfoStore.setUserToken(null);
+        UserInfoStore.setUserInfo(null);
+    }
+
+    // 读取用户信息
     readUserInfo() {
         let loading = SActivityIndicator.show(true, "载入中...");
         apis.userInfo().then(
