@@ -54,7 +54,7 @@ export default class SubViewTest extends Component{
 
     renderVerifyProcessTipView(){
 
-
+        return <VerifyProcessTipView messageTitle={'呵呵哒'} currentNum={0}/>
     }
 
     render() {

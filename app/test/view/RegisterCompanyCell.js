@@ -89,9 +89,9 @@ class RegisterCompanyCell extends Component{
 
             return  <View style={[{width: 10, alignItems:'center'}]}>
 
-                {this._leftTipViewHighTopLine()}
+                       {this._leftTipViewHighTopLine()}
                        <View style={[{width: 10, height : 10, borderRadius:5,backgroundColor:'#E5151d'}]}></View>
-                {this._leftTipViewHighBottomLine()}
+                       {this._leftTipViewHighBottomLine()}
                     </View>;
         }else {
             return   <View style={[{width: 10, alignItems:'center'}]}>
@@ -202,6 +202,7 @@ var styles = StyleSheet.create({
         flexDirection:'row-reverse',
         marginRight:15,
         alignItems:'center'
+
 
     }
 });
