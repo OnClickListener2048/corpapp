@@ -10,7 +10,8 @@ import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
 import SubViewTest from "./test/SubViewTest";
 import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
-import VerifyCompanyName from  './VerifyCompanyInfo/VerifyCompanyName'
+import VerifyCompanyName from  './VerifyCompanyInfo/VerifyCompanyName';
+import GetLicensePage from  './getLicense/GetLicensePage';
 import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
 
 export default function () {
@@ -24,6 +25,6 @@ export default function () {
     reg('SubViewTest', () => SubViewTest);
     reg('MyOutSideWorkPage', () => MyOutSideWorkPage);
     reg('VerifyCompanyName', () => VerifyCompanyName);
-
+    reg('GetLicensePage', () => GetLicensePage);
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
 }
