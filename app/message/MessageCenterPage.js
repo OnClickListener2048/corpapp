@@ -4,6 +4,9 @@
 import React, {Component} from 'react';
 import {Dimensions, InteractionManager} from 'react-native';
 import JPushModule from 'jpush-react-native';
+import * as apis from '../apis';
+import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+
 import {
     AppRegistry,
     StyleSheet,
@@ -38,8 +41,6 @@ var data = (function () {
 
 var stickyId = 3
 
-
-
 const window = Dimensions.get('window');
 
 export const SCREEN_WIDTH = window.width;
@@ -50,6 +51,34 @@ export default class MessageCenterPage extends Component {
     dataBlob: {}
     sectionIDs: []
     rowIDs: []
+
+    componentDidMount() {
+        this._loadData();
+    }
+
+    _loadData() {
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+
+
+        apis.loadMessageData(10,'').then(
+
+        (responseData) => {
+            SActivityIndicator.hide(loading);
+
+            },
+            (e) => {
+                // SActivityIndicator.hide(loading);
+
+
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+
+        );
+
+
+    }
 
     constructor(props) {
         super(props)
@@ -163,6 +192,12 @@ export default class MessageCenterPage extends Component {
         );
     }
 
+    static renderbadTitleItem() {
+        return (
+            <Text style={styles.navbarTitleItemStyle}>获取失败</Text>
+        );
+    }
+
     _renderRow(rowData, sectionID, rowID) {
         return (
             <TouchableOpacity onPress={() => {
@@ -190,7 +225,7 @@ export default class MessageCenterPage extends Component {
                 <CommunalNavBar
                     titleItem={() => MessageCenterPage.renderTitleItem()}
                 />
-
+                { this._loadData()}
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}
