@@ -14,6 +14,7 @@ import styles from './css/VerifyCompanyStyle'
 import CompanyInfoView from '../test/view/CompanyInfoView'
 import CommunalNavBar from '../main/GDCommunalNavBar';
 import VerifyProcessTipView from './view/VerifyProcessTipView'
+import CompanyAddress from "../test/view/CompanyAddress";
 
 var details = [
     {processName:'确认材料'},
@@ -21,7 +22,7 @@ var details = [
     {processName:'结束任务'},
 ];
 
-export default class SubViewTest extends Component{
+export default class VerifyCompanyName extends Component{
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
@@ -52,6 +53,13 @@ export default class SubViewTest extends Component{
         />
     }
 
+    //公司地址
+    compAddress() {
+
+        return  <CompanyAddress companyAddress='北京市 朝阳区 小营路25号 房地置业大厦 1105室'
+        />
+    }
+
     renderVerifyProcessTipView(){
 
         return <VerifyProcessTipView messageTitle={'呵呵哒'} currentNum={0}/>
@@ -75,7 +83,10 @@ export default class SubViewTest extends Component{
 
                     </View>}
 
+                    {<View >
+                        {this.compAddress()}
 
+                    </View>}
                 </ScrollView>
 
 
