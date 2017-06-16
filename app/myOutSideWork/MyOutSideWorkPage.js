@@ -58,7 +58,8 @@ export default class MyOutSideWorkPage extends Component{
                      because ScrollableTabView passing only this prop to tabs.
                      */}
                     <MyOutSideWorkItemPage tabLabel={{label: "待处理", badge: 2,theLast:1}}
-                          label="待处理"/>
+                          label="待处理"
+                    />
                     <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"/>
                     <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="已完成"/>
                 </ScrollableTabView>

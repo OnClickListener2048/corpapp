@@ -80,16 +80,16 @@ export default class MyOutSideWorkItemPage extends Component{
 
     };
 
-    // toSubViewTest(){
-    //     InteractionManager.runAfterInteractions(() => {
-    //         this.props.navigator.push({
-    //             screen: 'SubViewTest',
-    //             backButtonTitle: '返回', // 返回按钮的文字 (可选)
-    //             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-    //         });
-    //     });
-    //
-    // }
+    toSubViewTest(){
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                screen: 'SubViewTest',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            });
+        });
+
+    }
 
     listViewHandleData(result){
         var me = this,
@@ -133,7 +133,7 @@ export default class MyOutSideWorkItemPage extends Component{
 
     _renderRow(rowData, sectionID, rowID) {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {this.toSubViewTest()}}>
                 <MyOutSideWorkCell
                     statusIcon = {rowData.statusIcon}
                     statusName = {rowData.statusName}
