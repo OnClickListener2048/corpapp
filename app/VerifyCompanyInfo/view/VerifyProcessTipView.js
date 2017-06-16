@@ -97,36 +97,15 @@ class VerifyProcessTipView extends Component{
                 </View>
 
 
-                <View style={styles.container}>
+                <View style={styles.titleContainer}>
 
-                    <View style={styles.left}>
-                        {/*{this._leftTipView()}*/}
-                        <Text style={{fontSize:15,marginLeft:15,color:'#323232'}}>{currentNum}</Text>
+                    <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#323232'}}>{'确认材料'}</Text>
+                    <Text style={{fontSize:15,width:80,textAlign:'center', justifyContent: 'center',color:'#323232'}}>{'开始任务'}</Text>
+                    <Text style={{fontSize:15,width:80,textAlign:'center', justifyContent: 'center',color:'#323232'}}>{'结束任务'}</Text>
 
-                    </View>
 
-                    <View style={styles.center}>
-                        <Text style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{messageTitle}</Text>
-
-                    </View>
-
-                    <View style={styles.right}>
-                        <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
-
-                        <Text textAlign='right'
-                              style={{fontSize:15,color:'#323232',marginRight:10}}>{messageTitle}</Text>
-
-                    </View>
                 </View>
 
-
-                {/*</TouchableOpacity>*/}
-
-                {/*<View style={styles.close}>*/}
-                {/*<TouchableOpacity activeOpacity={0.5} onPress={()=>this.delete()}>*/}
-                {/*<Image style={{height:22,width:22,resizeMode: 'stretch',}} source={require('../image/icon_close.png')}/>*/}
-                {/*</TouchableOpacity>*/}
-                {/*</View>*/}
 
             </View>
         );
@@ -145,9 +124,8 @@ var styles = StyleSheet.create({
     container:{
         height:50,
         marginTop: 5,
-        backgroundColor:'orange',
 
-        // backgroundColor:'#FFFFFF',
+        backgroundColor:'#FFFFFF',
         flexDirection:'row'
     },
     processImgTipView:{
@@ -159,40 +137,12 @@ var styles = StyleSheet.create({
         flexDirection:'row',
         alignItems:'center'
     },
-    close:{
-        width:22,
-        height:22,
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'transparent',
-        flex:1,
-        bottom:55,
-        left:2,
-        right:0,
-        position: 'absolute'
-    },
-    icon:{
-        width:40,
-        height:40,
-        borderRadius:20
-    },
-    left:{
-        flex:4,
-        marginLeft:15,
-
-        flexDirection:'row',
-        alignItems:'center'
-    },
-    center:{
-        flex:2,
-        justifyContent:'center'
-    },
-    right:{
-        flex:2,
-        flexDirection:'row-reverse',
-        marginRight:15,
-        alignItems:'center'
-
+    titleContainer:{
+        marginLeft: 20.5,
+        marginRight: 20.5,
+        justifyContent:'space-between',
+        backgroundColor:'#FFFFFF',
+        flexDirection:'row'
     }
 });
 
