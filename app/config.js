@@ -31,7 +31,7 @@ export let KEY_USER_INFO = 'KEY_USER_INFO';// 用户基本信息
 // 顶部导航栏默认风格设置(react-native-navigation)
 export const DEFAULT_NAVIGATOR_STYLE = {
     navBarTextColor: 'black',
-    navBarButtonColor: '#008800',// 顶部按钮颜色
+    navBarButtonColor: '#666666',// 顶部按钮颜色
     statusBarHideWithNavBar: true,
 };
 

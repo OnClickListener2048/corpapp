@@ -12,6 +12,7 @@ import SubViewTest from "./test/SubViewTest";
 import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
 import VerifyCompanyName from  './VerifyCompanyInfo/VerifyCompanyName'
 import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
+import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -26,4 +27,5 @@ export default function () {
     reg('VerifyCompanyName', () => VerifyCompanyName);
 
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
+    reg('pilipaMain.my.PersonalInfo', () => PersonalInfo);
 }

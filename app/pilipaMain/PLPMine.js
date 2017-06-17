@@ -30,28 +30,17 @@ export default class PLPMine extends Component {
         this.state = {
             userName: '-',     // 用户名
         };
-
-        UserInfoStore.getUserInfo().then(
-            (user) => {
-                if (user !== null) {
-                    this.setState({userName: user.name});
-                }
-            },
-            (e) => {
-                console.log("读取信息错误:", e);
-            },
-        );
     }
-
-
 
     render() {
         return (
             <View style={styles.container}>
                 <Image source={require('../img/bg.png')} style={styles.head_background}>
+                    <TouchableWithoutFeedback onPress={() => {this._goPersonalInfo()}}>
                     <View style={styles.headimagestyle}>
                         <Image source={require('../img/logo_circle.png')} style={styles.headPortraint}/>
                     </View>
+                    </TouchableWithoutFeedback>
                     <Text style={styles.textname}>{this.state.userName}</Text>
                     <Text style={styles.textcontentview}>{/* 暂无部门信息*/}</Text>
                 </Image>
@@ -103,10 +92,19 @@ export default class PLPMine extends Component {
                     text: '确定',
                     onPress: () => apis.logout().then(
                         () => navToBootstrap({isReset: true}),
-                        (e) => Toast.show("退出失败:" + JSON.stringify(e))
+                        (e) => Toast.show("退出失败:" + e.msg)
                     ),
                 },]
             , {cancelable: false});
+    }
+
+    _goPersonalInfo() {
+        this.props.navigator.push({
+            screen: 'pilipaMain.my.PersonalInfo',
+            backButtonTitle: '', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title:'个人资料',
+        });
     }
 }
 
