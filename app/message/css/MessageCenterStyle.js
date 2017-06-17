@@ -14,6 +14,11 @@ const styles = StyleSheet.create({
             flexDirection: 'column'
         },
 
+    listViewcontainer: {
+        flex: 1,
+        backgroundColor: '#FAFAFA',
+        flexDirection: 'column'
+    },
          rowStyle: {
              marginTop: 15,
              height : 65,

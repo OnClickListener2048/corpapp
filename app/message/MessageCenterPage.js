@@ -26,82 +26,112 @@ import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 import Platform from "react-native";
 
-var data = (function () {
-    var _arr = [];
-    for (var i = 0; i <= 10; i++) {
-        _arr.push({
-            "userId": i,
-            "user": "hugo hua",
-            "blog": "http://www.ghugo.com",
-            "github": "https://github.com/hugohua"
-        })
-    }
-    return _arr;
-})()
-
 var stickyId = 3
 
 const window = Dimensions.get('window');
 
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
-    static navigatorStyle = {
-        navBarHidden: true, // 隐藏默认的顶部导航栏
-    };
-    dataBlob: {}
-    sectionIDs: []
-    rowIDs: []
 
-    componentDidMount() {
-        this._loadData();
-    }
-
-    _loadData() {
-
-        let loading = SActivityIndicator.show(true, "加载中...");
-
-
-        apis.loadMessageData(10,'').then(
-
-        (responseData) => {
-            SActivityIndicator.hide(loading);
-
-            },
-            (e) => {
-                // SActivityIndicator.hide(loading);
-
-
-                console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
-            },
-
-        );
-
-
-    }
 
     constructor(props) {
         super(props)
-
-
-        var getRowData = (dataBlob, sectionID, rowID) => {
-            return dataBlob[sectionID + ':' + rowID];
-        };
-
         this.state = {
             dataSource: new ListView.DataSource({
-                getRowData: getRowData,
-                // getSectionHeaderData: getSectionData, //组头信息
-                rowHasChanged: (row1, row2) => row1 !== row2,
-                sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-            })
+                rowHasChanged: (row1, row2) => row1 !== row2}),
+            loaded:false,                   // 是否初始化 ListView
+            // getRowData: getRowData,
         }
-
+        this.messageArr = [];
+        this.lastID = null;
+        this.pageCount = 10;
+        this._loadData = this._loadData.bind(this);
+        this._loadMoreData = this._loadMoreData.bind(this);
         this.props.navigator.setTabBadge({
             badge: 88 // 数字气泡提示, 设置为null会删除
         });
     }
 
+
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
+
+    dataBlob: {}
+    sectionIDs: []
+    rowIDs: []
+
+
+    _loadData() {
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.lastID = null;
+        apis.loadMessageData(this.pageCount,'').then(
+
+        (responseData) => {
+             SActivityIndicator.hide(loading);
+
+            if(responseData !== null && responseData.data !== null) {
+                this.messageArr = [];
+
+                this.messageArr = this.messageArr.concat(responseData.data);
+                // console.log(this.messageArr)
+
+                if (this.messageArr.length == this.pageCount){
+                    this.lastID = this.messageArr[this.pageCount - 1].msgId;
+                    console.log(this.lastID +'你大爷');
+
+                }
+
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                    loaded:true,
+                });
+            }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
+
+    _loadMoreData() {
+
+        if (this.lastID == null){
+            return;
+        }
+
+        apis.loadMessageData(this.pageCount,this.lastID).then(
+
+            (responseData) => {
+
+                this.messageArr = this.messageArr.concat(responseData.data);
+
+                if (responseData.data.length == this.pageCount){
+                    this.lastID = responseData.data[this.pageCount - 1].msgId;
+                    console.log(this.lastID +'你大爷');
+
+                }else {
+
+                    this.lastID = null;
+                }
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                    loaded:true,
+                });
+
+                if(responseData !== null && responseData.data !== null) {
+
+                }
+            },
+            (e) => {
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
 
     listViewHandleData(result) {
         var me = this,
@@ -139,7 +169,10 @@ export default class MessageCenterPage extends Component {
         }
     }
 
+
+
     componentDidMount() {
+
         Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'));
 
         try {
@@ -168,12 +201,8 @@ export default class MessageCenterPage extends Component {
     }
 
     componentWillMount() {
-        var res = this.listViewHandleData(data);
-        console.log(res)
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRowsAndSections(res.dataBlob, res.sectionIDs, res.rowIDs),
-            loaded: true
-        });
+        this._loadData();
+
     }
 
     toMyOutSideWork() {
@@ -199,25 +228,50 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    _renderRow(rowData, sectionID, rowID) {
+    _renderRow(rowData) {
         return (
             <TouchableOpacity onPress={() => {
                 this.toMyOutSideWork()
             }}>
                 {/*<View style={styles.rowStyle}>*/}
-                {/*<Text style={styles.rowText}>{rowData.userId}  {rowData.user}</Text>*/}
-                {/*</View>*/}
-                {/*onPress={() => {this.toMyOutSideWork()}}*/}
 
-                <MessageCell messageTitle='我的外勤标题外勤标'
-                             messageSubTitle='sub标题'
-                             messageTime='17/06/02'
-                             messageIcon={require('../img/field.png')}
+
+                <MessageCell messageTitle={rowData.title}
+                             messageSubTitle = {rowData.subTitle}
+                             messageTime = {rowData.date}
+                             messageIcon={rowData.type == 'outservice'?  rowData.read ?  require('../img/system_y.png') : require('../img/system.png') : require('../img/field.png')}
                 />
 
 
             </TouchableOpacity>
         );
+    }
+
+
+    // 根据网络状态决定是否渲染 ListView
+    renderListView() {
+        if (this.state.loaded === false) {      // 无数据
+            return(
+                <View style={[{flex : 1 , backgroundColor:'orange' }]}></View>
+            );
+        }else {         // 有数据
+            return(
+                <ListView ref="pullList"
+                          // onPullRelease={(resolve) => this.loadData(resolve)}     // 下拉刷新操作
+                          dataSource={this.state.dataSource}          // 设置数据源
+                          renderRow={(rowData) => this._renderRow(rowData)}  // 根据数据创建相应 cell
+                          showsHorizontalScrollIndicator={false}      // 隐藏水平指示器
+                          style={styles.listViewcontainer}                // 样式
+                          initialListSize={7}                         // 优化:一次渲染几条数据
+                          // renderHeader={this.renderHeader}            // 设置头部视图
+                          onEndReached={this._loadMoreData}                // 当接近底部特定距离时调用
+                          // onEndReachedThreshold={60}                  // 当接近底部60时调用
+                          // renderFooter={this.renderFooter}            // 设置尾部视图
+                          // removeClippedSubviews={true}                // 优化
+                          enableEmptySections={true}
+                />
+            );
+        }
     }
 
     render() {
@@ -226,17 +280,13 @@ export default class MessageCenterPage extends Component {
                 <CommunalNavBar
                     titleItem={() => MessageCenterPage.renderTitleItem()}
                 />
-                { this._loadData()}
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}
-                />
+
+                {this.renderListView()}
+
             </View>
         );
     }
 }
-
-
 
 
 
