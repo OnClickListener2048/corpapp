@@ -44,6 +44,7 @@ export default class PLPMine extends Component {
                     <Text style={styles.textname}>{this.state.userName}</Text>
                     <Text style={styles.textcontentview}>{/* 暂无部门信息*/}</Text>
                 </Image>
+
                 <View style={styles.settingview}>
                     <Image source={require('../img/set@3x.png')}
                            style={styles.imgiconview}/>
@@ -52,7 +53,9 @@ export default class PLPMine extends Component {
                     </Text>
                     <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
                 </View>
+                <View style={styles.lineview}/>
 
+                <TouchableWithoutFeedback onPress={() => {this._goFeedback()}}>
                 <View style={styles.settingview}>
                     <Image source={require('../img/problem@3x.png')}
                            style={styles.imgiconview}/>
@@ -61,8 +64,11 @@ export default class PLPMine extends Component {
                     </Text>
                     <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
                 </View>
+                </TouchableWithoutFeedback>
+
                 <View style={styles.lineview}/>
 
+                <TouchableWithoutFeedback onPress={() => {this._goAbout()}}>
                 <View style={styles.settingview}>
                     <Image source={require('../img/about@3x.png')}
                            style={styles.imgiconview}/>
@@ -71,6 +77,7 @@ export default class PLPMine extends Component {
                     </Text>
                     <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
                 </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.lineviewlast}/>
 
                 <TouchableWithoutFeedback onPress={() => {this._doLogout()}}>
@@ -104,6 +111,24 @@ export default class PLPMine extends Component {
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             title:'个人资料',
+        });
+    }
+
+    _goFeedback() {
+        this.props.navigator.push({
+            screen: 'pilipaMain.my.Feedback',
+            backButtonTitle: '', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title:'问题反馈',
+        });
+    }
+
+    _goAbout() {
+        this.props.navigator.push({
+            screen: 'pilipaMain.my.About',
+            backButtonTitle: '', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title:'关于噼里啪',
         });
     }
 }
