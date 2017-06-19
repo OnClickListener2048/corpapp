@@ -6,6 +6,8 @@ import {Dimensions, InteractionManager} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import { PullList } from 'react-native-pull';
+import NoMessage from '../test/NoMessage';
 
 import {
     AppRegistry,
@@ -29,7 +31,7 @@ import Platform from "react-native";
 var stickyId = 3
 
 const window = Dimensions.get('window');
-
+const moreText = "加载完毕";
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
 
@@ -42,6 +44,8 @@ export default class MessageCenterPage extends Component {
             loaded:false,                   // 是否初始化 ListView
             // getRowData: getRowData,
         }
+        this.foot = 0;
+             // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
         this.pageCount = 10;
@@ -62,10 +66,12 @@ export default class MessageCenterPage extends Component {
     rowIDs: []
 
 
-    _loadData() {
+    _loadData(resolve) {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
+        console.log("开始请求1");
+
         apis.loadMessageData(this.pageCount,'').then(
 
         (responseData) => {
@@ -73,6 +79,7 @@ export default class MessageCenterPage extends Component {
 
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
+                console.log("开始请求2");
 
                 this.messageArr = this.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
@@ -83,10 +90,25 @@ export default class MessageCenterPage extends Component {
 
                 }
 
+
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
+
+                if(responseData.length < this.pageCount){
+                    //当当前返回的数据小于PageSize时，认为已加载完毕
+                    this.setState({ foot:1,moreText:moreText});
+                }else{//设置foot 隐藏Footer
+                    this.setState({foot:0});
+                }
+
+                // 关闭刷新动画
+                if (resolve !== undefined){
+                    setTimeout(() => {
+                        resolve();
+                    }, 1000);
+                }
             }
             },
             (e) => {
@@ -121,6 +143,15 @@ export default class MessageCenterPage extends Component {
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
+
+                if(responseData.length < this.pageCount){
+                    this.setState({foot:0});
+
+                    //当当前返回的数据小于PageSize时，认为已加载完毕
+                }else{//设置foot 隐藏Footer
+                    this.setState({ foot:1});
+
+                }
 
                 if(responseData !== null && responseData.data !== null) {
 
@@ -247,28 +278,78 @@ export default class MessageCenterPage extends Component {
         );
     }
 
+    _endReached(){
+        if(this.state.foot != 0 ){
+            return ;
+        }
+        this.setState({
+            foot:2,
+        });
+        this.timer = setTimeout(
+            () => {
+                this._loadMoreData();
+            },50);
+    }
+
+    _renderFooter() {
+        if(this.state.foot === 1){//加载完毕 没有下一页
+            return (
+                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+
+
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+
+                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                        {'历史消息'}
+                    </Text>
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+                </View>);
+        }else if(this.state.foot === 2) {//加载中
+            return (
+                <View style={{height:40,backgroundColor:'blue',alignItems:'center',justifyContent:'center',}}>
+                    {this.state.moreText}
+
+                    {/*<Image source={{uri:loadgif}} style={{width:20,height:20}}/>*/}
+                </View>);
+        }
+    }
 
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
         if (this.state.loaded === false) {      // 无数据
             return(
-                <View style={[{flex : 1 , backgroundColor:'orange' }]}></View>
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}></View>
+            );
+        }else if (this.messageArr.length == 0){
+
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <NoMessage/>
+                </View>
             );
         }else {         // 有数据
             return(
-                <ListView ref="pullList"
-                          // onPullRelease={(resolve) => this.loadData(resolve)}     // 下拉刷新操作
+                <PullList ref="pullList"
+                          onPullRelease={(resolve) => this._loadData(resolve)}     // 下拉刷新操作
+                         // onEndReachedThreshold={30}                  // 当接近底部60时调用
                           dataSource={this.state.dataSource}          // 设置数据源
                           renderRow={(rowData) => this._renderRow(rowData)}  // 根据数据创建相应 cell
                           showsHorizontalScrollIndicator={false}      // 隐藏水平指示器
                           style={styles.listViewcontainer}                // 样式
                           initialListSize={7}                         // 优化:一次渲染几条数据
-                          // renderHeader={this.renderHeader}            // 设置头部视图
-                          onEndReached={this._loadMoreData}                // 当接近底部特定距离时调用
-                          // onEndReachedThreshold={60}                  // 当接近底部60时调用
-                          // renderFooter={this.renderFooter}            // 设置尾部视图
-                          // removeClippedSubviews={true}                // 优化
+                         // onEndReached={this._loadMoreData}                // 当接近底部特定距离时调用
                           enableEmptySections={true}
+                          renderFooter={this._renderFooter.bind(this)}
+                          onEndReached={this._endReached.bind(this)}
+
+                    // renderHeader={this._renderHeader}            // 设置头部视图
+                    //renderHeader={this.renderHeader}            // 设置头部视图
+                    // removeClippedSubviews={true}                // 优化
+                    // renderFooter={this.renderFooter}            // 设置尾部视图
+                     removeClippedSubviews={true}                // 优化
+
                 />
             );
         }
