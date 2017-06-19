@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     },
 
     registerNumStyle: {
-        marginTop : 20,
+        marginTop : 5,
         width: SCREEN_WIDTH - 30,
         // flex: 1,
         height: 30,

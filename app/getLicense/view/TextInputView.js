@@ -12,24 +12,28 @@ export default class CompanyInfoView extends Component {
     constructor(props) {
         super(props);
         this.state = { content: '',
-        textName:this.props.textName,};
+        textName:this.props.textName,
+            inputWidth:this.props.inputWidth,
+            winWidth:this.props.winWidth};
 
     }
 
     static propTypes = {
         //style: PropTypes.object,
         textName: PropTypes.string,
+        inputWidth:PropTypes.object,
+        winWidth:PropTypes.object,
     };
 
     render(){
         return(
             <View style={styles.container}>
                 <View style={styles.registerNumStyle}>
-                    <Text style={{
-                        marginLeft : 15,
-                        width:110,fontSize:15}}>{this.props.textName}</Text>
+                    <Text style={[{
+                        marginLeft : 15,fontSize:15},
+                        this.props.inputWidth,]}>{this.props.textName}</Text>
                 <View style={styles.textInputContainer}>
-                    <View style={styles.textInputWrapper}>
+                    <View style={[styles.textInputWrapper,this.props.winWidth,]}>
                         <TextInput underlineColorAndroid='transparent' value={this.state.content}
                                    style={styles.textInput} placeholder='' returnKeyType='next'
                                    onChangeText={

@@ -17,6 +17,10 @@ import CompanyInfoView from '../test/view/CompanyInfoView'
 import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
 import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
+const window = Dimensions.get('window');
+
+export const SCREEN_HEIGHT = window.height;
+export const SCREEN_WIDTH = window.width;
 
 var details = [
     {processName:'确认材料'},
@@ -85,22 +89,49 @@ export default class GetLicensePage extends Component{
 
                     <TextInputView
                         textName={'法       人：'}
+                        inputWidth={{width:75}}
+                        winWidth={{width:SCREEN_WIDTH-110}}
                     />
+                    <View
+                        style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'注  册  号：'}
+                        inputWidth={{width:80}}
+                        winWidth={{width:SCREEN_WIDTH-115}}
                     />
+                    </View>
+                    <View
+                        style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'国税登记号：'}
+                        inputWidth={{width:93}}
+                        winWidth={{width:SCREEN_WIDTH-130}}
                     />
+                    </View>
+                    <View
+                        style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'地税登记号：'}
+                        inputWidth={{width:93}}
+                        winWidth={{width:SCREEN_WIDTH-130}}
                     />
+                    </View>
+                    <View
+                        style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'注册资金：'}
+                        inputWidth={{width:80}}
+                        winWidth={{width:SCREEN_WIDTH-115}}
                     />
+                    </View>
+                    <View
+                        style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'经营范围：'}
+                        inputWidth={{width:80}}
+                        winWidth={{width:SCREEN_WIDTH-115}}
                     />
+                    </View>
                 </ScrollView>
 
 

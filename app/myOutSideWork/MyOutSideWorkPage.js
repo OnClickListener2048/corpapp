@@ -4,7 +4,7 @@
  */
 
 import React,{Component}from 'react';
-import {Text, View, Dimensions, TouchableOpacity, Image,DeviceEventEmitter,ListView,} from "react-native";
+import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 const window = Dimensions.get('window');
 export const height = window.height;
@@ -35,12 +35,15 @@ import TabBar from '../myOutSideWork/view/TabBar';
 
 // );
 
+
+
 export default class MyOutSideWorkPage extends Component{
 
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
+
 
     render(){
         return(

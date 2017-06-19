@@ -8,6 +8,7 @@ import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import SubViewTest from "../test/SubViewTest";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
+import MyOutSideWorkPage from "./MyOutSideWorkPage";
 
 //模拟我的外勤数据
 var data = (function(){
@@ -57,6 +58,12 @@ var data = (function(){
 
 export default class MyOutSideWorkItemPage extends Component{
 
+    static navigatorStyle = {
+        navBarHidden: false, // 隐藏默认的顶部导航栏
+        tabBarHidden: true, // 默认隐藏底部标签栏
+    };
+
+
     constructor(props){
         super(props)
         var getRowData = (dataBlob, sectionID, rowID) => {
@@ -70,17 +77,15 @@ export default class MyOutSideWorkItemPage extends Component{
                 // getSectionHeaderData: getSectionData, //组头信息
                 rowHasChanged: (row1, row2) => row1 !== row2,
                 sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-            })
+            }),
         }
-
     }
 
     static propTypes = {
         label: PropTypes.string,
-
     };
 
-    toSubViewTest(){
+    toSubViewTest() {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'SubViewTest',
@@ -88,7 +93,6 @@ export default class MyOutSideWorkItemPage extends Component{
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });
         });
-
     }
 
     listViewHandleData(result){
@@ -123,6 +127,8 @@ export default class MyOutSideWorkItemPage extends Component{
             var res = this.listViewHandleData(data._finished);
         }else if(this.props.label == "全部"){
             var res = this.listViewHandleData(data._finished);
+        }else{
+            var res = this.listViewHandleData(data._pending);
         }
         console.log(res)
         this.setState({
@@ -132,6 +138,7 @@ export default class MyOutSideWorkItemPage extends Component{
     }
 
     _renderRow(rowData, sectionID, rowID) {
+
         return (
             <TouchableOpacity onPress={() => {this.toSubViewTest()}}>
                 <MyOutSideWorkCell

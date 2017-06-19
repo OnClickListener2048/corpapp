@@ -16,6 +16,7 @@ import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
 import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 import Feedback from "./pilipaMain/my/Feedback";
 import About from "./pilipaMain/my/About";
+import NoMessage from "./test/NoMessage";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -30,6 +31,7 @@ export default function () {
     reg('VerifyCompanyName', () => VerifyCompanyName);
     reg('GetLicensePage', () => GetLicensePage);
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
+    reg('NoMessage', () => NoMessage);
     reg('pilipaMain.my.PersonalInfo', () => PersonalInfo);
     reg('pilipaMain.my.Feedback', () => Feedback);
     reg('pilipaMain.my.About', () => About);
