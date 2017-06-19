@@ -17,10 +17,44 @@ import TabBar from '../myOutSideWork/view/TabBar';
 
 export default class MyOutSideWorkPage extends Component{
 
+    constructor(props) {
+        super(props);
+        // if you want to listen on navigator events, set this up
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
+
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: '全部', // for a textual button, provide the button title (label)
+                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+                id: 'edit'
+            }]
+
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
+            if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+                InteractionManager.runAfterInteractions(() => {
+                    this.props.navigator.push({
+                        screen: 'MyOutSideWorkItemPage',
+                        backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                        backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                        title:'我的外勤',
+                    });
+                });
+            }
+        }
+
+    }
 
     //获取item列表项的ID，跳转并传值
     _callback(statusId) {

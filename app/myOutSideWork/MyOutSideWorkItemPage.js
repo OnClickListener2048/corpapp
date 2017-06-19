@@ -87,7 +87,17 @@ export default class MyOutSideWorkItemPage extends Component{
 
     //将ID传值给父组件
     _press(statusId) {
+        if (this.props.label == null) {
+            InteractionManager.runAfterInteractions(() => {
+                this.props.navigator.push({
+                    screen: 'SubViewTest',
+                    backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                    backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                });
+            });
+        } else {
         this.props.callback(statusId);
+        }
     }
 
     listViewHandleData(result){
@@ -153,7 +163,7 @@ export default class MyOutSideWorkItemPage extends Component{
     render() {
         return(
 
-            <View style={styles.container}>
+            <View style={[styles.container,{height:this.props.label == null?SCREEN_HEIGHT-65:SCREEN_HEIGHT-112}]}>
                 {this.props.label == "待处理"&&data._pending.length === 0&&
                     <NoMessage/>
                 }
