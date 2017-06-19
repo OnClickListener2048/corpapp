@@ -9,7 +9,7 @@ import {
     Text,
     View,
     ScrollView,
-    Dimensions
+    Dimensions, Image
 } from 'react-native';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
@@ -92,8 +92,14 @@ export default class GetLicensePage extends Component{
                         inputWidth={{width:75}}
                         winWidth={{width:SCREEN_WIDTH-110}}
                     />
+                    <View style={styles.identityCardPhoto}>
+                        <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >身  份  证：</Text>
+                        <Image source={require('../img/obverse.png')} style={{marginTop:15}}/>
+                        <Image source={require('../img/reverse.png')} style={{marginLeft:27,marginTop:15,
+                            justifyContent:'flex-end'}}/>
+                    </View>
                     <View
-                        style={{paddingTop:15,backgroundColor:'white'}}>
+                        style={{paddingTop:5,backgroundColor:'white'}}>
                     <TextInputView
                         textName={'注  册  号：'}
                         inputWidth={{width:80}}
@@ -131,6 +137,10 @@ export default class GetLicensePage extends Component{
                         inputWidth={{width:80}}
                         winWidth={{width:SCREEN_WIDTH-115}}
                     />
+                    </View>
+                    <View style={[styles.identityCardPhoto,{height:150}]}>
+                        <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >经营执照：</Text>
+                        <Image source={require('../img/obverse.png')} style={{marginTop:10}}/>
                     </View>
                 </ScrollView>
 

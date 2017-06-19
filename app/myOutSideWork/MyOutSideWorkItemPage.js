@@ -133,7 +133,7 @@ export default class MyOutSideWorkItemPage extends Component{
         }else if(this.props.label == "全部"){
             var res = this.listViewHandleData(data._finished);
         }else{
-            var res = this.listViewHandleData(data._pending);
+            var res = this.listViewHandleData(data._finished);
         }
         console.log(res)
         this.setState({

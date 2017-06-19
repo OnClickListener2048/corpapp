@@ -17,8 +17,16 @@ const styles = StyleSheet.create({
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
         height:130,
+        flexDirection: 'row',
+        justifyContent:'space-between',
         backgroundColor: '#FFFFFF',
-        flexDirection: 'column'
+        // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
+    },
+    identityCardPhoto: {
+        width: SCREEN_WIDTH,
+        height:100,
+        backgroundColor: '#FFFFFF',
+        flexDirection: 'row'
         // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
     },
 
