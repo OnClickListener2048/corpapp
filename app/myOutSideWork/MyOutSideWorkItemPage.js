@@ -85,14 +85,9 @@ export default class MyOutSideWorkItemPage extends Component{
         label: PropTypes.string,
     };
 
-    toSubViewTest() {
-        InteractionManager.runAfterInteractions(() => {
-            this.props.navigator.push({
-                screen: 'SubViewTest',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            });
-        });
+    //将ID传值给父组件
+    _press(statusId) {
+        this.props.callback(statusId);
     }
 
     listViewHandleData(result){
@@ -140,7 +135,7 @@ export default class MyOutSideWorkItemPage extends Component{
     _renderRow(rowData, sectionID, rowID) {
 
         return (
-            <TouchableOpacity onPress={() => {this.toSubViewTest()}}>
+            <TouchableOpacity onPress={() => {this._press(this, 1)}}>
                 <MyOutSideWorkCell
                     statusIcon = {rowData.statusIcon}
                     statusName = {rowData.statusName}

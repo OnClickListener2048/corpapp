@@ -15,34 +15,31 @@ const dismissKeyboard = require('dismissKeyboard');
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
 
-// const Page = ({label}) => (
-
-        /*<View style={styles.container}>*/
-                /*<Image style={styles.noMessageImg}*/
-                       /*source = {require('../img/no_message.png')}/>*/
-                /*<Text style={styles.welcome}>*/
-                    /*{label}*/
-                /*</Text>*/
-
-        /*</View>*/
-
-            {/*<View style={styles.container}>*/}
-            {/*<ListView*/}
-                {/*dataSource={this.state.dataSource}*/}
-                {/*renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}*/}
-            {/*/>*/}
-        {/*</View>*/}
-
-// );
-
-
-
 export default class MyOutSideWorkPage extends Component{
 
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
+
+    //获取item列表项的ID，跳转并传值
+    _callback(statusId) {
+
+        this.setState({
+            status: statusId,
+        });
+
+        if(statusId!=0){
+            InteractionManager.runAfterInteractions(() => {
+                this.props.navigator.push({
+                    screen: 'SubViewTest',
+                    backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                    backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                });
+            });
+        }
+
+    }
 
 
     render(){
@@ -61,10 +58,12 @@ export default class MyOutSideWorkPage extends Component{
                      because ScrollableTabView passing only this prop to tabs.
                      */}
                     <MyOutSideWorkItemPage tabLabel={{label: "待处理", badge: 2,theLast:1}}
-                          label="待处理"
+                          label="待处理" callback={this._callback.bind(this)}
                     />
-                    <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"/>
-                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="已完成"/>
+                    <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"
+                                           callback={this._callback.bind(this)}/>
+                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="已完成"
+                                           callback={this._callback.bind(this)}/>
                 </ScrollableTabView>
             </View>
         );
