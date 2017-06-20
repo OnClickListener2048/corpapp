@@ -25,6 +25,10 @@ export default class CompanyInfoView extends Component {
         winWidth:PropTypes.object,
     };
 
+    _inputContent(content){
+        this.props.callback(content);
+    }
+
     render(){
         return(
             <View style={styles.container}>
@@ -38,7 +42,8 @@ export default class CompanyInfoView extends Component {
                                    style={styles.textInput} placeholder='' returnKeyType='next'
                                    onChangeText={
                                        (legalPerson) => {
-                                           this.setState({legalPerson});
+                                           this.setState({content:legalPerson});
+                                           this._inputContent(legalPerson);
                                        }
                                    }/>
                     </View>

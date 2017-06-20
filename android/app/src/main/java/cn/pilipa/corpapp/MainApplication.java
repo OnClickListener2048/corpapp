@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.reactnativenavigation.NavigationApplication;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 
@@ -35,6 +36,7 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
               return Arrays.<ReactPackage>asList(
                   //new MainReactPackage(),
+            new ImagePickerPackage(),
                     //new NavigationReactPackage(),
                     new RNDeviceInfo(),
                     new RealmReactPackage(),
