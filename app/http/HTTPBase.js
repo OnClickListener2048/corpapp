@@ -43,7 +43,7 @@ HTTPBase.getEx = async function (url, params, headers) {
  * @return {Promise}
  *
  * */
-HTTPBase.postEx = async function (url, params, headers) {
+HTTPBase.postEx = async function (url, params= {}, headers= null) {
     let responseJson = await this.post(url, params, headers);
     console.log('HTTPBase.postEx()');
     return HTTPBase._handleResponse(responseJson);
@@ -68,7 +68,7 @@ HTTPBase._handleResponse = async function(responseJson) {
  * @return {Promise}
  *
  * */
-HTTPBase.get = async function (url, params, headers) {
+HTTPBase.get = async function (url, params= {}, headers= null) {
     let paramsFinal = await this._commonParams(params);
 
     if (paramsFinal) {
@@ -131,7 +131,7 @@ HTTPBase.get = async function (url, params, headers) {
  * @return {Promise}
  *
  **/
-HTTPBase.post = async function (url, params, headers) {
+HTTPBase.post = async function (url, params= {}, headers= null) {
     let paramsArray = await this._commonParams(params);
     let formData = new FormData();
     for (let [k, v] of Object.entries(paramsArray)) {
@@ -172,7 +172,6 @@ HTTPBase._parseHttpResult = async function (response) {
 
 HTTPBase._commonHeaders =  function (headers) {
     let finalHeaders = new Headers();
-    // finalHeaders.append('Cookie', '');
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
     if(headers) {
         // 获取 headers 内所有的 key
