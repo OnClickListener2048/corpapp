@@ -24,7 +24,6 @@ class VerifyProcessTipView extends Component{
         super(props)
         this.state = {
             tipArr: this.props.tipArr,
-            messageTitle: this.props.messageTitle,
             currentNum: this.props.currentNum
 
 
@@ -33,7 +32,6 @@ class VerifyProcessTipView extends Component{
 
     static propTypes = {
         tipArr: PropTypes.array,
-        messageTitle: PropTypes.string,
         currentNum: PropTypes.number
     };
 
@@ -82,7 +80,7 @@ class VerifyProcessTipView extends Component{
 
 
     render(){
-        const { messageTitle,tipArr,currentNum} = this.state
+        const {tipArr,currentNum} = this.state
 
         return(
 

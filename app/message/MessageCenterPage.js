@@ -240,7 +240,7 @@ export default class MessageCenterPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
-                screen: 'GetLicensePage',
+                screen: 'VerifyCompanyName',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });
@@ -270,7 +270,7 @@ export default class MessageCenterPage extends Component {
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
                              messageTime = {rowData.date}
-                             messageIcon={rowData.type == 'outservice'?  rowData.read ?  require('../img/system_y.png') : require('../img/system.png') : require('../img/field.png')}
+                             messageIcon={rowData.type == 'outservice'?  rowData.read == 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read == 'true'? require('../img/task_y.png') :  require('../img/task.png')}
                 />
 
 

@@ -14,13 +14,14 @@ import styles from './css/VerifyCompanyStyle'
 import CompanyInfoView from '../test/view/CompanyInfoView'
 import CommunalNavBar from '../main/GDCommunalNavBar';
 import VerifyProcessTipView from './view/VerifyProcessTipView'
-import CompanyAddress from "../test/view/CompanyAddress";
+import DottedLine from './view/DottedLine'
 
-var details = [
-    {processName:'确认材料'},
-    {processName:'开始任务'},
-    {processName:'结束任务'},
-];
+import CompanyAddress from "../test/view/CompanyAddress";
+import ProcessBtnView from "./view/ProcessBtnView";
+const window = Dimensions.get('window');
+
+export const SCREEN_HEIGHT = window.height;
+export const SCREEN_WIDTH = window.width;
 
 export default class VerifyCompanyName extends Component{
     static navigatorStyle = {
@@ -39,11 +40,7 @@ export default class VerifyCompanyName extends Component{
     }
 
 
-    // renderExpenseItem(item , i) {
-    //     return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
-    // }
-
-    renderTest() {
+    renderWorkerInfo() {
 
         return  <CompanyInfoView companyName='CRM'
                                  ContactsName='野原新之助'
@@ -62,7 +59,29 @@ export default class VerifyCompanyName extends Component{
 
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView messageTitle={'呵呵哒'} currentNum={0}/>
+        return <VerifyProcessTipView currentNum={0}/>
+    }
+
+    renderProcessBtnView(){
+
+        return <ProcessBtnView/>
+    }
+
+
+
+    renderLineView(){
+
+        return      <View style={[{width : SCREEN_WIDTH - 30,marginLeft:15, height : 1}]}>
+            <DottedLine style={{height : 1, flex: 1,marginLeft:15,alignItems:'center',justifyContent:'center', backgroundColor :'#c8c8c8'}}
+                        dottedLineWidth={SCREEN_WIDTH - 30} grayWidth={2} whiteWidth={2}/>
+        </View>
+    }
+
+    renderCompanyTipView(){
+
+        return  <View style={[{width : SCREEN_WIDTH,backgroundColor:'#FFFFFF'}]}>
+            <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
+                 </View>
     }
 
     render() {
@@ -74,19 +93,17 @@ export default class VerifyCompanyName extends Component{
 
 
                     {this.renderVerifyProcessTipView()}
+                    {this.renderProcessBtnView()}
 
 
                     {<View style={[{height:15}]}></View>}
+                    {this.renderCompanyTipView()}
 
-                    {<View >
-                        {this.renderTest()}
+                    {this.renderLineView()}
 
-                    </View>}
+                    {this.renderWorkerInfo()}
+                    {this.compAddress()}
 
-                    {<View >
-                        {this.compAddress()}
-
-                    </View>}
                 </ScrollView>
 
 
