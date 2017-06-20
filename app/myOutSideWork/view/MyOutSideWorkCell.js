@@ -40,18 +40,14 @@ export default class MessageCenterCell extends Component {
                 style={styles.rowStyle}>
                 <View
                     style={styles.realRowStyle}>
-                    <View style={[styles.badgeBubble,
-                        {backgroundColor: statusIconBg}]}>
-                        <Text style={styles.badgeText}>{statusIcon}</Text>
-                    </View>
                     <View
                         style={styles.titleViewStyle}>
                         <Text
                             textAlign='left'
-                            style={[{fontSize: 17,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{statusName}</Text>
+                            style={[{fontSize: 17,marginTop: 15, marginLeft : 20 , color : '#323232'}] }>{statusName}</Text>
                         <Text
                             textAlign='left'
-                            style={[{fontSize: 14,marginTop: 10, marginLeft :0 , color : '#969696'}] }>{companyName}</Text>
+                            style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : '#969696'}] }>{companyName}</Text>
                     </View>
                     <Text
                         textAlign='center'
@@ -60,6 +56,10 @@ export default class MessageCenterCell extends Component {
                     <Text
                         textAlign='right'
                         style={[styles.timeTitleStyle]}>{statusCourse}</Text>
+                </View>
+                <View style={[styles.badgeBubble,
+                    {backgroundColor: statusIconBg}]}>
+                    <Text style={styles.badgeText}>{statusIcon}</Text>
                 </View>
             </View>
         )

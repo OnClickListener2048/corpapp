@@ -96,7 +96,7 @@ export default class MyOutSideWorkPage extends Component{
                     />
                     <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"
                                            callback={this._callback.bind(this)}/>
-                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="已完成"
+                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 10,theLast:0}} label="已完成"
                                            callback={this._callback.bind(this)}/>
                 </ScrollableTabView>
             </View>

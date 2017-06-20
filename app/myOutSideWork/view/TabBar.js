@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
 
   },
   scrollContainer: {
-    paddingRight: 20,
+    paddingRight: 0,
   },
   tabs: {
     height:46,
@@ -149,7 +149,7 @@ class TabBar extends Component {
                 borderTopWidth: 0,
                 borderLeftWidth: 0,
                 borderRightColor: '#d2d2d2',
-                paddingRight:33,
+                paddingRight:32,
                 paddingLeft:33}}>
               <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
             </View>

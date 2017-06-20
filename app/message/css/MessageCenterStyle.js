@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
     },
     titleViewStyle: {
-        marginLeft: 10,
+        marginLeft: 20,
          marginRight: 22.5,
         flex: 1,
         height : 65,

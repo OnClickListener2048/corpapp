@@ -17,28 +17,28 @@ const styles = StyleSheet.create({
              marginTop: 18,
              height : 75,
              backgroundColor: '#FAFAFA',
+             // backgroundColor:'red',
              flexDirection: 'column'
-
          },
         realRowStyle: {
             marginLeft: 23.5,
             marginRight: 15,
             height : 75,
             // justifyContent : 'space-between',
-            // borderBottomColor: 'blue',
             borderBottomWidth: 1,
             backgroundColor: '#FFFFFF',
+            // backgroundColor:'yellow',
             flexDirection: 'row',
             borderColor: '#FAFAFA',
             borderRadius: 6,
             borderWidth: 1,
-
         },
     badgeBubble: {
         width: 37,
         height:37,
-        marginLeft: -15,
-        alignSelf: 'center',
+        position:'absolute',
+        marginLeft: 7,
+        marginTop:18,
         borderRadius: 20,
         alignItems: 'center',
         justifyContent: 'center'
