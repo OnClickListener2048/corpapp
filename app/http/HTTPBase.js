@@ -16,7 +16,6 @@ import DeviceInfo from 'react-native-device-info';
 
 var HTTPBase = {};
 
-
 /**
  * 支持报文校验处理的GET请求.
  *
@@ -147,7 +146,6 @@ HTTPBase.post = async function (url, params= {}, headers= null) {
     });
 
     return this._parseHttpResult(response);
-
 };
 
 HTTPBase._parseHttpResult = async function (response) {
@@ -161,7 +159,7 @@ HTTPBase._parseHttpResult = async function (response) {
             return Promise.reject(responseJson);
         } catch (e) {
             console.log("post() will throw2 error ", e);
-            return Promise.reject({'code':  response.status, 'msg':  response.statusText});
+            return Promise.reject(this._makeErrorMsg(response));
         }
     }
 
@@ -170,7 +168,30 @@ HTTPBase._parseHttpResult = async function (response) {
     return responseJson;
 }
 
-HTTPBase._commonHeaders =  function (headers) {
+// 处理默认的Http错误信息, 确保msg不为空
+HTTPBase._makeErrorMsg =  function (response) {
+
+    let {status, statusText} = response;
+    if (statusText === undefined) {
+        let errorMap = new Map();
+        errorMap.set(200, '成功');
+        errorMap.set(400, '请求不正确');
+        errorMap.set(401, '没有权限');
+        errorMap.set(404, '找不到文件或目录');
+        errorMap.set(413, '发送内容过大');
+        errorMap.set(500, '服务器内部错误');
+        errorMap.set(502, '服务暂时不可用');
+        errorMap.set(504, '服务器处理超时');
+
+        statusText= errorMap.get(status);
+        if (statusText === undefined) {
+            statusText = '请求服务出错';
+        }
+    }
+    return {'code':  status, 'msg':  statusText}
+}
+
+HTTPBase._commonHeaders =  function (headers) : Headers {
     let finalHeaders = new Headers();
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
     if(headers) {

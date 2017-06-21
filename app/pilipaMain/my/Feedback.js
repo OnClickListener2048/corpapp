@@ -16,6 +16,8 @@ import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
+import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
+import * as apis from '../../apis';
 
 export default class Feedback extends Component {
     static navigatorStyle = {
@@ -28,18 +30,9 @@ export default class Feedback extends Component {
         this.state = {
             userName: '-',     // 用户名
             mobile: '', //手机号
+            message: '',//反馈内容
+            messageValid: false,// 内容有效可提交
         };
-
-        UserInfoStore.getUserInfo().then(
-            (user) => {
-                if (user !== null) {
-                    this.setState({userName: user.name, mobile: user.mobile});
-                }
-            },
-            (e) => {
-                console.log("读取信息错误:", e);
-            },
-        );
     }
 
     componentWillMount() {
@@ -63,13 +56,12 @@ export default class Feedback extends Component {
                     <TextInput underlineColorAndroid='transparent'
                                multiline={true}
                                value={this.state.smsCode}
-                               secureTextEntry={false} maxLength={1024} keyboardType='default'
+                               maxLength={1024} keyboardType='default'
                                style={styles.codeInput} placeholder='请输入反馈内容'
                                returnKeyType='done'
-                               onChangeText={(smsCode) => {
-                                   this.setState({smsCode})
-                                   let smsCodeValid = (smsCode.length == 6);
-                                   this.setState({smsCode, smsCodeValid});
+                               onChangeText={(message) => {
+                                   let messageValid = (message.length > 0 && message.length <= 1024);
+                                   this.setState({message, messageValid});
                                }}
 
                                onSubmitEditing={() => {
@@ -90,8 +82,10 @@ export default class Feedback extends Component {
                     </Text>
                 </View>
 
-                <TouchableWithoutFeedback onPress={() => {this._doLogout()}}>
-                    <View style={styles.buttonView}>
+                <TouchableWithoutFeedback onPress={() => {this._doFeedback()}}>
+                    <View style={[styles.buttonView,
+                        {backgroundColor: (
+                            (this.state.messageValid ) ? '#ef0c35' : '#e6e6e6')}]}>
                         <Text style={styles.submitButtonText}>提交</Text>
                     </View>
                 </TouchableWithoutFeedback>
@@ -100,16 +94,25 @@ export default class Feedback extends Component {
         );
     }
 
-    // 登出
-    _doLogout() {
-        Alert.alert('确定退出', '',
-            [
-                {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-                {
-                    text: '确定',
-                    onPress: () => {},
-                },]
-            , {cancelable: false});
+    _doFeedback() {
+        let loading = SActivityIndicator.show(true, "提交反馈中");
+        let message = this.state.message;
+        let userName = this.state.userName;
+
+        apis.sendFeedback({message , userName}).then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+                Toast.show('反馈提交成功');
+                if(responseData !== null && responseData.data !== null ) {
+                    this.props.navigator.pop();
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("反馈提交失败:" , e);
+                Toast.show('反馈提交失败:' + JSON.stringify(e));
+            },
+        );
     }
 }
 
@@ -154,9 +157,7 @@ const styles = StyleSheet.create({
     },
 
     buttonView: {
-        borderColor: '#e6272e',
         margin: 0,
-        borderWidth: 1.5,
         borderRadius: 5,
         alignSelf: 'center',
         justifyContent: 'center',
@@ -166,7 +167,7 @@ const styles = StyleSheet.create({
     },
     submitButtonText: {
         fontSize: 30 / 2,
-        color: '#e6272e',
+        color: '#ffffff',
         textAlign: 'center',
     },
 

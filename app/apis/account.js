@@ -3,22 +3,22 @@
  */
 import {postApi, getApi} from './common';
 
-// export function register({username = '', mobile = '', password, code}) {
-//   return postApi('/register', {username, mobile, password, code});
-// }
-
+// 登陆
 export function login( phone = '', smsCode = '') {
   return postApi('/app/v0/user/login/phone', {phone, smsCode});
 }
 
+// 短信验证码
 export async function sendVerifyCode(phone = '', verifyCode = '') {
     return await postApi('app/v0/user/smscode/get', {phone, verifyCode});
 }
 
-// export function resetPassword({mobile = '', email = '', password = '', code}) {
-//   return getApi('/resetPassword', {mobile, email, password, code});
-// }
+// 问题反馈
+export function sendFeedback({message = '', userName = ''}) {
+  return postApi('/resetPassword', {message, userName});
+}
 
+// 用户信息
 export function userInfo() {
   return postApi('/app/v0/user/info');
 }

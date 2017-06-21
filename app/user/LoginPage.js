@@ -5,6 +5,7 @@
 
 import React, {Component} from 'react';
 import {
+    Alert,
     AppRegistry,
     StyleSheet,
     Text,
@@ -82,13 +83,6 @@ export default class LoginPage extends Component {
         );
     }
 
-    // 返回中间按钮
-    renderTitleItem() {
-        return (
-            <Text style={styles.navbarTitleItemStyle}>登录</Text>
-        );
-    }
-
     // 准备加载组件
     componentWillMount() {
         // 发送通知
@@ -137,6 +131,17 @@ export default class LoginPage extends Component {
                 SActivityIndicator.hide(loading);
                 console.log("登录错误返回22:" , e);
                 Toast.show('登录错误返回22' + JSON.stringify(e));
+                let errMsg = e.msg;
+                if(errMsg === undefined) {
+                    errMsg = '请输入正确的验证码或手机号码';
+                }
+                Alert.alert(errMsg, '',
+                    [
+                        {
+                            text: '确定',
+                            onPress: () => {},
+                        },]
+                    , {cancelable: false});
             },
         );
     }

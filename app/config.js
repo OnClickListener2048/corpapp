@@ -13,9 +13,9 @@ export const RN_VERSION = '1.3.0';
 let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
-
-export let SCHEME = 'https';
-export let DOMAIN_API = 'api.xxx.com';
+// TODO 线上API服务器接口地址
+export let SCHEME = 'http';
+export let DOMAIN_API = '123.56.31.133:8081';
 if(DEBUG) {// 测试环境变量, 上线时应删除
     SCHEME = 'http';
     DOMAIN_API = '123.56.31.133:8081';
