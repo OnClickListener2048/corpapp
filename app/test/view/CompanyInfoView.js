@@ -4,8 +4,9 @@
 
 
 import React, {PropTypes} from 'react';
-import {View, Text,Image,Dimensions} from 'react-native';
+import {View, Text,Image,Dimensions,Linking,TouchableOpacity} from 'react-native';
 import styles from '../style/SubViewStyle'
+
 
 const window = Dimensions.get('window');
 
@@ -34,6 +35,12 @@ export default class CompanyInfoView extends React.Component {
         SalesPhone:PropTypes.string,
     };
 
+    _callPhone(phoneNumber) {
+
+        return Linking.openURL('tel:'+ phoneNumber);
+
+
+    }
 
     render() {
        // const { style} = this.props
@@ -85,6 +92,7 @@ export default class CompanyInfoView extends React.Component {
                             numberOfLines={1}
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话: {ContactsPhone}</Text>
+                        <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
                         <Image
                             source={require('../../img/phone.png')}
                             style={[{
@@ -96,6 +104,8 @@ export default class CompanyInfoView extends React.Component {
                             }
 
                         />
+                        </TouchableOpacity>
+
 
                     </View>
 
@@ -127,6 +137,7 @@ export default class CompanyInfoView extends React.Component {
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话: {SalesPhone}</Text>
 
+                        <TouchableOpacity onPress={() => {this._callPhone(SalesPhone)}}>
                         <Image
                             source={require('../../img/phone.png')}
                             style={[{
@@ -138,6 +149,8 @@ export default class CompanyInfoView extends React.Component {
                             }
 
                         />
+                        </TouchableOpacity>
+
                     </View>
 
                 </View>
