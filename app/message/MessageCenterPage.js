@@ -326,7 +326,9 @@ export default class MessageCenterPage extends Component {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <NoMessage/>
+                    <NoMessage
+                    textContent='暂无消息'
+                    active={require('../img/no_message.png')}/>
                 </View>
             );
         }else {         // 有数据

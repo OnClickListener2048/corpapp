@@ -7,7 +7,9 @@ import {
     Text,
     View,
     ScrollView,
-    Dimensions
+    Dimensions,
+    TouchableOpacity,
+    InteractionManager
 } from 'react-native';
 
 import styles from './style/SubViewStyle'
@@ -43,8 +45,25 @@ export default class SubViewTest extends Component{
 
     }
 
+    //跳转客户审核具体信息
+    toLicense(){
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                screen: 'GetLicensePage',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            });
+        });
+    }
+
     renderExpenseItem(item , i) {
-        return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
+        return (
+            <TouchableOpacity onPress={() => {
+                this.toLicense()
+            }}>
+                <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>
+            </TouchableOpacity>
+    )
     }
 
     renderTest() {

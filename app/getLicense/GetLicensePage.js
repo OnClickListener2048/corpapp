@@ -22,20 +22,6 @@ const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
-//图片选择器
-import ImagePicker from 'react-native-image-picker';
-//图片选择器参数设置
-var options = {
-    title: '请选择图片来源',
-    cancelButtonTitle:'取消',
-    takePhotoButtonTitle:'拍照',
-    chooseFromLibraryButtonTitle:'相册图片',
-    storageOptions: {
-        skipBackup: true,
-        path: 'images'
-    }
-};
-
 var details = [
     {processName:'确认材料'},
     {processName:'开始任务'},
@@ -53,8 +39,6 @@ export default class GetLicensePage extends Component{
 
         this.state = {
             renderUnderline: true,
-            avatarSource: null,
-            blicenseSource:null,
 
         };
     }
@@ -77,39 +61,6 @@ export default class GetLicensePage extends Component{
     renderVerifyProcessTipView(){
 
         return <VerifyProcessTipView messageTitle={'呵呵哒'} currentNum={0}/>
-    }
-
-    //选择照片按钮点击
-    choosePic(type) {
-        ImagePicker.showImagePicker(options, (response) => {
-            console.log('Response = ', response);
-
-            if (response.didCancel) {
-                console.log('用户取消了选择！');
-            }
-            else if (response.error) {
-                console.log("ImagePicker发生错误：" + response.error);
-
-            }
-            else {
-                let source = { uri: response.uri };
-                // You can also display the image using data:
-                // let source = { uri: 'data:image/jpeg;base64,' + response.data };
-                console.log(response.uri+"<==>"+source+"<==>");
-                if(type === 0) {//身份证
-                    this.setState({
-                        avatarSource: source,
-                    });
-                }else{//营业执照
-                    this.setState({
-                        blicenseSource: source,
-                    });
-                }
-                console.log("=====a"+this.state.avatarSource+"======a");
-
-            }
-        });
-
     }
 
     //输入框回调
@@ -149,11 +100,7 @@ export default class GetLicensePage extends Component{
                     />
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}}>身  份  证：</Text>
-                        <TouchableOpacity onPress={this.choosePic.bind(this,0)}>
-                            { this.state.avatarSource === null ? <Image source={require('../img/reverse.png')} style={{marginTop:15}}/> :
-                                <Image source={this.state.avatarSource} style={{marginTop:15,width:120,height:85}}/>
-                            }
-                        </TouchableOpacity>
+                        <Image source={require('../img/reverse.png')} style={{marginTop:15}}/>
                         {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                             {/*justifyContent:'flex-end'}}/>*/}
                     </View>
@@ -204,11 +151,7 @@ export default class GetLicensePage extends Component{
                     </View>
                     <View style={[styles.identityCardPhoto,{height:150}]}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >经营执照：</Text>
-                        <TouchableOpacity onPress={this.choosePic.bind(this,1)}>
-                            { this.state.blicenseSource === null ? <Image source={require('../img/blicense.png')} style={{marginTop:10}}/> :
-                                <Image source={this.state.blicenseSource} style={{marginTop:15,width:120,height:85}}/>
-                            }
-                        </TouchableOpacity>
+                        <Image source={require('../img/blicense.png')} style={{marginTop:10}}/>
                     </View>
                 </ScrollView>
 

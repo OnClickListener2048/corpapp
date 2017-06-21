@@ -40,6 +40,7 @@ export default class MyOutSideWorkPage extends Component{
 
     }
 
+    //点击右按钮
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
@@ -104,29 +105,3 @@ export default class MyOutSideWorkPage extends Component{
 }
 
 }
-// const styles = StyleSheet.create({
-//     navBarLeftItemStyle: {
-//         width:20,
-//         height:20,
-//         marginLeft:15,
-//     },
-//     navBarTitleItemStyle: {
-//         fontSize:17,
-//         color:'black',
-//         marginRight:50
-//     },
-//     container: {
-//         flex: 1,
-//         backgroundColor: '#FAFAFA',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//     },
-//     welcome: {
-//         fontSize: 18,
-//         marginTop:20,
-//         color:'#969696',
-//     },
-//     noMessageImg:{
-//         marginTop:160,
-//     }
-// });

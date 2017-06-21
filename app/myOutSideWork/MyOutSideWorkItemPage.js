@@ -165,19 +165,27 @@ export default class MyOutSideWorkItemPage extends Component{
 
             <View style={[styles.container,{height:this.props.label == null?SCREEN_HEIGHT-65:SCREEN_HEIGHT-112}]}>
                 {this.props.label == "待处理"&&data._pending.length === 0&&
-                    <NoMessage/>
+                    <NoMessage
+                        textContent='暂无消息'
+                        active={require('../img/no_message.png')}/>
                 }
 
                 {this.props.label == "进行中"&&data._waiting.length === 0&&
-                    <NoMessage/>
+                    <NoMessage
+                        textContent='加载失败，点击重试'
+                        active={require('../img/load_failed.png')}/>
                 }
 
                 {this.props.label == "已完成"&&data._finished.length === 0&&
-                    <NoMessage/>
+                    <NoMessage
+                        textContent='网络错误（错误代码：4009）下拉重新开始'
+                        active={require('../img/network_error.png')}/>
                 }
 
                 {this.props.label == "全部"&&data._finished.length === 0&&
-                    <NoMessage/>
+                    <NoMessage
+                        textContent='暂无消息'
+                        active={require('../img/no_message.png')}/>
                 }
 
                 <ListView
