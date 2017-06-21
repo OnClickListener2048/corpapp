@@ -40,7 +40,7 @@ export default class GDLaunchPage extends Component {
         //     animated: false,
         // });
 
-        let {isReset = false } = this.props;// 重置
+        let {isReset = false } = this.props;// 重置, 清理所有登录信息
 
         if (isReset) {
             this.reset();
@@ -60,8 +60,8 @@ export default class GDLaunchPage extends Component {
     }
 
     reset() {
-        UserInfoStore.setUserToken(null);
-        UserInfoStore.setUserInfo(null);
+        UserInfoStore.removeUserToken(null);
+        UserInfoStore.removeUserInfo(null);
     }
 
     // 读取用户信息

@@ -19,7 +19,6 @@ import {
 import ProgressiveInput from '../view/ClearFocusEdit';
 // 引入外部文件
 import CommunalNavBar from '../main/GDCommunalNavBar';
-import LaunchPage from '../main/GDLaunchPage';
 import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
 import styles from './css/LoginPageStyle';
@@ -29,6 +28,7 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
 import {navToBootstrap, navToMainTab} from '../navigation';
+import InternetStatusView from '../modules/react-native-internet-status-view';
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
@@ -104,7 +104,7 @@ export default class LoginPage extends Component {
     }
 
     _doLogin() {
-        if(!(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid)) {
+        if (!(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid)) {
             // Toast.show('请输入正确的手机号, 验证码并同意许可协议.');
             return;
         }
@@ -113,10 +113,10 @@ export default class LoginPage extends Component {
         apis.login(this.state.mobile, this.state.smsCode).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                console.log("登录成功返回:" , responseData);
+                console.log("登录成功返回:", responseData);
                 Toast.show('登录成功返回' + responseData.data.name + "token="
-                + responseData.data.token);
-                if(responseData !== null && responseData.data !== null && responseData.data.token) {
+                    + responseData.data.token);
+                if (responseData !== null && responseData.data !== null && responseData.data.token) {
                     UserInfoStore.setUserToken(responseData.data.token).then(
                         v => {
                             // this.readUserInfo();
@@ -129,22 +129,25 @@ export default class LoginPage extends Component {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
-                console.log("登录错误返回22:" , e);
+                console.log("登录错误返回22:", e);
                 Toast.show('登录错误返回22' + JSON.stringify(e));
                 let errMsg = e.msg;
-                if(errMsg === undefined) {
+                if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';
                 }
                 Alert.alert(errMsg, '',
                     [
                         {
                             text: '确定',
-                            onPress: () => {},
+                            onPress: () => {
+                            },
                         },]
                     , {cancelable: false});
             },
         );
     }
+
+
 
     render() {
         return (
@@ -155,6 +158,16 @@ export default class LoginPage extends Component {
                     {/*leftItem={() => this.renderLeftItem()}*/}
                     {/*titleItem={() => this.renderTitleItem()}*/}
                     {/*/>*/}
+                    <InternetStatusView
+                        textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"
+                        style={{
+                            justifyContent: 'center',
+                            alignSelf: 'stretch',
+                            backgroundColor: '#00000088',
+                            marginTop: px2dp(50),
+                            height: 25
+                        }}
+                    />
 
                     <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                     <View style={{height: px2dp(100),}}/>
@@ -262,11 +275,13 @@ export default class LoginPage extends Component {
                         </View>
 
                         <TouchableWithoutFeedback onPress={this._doLogin}>
-                        <View style={[styles.buttonview,
-                            {backgroundColor: (
-                                (this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')}]}>
-                            <Text style={styles.logintext}>登录</Text>
-                        </View>
+                            <View style={[styles.buttonview,
+                                {
+                                    backgroundColor: (
+                                        (this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')
+                                }]}>
+                                <Text style={styles.logintext}>登录</Text>
+                            </View>
                         </TouchableWithoutFeedback>
 
                     </KeyboardAvoidingView>

@@ -80,7 +80,7 @@ export default class PLPMine extends Component {
                 </TouchableWithoutFeedback>
                 <View style={styles.lineviewlast}/>
 
-                <TouchableWithoutFeedback onPress={() => {this._doLogout()}}>
+                <TouchableWithoutFeedback onPress={this._doLogout}>
                     <View style={styles.buttonView}>
                         <Text style={styles.submitButtonText}>退出</Text>
                     </View>

@@ -150,7 +150,6 @@ HTTPBase.post = async function (url, params= {}, headers= null) {
 
 HTTPBase._parseHttpResult = async function (response) {
     if (!response.ok) {
-        // throw new Error(text);
         let text = await response.text();
         console.log("error response text:", text);
         try {
@@ -163,9 +162,22 @@ HTTPBase._parseHttpResult = async function (response) {
         }
     }
 
-    let responseJson = await response.json();
-    console.log("response:",  responseJson, "\n");
-    return responseJson;
+    try {
+        let text = await response.text();
+        try {
+            let responseJson = JSON.parse(text);
+            console.log("post() will throw2 ", JSON.stringify(responseJson));
+            return responseJson;
+        } catch (e) {
+            if(text !== '' && text.length > 0) {
+                return Promise.reject(text);
+            }
+        }
+    } catch (e) {
+        console.log("post() will throw2 error ", e);
+        return Promise.reject(this._makeErrorMsg(response));
+    }
+
 }
 
 // 处理默认的Http错误信息, 确保msg不为空

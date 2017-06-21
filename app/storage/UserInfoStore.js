@@ -20,6 +20,10 @@ UserInfoStore.setUserInfo = async function (value: Object) {
     return Preferences.set(KEY_USER_INFO, JSON.stringify(value));
 }
 
+UserInfoStore.removeUserInfo = async function () {
+    return Preferences.remove(KEY_USER_INFO);
+}
+
 UserInfoStore.getUserToken = async function () {
     return await Preferences.get(KEY_USER_TOKEN);
 }
@@ -27,5 +31,9 @@ UserInfoStore.getUserToken = async function () {
 UserInfoStore.setUserToken = async function (value: string) {
     return Preferences.set(KEY_USER_TOKEN, value);
 };
+
+UserInfoStore.removeUserToken = async function () {
+    return Preferences.remove(KEY_USER_TOKEN);
+}
 
 global.UserInfoStore = UserInfoStore;// 全局可用
