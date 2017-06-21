@@ -1348,6 +1348,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/corpapp.app/corpapp";
 			};
@@ -1388,6 +1389,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/corpapp.app/corpapp";
 			};
@@ -1419,7 +1421,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = biz.beansoft.corpapp;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = corpapp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1451,7 +1453,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = biz.beansoft.corpapp;
+				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = corpapp;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
