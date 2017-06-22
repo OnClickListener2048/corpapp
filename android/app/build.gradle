@@ -123,6 +123,31 @@ def elvisFile(thing) {
     return thing ? file(thing) : null;
 }
 
+task createBundle(type: Exec) {
+    println 'createBundle()'
+    def config = project.hasProperty("react") ? project.react : [];
+    // Set up dev mode, only for release mode
+    def devEnabled = false
+
+    def bundleAssetName = config.bundleAssetName ?: "index.android.bundle"
+    def entryFile = config.entryFile ?: "index.android.js"
+    def reactRoot = elvisFile(config.root) ?: file("../../")
+    def inputExcludes = config.inputExcludes ?: ["android/**", "ios/**"]
+    // Additional node and packager commandline arguments
+    def nodeExecutableAndArgs = config.nodeExecutableAndArgs ?: ["node"]
+    def extraPackagerArgs = config.extraPackagerArgs ?: []
+    def jsBundleFile = "android/app/src/main/assets/index.android.bundle"
+    def resourcesDir = "android/app/src/main/res/"
+
+    print inputExcludes
+
+    commandLine(*nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
+            "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
+}
+
+
+
+
 //apply from: "../../node_modules/react-native/react.gradle"
 //apply from: "./react.gradle"
 /**
