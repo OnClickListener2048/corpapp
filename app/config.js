@@ -51,9 +51,9 @@ export const tabsStyle = {
 // App 的默认样式(react-native-navigation)
 export const appStyle = {
     tabBarBackgroundColor: '#F5F5F5',
-        navBarButtonColor: '#c8c8c8',
+        navBarButtonColor: '#646464',
         tabBarButtonColor: '#c8c8c8',
-        navBarTextColor: '#ffffff',
+        navBarTextColor: '#323232',
         tabBarSelectedButtonColor: '#ff505c',
         navigationBarColor: '#F5F5F5',
         navBarBackgroundColor: '#F5F5F5',
