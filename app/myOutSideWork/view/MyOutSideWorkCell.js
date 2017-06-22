@@ -17,7 +17,6 @@ export default class MessageCenterCell extends Component {
             companyName: this.props.companyName,
             statusContent: this.props.statusContent,
             statusCourse: this.props.statusCourse,
-            statusIconBg: this.props.statusIconBg,
 
         }
     }
@@ -27,11 +26,34 @@ export default class MessageCenterCell extends Component {
         statusName: PropTypes.string,
         companyName: PropTypes.string,
         statusContent: PropTypes.string,
-        statusCourse: PropTypes.string,
-        statusIconBg: PropTypes.string,
+        statusCourse: PropTypes.number,
 
 
     };
+
+    _statusCourse(){
+        if(this.state.statusCourse==0){
+            return '待处理'
+        }else if(this.state.statusCourse==1){
+            return '进行中'
+        }else if(this.state.statusCourse==2){
+            return '已完成'
+        }else if(this.state.statusCourse==3){
+            return '已取消'
+        }
+    }
+
+    _statusCourseColor(){
+        if(this.state.statusCourse==0){
+            return 'orange'
+        }else if(this.state.statusCourse==1){
+            return 'green'
+        }else if(this.state.statusCourse==2){
+            return 'red'
+        }else if(this.state.statusCourse==3){
+            return 'grey'
+        }
+    }
 
     render() {
         const {statusIcon,statusName,companyName,statusContent,statusCourse,statusIconBg} = this.state
@@ -55,10 +77,10 @@ export default class MessageCenterCell extends Component {
 
                     <Text
                         textAlign='right'
-                        style={[styles.timeTitleStyle]}>{statusCourse}</Text>
+                        style={[styles.timeTitleStyle]}>{this._statusCourse()}</Text>
                 </View>
                 <View style={[styles.badgeBubble,
-                    {backgroundColor: statusIconBg}]}>
+                    {backgroundColor: this._statusCourseColor()}]}>
                     <Text style={styles.badgeText}>{statusIcon}</Text>
                 </View>
             </View>

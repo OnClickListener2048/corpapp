@@ -9,52 +9,9 @@ import SubViewTest from "../test/SubViewTest";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
 import MyOutSideWorkPage from "./MyOutSideWorkPage";
-
-//模拟我的外勤数据
-var data = (function(){
-    var obj = {};
-    var _pending = [];
-    for(var i = 0;i < 15; i++){//待处理
-        _pending.push({
-            "userId" : i,
-            "statusIcon": "注",
-            "statusName": "注册公司",
-            "companyName": "医保化纤电子商务",
-            "statusContent": "银行开户",
-            "statusCourse": "待处理",
-            "statusIconBg": "orange",
-        })
-    }
-
-    var _waiting = [];
-    for(var i = 0;i < 15; i++){//进行中
-        _waiting.push({
-            "userId" : i,
-            "statusIcon": "名",
-            "statusName": "名称变更",
-            "companyName": "张三丰",
-            "statusContent": "核实名称",
-            "statusCourse": "进行中",
-            "statusIconBg": "green",
-        })
-    }
-
-    var _finished = [];
-    for(var i = 0;i < 15; i++){//已完成
-        _finished.push({
-            "userId" : i,
-            "statusIcon": "名",
-            "statusName": "名称变更",
-            "companyName": "张三丰",
-            "statusContent": "核实名称",
-            "statusCourse": "已完成",
-            "statusIconBg": "red",
-        })
-    }
-
-    obj = {"_pending":_pending,"_waiting":_waiting,"_finished":_finished}
-    return obj;
-})()
+import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import Toast from 'react-native-root-toast';
+import {loadOutSourceList} from "../apis/outSource";
 
 export default class MyOutSideWorkItemPage extends Component{
 
@@ -78,12 +35,19 @@ export default class MyOutSideWorkItemPage extends Component{
                 rowHasChanged: (row1, row2) => row1 !== row2,
                 sectionHeaderHasChanged: (s1, s2) => s1 !== s2
             }),
+            loaded:false,
         }
+        this.outList = [];
     }
 
     static propTypes = {
         label: PropTypes.string,
     };
+
+    componentWillMount() {
+        this._loadList();
+
+    }
 
     //将ID传值给父组件
     _press(statusId) {
@@ -100,46 +64,37 @@ export default class MyOutSideWorkItemPage extends Component{
         }
     }
 
-    listViewHandleData(result){
-        var me = this,
-            dataBlob = {},
-            sectionIDs = ['s0'],//'s0','s1'
-            rowIDs = [[]],
-            key,
-            length = result.length
+    _loadList(){
+        let loading = SActivityIndicator.show(true, "加载中...");
+        let taskType = this.props.label==null?'all':this.props.label;
+        loadOutSourceList(15,'',taskType).then(
 
-        for(var i = 0;i < length; i++){
-            key = result[i]['userId'];
-            dataBlob['s0:' + key] = result[i];
-            rowIDs[0].push(key);
-        }
+            (responseData) => {
+                SActivityIndicator.hide(loading);
 
-        console.log('dataBlob==',dataBlob,'sectionIDs==',sectionIDs,'rowIDs==',rowIDs);
+                if(responseData !== null && responseData.data !== null) {
+                    this.outList = [];
+                    console.log("开始请求2----"+responseData.data);
+                    outList: this.outList.concat(responseData.data),
+                    console.log("开始请求2===?"+this.outList.toString());
+                        this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                    });
 
-        return {
-            dataBlob : dataBlob,
-            sectionIDs : sectionIDs,
-            rowIDs : rowIDs
-        }
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
     }
 
     componentWillMount(){
-        if(this.props.label == "待处理"){
-            var res = this.listViewHandleData(data._pending);
-        }else if(this.props.label == "进行中"){
-            var res = this.listViewHandleData(data._waiting);
-        }else if(this.props.label == "已完成"){
-            var res = this.listViewHandleData(data._finished);
-        }else if(this.props.label == "全部"){
-            var res = this.listViewHandleData(data._finished);
-        }else{
-            var res = this.listViewHandleData(data._finished);
-        }
-        console.log(res)
-        this.setState({
-            dataSource: this.state.dataSource.cloneWithRowsAndSections(res.dataBlob,res.sectionIDs,res.rowIDs),
-            loaded: true
-        });
+        this._loadList();
     }
 
     _renderRow(rowData, sectionID, rowID) {
@@ -147,12 +102,11 @@ export default class MyOutSideWorkItemPage extends Component{
         return (
             <TouchableOpacity onPress={() => {this._press(this, 1)}}>
                 <MyOutSideWorkCell
-                    statusIcon = {rowData.statusIcon}
-                    statusName = {rowData.statusName}
-                    companyName = {rowData.companyName}
-                    statusContent = {rowData.statusContent}
-                    statusCourse = {rowData.statusCourse}
-                    statusIconBg = {rowData.statusIconBg}
+                    statusIcon = {rowData.stepId}
+                    statusName = {rowData.stepName}
+                    companyName = {rowData.corpName}
+                    statusContent = {rowData. taskName}
+                    statusCourse = {rowData.taskStatus}
                 />
 
 
@@ -161,39 +115,42 @@ export default class MyOutSideWorkItemPage extends Component{
     }
 
     render() {
-        return(
 
-            <View style={[styles.container,{height:this.props.label == null?SCREEN_HEIGHT-65:SCREEN_HEIGHT-112}]}>
-                {this.props.label == "待处理"&&data._pending.length === 0&&
-                    <NoMessage
-                        textContent='暂无消息'
-                        active={require('../img/no_message.png')}/>
-                }
-
-                {this.props.label == "进行中"&&data._waiting.length === 0&&
+        if (this.state.loaded === false) {      // 数据加载失败
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    <TouchableOpacity onpress={this._loadList()}>
                     <NoMessage
                         textContent='加载失败，点击重试'
                         active={require('../img/load_failed.png')}/>
-                }
+                    </TouchableOpacity>
+                </View>
+            );
+        }else if (this.outList.length == 0){
 
-                {this.props.label == "已完成"&&data._finished.length === 0&&
-                    <NoMessage
-                        textContent='网络错误（错误代码：4009）下拉重新开始'
-                        active={require('../img/network_error.png')}/>
-                }
-
-                {this.props.label == "全部"&&data._finished.length === 0&&
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <NoMessage
                         textContent='暂无消息'
                         active={require('../img/no_message.png')}/>
-                }
+                </View>
+            );
+        }else {
+            return (
+                <View
+                    style={[styles.container, {height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
 
-                <ListView
-                    dataSource={this.state.dataSource}
-                    renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}
-                />
-            </View>
-        )
+                    {/*textContent='网络错误（错误代码：4009）下拉重新开始'*/}
+                    {/*active={require('../img/network_error.png')}/>*/}
+
+
+                    <ListView
+                        dataSource={this.state.dataSource}
+                        renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}
+                    />
+                </View>
+            )
+        }
     }
 }
 

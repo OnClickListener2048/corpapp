@@ -57,7 +57,26 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'flex-end'
 
+    },
+
+    containers: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.25)',
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    background: {
+        backgroundColor: '#ffffffff',
+        justifyContent: 'center',
+        alignItems: 'center'
     }
+
+
 
 });
 export default styles;
