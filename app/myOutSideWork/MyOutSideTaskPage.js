@@ -19,19 +19,6 @@ import RegisterCompanyCell from '../test/view/RegisterCompanyCell'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 
-var details = [
-    {processName:'长途',workManName:'小白',processState:'待处理'},
-    {processName:'交通',workManName:'小黑',processState:'进行中'},
-    {processName:'住宿',workManName:'小黑',processState:'待处理'},
-    {processName:'餐饮',workManName:'小红5',processState:'待处理'},
-    {processName:'补助',workManName:'226',processState:'待处理'},
-    {processName:'办公',workManName:'2.11',processState:'待处理'},
-    {processName:'福利',workManName:'20112',processState:'待处理'},
-    {processName:'市场',workManName:'2013',processState:'待处理'},
-    {processName:'研发',workManName:'2014',processState:'待处理'},
-    {processName:'广告',workManName:'205',processState:'待处理'},
-];
-
 export default class MyOutSideTaskPage extends Component{
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
@@ -43,9 +30,12 @@ export default class MyOutSideTaskPage extends Component{
 
 
         this.state = {
+            loaded:false,                   // 是否初始化 ListView
+
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
+        this.info;
 
 
     }
@@ -62,9 +52,11 @@ export default class MyOutSideTaskPage extends Component{
                 if(responseData !== null && responseData.data !== null) {
                     this.stepsArr = [];
                     console.log("开始请求2");
-
-                    this.stepsArr = this.stepsArr.concat(responseData.data.steps|4);
-                    console.log(this.messageArr)
+                    this.info = responseData.data;
+                    this.stepsArr = this.stepsArr.concat(responseData.data.steps);
+                    this.setState({
+                        loaded:true,
+                    });
 
 
                 }
@@ -99,34 +91,50 @@ export default class MyOutSideTaskPage extends Component{
             <TouchableOpacity onPress={() => {
                 this.toLicense()
             }}>
-                <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>
+                <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
             </TouchableOpacity>
         )
     }
 
     renderTest() {
 
-        return  <CompanyInfoView companyName='CRM'
-                                 ContactsName='野原新之助'
+        return  <CompanyInfoView companyName= {this.info.corpName}
+                                 ContactsName={this.info.contactName}
                                  ContactsPhone='13256738495'
                                  SalesName='销售员'
                                  SalesPhone='13522805747'
         />
     }
-    render() {
-        return(
-            <View style={styles.container}>
 
+    renderScrollView() {
+        if (this.state.loaded === false) {      // 无数据
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
 
+                </View>
+            );
+        }else{
+
+            return(
                 <ScrollView style={styles.container}>
 
                     {this.renderTest()}
 
                     {<View style={[{height:15}]}></View>}
 
-                    {details.map((item,i)=>this.renderExpenseItem(item,i))}
+                    {this.stepsArr.map((item,i)=>this.renderExpenseItem(item,i))}
 
                 </ScrollView>
+            );
+        }
+    }
+
+    render() {
+        return(
+            <View style={styles.container}>
+
+
+                {this.renderScrollView()}
 
 
             </View>
