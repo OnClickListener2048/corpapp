@@ -10,12 +10,12 @@ export function login( phone = '', smsCode = '') {
 
 // 短信验证码
 export async function sendVerifyCode(phone = '', verifyCode = '') {
-    return await postApi('app/v0/user/smscode/get', {phone, verifyCode});
+    return await postApi('/app/v0/user/smscode/get', {phone, verifyCode});
 }
 
 // 问题反馈
 export function sendFeedback({message = '', userName = ''}) {
-  return postApi('/resetPassword', {message, userName});
+  return postApi('/app/v0/feedback', {message, userName});
 }
 
 // 用户信息

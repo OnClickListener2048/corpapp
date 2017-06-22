@@ -102,15 +102,29 @@ export default class Feedback extends Component {
         apis.sendFeedback({message , userName}).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                Toast.show('反馈提交成功');
-                if(responseData !== null && responseData.data !== null ) {
-                    this.props.navigator.pop();
-                }
+                Alert.alert('反馈提交成功', '',
+                    [
+                        {
+                            text: '确定',
+                            onPress: () => {
+                                this.props.navigator.pop();
+                            },
+                        },]
+                    , {cancelable: false});
+
             },
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("反馈提交失败:" , e);
                 Toast.show('反馈提交失败:' + JSON.stringify(e));
+                Alert.alert('反馈提交失败', '服务器出错了',
+                    [
+                        {
+                            text: '确定',
+                            onPress: () => {
+                            },
+                        },]
+                    , {cancelable: false});
             },
         );
     }

@@ -39,6 +39,13 @@ gradle.projectsEvaluated {
                     "${productFlavorName}/${buildTypeName}" :
                     "${buildTypeName}"
 
+            println'targetName=' + targetName
+            println'targetPath=' + targetPath
+            /*
+            targetName=Release
+targetPath=release
+             */
+
             // React js bundle directories
             def jsBundleDirConfigName = "jsBundleDir${targetName}"
             def jsBundleDir = elvisFile(config."$jsBundleDirConfigName") ?:
@@ -64,17 +71,20 @@ gradle.projectsEvaluated {
 
                 println description
 
+                println "mkdirs"
                 // Create dirs if they are not there (e.g. the "clean" task just ran)
                 doFirst {
                     jsBundleDir.mkdirs()
                     resourcesDir.mkdirs()
                 }
 
+
+
                 // Set up inputs and outputs so gradle can cache the result
                 inputs.files fileTree(dir: reactRoot, excludes: inputExcludes)
                 outputs.dir jsBundleDir
                 outputs.dir resourcesDir
-
+                println "workingDir"
                 // Set up the call to the react-native cli
                 workingDir reactRoot
 
@@ -84,6 +94,7 @@ gradle.projectsEvaluated {
                     commandLine("cmd", "/c", *nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
                             "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
                 } else {
+                    println "commandLine"
                     commandLine(*nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
                             "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
                 }
