@@ -28,6 +28,20 @@ export function loadOutSourceList(count = 15, sinceId = '',taskType='') {
  * 我的外勤-主任务详情 即 公司信息 + 所有的任务信息 包括 任务处理人员 任务ID 任务状态
  */
 
-export function loadOutSourceTask(taskId = '1') {
+export function loadOutSourceTask(taskId = '') {
     return postApi('/app/v0/outsource/task',{taskId});
 }
+
+/**
+ * 我的外勤-主任务-步骤详情-任务进度变化
+ * finished	结束任务	boolean	@mock=false
+ * inProgress	开始任务	boolean	@mock=false
+ * materialConfirm	确认材料	boolean	@mock=false
+ * stepId	步骤 ID, 必填	string	@mock=1
+ * taskId	任务ID, 必填	string	@mock=1
+ */
+
+export function loadOutSourceTaskStepChange(finished = 'false' , inProgress = 'false' , materialConfirm = 'false' , stepId = '' , taskId = '') {
+    return postApi('/app/v0/outsource/task/step/change',{finished,inProgress,materialConfirm,stepId,taskId});
+}
+
