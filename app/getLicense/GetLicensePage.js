@@ -18,6 +18,9 @@ import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView
 import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
 import AlertModal from "../view/AlertModal";
+import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
+import BusinessTimeView from "./view/BusinessTimeView";
+
 const window = Dimensions.get('window');
 
 export const SCREEN_HEIGHT = window.height;
@@ -60,8 +63,20 @@ export default class GetLicensePage extends Component{
 
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView messageTitle={'呵呵哒'} currentNum={0}/>
+        return <VerifyProcessTipView currentNum={0}/>
     }
+
+    renderVerifyBtnView(){
+
+        return <ProcessBtnView/>
+    }
+
+    renderBusinessTimeView(){
+
+        return <BusinessTimeView/>
+    }
+
+
 
     //输入框回调
     _callback(content) {
@@ -83,6 +98,8 @@ export default class GetLicensePage extends Component{
                 <ScrollView style={styles.container}>
 
                     {this.renderVerifyProcessTipView()}
+                    {this.renderVerifyBtnView()}
+
 
                     {<View style={[{height:15}]}></View>}
 
@@ -137,6 +154,9 @@ export default class GetLicensePage extends Component{
                         callback={this._callback.bind(this)}
                     />
                     </View>
+
+                    {this.renderBusinessTimeView()}
+
                     <View
                         style={{paddingTop:15,backgroundColor:'white'}}>
                     <TextInputView

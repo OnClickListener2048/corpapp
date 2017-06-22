@@ -164,41 +164,6 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    listViewHandleData(result) {
-        var me = this,
-            dataBlob = {},
-            sectionIDs = ['s0', 's1'],
-            rowIDs = [[], []],
-            key,
-            //result = Util.sortResource(data),        //重新排序
-            length = result.length,
-            splitIdx;
-
-        //将数据分隔成两段
-        for (var i = 0; i < length; i++) {
-            key = result[i]['userId'];
-            if (key === stickyId) {
-                dataBlob['s1'] = result[i];
-                splitIdx = true;
-            } else {
-                if (splitIdx) {
-                    dataBlob['s1:' + key] = result[i];
-                    rowIDs[1].push(key);
-                } else {
-                    dataBlob['s0:' + key] = result[i];
-                    rowIDs[0].push(key);
-                }
-
-            }
-        }
-        console.log(dataBlob, sectionIDs, rowIDs);
-
-        return {
-            dataBlob: dataBlob,
-            sectionIDs: sectionIDs,
-            rowIDs: rowIDs
-        }
-    }
 
 
 
