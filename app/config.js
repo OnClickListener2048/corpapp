@@ -17,8 +17,8 @@ export const SCREEN_HEIGHT = height;
 export let SCHEME = 'http';
 export let DOMAIN_API = '123.56.31.133:8081';
 if(DEBUG) {// 测试环境变量, 上线时应删除
-    SCHEME = 'http';
-    DOMAIN_API = '123.56.31.133:8081';
+    SCHEME = 'https';
+    DOMAIN_API = 'x-crm.i-counting.cn';
 }
 // export let DOMAIN_WWW = 'www.zaiqiuchang.com';
 // export let DOMAIN_WEB = 'web.zaiqiuchang.com';
