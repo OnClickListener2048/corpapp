@@ -22,3 +22,12 @@ export function loadOutSourceCount() {
 export function loadOutSourceList(count = 15, sinceId = '',taskType='') {
     return postApi('/app/v0/outsource/list',{count, sinceId ,taskType });
 }
+
+
+/**
+ * 我的外勤-主任务详情 即 公司信息 + 所有的任务信息 包括 任务处理人员 任务ID 任务状态
+ */
+
+export function loadOutSourceTask(taskId = '1') {
+    return postApi('/app/v0/outsource/task',{taskId});
+}

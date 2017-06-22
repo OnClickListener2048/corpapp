@@ -205,7 +205,7 @@ export default class MessageCenterPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
-                screen: 'VerifyCompanyName',
+                screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });
