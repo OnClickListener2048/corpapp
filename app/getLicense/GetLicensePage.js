@@ -8,7 +8,7 @@ import React, { Component,PropTypes } from 'react';
 import {
     Text,
     View,
-    ScrollView,
+    ScrollView,InteractionManager,
     Dimensions, Image, TouchableOpacity,NativeModules
 } from 'react-native';
 
@@ -17,6 +17,7 @@ import CompanyInfoView from '../test/view/CompanyInfoView'
 import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
 import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
+import AlertModal from "../view/AlertModal";
 const window = Dimensions.get('window');
 
 export const SCREEN_HEIGHT = window.height;
@@ -39,7 +40,6 @@ export default class GetLicensePage extends Component{
 
         this.state = {
             renderUnderline: true,
-
         };
     }
 
@@ -71,6 +71,10 @@ export default class GetLicensePage extends Component{
         });
     }
 
+    toAlertModal(){
+
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -100,7 +104,9 @@ export default class GetLicensePage extends Component{
                     />
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}}>身  份  证：</Text>
+                        <TouchableOpacity onPress={this.toAlertModal()}>
                         <Image source={require('../img/reverse.png')} style={{marginTop:15}}/>
+                        </TouchableOpacity>
                         {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                             {/*justifyContent:'flex-end'}}/>*/}
                     </View>
@@ -154,7 +160,6 @@ export default class GetLicensePage extends Component{
                         <Image source={require('../img/blicense.png')} style={{marginTop:10}}/>
                     </View>
                 </ScrollView>
-
 
             </View>
         );

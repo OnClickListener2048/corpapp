@@ -320,7 +320,11 @@ export default class MessageCenterPage extends Component {
     renderListView() {
         if (this.state.loaded === false) {      // 无数据
             return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}></View>
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <NoMessage
+                        textContent='加载失败，点击重试'
+                        active={require('../img/load_failed.png')}/>
+                </View>
             );
         }else if (this.messageArr.length == 0){
 

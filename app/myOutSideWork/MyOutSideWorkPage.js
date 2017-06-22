@@ -6,6 +6,7 @@
 import React,{Component}from 'react';
 import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
+import {loadOutSourceCount} from "../apis/outSource";
 const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
@@ -14,11 +15,17 @@ let naviButtonHeight = width * 0.75;   // 导航条每个高度
 const dismissKeyboard = require('dismissKeyboard');
 import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
+import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import Toast from 'react-native-root-toast';
 
 export default class MyOutSideWorkPage extends Component{
 
     constructor(props) {
         super(props);
+        this.state = {
+            outSourceCountObj : {},
+            loaded:false,
+        }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -76,6 +83,40 @@ export default class MyOutSideWorkPage extends Component{
 
     }
 
+    componentWillMount() {
+        this._loadCount();
+
+    }
+
+    //获取每个外勤状态数量
+    _loadCount(){
+        let loading = SActivityIndicator.show(true, "加载中...");
+        loadOutSourceCount().then(
+
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+                    this.outSourceCountObj = {};
+                    console.log("开始请求2"+responseData.data.todoNum);
+
+                    this.setState({
+                        outSourceCountObj: responseData.data,
+                        loaded:true,
+                    });
+                    console.log("===>>>"+this.state.outSourceCountObj.todoNum+this.state.outSourceCountObj.inProgressNum+this.state.outSourceCountObj.totalNum);
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+
+    }
+
 
     render(){
         return(
@@ -92,12 +133,12 @@ export default class MyOutSideWorkPage extends Component{
                      We have to use tabLabel to pass tab options to TabBar component,
                      because ScrollableTabView passing only this prop to tabs.
                      */}
-                    <MyOutSideWorkItemPage tabLabel={{label: "待处理", badge: 2,theLast:1}}
-                          label="待处理" callback={this._callback.bind(this)}
+                    <MyOutSideWorkItemPage tabLabel={{label: "待处理", badge:this.state.outSourceCountObj.todoNum,theLast:1}}
+                          label="todo" callback={this._callback.bind(this)}
                     />
-                    <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: 700,theLast:1}} label="进行中"
+                    <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum,theLast:1}} label="inProgress"
                                            callback={this._callback.bind(this)}/>
-                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 10,theLast:0}} label="已完成"
+                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: this.state.outSourceCountObj.totalNum,theLast:0}} label="end"
                                            callback={this._callback.bind(this)}/>
                 </ScrollableTabView>
             </View>
