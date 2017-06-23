@@ -169,7 +169,11 @@ export default class MessageCenterPage extends Component {
 
     componentDidMount() {
 
-        Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'));
+        Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
+            {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
+        JPushModule.setBadge(5, (success) => {
+            console.log("Badge", success)
+        });
 
         try {
             if (Platform.OS !== 'ios') {
@@ -187,7 +191,7 @@ export default class MessageCenterPage extends Component {
                 })
             }
         } catch (e) {
-            Toast.show('JPush error: ' + e.message);
+            // Toast.show('JPush error: ' + e.message);
         }
     }
 

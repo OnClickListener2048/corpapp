@@ -13,7 +13,7 @@ import {
     View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView, TouchableWithoutFeedback
+    KeyboardAvoidingView, TouchableWithoutFeedback, __DEV__
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -147,8 +147,6 @@ export default class LoginPage extends Component {
         );
     }
 
-
-
     render() {
         return (
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -193,6 +191,41 @@ export default class LoginPage extends Component {
                                                    this.setState({mobile, mobileValid});
                                                }
                                            }/>
+                            </View>
+                        </View>
+
+                        {/*  图片验证码 */}
+                        <View style={styles.textInputContainer}>
+                            <Image
+                                source={ require('../img/icon_123.png') }
+                                style={styles.inputLogo}/>
+                            <View style={styles.textInputWrapper}>
+                                <TextInput underlineColorAndroid='transparent'
+                                           value={this.state.smsCode}
+                                           secureTextEntry={false} maxLength={6} keyboardType='numeric'
+                                           style={styles.codeInput} placeholder='短信验证码'
+                                           returnKeyType='done'
+                                           onChangeText={(smsCode) => {
+                                               this.setState({smsCode})
+                                               let smsCodeValid = (smsCode.length == 6);
+                                               this.setState({smsCode, smsCodeValid});
+                                           }}
+
+                                           onSubmitEditing={() => {
+                                               dismissKeyboard();
+                                           }}
+                                />
+
+                                <View style={{
+                                    height: 15,
+                                    width: 1,
+                                    backgroundColor: '#c8c8c8',
+                                    alignSelf: 'center',
+                                    marginRight: 1
+                                }}/>
+
+                                <Image        style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}        source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}      />
+
                             </View>
                         </View>
 
