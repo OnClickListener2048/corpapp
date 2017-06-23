@@ -64,7 +64,7 @@ export default class MyOutSideTaskPage extends Component{
                 }
             },
             (e) => {
-                // SActivityIndicator.hide(loading);
+                SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },

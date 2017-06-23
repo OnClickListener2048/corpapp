@@ -43,7 +43,22 @@ export default class GetLicensePage extends Component{
 
         this.state = {
             renderUnderline: true,
+            currentStep : 0
         };
+    }
+
+    stepBtnClick(status){
+
+
+
+
+
+        this.setState({
+            currentStep:status + 1,
+        });
+
+        console.log("点我的最新数字是" + this.state.currentStep);
+
     }
 
 
@@ -68,7 +83,7 @@ export default class GetLicensePage extends Component{
 
     renderVerifyBtnView(){
 
-        return <ProcessBtnView/>
+        return <ProcessBtnView currentNum={this.state.currentStep}  callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView(){
