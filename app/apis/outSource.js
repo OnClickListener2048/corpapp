@@ -41,7 +41,7 @@ export function loadOutSourceTask(taskId = '') {
  * taskId	任务ID, 必填	string	@mock=1
  */
 
-export function loadOutSourceTaskStepChange(finished = 'false' , inProgress = 'false' , materialConfirm = 'false' , stepId = '' , taskId = '') {
+export function loadOutSourceTaskStepChange(finished = false , inProgress = false , materialConfirm = false , stepId = '' , taskId = '') {
     return postApi('/app/v0/outsource/task/step/change',{finished,inProgress,materialConfirm,stepId,taskId});
 }
 

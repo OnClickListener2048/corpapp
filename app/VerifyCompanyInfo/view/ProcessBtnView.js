@@ -52,23 +52,24 @@ class ProcessBtnView extends Component{
         // export function loadOutSourceTaskStepChange(finished = 'false' , inProgress = 'false' , materialConfirm = 'false' , stepId = '' , taskId = '') {
 
 
-            apis.loadOutSourceTaskStepChange('false','false','false','1','1').then(
+            apis.loadOutSourceTaskStepChange(false,false,true,'1','1').then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
+                // this.props.callback(this.state.currentNum);
+
+                this.state.countNum++;
+
+                this.setState({
+                    currentNum:this.state.countNum,
+                    // finished : responseData.data.finished,
+                    // inProgress : responseData.data.inProgress,
+                    // materialConfirm : responseData.data.materialConfirm,
+
+                });
 
                 if(responseData !== null && responseData.data !== null) {
-                    this.props.callback(this.state.currentNum);
 
-                    this.state.countNum++;
-
-                    this.setState({
-                        currentNum:this.state.countNum,
-                        finished : responseData.data.finished,
-                        inProgress : responseData.data.inProgress,
-                        materialConfirm : responseData.data.materialConfirm,
-
-                    });
 
                 }
             },

@@ -125,19 +125,19 @@ class RegisterCompanyCell extends Component{
 
                         <View style={styles.left}>
                             {this._leftTipView()}
-                            <Text style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.stepName}</Text>
+                            <Text numberOfLines={1} style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.stepName}</Text>
 
                         </View>
 
                         <View style={styles.center}>
-                            <Text style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{this.props.detail.stepContact}</Text>
+                            <Text numberOfLines={1} style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{this.props.detail.stepContact}</Text>
 
                         </View>
 
                         <View style={styles.right}>
                             <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
 
-                            <Text textAlign='right'
+                            <Text numberOfLines={1} textAlign='right'
                                   style={{fontSize:15,color:'#323232',marginRight:10}}>{this.props.detail.stepStatus}</Text>
 
                         </View>
