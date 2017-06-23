@@ -17,7 +17,7 @@ import CompanyInfoView from '../test/view/CompanyInfoView'
 import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
 import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
-import AlertModal from "../view/AlertModal";
+import AlertModal from "../view/AlertPhotoModal";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
 

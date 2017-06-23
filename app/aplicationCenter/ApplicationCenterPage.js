@@ -17,7 +17,7 @@ import styles from './css/ApplictionCenterPageStyle'
 const window = Dimensions.get('window');
 import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
-import AlertModal from "../view/AlertModal";
+import AlertPhotoModal from "../view/AlertPhotoModal";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -29,6 +29,7 @@ export default class ApplicationCenterPage extends Component{
 
         this.state = {
             visible: this.props.visible,
+            image: null,
         };
 
 
@@ -69,12 +70,20 @@ export default class ApplicationCenterPage extends Component{
         return imageViews;
     }
 
+    _callback(image,visible) {//获取图片
+        this.setState({
+            image: image,
+            visible:visible,
+        });
+    }
+
     render() {
         return(
         <View style={styles.container}>
 
             {this.state.visible==true&&
-            <AlertModal/>}
+            <AlertPhotoModal
+                callback={this._callback.bind(this)}/>}
 
             <CommunalNavBar
 
@@ -122,6 +131,8 @@ export default class ApplicationCenterPage extends Component{
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
                 />
             </View>
+
+            <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={this.state.image}/>
 
         </View>
         );
