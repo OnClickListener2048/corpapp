@@ -56,7 +56,7 @@ export default class MessageCenterCell extends Component {
     }
 
     render() {
-        const {statusIcon,statusName,companyName,statusContent,statusCourse,statusIconBg} = this.state
+        const {statusIcon,statusName,companyName,statusContent,statusCourse} = this.state
         return (
             <View
                 style={styles.rowStyle}>
@@ -77,7 +77,7 @@ export default class MessageCenterCell extends Component {
 
                     <Text
                         textAlign='right'
-                        style={[styles.timeTitleStyle]}>{this.statusCourse}</Text>
+                        style={[styles.timeTitleStyle]}>{statusCourse}</Text>
                 </View>
                 <View style={[styles.badgeBubble,
                     {backgroundColor: this._statusCourseColor()}]}>
