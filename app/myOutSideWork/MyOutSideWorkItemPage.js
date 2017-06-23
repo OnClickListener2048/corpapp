@@ -69,21 +69,16 @@ export default class MyOutSideWorkItemPage extends Component{
 
     constructor(props){
         super(props)
-        var getRowData = (dataBlob, sectionID, rowID) => {
-            return dataBlob[sectionID + ':' + rowID];
-        };
 
         this.state = {
             label: this.props.label,
             dataSource: new ListView.DataSource({
-                getRowData: getRowData,
-                // getSectionHeaderData: getSectionData, //组头信息
-                rowHasChanged: (row1, row2) => row1 !== row2,
-                sectionHeaderHasChanged: (s1, s2) => s1 !== s2
-            }),
+                rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,
         }
         this.outList = [];
+        this._loadList = this._loadList.bind(this);
+
     }
 
     static propTypes = {
@@ -140,28 +135,6 @@ export default class MyOutSideWorkItemPage extends Component{
         );
     }
 
-    listViewHandleData(result){
-        var me = this,
-            dataBlob = {},
-            sectionIDs = ['s0'],//'s0','s1'
-            rowIDs = [[]],
-            key,
-            length = result.length
-
-        for(var i = 0;i < length; i++){
-            key = result[i]['userId'];
-            dataBlob['s0:' + key] = result[i];
-            rowIDs[0].push(key);
-        }
-
-        console.log('dataBlob==',dataBlob,'sectionIDs==',sectionIDs,'rowIDs==',rowIDs);
-
-        return {
-            dataBlob : dataBlob,
-            sectionIDs : sectionIDs,
-            rowIDs : rowIDs
-        }
-    }
 
     // componentWillMount(){
     //     this._loadList();
@@ -190,7 +163,8 @@ export default class MyOutSideWorkItemPage extends Component{
         );
     }
 
-    render() {
+
+    renderListView() {
 
         if (this.state.loaded === false) {      // 数据加载失败
             return(
@@ -211,41 +185,31 @@ export default class MyOutSideWorkItemPage extends Component{
             );
         }else {
             return (
-                <View
-                    style={[styles.container, {height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    {/*{this.props.label == "待处理"&&data._pending.length === 0&&*/}
-                    {/*<NoMessage*/}
-                    {/*textContent='暂无消息'*/}
-                    {/*active={require('../img/no_message.png')}/>*/}
-                    {/*}*/}
 
-                    {/*{this.props.label == "进行中"&&data._waiting.length === 0&&*/}
-                    {/*<NoMessage*/}
-                    {/*textContent='加载失败，点击重试'*/}
-                    {/*active={require('../img/load_failed.png')}/>*/}
-                    {/*}*/}
-
-                    {/*{this.props.label == "已完成"&&data._finished.length === 0&&*/}
-                    {/*<NoMessage*/}
-                    {/*textContent='网络错误（错误代码：4009）下拉重新开始'*/}
-                    {/*active={require('../img/network_error.png')}/>*/}
-                    {/*}*/}
-
-                    {/*{this.props.label == "全部"&&data._finished.length === 0&&*/}
-                    {/*<NoMessage*/}
-                    {/*textContent='暂无消息'*/}
-                    {/*active={require('../img/no_message.png')}/>*/}
-                    {/*}*/}
+            <ListView
+                dataSource={this.state.dataSource}
+                renderRow={(rowData) => this._renderRow(rowData)}
+            />
 
 
-                    <ListView
-                        dataSource={this.state.dataSource}
-                        renderRow={(rowData) => this._renderRow(rowData)}
-                    />
-                </View>
             )
         }
+        
+
     }
+
+
+
+    render() {
+        return (
+            <View style={styles.container}>
+
+                {this.renderListView()}
+
+            </View>
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
