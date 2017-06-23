@@ -56,7 +56,6 @@ export default class MessageCenterPage extends Component {
         });
     }
 
-
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
     };
@@ -287,12 +286,15 @@ export default class MessageCenterPage extends Component {
 
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
+
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <NoMessage
-                        textContent='加载失败，点击重试'
-                        active={require('../img/load_failed.png')}/>
+                    <TouchableOpacity onpress={this._loadData()}>
+                        <NoMessage
+                            textContent='加载失败，点击重试'
+                            active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
                 </View>
             );
         }else if (this.messageArr.length == 0){

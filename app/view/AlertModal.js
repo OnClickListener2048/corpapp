@@ -25,6 +25,10 @@ export default class AlertModal extends Component{
         this.state = { visible: this.props.visible };
     }
 
+    // static propTypes = {
+    //     visible: PropTypes.boolean,
+    // };
+
     close=()=>{
         this.setState({ visible: false });
     }
@@ -33,21 +37,21 @@ export default class AlertModal extends Component{
     }
     renderContent=()=>{
         return ( <View style={[styles.background,{width: SCREEN_WIDTH * 0.4, height: SCREEN_HEIGHT * 0.3}]}>
-            <TouchableOpacity activeOpacity={0.5} onPress={this.props.openPicker}>
-                <Text style={{fontSize:35, color:'black', margin:15}}>打开相册</Text>
+            <TouchableOpacity onPress={this.props.openPicker}>
+                <Text style={{fontSize:15, color:'black', margin:15}}>打开相册</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={this.props.openPicker}>
-                <Text style={{fontSize:35, color:'black',margin:15}}>打开相机</Text>
+                <Text style={{fontSize:15, color:'black',margin:15}}>打开相机</Text>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={this.close}>
-                <Text style={{fontSize:35, color:'black',margin:15}}>取消</Text>
+                <Text style={{fontSize:15, color:'black',margin:15}}>取消</Text>
             </TouchableOpacity>
         </View>)
     }
     render(){
         return(
             <Modal
-                animationType='slide'//进场动画 fade
+                animationType='none'//进场动画 fade
                 onRequestClose={() => this.close()}
                 visible={this.state.visible}//是否可见
                 transparent={true} //背景透明

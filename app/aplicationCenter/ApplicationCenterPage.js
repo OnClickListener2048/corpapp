@@ -17,6 +17,7 @@ import styles from './css/ApplictionCenterPageStyle'
 const window = Dimensions.get('window');
 import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
+import AlertModal from "../view/AlertModal";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -27,8 +28,9 @@ export default class ApplicationCenterPage extends Component{
         super(props);
 
         this.state = {
-
+            visible: this.props.visible,
         };
+
 
     }
 
@@ -49,6 +51,10 @@ export default class ApplicationCenterPage extends Component{
         });
     }
 
+    toAlertModal(){
+        this.setState({ visible: true });
+    }
+
     renderImg(){
         var imageViews=[];
         for(var i=0;i<4;i++){
@@ -66,12 +72,16 @@ export default class ApplicationCenterPage extends Component{
     render() {
         return(
         <View style={styles.container}>
+
+            {this.state.visible==true&&
+            <AlertModal/>}
+
             <CommunalNavBar
 
                 titleItem = {() => ApplicationCenterPage.renderTitleItem()}
             />
 
-
+            {/*<AlertModal/>*/}
             <Swiper height={200}
             >
                 {this.renderImg()}
@@ -91,11 +101,16 @@ export default class ApplicationCenterPage extends Component{
                                                  textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                     />
                 </TouchableOpacity>
+                <TouchableOpacity onPress={() => {this.toAlertModal()}}
+                    style={{marginLeft: 15,marginTop: 15,  height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
+                >
                 <TopcenterImgBottomTitleView applicationTitle='CRM'
                                              applicationImg = {require('../img/crm_h.png')}
-                                             style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                 />
+                </TouchableOpacity>
                 <TopcenterImgBottomTitleView applicationTitle='工作统计'
                                              applicationImg = {require('../img/statistical_h.png')}
                                              style={{marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
@@ -107,14 +122,6 @@ export default class ApplicationCenterPage extends Component{
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
                 />
             </View>
-
-
-
-
-
-
-
-
 
         </View>
         );

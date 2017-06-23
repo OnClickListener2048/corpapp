@@ -53,6 +53,8 @@ export default class MyOutSideTaskPage extends Component{
                     this.stepsArr = [];
                     console.log("开始请求2");
                     this.info = responseData.data;
+                    console.log(this.info);
+
                     this.stepsArr = this.stepsArr.concat(responseData.data.steps);
                     this.setState({
                         loaded:true,
@@ -100,9 +102,9 @@ export default class MyOutSideTaskPage extends Component{
 
         return  <CompanyInfoView companyName= {this.info.corpName}
                                  ContactsName={this.info.contactName}
-                                 ContactsPhone='13256738495'
-                                 SalesName='销售员'
-                                 SalesPhone='13522805747'
+                                 ContactsPhone={this.info.contactPhone}
+                                 SalesName={this.info.salesmanName}
+                                 SalesPhone={this.info.salesmanPhone}
         />
     }
 

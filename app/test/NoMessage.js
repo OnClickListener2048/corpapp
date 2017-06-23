@@ -19,7 +19,7 @@ export default class NoMessage extends Component{
 
     static propTypes = {
         textContent: PropTypes.string,
-        active:PropTypes.object,
+        active:PropTypes.number,
     };
 
     render() {
