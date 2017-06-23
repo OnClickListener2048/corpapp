@@ -26,31 +26,31 @@ export default class MessageCenterCell extends Component {
         statusName: PropTypes.string,
         companyName: PropTypes.string,
         statusContent: PropTypes.string,
-        statusCourse: PropTypes.number,
+        statusCourse: PropTypes.string,
 
 
     };
 
-    _statusCourse(){
-        if(this.state.statusCourse==0){
-            return '待处理'
-        }else if(this.state.statusCourse==1){
-            return '进行中'
-        }else if(this.state.statusCourse==2){
-            return '已完成'
-        }else if(this.state.statusCourse==3){
-            return '已取消'
-        }
-    }
+    // _statusCourse(){
+    //     if(this.state.statusCourse==0){
+    //         return '待处理'
+    //     }else if(this.state.statusCourse==1){
+    //         return '进行中'
+    //     }else if(this.state.statusCourse==2){
+    //         return '已完成'
+    //     }else if(this.state.statusCourse==3){
+    //         return '已取消'
+    //     }
+    // }
 
     _statusCourseColor(){
-        if(this.state.statusCourse==0){
+        if(this.state.statusCourse=='待处理'){
             return 'orange'
-        }else if(this.state.statusCourse==1){
+        }else if(this.state.statusCourse=='进行中'){
             return 'green'
-        }else if(this.state.statusCourse==2){
+        }else if(this.state.statusCourse=='已完成'){
             return 'red'
-        }else if(this.state.statusCourse==3){
+        }else if(this.state.statusCourse=='已取消'){
             return 'grey'
         }
     }
@@ -77,7 +77,7 @@ export default class MessageCenterCell extends Component {
 
                     <Text
                         textAlign='right'
-                        style={[styles.timeTitleStyle]}>{this._statusCourse()}</Text>
+                        style={[styles.timeTitleStyle]}>{this.statusCourse}</Text>
                 </View>
                 <View style={[styles.badgeBubble,
                     {backgroundColor: this._statusCourseColor()}]}>

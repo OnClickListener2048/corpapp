@@ -13,6 +13,52 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
 
+//模拟我的外勤数据
+var data = (function(){
+    var obj = {};
+    var _pending = [];
+    for(var i = 0;i < 15; i++){//待处理
+        _pending.push({
+            "userId" : i,
+            "statusIcon": "注",
+            "statusName": "注册公司",
+            "companyName": "医保化纤电子商务",
+            "statusContent": "银行开户",
+            "statusCourse": "待处理",
+            "statusIconBg": "orange",
+        })
+    }
+
+    var _waiting = [];
+    for(var i = 0;i < 15; i++){//进行中
+        _waiting.push({
+            "userId" : i,
+            "statusIcon": "名",
+            "statusName": "名称变更",
+            "companyName": "张三丰",
+            "statusContent": "核实名称",
+            "statusCourse": "进行中",
+            "statusIconBg": "green",
+        })
+    }
+
+    var _finished = [];
+    for(var i = 0;i < 15; i++){//已完成
+        _finished.push({
+            "userId" : i,
+            "statusIcon": "名",
+            "statusName": "名称变更",
+            "companyName": "张三丰",
+            "statusContent": "核实名称",
+            "statusCourse": "已完成",
+            "statusIconBg": "red",
+        })
+    }
+
+    obj = {"_pending":_pending,"_waiting":_waiting,"_finished":_finished}
+    return obj;
+})()
+
 export default class MyOutSideWorkItemPage extends Component{
 
     static navigatorStyle = {
@@ -75,8 +121,9 @@ export default class MyOutSideWorkItemPage extends Component{
                 if(responseData !== null && responseData.data !== null) {
                     this.outList = [];
                     console.log("开始请求2----"+responseData.data);
-                    outList: this.outList.concat(responseData.data),
-                    console.log("开始请求2===?"+this.outList.toString());
+                    this.outList= this.outList.concat(responseData.data);
+                    console.log("开始请求outlist----"+this.outList);
+
                         this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
@@ -93,11 +140,40 @@ export default class MyOutSideWorkItemPage extends Component{
         );
     }
 
-    componentWillMount(){
-        this._loadList();
+    listViewHandleData(result){
+        var me = this,
+            dataBlob = {},
+            sectionIDs = ['s0'],//'s0','s1'
+            rowIDs = [[]],
+            key,
+            length = result.length
+
+        for(var i = 0;i < length; i++){
+            key = result[i]['userId'];
+            dataBlob['s0:' + key] = result[i];
+            rowIDs[0].push(key);
+        }
+
+        console.log('dataBlob==',dataBlob,'sectionIDs==',sectionIDs,'rowIDs==',rowIDs);
+
+        return {
+            dataBlob : dataBlob,
+            sectionIDs : sectionIDs,
+            rowIDs : rowIDs
+        }
     }
 
-    _renderRow(rowData, sectionID, rowID) {
+    // componentWillMount(){
+    //     this._loadList();
+    //     var res = this.listViewHandleData(this.outList);
+    //     console.log(res)
+    //     this.setState({
+    //         dataSource: this.state.dataSource.cloneWithRowsAndSections(res.dataBlob,res.sectionIDs,res.rowIDs),
+    //         loaded: true
+    //     });
+    // }
+
+    _renderRow(rowData) {
 
         return (
             <TouchableOpacity onPress={() => {this._press(this, 1)}}>
@@ -119,11 +195,9 @@ export default class MyOutSideWorkItemPage extends Component{
         if (this.state.loaded === false) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onpress={this._loadList()}>
                     <NoMessage
                         textContent='加载失败，点击重试'
                         active={require('../img/load_failed.png')}/>
-                    </TouchableOpacity>
                 </View>
             );
         }else if (this.outList.length == 0){
@@ -139,14 +213,34 @@ export default class MyOutSideWorkItemPage extends Component{
             return (
                 <View
                     style={[styles.container, {height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    {/*{this.props.label == "待处理"&&data._pending.length === 0&&*/}
+                    {/*<NoMessage*/}
+                    {/*textContent='暂无消息'*/}
+                    {/*active={require('../img/no_message.png')}/>*/}
+                    {/*}*/}
 
+                    {/*{this.props.label == "进行中"&&data._waiting.length === 0&&*/}
+                    {/*<NoMessage*/}
+                    {/*textContent='加载失败，点击重试'*/}
+                    {/*active={require('../img/load_failed.png')}/>*/}
+                    {/*}*/}
+
+                    {/*{this.props.label == "已完成"&&data._finished.length === 0&&*/}
+                    {/*<NoMessage*/}
                     {/*textContent='网络错误（错误代码：4009）下拉重新开始'*/}
                     {/*active={require('../img/network_error.png')}/>*/}
+                    {/*}*/}
+
+                    {/*{this.props.label == "全部"&&data._finished.length === 0&&*/}
+                    {/*<NoMessage*/}
+                    {/*textContent='暂无消息'*/}
+                    {/*active={require('../img/no_message.png')}/>*/}
+                    {/*}*/}
 
 
                     <ListView
                         dataSource={this.state.dataSource}
-                        renderRow={(rowData, sectionID, rowID, highlightRow) => this._renderRow(rowData, sectionID, rowID, highlightRow)}
+                        renderRow={(rowData) => this._renderRow(rowData)}
                     />
                 </View>
             )
