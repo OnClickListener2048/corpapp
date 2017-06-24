@@ -6,7 +6,8 @@
     "postinstall": "node ./scripts/postinstall.js",
     "configureJPush": "node node_modules/jpush-react-native/JPushConfiguration.js",
     "start": "watchman watch-del-all && (adb reverse tcp:8081 tcp:8081 || true) && node node_modules/react-native/local-cli/cli.js start --reset-cache",
-    "test": "jest"
+    "test": "jest",
+    "buildAndroidApk": "react-native bundle --platform android --entry-file index.android.js --reset-cache --bundle-output android/app/src/main/assets/index.android.bundle --dev false --assets-dest android/app/src/main/res/&&cd android;./gradlew assembleRelease"
   },
   "dependencies": {
     "jcore-react-native": "^1.1.3",
