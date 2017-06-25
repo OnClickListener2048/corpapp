@@ -123,6 +123,7 @@ def elvisFile(thing) {
     return thing ? file(thing) : null;
 }
 
+/*
 task createBundle(type: Exec) {
     println 'createBundle()'
     def config = project.hasProperty("react") ? project.react : [];
@@ -144,6 +145,7 @@ task createBundle(type: Exec) {
     commandLine(*nodeExecutableAndArgs, "node_modules/react-native/local-cli/cli.js", "bundle", "--platform", "android", "--dev", "${devEnabled}",
             "--reset-cache", "--entry-file", entryFile, "--bundle-output", jsBundleFile, "--assets-dest", resourcesDir, *extraPackagerArgs)
 }
+*/
 
 
 
@@ -198,6 +200,13 @@ android {
             keyPassword "pilipa"
         }
     }
+
+        packagingOptions {
+            exclude 'META-INF/DEPENDENCIES'
+            exclude 'META-INF/NOTICE'
+            exclude 'META-INF/LICENSE'
+            exclude 'META-INF/rxjava.properties'
+        }
 
     splits {
         abi {
