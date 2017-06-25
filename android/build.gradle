@@ -22,6 +22,7 @@ allprojects {
         }
         mavenLocal()
         maven { url('http://maven.aliyun.com/nexus/content/groups/public/') }
+        maven { url "http://repo1.maven.org/" }
         jcenter()
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
     }
