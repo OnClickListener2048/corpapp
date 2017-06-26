@@ -20,6 +20,8 @@ import TextInputView from "./view/TextInputView";
 import AlertModal from "../view/AlertPhotoModal";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
+import * as apis from '../apis';
+import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 
 const window = Dimensions.get('window');
 
@@ -45,6 +47,8 @@ export default class GetLicensePage extends Component{
             renderUnderline: true,
             currentStep : 0
         };
+        this._loadData = this._loadData.bind(this);
+
     }
 
     stepBtnClick(status){
@@ -59,6 +63,38 @@ export default class GetLicensePage extends Component{
 
         console.log("点我的最新数字是" + this.state.currentStep);
 
+    }
+
+    componentWillMount() {
+        this._loadData();
+
+    }
+
+    _loadData(resolve) {
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.lastID = null;
+
+        apis.loadOutSourceTaskStep('1','1').then(
+
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+
+
+                    this.setState({
+
+                    });
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
     }
 
 
