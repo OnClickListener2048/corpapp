@@ -5,5 +5,5 @@ import {navToBootstrap,navToMainTab} from './app/navigation';
 import  './app/storage/UserInfoStore';
 
 //SplashScreen.hide();
- navToBootstrap();
-// navToMainTab();
+//  navToBootstrap();
+navToMainTab();

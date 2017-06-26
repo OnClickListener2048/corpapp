@@ -19,6 +19,7 @@ import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 import Feedback from "./pilipaMain/my/Feedback";
 import About from "./pilipaMain/my/About";
 import NoMessage from "./test/NoMessage";
+import DataTimerView from "./view/DataTimerView";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -35,6 +36,7 @@ export default function () {
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
     reg('MyOutSideTaskPage', () => MyOutSideTaskPage);
     reg('NoMessage', () => NoMessage);
+    reg('DataTimerView', () => DataTimerView);
     reg('pilipaMain.my.PersonalInfo', () => PersonalInfo);
     reg('pilipaMain.my.Feedback', () => Feedback);
     reg('pilipaMain.my.About', () => About);

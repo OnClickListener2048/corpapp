@@ -18,6 +18,7 @@ const window = Dimensions.get('window');
 import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
 import AlertPhotoModal from "../view/AlertPhotoModal";
+import DataTimerView from "../view/DataTimerView";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -30,6 +31,8 @@ export default class ApplicationCenterPage extends Component{
         this.state = {
             visible: this.props.visible,
             image: null,
+            date:"",
+            isDateTimePickerVisible:this.props.isDateTimePickerVisible,
         };
 
 
@@ -52,8 +55,20 @@ export default class ApplicationCenterPage extends Component{
         });
     }
 
+    toMyDataTimer(){
+        // InteractionManager.runAfterInteractions(() => {
+        //     this.props.navigator.push({
+        //         screen: 'DataTimerView',
+        //         backButtonTitle: '返回', // 返回按钮的文字 (可选)
+        //         backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+        //         title:'我的外勤',
+        //     });
+        // });
+        this.setState({isDateTimePickerVisible:true,visible:false});
+    }
+
     toAlertModal(){
-        this.setState({ visible: true });
+        this.setState({ visible: true ,isDateTimePickerVisible:false});
     }
 
     renderImg(){
@@ -77,6 +92,14 @@ export default class ApplicationCenterPage extends Component{
         });
     }
 
+    _callbackData(date,isDateTimePickerVisible){//获取日期
+        this.setState({
+            isDateTimePickerVisible:isDateTimePickerVisible,
+            date:date,
+        });
+        console.log("===>>>"+this.state.date);
+    }
+
     render() {
         return(
         <View style={styles.container}>
@@ -84,13 +107,15 @@ export default class ApplicationCenterPage extends Component{
             {this.state.visible==true&&
             <AlertPhotoModal
                 callback={this._callback.bind(this)}/>}
+            {this.state.isDateTimePickerVisible==true&&
+                <DataTimerView
+                callback={this._callbackData.bind(this)}/>
+            }
 
             <CommunalNavBar
 
                 titleItem = {() => ApplicationCenterPage.renderTitleItem()}
             />
-
-            {/*<AlertModal/>*/}
             <Swiper height={200}
             >
                 {this.renderImg()}
@@ -114,24 +139,30 @@ export default class ApplicationCenterPage extends Component{
                     style={{marginLeft: 15,marginTop: 15,  height: 100, width: (SCREEN_WIDTH - 45)/2,}}
 
                 >
-                <TopcenterImgBottomTitleView applicationTitle='CRM'
-                                             applicationImg = {require('../img/crm_h.png')}
-                                             style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
-                                             textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
-                />
+                    <TopcenterImgBottomTitleView applicationTitle='CRM'
+                                                 applicationImg = {require('../img/crm_h.png')}
+                                                 style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                                 textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                    />
                 </TouchableOpacity>
-                <TopcenterImgBottomTitleView applicationTitle='工作统计'
-                                             applicationImg = {require('../img/statistical_h.png')}
-                                             style={{marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
-                                             textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
-                />
+                <TouchableOpacity
+                    onPress={() => {this.toMyDataTimer()}}
+                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
+                >
+                    <TopcenterImgBottomTitleView applicationTitle='工作统计'
+                                                 applicationImg = {require('../img/statistical_h.png')}
+                                                 style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                                 textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                    />
+                </TouchableOpacity>
                 <TopcenterImgBottomTitleView applicationTitle='工作日志'
                                              applicationImg = {require('../img/log_h.png')}
                                              style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
                 />
             </View>
-
+            <Text style={{fontSize:15,color:'red'}}>{this.state.date+""}</Text>
             <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={this.state.image}/>
 
         </View>
