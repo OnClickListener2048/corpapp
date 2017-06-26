@@ -21,13 +21,11 @@ class ProcessBtnView extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            // messageTitle: this.props.messageTitle,
-             currentNum: this.props.currentNum,
-             countNum: 0,
-             titleArr :['确认材料','开始任务','完成','完成'],
-            finished : false,
-            inProgress : false,
-            materialConfirm : false,
+            finished : this.props.finished,
+            inProgress : this.props.inProgress,
+            materialConfirm : this.props.materialConfirm,
+            titleArr :['确认材料','开始任务','完成','完成'],
+            currentNum: 0,
 
         }
 
@@ -36,7 +34,9 @@ class ProcessBtnView extends Component{
     }
 
     static propTypes = {
-        currentNum: PropTypes.number
+        finished : PropTypes.bool,
+        inProgress : PropTypes.bool,
+        materialConfirm : PropTypes.bool,
     };
 
 
@@ -55,18 +55,20 @@ class ProcessBtnView extends Component{
             apis.loadOutSourceTaskStepChange(false,false,true,'1','1').then(
 
             (responseData) => {
-                SActivityIndicator.hide(loading);
-                // this.props.callback(this.state.currentNum);
+                 SActivityIndicator.hide(loading);
+                 this.props.callback(this.state.currentNum);
 
-                this.state.countNum++;
 
                 this.setState({
-                    currentNum:this.state.countNum,
-                    // finished : responseData.data.finished,
-                    // inProgress : responseData.data.inProgress,
-                    // materialConfirm : responseData.data.materialConfirm,
 
-                });
+                     // finished : responseData.data.progress.finished,
+                     // inProgress : responseData.data.progress.inProgress,
+                     // materialConfirm : responseData.data.progress.materialConfirm,
+                    // currentNum : (responseData.data.progress.finished == 'true') ? 3 : (responseData.data.progress.inProgress == 'true') ? 2 : (responseData.data.progress.materialConfirm == 'true') ? 1 : 0,
+                    currentNum : 2,
+
+
+            });
 
                 if(responseData !== null && responseData.data !== null) {
 
@@ -114,8 +116,21 @@ class ProcessBtnView extends Component{
 
 
     render(){
-        const {currentNum} = this.state
-        this.state.countNum = currentNum;
+        const {finished,inProgress,materialConfirm} = this.state
+        if (finished == 'true'){
+            this.state.countNum = 3;
+        }else if (inProgress == 'true'){
+            this.state.countNum = 2;
+        }else if (materialConfirm == 'true'){
+            this.state.countNum = 1;
+        }else{
+            this.state.countNum = 0;
+        }
+
+        this.state.finished = finished;
+        this.state.inProgress = inProgress;
+        this.state.materialConfirm = materialConfirm;
+
         return(
 
             <View style={{backgroundColor:'#FFFFFF',width: SCREEN_WIDTH,height :80 ,flexDirection:'row-reverse'}}>

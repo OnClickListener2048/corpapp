@@ -33,6 +33,13 @@ export function loadOutSourceTask(taskId = '') {
 }
 
 /**
+ * 我的外勤-主任务-步骤详情 最复杂的一页
+ */
+export function loadOutSourceTaskStep(stepId = '' , taskId = '') {
+    return postApi('/app/v0/outsource/task/step',{stepId,taskId});
+}
+
+/**
  * 我的外勤-主任务-步骤详情-任务进度变化
  * finished	结束任务	boolean	@mock=false
  * inProgress	开始任务	boolean	@mock=false
