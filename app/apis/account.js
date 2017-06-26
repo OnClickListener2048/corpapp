@@ -1,7 +1,7 @@
 /**
  * 用户相关接口
  */
-import {postApi, getApi} from './common';
+import {postApi, postRawApi} from './common';
 
 // 登陆
 export function login( phone = '', smsCode = '') {
@@ -11,6 +11,11 @@ export function login( phone = '', smsCode = '') {
 // 短信验证码
 export async function sendVerifyCode(phone = '', verifyCode = '') {
     return await postApi('/app/v0/user/smscode/get', {phone, verifyCode});
+}
+
+// 校验图形验证码
+export async function sendVerifyVCode(phone = '', vcode = '') {
+    return await postApi('/app/v0/user/smscode/get', {phone, vcode});
 }
 
 // 问题反馈
@@ -27,3 +32,8 @@ export function userInfo() {
 export function logout() {
   return postApi('/app/v0/user/logout');
 }
+
+// // 图片验证码
+// export async function sendImageVerifyCode(phone = '') {
+//     return await postRawApi('/app/v0/user/vcode/get', {phone});
+// }

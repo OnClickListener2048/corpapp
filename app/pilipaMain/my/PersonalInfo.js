@@ -27,26 +27,17 @@ export default class PLPMine extends Component {
         super(props);
         this.state = {
             userName: '-',     // 用户名
-            mobile: '', //手机号
+            phone: '', //手机号
         };
 
-        UserInfoStore.getUserInfo().then(
-            (user) => {
-                if (user !== null) {
-                    this.setState({userName: user.name, mobile: user.mobile});
-                }
-            },
-            (e) => {
-                console.log("读取信息错误:", e);
-            },
-        );
+
     }
 
     componentWillMount() {
         UserInfoStore.getUserInfo().then(
             (user) => {
                 if (user !== null) {
-                    this.setState({userName: user.name});
+                    this.setState({userName: user.name, phone: user.phone});
                 }
             },
             (e) => {
@@ -76,7 +67,7 @@ export default class PLPMine extends Component {
                     </Text>
                     <Text style= {[styles.nameTextStyle,
                         {marginLeft: 5}]}>
-                        {this.state.mobile}
+                        {this.state.phone}
                     </Text>
                 </View>
                 <View style={styles.divider}/>

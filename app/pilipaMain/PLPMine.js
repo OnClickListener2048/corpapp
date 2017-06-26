@@ -32,6 +32,19 @@ export default class PLPMine extends Component {
         };
     }
 
+    componentWillMount() {
+        UserInfoStore.getUserInfo().then(
+            (user) => {
+                if (user !== null) {
+                    this.setState({userName: user.name});
+                }
+            },
+            (e) => {
+                console.log("读取信息错误:", e);
+            },
+        );
+    }
+
     render() {
         return (
             <View style={styles.container}>

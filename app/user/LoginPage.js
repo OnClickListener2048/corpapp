@@ -44,6 +44,9 @@ export default class LoginPage extends Component {
             smsCode: '',         // 短信验证码
             smsCodeValid: false,          // 短信验证码有效
             acceptLic: false,// 同意许可协议
+            picURL: {uri: 'https://x-crm.i-counting.cn/app/v0/user/vcode/get'} ,// 图片验证码地址
+            vCode: '',         // 图片验证码
+            vCodeValid: false,          // 图片验证码有效
         };
 
         this._doLogin = this._doLogin.bind(this);
@@ -56,8 +59,22 @@ export default class LoginPage extends Component {
             mobileValid: true,   // 手机号有效
             smsCode: '888888',         // 短信验证码
             smsCodeValid: true,        // 短信验证码有效
-            acceptLic: true
+            acceptLic: true,
+            vCode: 'E69M',         // 图片验证码
+            vCodeValid: false,          // 图片验证码有效
         });
+
+        console.log("sendImageVerifyCode");
+
+        // apis.sendImageVerifyCode(this.state.mobile).then(function(response) {
+        //     if (!response.ok) return new Error(response);
+        //     return response.blob();
+        // })
+        //     .then(function(myBlob) {
+        //         var picURL = URL.createObjectURL(myBlob);
+        //         this.setState({picURL});
+        //     })
+        //     .catch(function(err) { console.log(err); });
     }
 
     // 返回
@@ -202,29 +219,21 @@ export default class LoginPage extends Component {
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.smsCode}
-                                           secureTextEntry={false} maxLength={6} keyboardType='numeric'
-                                           style={styles.codeInput} placeholder='短信验证码'
+                                           secureTextEntry={false} maxLength={4} keyboardType='default'
+                                           style={styles.codeInput} placeholder='图片验证码'
                                            returnKeyType='done'
-                                           onChangeText={(smsCode) => {
-                                               this.setState({smsCode})
-                                               let smsCodeValid = (smsCode.length == 6);
-                                               this.setState({smsCode, smsCodeValid});
+                                           onChangeText={(vCode) => {
+                                               this.setState({vCode})
+                                               let vCodeValid = (vCode.length == 4);
+                                               this.setState({vCode, vCodeValid});
                                            }}
-
                                            onSubmitEditing={() => {
                                                dismissKeyboard();
                                            }}
                                 />
 
-                                <View style={{
-                                    height: 15,
-                                    width: 1,
-                                    backgroundColor: '#c8c8c8',
-                                    alignSelf: 'center',
-                                    marginRight: 1
-                                }}/>
-
-                                <Image        style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}        source={{uri: 'http://facebook.github.io/react/img/logo_og.png'}}      />
+                                <Image  style={{width: 69, marginRight: 0, height: 34, alignSelf: 'center',}}
+                                              source={this.state.picURL}      />
 
                             </View>
                         </View>

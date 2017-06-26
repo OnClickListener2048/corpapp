@@ -148,6 +148,34 @@ HTTPBase.post = async function (url, params= {}, headers= null) {
     return this._parseHttpResult(response);
 };
 
+/**
+ * TODO 此功能需要第三方库支持, 暂时先不用
+ * POST请求, 返回原始的response对象, 不进行任何解析.
+ * @param url
+ * @param params {}包装
+ * @param headers
+ *
+ * @return {Promise}
+ *
+ **/
+HTTPBase.postRaw = async function (url, params= {}, headers= null) {
+    let paramsArray = await this._commonParams(params);
+    let formData = new FormData();
+    for (let [k, v] of Object.entries(paramsArray)) {
+        if(v !== null) {
+            formData.append(k, v);
+        }
+    }
+    console.log("POST======> ", url, "params", formData, "\n");
+    let response = await fetch(url, {
+        method:'POST',
+        headers:this._commonHeaders(headers),
+        body:formData,
+    });
+
+    return response;
+};
+
 HTTPBase._parseHttpResult = async function (response) {
     if (!response.ok) {
         let text = await response.text();
