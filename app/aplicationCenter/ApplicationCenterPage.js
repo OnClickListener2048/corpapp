@@ -56,14 +56,6 @@ export default class ApplicationCenterPage extends Component{
     }
 
     toMyDataTimer(){
-        // InteractionManager.runAfterInteractions(() => {
-        //     this.props.navigator.push({
-        //         screen: 'DataTimerView',
-        //         backButtonTitle: '返回', // 返回按钮的文字 (可选)
-        //         backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-        //         title:'我的外勤',
-        //     });
-        // });
         this.setState({isDateTimePickerVisible:true,visible:false});
     }
 

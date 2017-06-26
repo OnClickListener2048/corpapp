@@ -17,11 +17,12 @@ import CompanyInfoView from '../test/view/CompanyInfoView'
 import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
 import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
-import AlertModal from "../view/AlertPhotoModal";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import DataTimerView from "../view/DataTimerView";
+import AlertPhotoModal from "../view/AlertPhotoModal";
 
 const window = Dimensions.get('window');
 
@@ -45,17 +46,17 @@ export default class GetLicensePage extends Component{
 
         this.state = {
             renderUnderline: true,
-            currentStep : 0
+            currentStep : 0,
+            visible: this.props.visible,
+            reImage: null,
+            linImage:null,
+            photoType:null,
         };
         this._loadData = this._loadData.bind(this);
 
     }
 
     stepBtnClick(status){
-
-
-
-
 
         this.setState({
             currentStep:status + 1,
@@ -137,7 +138,24 @@ export default class GetLicensePage extends Component{
         });
     }
 
-    toAlertModal(){
+    toAlertModal(photoType){
+        this.setState({ visible: true,
+            photoType:photoType});
+    }
+
+    _callbackPhoto(image,visible) {//获取图片
+
+        if(this.state.photoType=="reverse"){
+            this.setState({
+                reImage: image,
+                visible:visible,
+            });
+        }else{
+            this.setState({
+                linImage: image,
+                visible:visible,
+            });
+        }
 
     }
 
@@ -145,7 +163,9 @@ export default class GetLicensePage extends Component{
         return(
             <View style={styles.container}>
 
-
+                {this.state.visible==true&&
+                <AlertPhotoModal
+                    callback={this._callbackPhoto.bind(this)}/>}
                 <ScrollView style={styles.container}>
 
                     {this.renderVerifyProcessTipView()}
@@ -172,9 +192,12 @@ export default class GetLicensePage extends Component{
                     />
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}}>身  份  证：</Text>
-                        <TouchableOpacity onPress={this.toAlertModal()}>
-                        <Image source={require('../img/reverse.png')} style={{marginTop:15}}/>
+                        <TouchableOpacity onPress={() => {this.toAlertModal("reverse")}}>
+                            {this.state.reImage!=null?<Image source={this.state.reImage} style={{marginTop:15,height:75,width:110}}/>:
+                                <Image source={require('../img/reverse.png')} style={{marginTop:15}}/>}
+
                         </TouchableOpacity>
+
                         {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                             {/*justifyContent:'flex-end'}}/>*/}
                     </View>
@@ -228,7 +251,13 @@ export default class GetLicensePage extends Component{
                     </View>
                     <View style={[styles.identityCardPhoto,{height:150}]}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >经营执照：</Text>
-                        <Image source={require('../img/blicense.png')} style={{marginTop:10}}/>
+                        <TouchableOpacity onPress={() => {this.toAlertModal("blicense")}}>
+                            {this.state.linImage!=null?<Image source={this.state.linImage} style={{marginTop:10,height:75,width:110}}/>:
+                                <Image source={require('../img/blicense.png')} style={{marginTop:10}}/>
+                            }
+
+                        </TouchableOpacity>
+
                     </View>
                 </ScrollView>
 

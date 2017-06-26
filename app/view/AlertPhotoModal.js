@@ -55,7 +55,7 @@ export default class AlertPhotoModal extends Component{
         }).catch(e => {
             console.log(e);
             // Alert.alert(e.message ? e.message : e);
-            this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
+            // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
         });
     }
 
@@ -71,7 +71,7 @@ export default class AlertPhotoModal extends Component{
             });
             this.props.callback(this.state.image,this.state.visible);//将图片传递给页面
         }).catch(e => {
-            this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
+            // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
         });
     }
 
