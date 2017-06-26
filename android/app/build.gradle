@@ -246,7 +246,6 @@ dependencies {
     compile project(':jcore-react-native')
     compile "com.android.support:appcompat-v7:24.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
-    compile project(':react-native-datetime')
 }
 
 buildscript {

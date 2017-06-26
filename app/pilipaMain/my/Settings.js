@@ -203,7 +203,7 @@ export default class Settings extends Component {
                     SActivityIndicator.hide(loading);
                     console.log("短信验证码校验失败:", e);
                     Toast.show('短信验证码校验失败:' + JSON.stringify(e));
-                    Alert.alert('短信验证码校验失败', '',
+                    Alert.alert('绑定失败', e.msg,
                         [
                             {
                                 text: '确定',
