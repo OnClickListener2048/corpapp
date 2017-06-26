@@ -18,6 +18,7 @@ import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
 import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 import Feedback from "./pilipaMain/my/Feedback";
 import About from "./pilipaMain/my/About";
+import Settings from "./pilipaMain/my/Settings";
 import NoMessage from "./test/NoMessage";
 
 export default function () {
@@ -38,4 +39,5 @@ export default function () {
     reg('pilipaMain.my.PersonalInfo', () => PersonalInfo);
     reg('pilipaMain.my.Feedback', () => Feedback);
     reg('pilipaMain.my.About', () => About);
+    reg('pilipaMain.my.Settings', () => Settings);
 }
