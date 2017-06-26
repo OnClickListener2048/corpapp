@@ -51,6 +51,10 @@ export default class GetLicensePage extends Component{
             reImage: null,
             linImage:null,
             photoType:null,
+            dateType:null,
+            firstDate:"",
+            lastDate:"",
+            isDateTimePickerVisible:this.props.isDateTimePickerVisible,
         };
         this._loadData = this._loadData.bind(this);
 
@@ -125,7 +129,10 @@ export default class GetLicensePage extends Component{
 
     renderBusinessTimeView(){
 
-        return <BusinessTimeView/>
+        return <BusinessTimeView
+            callback={this._toMyDataTimer.bind(this)}
+            firstDate={this.state.firstDate}
+            lastDate={this.state.lastDate}/>
     }
 
 
@@ -138,8 +145,19 @@ export default class GetLicensePage extends Component{
         });
     }
 
+    _toMyDataTimer(isDateTimePickerVisible){
+        console.log("传值=====>>"+isDateTimePickerVisible);
+
+        if(isDateTimePickerVisible!=null) {
+            this.setState({isDateTimePickerVisible: true, visible: false,
+                dateType:isDateTimePickerVisible,});
+            console.log("传值==>>"+isDateTimePickerVisible);
+        }
+
+    }
+
     toAlertModal(photoType){
-        this.setState({ visible: true,
+        this.setState({ visible: true,isDateTimePickerVisible:false,
             photoType:photoType});
     }
 
@@ -159,6 +177,29 @@ export default class GetLicensePage extends Component{
 
     }
 
+    _callbackData(date,isDateTimePickerVisible){//获取日期
+        if(date!="") {
+            if (this.state.dateType == "firstTime") {
+                this.setState({
+                    isDateTimePickerVisible: isDateTimePickerVisible,
+                    firstDate: date,
+                });
+                console.log("===>>>" + this.state.firstDate);
+            } else {
+                this.setState({
+                    isDateTimePickerVisible: isDateTimePickerVisible,
+                    lastDate: date,
+                });
+                console.log("===>>>" + this.state.lastDate);
+            }
+        }else {
+            this.setState({
+                isDateTimePickerVisible: isDateTimePickerVisible,
+            });
+        }
+
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -166,6 +207,10 @@ export default class GetLicensePage extends Component{
                 {this.state.visible==true&&
                 <AlertPhotoModal
                     callback={this._callbackPhoto.bind(this)}/>}
+                {this.state.isDateTimePickerVisible==true&&
+                <DataTimerView
+                    callback={this._callbackData.bind(this)}/>
+                }
                 <ScrollView style={styles.container}>
 
                     {this.renderVerifyProcessTipView()}

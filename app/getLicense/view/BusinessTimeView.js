@@ -93,15 +93,24 @@ export default class BusinessTimeView extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            selectTimeBtnSelected : false,
+            selectTimeBtnSelected : true,
             allTimePressBtnSelected : false,
+            firstDate:this.props.firstDate,
+            lastDate:this.props.lastDate,
         }
 
         this._selectTimePress = this._selectTimePress.bind(this);
         this._allTimePress = this._allTimePress.bind(this);
         this._leftTimePress = this._leftTimePress.bind(this);
+        this._hideAlert = this._hideAlert.bind(this);
+
 
     }
+
+    static propTypes = {
+        firstDate: PropTypes.string,
+        lastDate:PropTypes.string,
+    };
 
 
     _selectTimePress(){
@@ -122,6 +131,7 @@ export default class BusinessTimeView extends Component{
     };
 
     _allTimePress(){
+
         this.setState({
             selectTimeBtnSelected : false,
             allTimePressBtnSelected : true,
@@ -130,6 +140,7 @@ export default class BusinessTimeView extends Component{
     };
 
     renderselectTimeBtn(){
+
 
         if (this.state.selectTimeBtnSelected) {
             return(
@@ -163,6 +174,12 @@ export default class BusinessTimeView extends Component{
 
     }
 
+    _hideAlert(isDateTimePickerVisible){
+        console.log("传值====="+isDateTimePickerVisible);
+
+        this.props.callback(isDateTimePickerVisible);
+    }
+
     render() {
         return (
             <View
@@ -178,20 +195,52 @@ export default class BusinessTimeView extends Component{
                             </View>
 
                         </TouchableOpacity>
+                        {this.state.selectTimeBtnSelected == true ?
+                            <TouchableOpacity style={ styles.leftdownDrapViewStyle} onPress={() => {
+                                this._hideAlert("firstTime")
+                            }}>
 
-                        <View style={ styles.leftdownDrapViewStyle}>
-                            <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center', justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{'呵呵'}</Text>
+                                <Image source={require('../../img/down.png')}/>
+                                <Text numberOfLines={1} style={[{
+                                    textAlign: 'center',
+                                    justifyContent: 'center',
+                                    flex: 1,
+                                    color: '#e6e6e6'
+                                }]}>{this.props.firstDate + ""}</Text>
 
-                        </View>
+                            </TouchableOpacity>:
+                            <View style={ styles.leftdownDrapViewStyle}>
+                                <Text numberOfLines={1} style={[{
+                                    textAlign: 'center',
+                                    justifyContent: 'center',
+                                    flex: 1,
+                                    color: '#e6e6e6'
+                                }]}>{this.props.firstDate + ""}</Text>
 
+                            </View>
+                        }
                         <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>
-
-                        <View style={ styles.rightdownDrapViewStyle}>
+                        {this.state.selectTimeBtnSelected == true ?
+                        <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
+                            this._hideAlert("lastTime")
+                        }}>
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center', justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{'呵呵呵'}</Text>
-
-                        </View>
+                            <Text numberOfLines={1} style={[{
+                                textAlign: 'center',
+                                justifyContent: 'center',
+                                flex: 1,
+                                color: '#e6e6e6'
+                            }]}>{this.props.lastDate + ""}</Text>
+                        </TouchableOpacity>:
+                            <View style={ styles.rightdownDrapViewStyle}>
+                                <Text numberOfLines={1} style={[{
+                                    textAlign: 'center',
+                                    justifyContent: 'center',
+                                    flex: 1,
+                                    color: '#e6e6e6'
+                                }]}>{this.props.lastDate + ""}</Text>
+                            </View>
+                        }
                     </View>
 
 
