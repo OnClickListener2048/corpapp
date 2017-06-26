@@ -55,7 +55,7 @@ export default class LoginPage extends Component {
     //debug only
     _setupDebug() {
         this.setState({
-            mobile: '18211137768',     // 手机号
+            mobile: '18513417295',     // 手机号
             mobileValid: true,   // 手机号有效
             smsCode: '888888',         // 短信验证码
             smsCodeValid: true,        // 短信验证码有效
@@ -273,7 +273,7 @@ export default class LoginPage extends Component {
                                              ref="timerButton"
                                              style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                              textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                             timerCount={60}
+                                             timerCount={80}
                                              onClick={(shouldStartCountting) => {
                                                  shouldStartCountting(true);
                                                  this._requestSMSCode(shouldStartCountting);

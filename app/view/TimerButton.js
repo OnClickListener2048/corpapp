@@ -31,6 +31,7 @@ export default class TimerButton extends React.Component {
             timerTitle: this.props.timerTitle || '获取验证码',
             counting: false,
             selfEnable: true,
+            unmounted: false,
         };
         this._shouldStartCountting = this._shouldStartCountting.bind(this)
         this._countDownAction = this._countDownAction.bind(this)
@@ -59,6 +60,11 @@ export default class TimerButton extends React.Component {
                 })
             } else {
                 console.log("---- timer ", timer);
+                if(this.state.unmounted) {
+                    clearInterval(this.interval);
+                    this.setState({timerCount: 0 });
+                    return;
+                }
                 this.setState({
                     timerCount: timer,
                     timerTitle: `剩余(${timer}s)`,
@@ -94,6 +100,8 @@ export default class TimerButton extends React.Component {
     }
 
     componentWillUnmount() {
+        console.log("TimerButton.js componentWillUnmount()");
+        this.setState({unmounted: true});
         clearInterval(this.interval)
     }
 

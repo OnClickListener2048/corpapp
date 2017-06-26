@@ -58,6 +58,7 @@ export default class PLPMine extends Component {
                     <Text style={styles.textcontentview}>{/* 暂无部门信息*/}</Text>
                 </Image>
 
+                <TouchableWithoutFeedback onPress={() => {this._goSettings()}}>
                 <View style={styles.settingview}>
                     <Image source={require('../img/set@3x.png')}
                            style={styles.imgiconview}/>
@@ -66,6 +67,8 @@ export default class PLPMine extends Component {
                     </Text>
                     <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
                 </View>
+                </TouchableWithoutFeedback>
+
                 <View style={styles.lineview}/>
 
                 <TouchableWithoutFeedback onPress={() => {this._goFeedback()}}>
@@ -142,6 +145,15 @@ export default class PLPMine extends Component {
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             title:'关于噼里啪',
+        });
+    }
+
+    _goSettings() {
+        this.props.navigator.push({
+            screen: 'pilipaMain.my.Settings',
+            backButtonTitle: '', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title:'设置',
         });
     }
 }
