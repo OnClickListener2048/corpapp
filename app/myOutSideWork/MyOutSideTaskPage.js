@@ -27,8 +27,6 @@ export default class MyOutSideTaskPage extends Component{
 
     constructor(props) {
         super(props);
-
-
         this.state = {
             loaded:false,                   // 是否初始化 ListView
 
@@ -36,7 +34,6 @@ export default class MyOutSideTaskPage extends Component{
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
         this.info;
-
 
     }
 
@@ -59,7 +56,9 @@ export default class MyOutSideTaskPage extends Component{
                     this.setState({
                         loaded:true,
                     });
-
+                    this.props.navigator.setTitle({
+                        title: this.info.taskName // the new title of the screen as appears in the nav bar
+                    });
 
                 }
             },

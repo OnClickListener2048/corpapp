@@ -49,7 +49,27 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent:'flex-end'
 
-    }
+    },
+
+    textInputWrapper: {
+        height: px2dp(50),
+        width: SCREEN_WIDTH-40,
+        backgroundColor: 'transparent',
+        // position: 'relative',
+        marginRight: px2dp(20),
+        flexDirection: 'row',
+        marginTop: 5,
+        marginLeft : 0,
+    },
+
+    textInput: {
+        flex: 1,
+        width: px2dp(438),
+        marginLeft: px2dp(0),
+        padding: 0,
+        fontSize: 15,
+        color:'#323232',
+    },
 
 });
 export default styles;

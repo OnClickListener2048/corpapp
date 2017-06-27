@@ -9,7 +9,7 @@ import {
     Text,
     View,
     ScrollView,InteractionManager,
-    Dimensions, Image, TouchableOpacity,NativeModules
+    Dimensions, Image, TouchableOpacity,NativeModules,
 } from 'react-native';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
@@ -54,7 +54,8 @@ export default class GetLicensePage extends Component{
             firstDate:"",
             lastDate:"",
             isDateTimePickerVisible:this.props.isDateTimePickerVisible,
-
+            detailObj:{},
+            loaded:false,
 
         };
         this._loadData = this._loadData.bind(this);
@@ -91,13 +92,22 @@ export default class GetLicensePage extends Component{
 
 
                     this.setState({
-
+                        detailObj : responseData.data,
+                        loaded:true,
                     });
 
+                    this.props.navigator.setTitle({
+                        title: this.state.detailObj.taskName // the new title of the screen as appears in the nav bar
+                    });
+
+                    console.log("detailObj赋值="+this.state.detailObj.bizTime);
                 }
             },
             (e) => {
                 SActivityIndicator.hide(loading);
+                this.setState({
+                    loaded:false,
+                });
                 console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -137,13 +147,15 @@ export default class GetLicensePage extends Component{
     // }
 
     renderTest() {
-
-        return  <CompanyInfoView companyName='CRM'
-                                 ContactsName='野原新之助'
-                                 ContactsPhone='13256738495'
-                                 SalesName='销售员'
-                                 SalesPhone='13522805747'
-        />
+        if (this.state.loaded === true) {
+            return <CompanyInfoView companyName={this.state.detailObj.corpName}
+                                    ContactsName={this.state.detailObj.contactName}
+                                    ContactsPhone={this.state.detailObj.contactPhone}
+                                    SalesName={this.state.detailObj.salesmanName}
+                                    SalesPhone={this.state.detailObj.salesmanPhone}
+                                    callback={this._callback.bind(this)}
+            />
+        }
     }
 
     renderVerifyProcessTipView(){
@@ -156,12 +168,20 @@ export default class GetLicensePage extends Component{
         return <ProcessBtnView currentNum={this.state.currentStep}  callback={this.stepBtnClick.bind(this)} />
     }
 
-    renderBusinessTimeView(){
+    renderBusinessTimeView() {
 
-        return <BusinessTimeView
-            callback={this._toMyDataTimer.bind(this)}
-            firstDate={this.state.firstDate}
-            lastDate={this.state.lastDate}/>
+        if (this.state.detailObj.bizTime.startDate != null) {
+            return <BusinessTimeView
+                callback={this._toMyDataTimer.bind(this)}
+                firstDate={this.state.detailObj.bizTime.startDate}
+                lastDate={this.state.detailObj.bizTime.endDate}/>
+        } else {
+
+            return <BusinessTimeView
+                callback={this._toMyDataTimer.bind(this)}
+                firstDate={this.state.firstDate}
+                lastDate={this.state.lastDate}/>
+        }
     }
 
     _addressBtnClick(){
@@ -216,21 +236,41 @@ export default class GetLicensePage extends Component{
         }
 
     }
+    _dateFormat(fmt) {
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        console.log(">>>>>"+fmt.Format("yyyy-MM-dd"));
+        return fmt.Format("yyyy-MM-dd");
+    }
 
     _callbackData(date,isDateTimePickerVisible){//获取日期
         if(date!="") {
+            var dateFormat = this._dateFormat(date);
             if (this.state.dateType == "firstTime") {
                 this.setState({
                     isDateTimePickerVisible: isDateTimePickerVisible,
-                    firstDate: date,
+                    firstDate: dateFormat,
                 });
-                console.log("===>>>" + this.state.firstDate);
+                console.log("==f=>>>" + this.state.firstDate);
             } else {
                 this.setState({
                     isDateTimePickerVisible: isDateTimePickerVisible,
-                    lastDate: date,
+                    lastDate: dateFormat,
                 });
-                console.log("===>>>" + this.state.lastDate);
+                console.log("==l=>>>" + this.state.lastDate);
             }
         }else {
             this.setState({
@@ -257,114 +297,130 @@ export default class GetLicensePage extends Component{
 
     render() {
         return(
-            <View style={styles.container}>
 
-                {this.state.visible==true&&
-                <AlertPhotoModal
-                    callback={this._callbackPhoto.bind(this)}/>}
-                {this.state.isDateTimePickerVisible==true&&
+
+        <View style={styles.container}>
+            {this.state.visible == true &&
+            <AlertPhotoModal
+                callback={this._callbackPhoto.bind(this)}/>}
+            {this.state.isDateTimePickerVisible == true &&
                 <DataTimerView
-                    callback={this._callbackData.bind(this)}/>
+                callback={this._callbackData.bind(this)}/>
+            }
+            {this.state.loaded === true &&
+            <ScrollView style={styles.container}>
+
+                {this.renderVerifyProcessTipView()}
+                {this.renderVerifyBtnView()}
+
+
+                {<View style={[{height: 15}]}></View>}
+                {this.renderCompanyTipView()}
+                {this.renderLineView()}
+
+                {<View >
+                    {this.renderTest()}
+
+                </View>}
+
+                {/*{<View >*/}
+                {/*{this.customerMessage()}*/}
+
+                {/*</View>}*/}
+
+                <TextInputView
+                textName={'法       人：'}
+                inputWidth={{width: 75}}
+                winWidth={{width: SCREEN_WIDTH - 110}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.legalEntity}
+                />
+                <View style={styles.identityCardPhoto}>
+                <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>身 份 证：</Text>
+                <TouchableOpacity onPress={() => {
+                this.toAlertModal("reverse")
+            }}>
+                {this.state.reImage != null ?
+                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                    this.state.detailObj.idCards!=null?<Image source={{uri: 'https://'+this.state.detailObj.idCards}} style={{marginTop: 15, height: 75, width: 110}}/>:
+                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+
+                </TouchableOpacity>
+
+                {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
+                {/*justifyContent:'flex-end'}}/>*/}
+                </View>
+                <View
+                style={{paddingTop: 5, backgroundColor: 'white'}}>
+                <TextInputView
+                textName={'注  册  号：'}
+                inputWidth={{width: 80}}
+                winWidth={{width: SCREEN_WIDTH - 115}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.regId}
+                />
+                </View>
+                <View
+                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                <TextInputView
+                textName={'国税登记号：'}
+                inputWidth={{width: 93}}
+                winWidth={{width: SCREEN_WIDTH - 130}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.nationalTaxId}
+                />
+                </View>
+                <View
+                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                <TextInputView
+                textName={'地税登记号：'}
+                inputWidth={{width: 93}}
+                winWidth={{width: SCREEN_WIDTH - 130}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.localTaxId}
+                />
+                </View>
+
+                {this.renderBusinessTimeView()}
+
+                <View
+                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                <TextInputView
+                textName={'注册资金：'}
+                inputWidth={{width: 80}}
+                winWidth={{width: SCREEN_WIDTH - 115}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.regFunds}
+                />
+                </View>
+                {this.renderCompanyAddressView()}
+                <View
+                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                <TextInputView
+                textName={'经营范围：'}
+                inputWidth={{width: 80}}
+                winWidth={{width: SCREEN_WIDTH - 115}}
+                callback={this._callback.bind(this)}
+                content={this.state.detailObj.bizRange}
+                />
+                </View>
+                <View style={[styles.identityCardPhoto, {height: 150}]}>
+                <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>经营执照：</Text>
+                <TouchableOpacity onPress={() => {
+                this.toAlertModal("blicense")
+            }}>
+                {this.state.linImage != null ?
+                    <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                    this.state.detailObj.bizLics!=null?<Image source={{uri: 'http://'+this.state.detailObj.bizLics}} style={{marginTop: 10, height: 75, width: 110}}/>:
+                        <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
                 }
-                <ScrollView style={styles.container}>
 
-                    {this.renderVerifyProcessTipView()}
-                    {this.renderVerifyBtnView()}
+                </TouchableOpacity>
 
-
-                    {<View style={[{height:15}]}></View>}
-                    {this.renderCompanyTipView()}
-                    {this.renderLineView()}
-
-                    {<View >
-                        {this.renderTest()}
-
-                    </View>}
-
-                    {/*{<View >*/}
-                    {/*{this.customerMessage()}*/}
-
-                    {/*</View>}*/}
-
-                    <TextInputView
-                        textName={'法       人：'}
-                        inputWidth={{width:75}}
-                        winWidth={{width:SCREEN_WIDTH-110}}
-                        callback={this._callback.bind(this)}
-                    />
-                    <View style={styles.identityCardPhoto}>
-                        <Text style={{marginLeft : 15,fontSize:15,marginTop:10}}>身  份  证：</Text>
-                        <TouchableOpacity onPress={() => {this.toAlertModal("reverse")}}>
-                            {this.state.reImage!=null?<Image source={this.state.reImage} style={{marginTop:15,height:75,width:110}}/>:
-                                <Image source={require('../img/reverse.png')} style={{marginTop:15}}/>}
-
-                        </TouchableOpacity>
-
-                        {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
-                        {/*justifyContent:'flex-end'}}/>*/}
-                    </View>
-                    <View
-                        style={{paddingTop:5,backgroundColor:'white'}}>
-                        <TextInputView
-                            textName={'注  册  号：'}
-                            inputWidth={{width:80}}
-                            winWidth={{width:SCREEN_WIDTH-115}}
-                            callback={this._callback.bind(this)}
-                        />
-                    </View>
-                    <View
-                        style={{paddingTop:15,backgroundColor:'white'}}>
-                        <TextInputView
-                            textName={'国税登记号：'}
-                            inputWidth={{width:93}}
-                            winWidth={{width:SCREEN_WIDTH-130}}
-                            callback={this._callback.bind(this)}
-                        />
-                    </View>
-                    <View
-                        style={{paddingTop:15,backgroundColor:'white'}}>
-                        <TextInputView
-                            textName={'地税登记号：'}
-                            inputWidth={{width:93}}
-                            winWidth={{width:SCREEN_WIDTH-130}}
-                            callback={this._callback.bind(this)}
-                        />
-                    </View>
-
-                    {this.renderBusinessTimeView()}
-
-                    <View
-                        style={{paddingTop:15,backgroundColor:'white'}}>
-                        <TextInputView
-                            textName={'注册资金：'}
-                            inputWidth={{width:80}}
-                            winWidth={{width:SCREEN_WIDTH-115}}
-                            callback={this._callback.bind(this)}
-                        />
-                    </View>
-                    {this.renderCompanyAddressView()}
-                    <View
-                        style={{paddingTop:15,backgroundColor:'white'}}>
-                        <TextInputView
-                            textName={'经营范围：'}
-                            inputWidth={{width:80}}
-                            winWidth={{width:SCREEN_WIDTH-115}}
-                            callback={this._callback.bind(this)}
-                        />
-                    </View>
-                    <View style={[styles.identityCardPhoto,{height:150}]}>
-                        <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >经营执照：</Text>
-                        <TouchableOpacity onPress={() => {this.toAlertModal("blicense")}}>
-                            {this.state.linImage!=null?<Image source={this.state.linImage} style={{marginTop:10,height:75,width:110}}/>:
-                                <Image source={require('../img/blicense.png')} style={{marginTop:10}}/>
-                            }
-
-                        </TouchableOpacity>
-
-                    </View>
+                </View>
                 </ScrollView>
-
-            </View>
+            }
+        </View>
         );
     }
 }

@@ -4,7 +4,7 @@
 
 
 import React, {PropTypes} from 'react';
-import {View, Text,Image,Dimensions,Linking,TouchableOpacity} from 'react-native';
+import {View, Text, Image, Dimensions, Linking, TouchableOpacity, TextInput} from 'react-native';
 import styles from '../style/SubViewStyle'
 
 
@@ -42,9 +42,13 @@ export default class CompanyInfoView extends React.Component {
 
     }
 
+    _inputContent(content){
+        this.props.callback(content);
+    }
+
     render() {
        // const { style} = this.props
-        const {companyName,ContactsName,ContactsPhone,SalesName,SalesPhone} = this.state
+        const {ContactsName,ContactsPhone,SalesName,SalesPhone} = this.state
         return (
             <View
                 style={styles.companyInfoViewContainer}>
@@ -55,15 +59,27 @@ export default class CompanyInfoView extends React.Component {
                     style={styles.companyInfoRowStyle}>
 
                     <View
-                        style={[{width:SCREEN_WIDTH - 30 , height: 30,   flexDirection: 'row'}]}>
+                        style={[{width:SCREEN_WIDTH - 30 , height: 35,   flexDirection: 'row'}]}>
 
                         <Text
                             textAlign='right'
-                            style={[{fontSize: 15,marginTop: 10,color:'#323232'}] }>{'公司名称'}</Text>
-                        <Text
-                            textAlign='left'
-                            numberOfLines={1}
-                            style={[{fontSize: 15,marginTop: 10, marginLeft : 0,color:'#323232', marginRight: 60}] }>: {companyName}</Text>
+                            style={[{fontSize: 15,marginTop: 10,color:'#323232'}] }>{'公司名称：'}</Text>
+                        <View textAlign='left'
+                              style={styles.textInputWrapper}>
+                            <TextInput
+                                underlineColorAndroid='transparent' value={this.state.companyName}
+                                       style={styles.textInput} placeholder='' returnKeyType='next'
+                                       onChangeText={
+                                           (legalPerson) => {
+                                               this.setState({companyName:legalPerson});
+                                               this._inputContent(legalPerson);
+                                           }
+                                       }/>
+                        </View>
+                        {/*<Text*/}
+                            {/*textAlign='left'*/}
+                            {/*numberOfLines={1}*/}
+                            {/*style={[{fontSize: 15,marginTop: 10, marginLeft : 0,color:'#323232', marginRight: 60}] }>: {companyName}</Text>*/}
                     </View>
 
 
@@ -78,10 +94,22 @@ export default class CompanyInfoView extends React.Component {
                         <Text
                             textAlign='center'
                             style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人 '}</Text>
-                        <Text
-                            textAlign='left'
-                            numberOfLines={1}
-                            style={[{fontSize: 15,alignSelf:'center', marginLeft : 2.5,marginRight: 0,color:'#323232'}] }>: {ContactsName}</Text>
+                        <View textAlign='left'
+                              style={[styles.textInputWrapper,{marginTop:3}]}>
+                            <TextInput
+                                underlineColorAndroid='transparent' value={this.state.ContactsName}
+                                style={styles.textInput} placeholder='' returnKeyType='next'
+                                onChangeText={
+                                    (legalPerson) => {
+                                        this.setState({companyName:legalPerson});
+                                        this._inputContent(legalPerson);
+                                    }
+                                }/>
+                        </View>
+                        {/*<Text*/}
+                            {/*textAlign='left'*/}
+                            {/*numberOfLines={1}*/}
+                            {/*style={[{fontSize: 15,alignSelf:'center', marginLeft : 2.5,marginRight: 0,color:'#323232'}] }>: {ContactsName}</Text>*/}
                     </View>
                     <View
                         style={styles.companyInfoRowPhoneStyle}>
