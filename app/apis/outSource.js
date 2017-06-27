@@ -52,3 +52,10 @@ export function loadOutSourceTaskStepChange(finished = false , inProgress = fals
     return postApi('/app/v0/outsource/task/step/change',{finished,inProgress,materialConfirm,stepId,taskId});
 }
 
+/*
+*地区信息
+*/
+export function loadDicArea(city = '') {
+    return postApi('/app/v0/dic/area',{city});
+}
+

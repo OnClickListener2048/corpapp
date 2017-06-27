@@ -19,6 +19,9 @@ import CompanyAddress from "../test/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
+import CompanyAddressView from "./view/CompanyAddressView";
+import PickerWidget from "./view/PickerWidget";
+
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import DataTimerView from "../view/DataTimerView";
@@ -30,11 +33,6 @@ const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
-var details = [
-    {processName:'确认材料'},
-    {processName:'开始任务'},
-    {processName:'结束任务'},
-];
 
 export default class GetLicensePage extends Component{
     static navigatorStyle = {
@@ -56,8 +54,11 @@ export default class GetLicensePage extends Component{
             firstDate:"",
             lastDate:"",
             isDateTimePickerVisible:this.props.isDateTimePickerVisible,
+
+
         };
         this._loadData = this._loadData.bind(this);
+        this._loadAreaData = this._loadAreaData.bind(this);
 
     }
 
@@ -82,6 +83,33 @@ export default class GetLicensePage extends Component{
         this.lastID = null;
 
         apis.loadOutSourceTaskStep('1','1').then(
+
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+
+
+                    this.setState({
+
+                    });
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
+
+    _loadAreaData(resolve) {
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.lastID = null;
+
+        apis.loadDicArea().then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
@@ -134,6 +162,17 @@ export default class GetLicensePage extends Component{
             callback={this._toMyDataTimer.bind(this)}
             firstDate={this.state.firstDate}
             lastDate={this.state.lastDate}/>
+    }
+
+    _addressBtnClick(){
+        this._loadAreaData();
+
+    }
+
+
+    renderCompanyAddressView(){
+
+        return <CompanyAddressView callback={this._addressBtnClick.bind(this)}/>
     }
 
 
@@ -243,7 +282,7 @@ export default class GetLicensePage extends Component{
                     </View>}
 
                     {/*{<View >*/}
-                        {/*{this.customerMessage()}*/}
+                    {/*{this.customerMessage()}*/}
 
                     {/*</View>}*/}
 
@@ -262,55 +301,56 @@ export default class GetLicensePage extends Component{
                         </TouchableOpacity>
 
                         {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
-                            {/*justifyContent:'flex-end'}}/>*/}
+                        {/*justifyContent:'flex-end'}}/>*/}
                     </View>
                     <View
                         style={{paddingTop:5,backgroundColor:'white'}}>
-                    <TextInputView
-                        textName={'注  册  号：'}
-                        inputWidth={{width:80}}
-                        winWidth={{width:SCREEN_WIDTH-115}}
-                        callback={this._callback.bind(this)}
-                    />
+                        <TextInputView
+                            textName={'注  册  号：'}
+                            inputWidth={{width:80}}
+                            winWidth={{width:SCREEN_WIDTH-115}}
+                            callback={this._callback.bind(this)}
+                        />
                     </View>
                     <View
                         style={{paddingTop:15,backgroundColor:'white'}}>
-                    <TextInputView
-                        textName={'国税登记号：'}
-                        inputWidth={{width:93}}
-                        winWidth={{width:SCREEN_WIDTH-130}}
-                        callback={this._callback.bind(this)}
-                    />
+                        <TextInputView
+                            textName={'国税登记号：'}
+                            inputWidth={{width:93}}
+                            winWidth={{width:SCREEN_WIDTH-130}}
+                            callback={this._callback.bind(this)}
+                        />
                     </View>
                     <View
                         style={{paddingTop:15,backgroundColor:'white'}}>
-                    <TextInputView
-                        textName={'地税登记号：'}
-                        inputWidth={{width:93}}
-                        winWidth={{width:SCREEN_WIDTH-130}}
-                        callback={this._callback.bind(this)}
-                    />
+                        <TextInputView
+                            textName={'地税登记号：'}
+                            inputWidth={{width:93}}
+                            winWidth={{width:SCREEN_WIDTH-130}}
+                            callback={this._callback.bind(this)}
+                        />
                     </View>
 
                     {this.renderBusinessTimeView()}
 
                     <View
                         style={{paddingTop:15,backgroundColor:'white'}}>
-                    <TextInputView
-                        textName={'注册资金：'}
-                        inputWidth={{width:80}}
-                        winWidth={{width:SCREEN_WIDTH-115}}
-                        callback={this._callback.bind(this)}
-                    />
+                        <TextInputView
+                            textName={'注册资金：'}
+                            inputWidth={{width:80}}
+                            winWidth={{width:SCREEN_WIDTH-115}}
+                            callback={this._callback.bind(this)}
+                        />
                     </View>
+                    {this.renderCompanyAddressView()}
                     <View
                         style={{paddingTop:15,backgroundColor:'white'}}>
-                    <TextInputView
-                        textName={'经营范围：'}
-                        inputWidth={{width:80}}
-                        winWidth={{width:SCREEN_WIDTH-115}}
-                        callback={this._callback.bind(this)}
-                    />
+                        <TextInputView
+                            textName={'经营范围：'}
+                            inputWidth={{width:80}}
+                            winWidth={{width:SCREEN_WIDTH-115}}
+                            callback={this._callback.bind(this)}
+                        />
                     </View>
                     <View style={[styles.identityCardPhoto,{height:150}]}>
                         <Text style={{marginLeft : 15,fontSize:15,marginTop:10}} >经营执照：</Text>

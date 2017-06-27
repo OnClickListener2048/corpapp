@@ -19,7 +19,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
-        height:42 * 2,
+        height:38 * 2,
         flexDirection: 'row',
         paddingTop:10,
         paddingBottom:2,
