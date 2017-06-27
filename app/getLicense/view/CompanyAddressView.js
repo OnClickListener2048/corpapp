@@ -94,7 +94,8 @@ export default class CompanyAddressView extends Component{
     constructor(props) {
         super(props)
         this.state = {
-
+            city:this.props.city,
+            district:this.props.district,
         }
 
         this._rightTimePress = this._rightTimePress.bind(this);
@@ -102,6 +103,11 @@ export default class CompanyAddressView extends Component{
 
     }
 
+
+    static propTypes = {
+        city:PropTypes.string,
+        district:PropTypes.string,
+    };
 
 
 
@@ -117,6 +123,8 @@ export default class CompanyAddressView extends Component{
 
 
     render() {
+        const {city, district} = this.state
+
         return (
             <View
                 style = {styles.container}>
@@ -129,7 +137,7 @@ export default class CompanyAddressView extends Component{
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{'市'}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{city}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>
@@ -140,7 +148,7 @@ export default class CompanyAddressView extends Component{
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{'区'}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{district}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>

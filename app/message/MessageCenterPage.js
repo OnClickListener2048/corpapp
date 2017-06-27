@@ -216,6 +216,18 @@ export default class MessageCenterPage extends Component {
         });
     }
 
+    toSystemMessagePage() {
+        InteractionManager.runAfterInteractions(() => {
+            this.props.navigator.push({
+                // screen: 'VerifyCompanyName',
+                screen: 'MyOutSideTaskPage',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            });
+        });
+    }
+
+
     static renderTitleItem() {
         return (
             <Text style={styles.navbarTitleItemStyle}>消息中心</Text>
@@ -231,7 +243,9 @@ export default class MessageCenterPage extends Component {
     _renderRow(rowData) {
         return (
             <TouchableOpacity onPress={() => {
-                this.toMyOutSideWork()
+                rowData.type == 'outservice'? this.toMyOutSideWork() : this.toMyOutSideWork();
+
+
             }}>
                 {/*<View style={styles.rowStyle}>*/}
 
@@ -291,11 +305,11 @@ export default class MessageCenterPage extends Component {
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <TouchableOpacity onpress={this._loadData()}>
-                        <NoMessage
-                            textContent='加载失败，点击重试'
-                            active={require('../img/load_failed.png')}/>
-                    </TouchableOpacity>
+                    {/*<TouchableOpacity onpress={this._loadData()}>*/}
+                        {/*<NoMessage*/}
+                            {/*textContent='加载失败，点击重试'*/}
+                            {/*active={require('../img/load_failed.png')}/>*/}
+                    {/*</TouchableOpacity>*/}
                 </View>
             );
         }else if (this.messageArr.length == 0){

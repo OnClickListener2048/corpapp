@@ -30,6 +30,8 @@ export default class MyOutSideTaskPage extends Component{
         this.state = {
             loaded:false,                   // 是否初始化 ListView
             taskId:this.props.taskId,
+            faild:false,                   // 是否初始化 ListView
+
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
@@ -64,6 +66,9 @@ export default class MyOutSideTaskPage extends Component{
             },
             (e) => {
                 SActivityIndicator.hide(loading);
+                this.setState({
+                    faild:true,
+                });
                 console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -117,6 +122,16 @@ export default class MyOutSideTaskPage extends Component{
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
 
+                </View>
+            );
+        }else if(this.state.faild === true){
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <TouchableOpacity onpress={this._loadData()}>
+                    <NoMessage
+                    textContent='加载失败，点击重试'
+                    active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
                 </View>
             );
         }else{
