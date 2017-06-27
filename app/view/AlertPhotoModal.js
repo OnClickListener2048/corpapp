@@ -49,6 +49,7 @@ export default class AlertPhotoModal extends Component{
         }).then(image => {
             console.log('received image', image);
             this.setState({
+                visible: false,
                 image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
             });
             this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
@@ -68,6 +69,7 @@ export default class AlertPhotoModal extends Component{
         }).then(image => {
             console.log('received image', image);
             this.setState({
+                visible: false,
                 image: {uri: image.path, width: image.width, height: image.height},
             });
             this.props.callback(this.state.image,this.state.visible);//将图片传递给页面

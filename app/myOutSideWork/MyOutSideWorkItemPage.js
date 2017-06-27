@@ -28,6 +28,7 @@ export default class MyOutSideWorkItemPage extends Component{
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,
+
         }
         this.outList = [];
         this._loadList = this._loadList.bind(this);
@@ -45,12 +46,16 @@ export default class MyOutSideWorkItemPage extends Component{
 
     //将ID传值给父组件
     _press(statusId) {
+        console.log("====>>>"+statusId);
         if (this.props.label == null) {
             InteractionManager.runAfterInteractions(() => {
                 this.props.navigator.push({
-                    screen: 'SubViewTest',
+                    screen: 'MyOutSideTaskPage',
                     backButtonTitle: '返回', // 返回按钮的文字 (可选)
                     backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                    passProps: {
+                        taskId:statusId,
+                    }
                 });
             });
         } else {
@@ -91,7 +96,7 @@ export default class MyOutSideWorkItemPage extends Component{
     _renderRow(rowData) {
         let statusicon = rowData.stepName.substring(0,1);
         return (
-            <TouchableOpacity onPress={() => {this._press(this, 1)}}>
+                <TouchableOpacity onPress={() => {this._press(rowData.taskId)}}>
                 <MyOutSideWorkCell
                     statusIcon = {statusicon}
                     statusName = {rowData.stepName}
@@ -109,13 +114,13 @@ export default class MyOutSideWorkItemPage extends Component{
     renderListView() {
 
         if (this.state.loaded === false) {      // 数据加载失败
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <NoMessage
-                        textContent='加载失败，点击重试'
-                        active={require('../img/load_failed.png')}/>
-                </View>
-            );
+            // return(
+            //     <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+            //         <NoMessage
+            //             textContent='加载失败，点击重试'
+            //             active={require('../img/load_failed.png')}/>
+            //     </View>
+            // );
         }else if (this.outList.length == 0){
 
             return(

@@ -86,6 +86,7 @@ export default class CompanyInfoView extends React.Component {
                                     {/*marginRight: 60*/}
                                 {/*}] }>: {companyName}</Text>*/}
 
+
                         </View>
 
 

@@ -14,7 +14,8 @@ export default class CompanyInfoView extends Component {
         this.state = { content: this.props.content,
         textName:this.props.textName,
             inputWidth:this.props.inputWidth,
-            winWidth:this.props.winWidth};
+            winWidth:this.props.winWidth,
+            textEditable:this.props.textEditable};
 
     }
 
@@ -24,6 +25,7 @@ export default class CompanyInfoView extends Component {
         inputWidth:PropTypes.object,
         winWidth:PropTypes.object,
         content:PropTypes.string,
+        textEditable:PropTypes.bool,
     };
 
     _inputContent(content){
@@ -41,6 +43,7 @@ export default class CompanyInfoView extends Component {
                     <View style={[styles.textInputWrapper,this.props.winWidth,]}>
                         <TextInput underlineColorAndroid='transparent'
                                    value={this.state.content}
+                                   editable={this.props.textEditable}
                                    style={styles.textInput} placeholder='' returnKeyType='next'
                                    onChangeText={
                                        (legalPerson) => {

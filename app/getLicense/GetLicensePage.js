@@ -55,8 +55,8 @@ export default class GetLicensePage extends Component{
             detailObj:{},
             loaded:false,
             editables:false,//不可编辑
+
             //保存数据类型
-            saveObj:{},
             legalEntity:null,//法人
             regId:null,//注册号
             nationalTaxId:null,//国税登记号
@@ -65,11 +65,6 @@ export default class GetLicensePage extends Component{
             bizRange:null,//经营范围
             bizLics:null,//营业执照
             idCards:null,//身份证
-            // var photo = {
-            //         uri: uriFromCameraRoll,
-            //         type: 'image/jpeg',
-            //         name: 'photo.jpg',
-            //       };
             endDate:"",//结束时间
             startDate:"",//开始时间
 
@@ -81,8 +76,8 @@ export default class GetLicensePage extends Component{
             corpType:"私营",          //企业类型
             district:"朝阳区",          //县或区
             industry:"IT",         //所属行业
-            stepId:1,          //步骤 ID
-            taskId:1,          //任务ID, 必填
+            stepId:this.props.stepId,          //步骤 ID
+            taskId:this.props.taskId,          //任务ID, 必填
             unlimited:false,        //营业期限不限
 
         };
@@ -111,7 +106,7 @@ export default class GetLicensePage extends Component{
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
 
-        apis.loadOutSourceTaskStep('1','1').then(
+        apis.loadOutSourceTaskStep(this.state.stepId,this.state.taskId).then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
@@ -122,8 +117,27 @@ export default class GetLicensePage extends Component{
                     this.setState({
                         detailObj : responseData.data,
                         loaded:true,
-                        startDate:responseData.data.bizTime.startDate,
-                        endDate:responseData.data.bizTime.endDate,
+                            bizLics:	responseData.data.bizLics,//营业执照
+                            bizRange:	responseData.data.bizRange,//经营范围
+                            city	: responseData.data.city,        //市
+                            contactName:	responseData.data.contactName,    //联系人名称
+                            contactPhone:	responseData.data.contactPhone,    //联系人电话
+                            corpAddress:	responseData.data.corpAddress,     //公司地址
+                            corpName:	responseData.data.corpName,          //公司名称
+                            corpType:	responseData.data.corpType,          //企业类型
+                            district:	responseData.data.district,          //县或区
+                            endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
+                            idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
+                            industry:	responseData.data.industry,           //所属行业
+                            legalEntity:	responseData.data.legalEntity,//法人
+                            localTaxId:	responseData.data.localTaxId,//地税登记号
+                            nationalTaxId:	responseData.data.nationalTaxId,//国税登记号
+                            regFunds:	responseData.data.regFunds,//注册资金
+                            regId:	responseData.data.regId,//注册号
+                            startDate:	responseData.data.bizTime.startDate,//营业期限开始日期
+                            stepId:	responseData.data.stepId,          //步骤 ID
+                            taskId:	responseData.data.taskId,          //任务ID, 必填
+                            unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                     });
 
                     this.props.navigator.setTitle({
@@ -208,7 +222,6 @@ export default class GetLicensePage extends Component{
                                     ContactsPhone={this.state.detailObj.contactPhone}
                                     SalesName={this.state.detailObj.salesmanName}
                                     SalesPhone={this.state.detailObj.salesmanPhone}
-                                    callback={this._callbacklegal.bind(this)}
             />
         }
     }
@@ -228,7 +241,8 @@ export default class GetLicensePage extends Component{
             return <BusinessTimeView
                 callback={this._toMyDataTimer.bind(this)}
                 firstDate={this.state.startDate}
-                lastDate={this.state.endDate}/>
+                lastDate={this.state.endDate}
+                isFocus={this.state.editables}/>
     }
 
     _addressBtnClick(){
@@ -273,7 +287,7 @@ export default class GetLicensePage extends Component{
         });
     }
     //输入框回调 注册资金
-    _callbackreg(content) {
+    _callbackregFunds(content) {
         console.log("输入框树枝jin="+content);
         this.setState({
             regFunds:content,//注册资金
@@ -386,30 +400,6 @@ export default class GetLicensePage extends Component{
 
     _edit(editables){
         if(editables==false){//点击保存，赋值并保存
-            this.setState({
-                saveObj:{"bizLics":	this.state.bizLics,//营业执照
-                    "bizRange":	this.state.bizRange,//经营范围
-                    "city"	: this.state.city,        //市
-                    "contactName":	this.state.contactName,    //联系人名称
-                    "contactPhone":	this.state.contactPhone,    //联系人电话
-                    "corpAddress":	this.state.corpAddress,     //公司地址
-                    "corpName":	this.state.corpName,          //公司名称
-                    "corpType":	this.state.corpType,          //企业类型
-                   "district":	this.state.district,          //县或区
-                    "endDate":	this.state.endDate,//营业期限结束日期
-                    "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
-                    "industry":	this.state.industry,           //所属行业
-                    "legalEntity":	this.state.legalEntity,//法人
-                    "localTaxId":	this.state.localTaxId,//地税登记号
-                    "nationalTaxId":	this.state.nationalTaxId,//国税登记号
-                    "regFunds":	this.state.regFunds,//注册资金
-                    "regId":	this.state.regId,//注册号
-                    "startDate":	this.state.startDate,//营业期限开始日期
-                    "stepId":	this.state.stepId,          //步骤 ID
-                    "taskId":	this.state.taskId,          //任务ID, 必填
-                    "unlimited":this.state.unlimited,        //营业期限不限
-                }
-            });
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
                 "city"	: this.state.city,        //市
@@ -511,18 +501,31 @@ export default class GetLicensePage extends Component{
                 winWidth={{width: SCREEN_WIDTH - 110}}
                 callback={this._callbacklegal.bind(this)}
                 content={this.state.detailObj.legalEntity}
-                />
+                textEditable={this.state.editables}/>
                 <View style={styles.identityCardPhoto}>
                 <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>身 份 证：</Text>
-                <TouchableOpacity onPress={() => {
-                this.toAlertModal("reverse")
-            }}>
-                {this.state.reImage != null ?
-                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                    this.state.detailObj.idCards!=null?<Image source={{uri: 'https://'+this.state.detailObj.idCards}} style={{marginTop: 15, height: 75, width: 110}}/>:
-                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+                    {this.state.editables === true ?
+                        <TouchableOpacity onPress={() => {
+                            this.toAlertModal("reverse")
+                        }}>
+                            {this.state.reImage != null ?
+                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                this.state.detailObj.idCards != null ?
+                                    <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
+                                           style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
-                </TouchableOpacity>
+                        </TouchableOpacity> :
+                        <View>
+                            {this.state.reImage != null ?
+                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                this.state.detailObj.idCards != null ?
+                                    <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
+                                           style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+
+                        </View>
+                    }
 
                 {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                 {/*justifyContent:'flex-end'}}/>*/}
@@ -535,7 +538,7 @@ export default class GetLicensePage extends Component{
                 winWidth={{width: SCREEN_WIDTH - 115}}
                 callback={this._callbackreg.bind(this)}
                 content={this.state.detailObj.regId}
-                />
+                textEditable={this.state.editables}/>
                 </View>
                 <View
                 style={{paddingTop: 15, backgroundColor: 'white'}}>
@@ -545,7 +548,7 @@ export default class GetLicensePage extends Component{
                 winWidth={{width: SCREEN_WIDTH - 130}}
                 callback={this._callbacknation.bind(this)}
                 content={this.state.detailObj.nationalTaxId}
-                />
+                textEditable={this.state.editables}/>
                 </View>
                 <View
                 style={{paddingTop: 15, backgroundColor: 'white'}}>
@@ -555,7 +558,7 @@ export default class GetLicensePage extends Component{
                 winWidth={{width: SCREEN_WIDTH - 130}}
                 callback={this._callbackdetail.bind(this)}
                 content={this.state.detailObj.localTaxId}
-                />
+                textEditable={this.state.editables}/>
                 </View>
 
                 {this.renderBusinessTimeView()}
@@ -566,9 +569,9 @@ export default class GetLicensePage extends Component{
                 textName={'注册资金：'}
                 inputWidth={{width: 80}}
                 winWidth={{width: SCREEN_WIDTH - 115}}
-                callback={this._callbackreg.bind(this)}
+                callback={this._callbackregFunds.bind(this)}
                 content={this.state.detailObj.regFunds}
-                />
+                textEditable={this.state.editables}/>
                 </View>
                 {this.renderCompanyAddressView()}
                 <View
@@ -579,20 +582,34 @@ export default class GetLicensePage extends Component{
                 winWidth={{width: SCREEN_WIDTH - 115}}
                 callback={this._callbackbiz.bind(this)}
                 content={this.state.detailObj.bizRange}
-                />
+                textEditable={this.state.editables}/>
                 </View>
                 <View style={[styles.identityCardPhoto, {height: 150}]}>
                 <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>经营执照：</Text>
-                <TouchableOpacity onPress={() => {
-                this.toAlertModal("blicense")
-            }}>
-                {this.state.linImage != null ?
-                    <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
-                    this.state.detailObj.bizLics!=null?<Image source={{uri: 'http://'+this.state.detailObj.bizLics}} style={{marginTop: 10, height: 75, width: 110}}/>:
-                        <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
-                }
+                    {this.state.editables === true ?
+                        <TouchableOpacity onPress={() => {
+                            this.toAlertModal("blicense")
+                        }}>
+                            {this.state.linImage != null ?
+                                <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                this.state.detailObj.bizLics != null ?
+                                    <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
+                                           style={{marginTop: 10, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
+                            }
 
-                </TouchableOpacity>
+                        </TouchableOpacity> :
+                        <View>
+                            {this.state.linImage != null ?
+                                <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                this.state.detailObj.bizLics != null ?
+                                    <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
+                                           style={{marginTop: 10, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
+                            }
+
+                        </View>
+                    }
 
                 </View>
                 </ScrollView>

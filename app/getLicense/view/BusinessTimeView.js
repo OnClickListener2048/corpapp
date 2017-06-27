@@ -97,6 +97,7 @@ export default class BusinessTimeView extends Component{
             allTimePressBtnSelected : false,
             firstDate:this.props.firstDate,
             lastDate:this.props.lastDate,
+            isFocus:this.props.isFocus,//是否可编辑
         }
 
         this._selectTimePress = this._selectTimePress.bind(this);
@@ -110,6 +111,7 @@ export default class BusinessTimeView extends Component{
     static propTypes = {
         firstDate: PropTypes.string,
         lastDate:PropTypes.string,
+        isFocus:PropTypes.bool,
     };
 
 
@@ -193,7 +195,7 @@ export default class BusinessTimeView extends Component{
                             </View>
 
                         </TouchableOpacity>
-                        {this.state.selectTimeBtnSelected == true ?
+                        {this.state.selectTimeBtnSelected == true&&this.props.isFocus === true ?
                             <TouchableOpacity style={ styles.leftdownDrapViewStyle} onPress={() => {
                                 this._hideAlert("firstTime")
                             }}>
@@ -218,7 +220,7 @@ export default class BusinessTimeView extends Component{
                             </View>
                         }
                         <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>
-                        {this.state.selectTimeBtnSelected == true ?
+                        {this.state.selectTimeBtnSelected == true &&this.props.isFocus === true?
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")
                         }}>
@@ -243,12 +245,19 @@ export default class BusinessTimeView extends Component{
 
 
                     <View style={ styles.rightRowViewStyle}>
-                        <TouchableOpacity onPress={() => {this._allTimePress(true)}}>
+                        {this.props.isFocus === true ?
+                        <TouchableOpacity onPress={() => {
+                            this._allTimePress(true)
+                        }}>
                             <View style={ styles.selectBtnStyle}>
                                 {this.renderallTimeBtn()}
 
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity>:<View style={ styles.selectBtnStyle}>
+                                {this.renderallTimeBtn()}
+
+                            </View>
+                        }
 
                         <Text style={[{ marginLeft : 4.5,color:'#e6e6e6',minHeight: 15,maxHeight:15}]}>{'无期限'}</Text>
                     </View>

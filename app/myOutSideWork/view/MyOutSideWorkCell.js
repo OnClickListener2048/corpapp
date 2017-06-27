@@ -44,7 +44,7 @@ export default class MessageCenterCell extends Component {
     // }
 
     _statusCourseColor(){
-        if(this.state.statusCourse=='待处理'){
+        if(this.state.statusCourse=='待处理'||this.state.statusCourse=='待分配'){
             return 'orange'
         }else if(this.state.statusCourse=='进行中'){
             return 'green'

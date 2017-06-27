@@ -73,15 +73,16 @@ export default class MyOutSideWorkPage extends Component{
             status: statusId,
         });
 
-        if(statusId!=0){
             InteractionManager.runAfterInteractions(() => {
                 this.props.navigator.push({
-                    screen: 'SubViewTest',
+                    screen: 'MyOutSideTaskPage',
                     backButtonTitle: '返回', // 返回按钮的文字 (可选)
                     backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                    passProps: {
+                        taskId:statusId,
+                    }
                 });
             });
-        }
 
     }
 

@@ -209,6 +209,7 @@ export default class MessageCenterPage extends Component {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
                 screen: 'MyOutSideTaskPage',
+                // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });

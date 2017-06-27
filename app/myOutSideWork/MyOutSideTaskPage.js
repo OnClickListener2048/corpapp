@@ -29,7 +29,7 @@ export default class MyOutSideTaskPage extends Component{
         super(props);
         this.state = {
             loaded:false,                   // 是否初始化 ListView
-
+            taskId:this.props.taskId,
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
@@ -41,7 +41,7 @@ export default class MyOutSideTaskPage extends Component{
         let loading = SActivityIndicator.show(true, "加载中...");
         console.log("开始请求1");
 
-        apis.loadOutSourceTask('1').then(
+        apis.loadOutSourceTask(this.props.taskId).then(
 
             (responseData) => {
                   SActivityIndicator.hide(loading);
@@ -77,12 +77,17 @@ export default class MyOutSideTaskPage extends Component{
     }
 
     //跳转客户审核具体信息
-    toLicense(){
+    toLicense(stepId){
+        console.log("i stepId="+stepId);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                passProps: {
+                    stepId:stepId,
+                    taskId:this.props.taskId,
+                }
             });
         });
     }
@@ -90,7 +95,7 @@ export default class MyOutSideTaskPage extends Component{
     renderExpenseItem(item , i) {
         return (
             <TouchableOpacity onPress={() => {
-                this.toLicense()
+                this.toLicense(this.stepsArr[i].stepId)
             }}>
                 <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
             </TouchableOpacity>
