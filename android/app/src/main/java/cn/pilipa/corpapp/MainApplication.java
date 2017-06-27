@@ -4,6 +4,7 @@ import android.app.Application;
 import android.support.annotation.Nullable;
 
 import com.facebook.react.ReactApplication;
+import com.beefe.picker.PickerViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.reactnativenavigation.NavigationApplication;
@@ -37,6 +38,7 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
               return Arrays.<ReactPackage>asList(
                   //new MainReactPackage(),
+            new PickerViewPackage(),
             new PickerPackage(),
             new ImagePickerPackage(),
                     //new NavigationReactPackage(),

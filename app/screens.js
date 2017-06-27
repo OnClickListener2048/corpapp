@@ -21,9 +21,11 @@ import About from "./pilipaMain/my/About";
 import Settings from "./pilipaMain/my/Settings";
 import NoMessage from "./test/NoMessage";
 import DataTimerView from "./view/DataTimerView";
+import AreaPicker from "../picker_demo";
 
 export default function () {
     let reg = Navigation.registerComponent;
+    reg('AreaPicker', () => AreaPicker);
     reg('Main', () => Main);
     reg('user.LoginPage', () => LoginPage);
     reg('main.LaunchPage', () => LaunchPage);

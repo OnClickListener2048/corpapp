@@ -43,6 +43,24 @@ export default class Settings extends Component {
     }
 
     componentWillMount() {
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        }
+        Toast.show(new Date().Format("yyyy-MM-dd"));
+
+
         UserInfoStore.getUserInfo().then(
             (user) => {
                 if (user !== null) {
@@ -57,7 +75,6 @@ export default class Settings extends Component {
 
     componentWillUnmount() {
         console.log("Settings.js componentWillUnmount()");
-        this.refs.timerButton.reset();
     }
 
     render() {
@@ -141,7 +158,7 @@ export default class Settings extends Component {
                                      ref="timerButton"
                                      style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                      textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                     timerCount={80}
+                                     timerCount={8}
                                      onClick={(shouldStartCountting) => {
                                          shouldStartCountting(true);
                                          this._requestSMSCode(shouldStartCountting);
@@ -168,15 +185,16 @@ export default class Settings extends Component {
 
     // 请求验证码
     _requestSMSCode(shouldStartCountting) {
+        console.log('_requestSMSCode shouldStartCountting', shouldStartCountting);
         if (!this.state.oldSmsCodeValid || this.state.newMobileValid) {
-            shouldStartCountting(true);
-            apis.sendVerifyCode(this.state.phone).then(
-                (responseData) => {
-                    Toast.show('短信验证码已发送');
-                }, (e) => {
-                    Toast.show('短信验证码获取失败:' + JSON.stringify(e));
-                }
-                );
+            // shouldStartCountting(false);
+            // apis.sendVerifyCode(this.state.phone).then(
+            //     (responseData) => {
+            //         Toast.show('短信验证码已发送');
+            //     }, (e) => {
+            //         Toast.show('短信验证码获取失败:' + JSON.stringify(e));
+            //     }
+            //     );
         }
     }
 
@@ -222,7 +240,9 @@ export default class Settings extends Component {
                         bindNewMobile: true, smsCode: '',
                         oldSmsCodeValid: false, newSmsCodeValid: false, submitButtonText: '绑定'
                     });
-
+                    if (this.refs.timerButton.state.counting) {
+                        this.refs.timerButton.reset();
+                    }
                 },
                 (e) => {
                     SActivityIndicator.hide(loading);

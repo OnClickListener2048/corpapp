@@ -9,8 +9,9 @@
  textStyle={{color: StaticColor.COLOR_MAIN}}
  timerCount={10}
  onClick={(shouldStartCountting)=>{
-    //this._requestSMSCode(shouldStartCountting)
-    其实应该调用shouldStartCountting(true/false)启停倒计时
+    this._requestSMSCode(shouldStartCountting)
+    // 注意回调这里只要调用一次shouldStartCountting(true/false)启停倒计时,
+     // 否则多次调用会造成死循环
   }}/>
 
  onClick：触发后按钮selfEnable会立即被置为false
@@ -31,7 +32,6 @@ export default class TimerButton extends React.Component {
             timerTitle: this.props.timerTitle || '获取验证码',
             counting: false,
             selfEnable: true,
-            unmounted: false,
         };
         this._shouldStartCountting = this._shouldStartCountting.bind(this)
         this._countDownAction = this._countDownAction.bind(this)
@@ -60,11 +60,6 @@ export default class TimerButton extends React.Component {
                 })
             } else {
                 console.log("---- timer ", timer);
-                if(this.state.unmounted) {
-                    clearInterval(this.interval);
-                    this.setState({timerCount: 0 });
-                    return;
-                }
                 this.setState({
                     timerCount: timer,
                     timerTitle: `剩余(${timer}s)`,
@@ -101,7 +96,6 @@ export default class TimerButton extends React.Component {
 
     componentWillUnmount() {
         console.log("TimerButton.js componentWillUnmount()");
-        this.setState({unmounted: true});
         clearInterval(this.interval)
     }
 
@@ -114,7 +108,6 @@ export default class TimerButton extends React.Component {
                     this.setState({selfEnable: false})
                     this.props.onClick(this._shouldStartCountting)
                 }
-                ;
             }}>
                 <View
                     style={[{width: 70, height: 44,  justifyContent: 'center', alignItems: 'flex-end'}, style]}>
