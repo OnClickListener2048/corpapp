@@ -96,11 +96,14 @@ export default class CompanyAddressView extends Component{
         this.state = {
             city:this.props.city,
             district:this.props.district,
+            // city:'市',
+            // district:'区',
         }
 
+        console.log("this.props.city=" + this.props.city);
         this._rightTimePress = this._rightTimePress.bind(this);
         this._leftTimePress = this._leftTimePress.bind(this);
-
+        this.setArea = this.setArea.bind(this);
     }
 
 
@@ -109,7 +112,10 @@ export default class CompanyAddressView extends Component{
         district:PropTypes.string,
     };
 
-
+    setArea(data:[]) {
+        this.setState({city:data[0],
+            district:data[1]});
+    }
 
     _leftTimePress(){
         this.props.callback();
@@ -123,7 +129,6 @@ export default class CompanyAddressView extends Component{
 
 
     render() {
-        const {city, district} = this.state
 
         return (
             <View
@@ -137,7 +142,7 @@ export default class CompanyAddressView extends Component{
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{city}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.city}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>
@@ -148,7 +153,7 @@ export default class CompanyAddressView extends Component{
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{district}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.district}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>

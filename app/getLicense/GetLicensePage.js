@@ -82,7 +82,7 @@ export default class GetLicensePage extends Component{
             unlimited:false,        //营业期限不限
             loadedArea:false,
             areaArr:[],
-
+            selectArea:[],
             areaCodeArr:[],
 
             areaCodeIndexArr:[],
@@ -282,12 +282,16 @@ export default class GetLicensePage extends Component{
             pickerTitleText: '请选择注册地',
             pickerData: this.state.areaArr,
             // pickerData: pickerData,
-            selectedValue: [ '北京', '昌平区'],
+            selectedValue: [ '北京', '昌平区'],// TODO 请修改
             onPickerConfirm: pickedValue => {
                 this.setState({
+                    selectArea : pickedValue,
                     areaCodeIndexArr : this.state.areaCodeTmpIndexArr,
                 });
                 console.log('area', pickedValue);
+                if(this.refs.companyAddressView) {
+                    this.refs.companyAddressView.setArea(this.state.selectArea);
+                }
             },
             onPickerCancel: pickedValue => {
                 console.log('area', pickedValue);
@@ -309,28 +313,30 @@ export default class GetLicensePage extends Component{
 
 
     renderCompanyAddressView(){
-        console.log('刷新地址');
-
+        return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+        /*
         if (this.state.areaCodeArr.length == 0 || this.state.areaCodeIndexArr.length == 0 || this.state.areaArr.length == 0 ) {
             console.log('刷新地址1');
 
-            return   <CompanyAddressView city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+            // return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
         } else {
             console.log('刷新地址2');
 
-            console.log(this.state.areaArr[0][this.state.areaCodeIndexArr[0]]);
-            console.log(this.state.areaArr[0]);
-            console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
-            console.log('选择位置' + this.state.areaCodeIndexArr[0][1]);
+            // console.log(this.state.areaArr[0][this.state.areaCodeIndexArr[0]]);
+            // console.log(this.state.areaArr[0]);
+            // console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
+            // console.log('选择位置' + this.state.areaCodeIndexArr[0][1]);
+            // console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
+            console.log('市' +  this.state.selectArea[0]);
+            console.log('区' + this.state.selectArea[1]);
 
-            console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
-            console.log('刷新地址2');
+            console.log('刷新地址222');
 
-            return   <CompanyAddressView city={this.state.areaArr[0][this.state.areaCodeIndexArr[0]]} district={this.state.areaArr[1][this.state.areaCodeIndexArr[1]]} callback={this._addressBtnClick.bind(this)}/>
+            // return   <CompanyAddressView city={this.state.selectArea[0]} district={this.state.selectArea[1]} callback={this._addressBtnClick.bind(this)}/>
+            // return   <CompanyAddressView city={'北京市'} district={'通州区'} callback={this._addressBtnClick.bind(this)}/>
 
         }
-
-
+*/
     }
 
 
