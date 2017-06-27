@@ -2,7 +2,10 @@
  * 公用的配置常量.
  */
 
-import {__DEV__, Dimensions} from 'react-native';
+import { Dimensions} from 'react-native';
+
+console.log('__DEV__开发模式', __DEV__);// 说明: __DEV__ 的值是自动设置的, 无需import
+// 参考: https://stackoverflow.com/questions/34315274/react-native-detect-dev-or-production-env
 
 export const DEBUG = __DEV__;
 export const IN_DEBUGGER = DEBUG && !!window.navigator.userAgent;

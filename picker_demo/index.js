@@ -151,15 +151,14 @@ export default class PickerTest extends Component {
             // pickerData: this._createAreaData(),
             pickerData: pickerData,
             selectedValue: [ '北京', '昌平区'],
-            onPickerConfirm: pickedValue => {
-                console.log('area', pickedValue);
+            onPickerConfirm: (pickedValue, pickedIndex) => {
+                console.log('Confirm Area', pickedValue, pickedIndex);
             },
-            onPickerCancel: pickedValue => {
-                console.log('area', pickedValue);
+            onPickerCancel: (pickedValue, pickedIndex) => {
+                console.log('Area', pickedValue, pickedIndex);
             },
-            onPickerSelect: pickedValue => {
-                //Picker.select(['山东', '青岛', '黄岛区'])
-                console.log('area', pickedValue);
+            onPickerSelect: (pickedValue, pickedIndex) => {
+                console.log('Select Area', pickedValue, pickedIndex);
             }
         });
         Picker.show();

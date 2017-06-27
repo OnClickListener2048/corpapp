@@ -10,8 +10,8 @@
  timerCount={10}
  onClick={(shouldStartCountting)=>{
     this._requestSMSCode(shouldStartCountting)
-    // 注意回调这里只要调用一次shouldStartCountting(true/false)启停倒计时,
-     // 否则多次调用会造成死循环
+    // 注意回调这里不要调用shouldStartCountting(true/false)启停倒计时,
+     // 否则会造成死循环
   }}/>
 
  onClick：触发后按钮selfEnable会立即被置为false

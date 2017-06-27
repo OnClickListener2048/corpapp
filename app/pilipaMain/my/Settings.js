@@ -160,7 +160,6 @@ export default class Settings extends Component {
                                      textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
                                      timerCount={8}
                                      onClick={(shouldStartCountting) => {
-                                         shouldStartCountting(true);
                                          this._requestSMSCode(shouldStartCountting);
                                      }}/>
                     </View>
@@ -187,14 +186,13 @@ export default class Settings extends Component {
     _requestSMSCode(shouldStartCountting) {
         console.log('_requestSMSCode shouldStartCountting', shouldStartCountting);
         if (!this.state.oldSmsCodeValid || this.state.newMobileValid) {
-            // shouldStartCountting(false);
-            // apis.sendVerifyCode(this.state.phone).then(
-            //     (responseData) => {
-            //         Toast.show('短信验证码已发送');
-            //     }, (e) => {
-            //         Toast.show('短信验证码获取失败:' + JSON.stringify(e));
-            //     }
-            //     );
+            apis.sendVerifyCode(this.state.phone).then(
+                (responseData) => {
+                    Toast.show('短信验证码已发送');
+                }, (e) => {
+                    Toast.show('短信验证码获取失败:' + JSON.stringify(e));
+                }
+                );
         }
     }
 

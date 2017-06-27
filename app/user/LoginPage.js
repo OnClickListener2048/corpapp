@@ -45,11 +45,15 @@ export default class LoginPage extends Component {
             smsCodeValid: false,          // 短信验证码有效
             acceptLic: false,// 同意许可协议
             picURL: {uri: 'https://x-crm.i-counting.cn/app/v0/user/vcode/get'} ,// 图片验证码地址
+            verifyText: '',// 图片验证码提示语
             vCode: '',         // 图片验证码
-            vCodeValid: false,          // 图片验证码有效
+            vCodeInputValid: false,          // 图片验证码输入有效
+            vCodeServerValid: true,          // 图片验证码服务端有效
         };
 
         this._doLogin = this._doLogin.bind(this);
+        this._requestSMSCode = this._requestSMSCode.bind(this);
+        this._verifyVCode = this._verifyVCode.bind(this);
     }
 
     //debug only
@@ -61,20 +65,8 @@ export default class LoginPage extends Component {
             smsCodeValid: true,        // 短信验证码有效
             acceptLic: true,
             vCode: 'E69M',         // 图片验证码
-            vCodeValid: false,          // 图片验证码有效
+            vCodeInputValid: false,          // 图片验证码有效
         });
-
-        console.log("sendImageVerifyCode");
-
-        // apis.sendImageVerifyCode(this.state.mobile).then(function(response) {
-        //     if (!response.ok) return new Error(response);
-        //     return response.blob();
-        // })
-        //     .then(function(myBlob) {
-        //         var picURL = URL.createObjectURL(myBlob);
-        //         this.setState({picURL});
-        //     })
-        //     .catch(function(err) { console.log(err); });
     }
 
     // 返回
@@ -113,15 +105,66 @@ export default class LoginPage extends Component {
         DeviceEventEmitter.emit('isHiddenTabBar', false);
     }
 
-    // 请求验证码
+    // 请求短信验证码
     _requestSMSCode(shouldStartCountting) {
+        console.log('_requestSMSCode');
         if (this.state.mobileValid) {
-            Toast.show('TODO 请求验证码');
+            apis.sendVerifyCode(this.state.phone, this.state.vCodeInputValid ? this.state.vCode : null).then(
+                (responseData) => {
+                    Toast.show('短信验证码已发送');
+                   if( responseData.data !== null) {
+                       let {verifyText, verify} = responseData.data;
+                       if(verify !== null && verify.length > 0) {
+                           let picURL = {uri: verify};
+                           this.setState({picURL});
+                       }
+
+                       if(verifyText !== null && verifyText.length > 0) {
+                           this.setState({vCodeServerValid: false});
+                       }
+
+                       this.setState({verifyText});
+                    }
+                }, (e) => {
+                    let msg = e.msg;
+                    if(msg !== null) {
+                        Alert.alert(msg);
+                    } else {
+                        Alert.alert('短信验证码获取失败:' + JSON.stringify(e));
+                    }
+                }
+            );
+        }
+    }
+
+    // 验证图形码
+    _verifyVCode() {
+        console.log('_verifyVCode');
+        if (this.state.mobileValid) {
+            apis.sendVerifyVCode(this.state.phone, this.state.vCodeInputValid ? this.state.vCode : null).then(
+                (responseData) => {
+                    Toast.show('图形验证码已验证');
+                    this.setState({vCodeServerValid: true});
+                    this.setState({verifyText : null});
+                }, (e) => {
+                    console.log('_verifyVCode error:' + e.message);
+                    let msg = e.msg;
+                    if(msg === undefined) {
+                        msg = e.message;
+                    }
+
+                    if(msg !== undefined) {
+                        Alert.alert(msg, '');
+                    } else {
+                        Alert.alert('图形验证码校验失败:' + e);
+                    }
+                }
+            );
         }
     }
 
     _doLogin() {
-        if (!(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid)) {
+        if (!(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid && this.state.vCodeServerValid)) {
             // Toast.show('请输入正确的手机号, 验证码并同意许可协议.');
             return;
         }
@@ -210,25 +253,27 @@ export default class LoginPage extends Component {
                                            }/>
                             </View>
                         </View>
-
                         {/*  图片验证码 */}
+                        {this.state.verifyText !== null && this.state.verifyText.length > 0 &&
+
                         <View style={styles.textInputContainer}>
                             <Image
                                 source={ require('../img/icon_123.png') }
                                 style={styles.inputLogo}/>
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
-                                           value={this.state.smsCode}
+                                           value={this.state.vCode}
                                            secureTextEntry={false} maxLength={4} keyboardType='default'
-                                           style={styles.codeInput} placeholder='图片验证码'
+                                           style={styles.codeInput} placeholder={this.state.verifyText}
                                            returnKeyType='done'
                                            onChangeText={(vCode) => {
                                                this.setState({vCode})
-                                               let vCodeValid = (vCode.length == 4);
-                                               this.setState({vCode, vCodeValid});
+                                               let vCodeInputValid = (vCode.length == 4);
+                                               this.setState({vCode, vCodeInputValid});
                                            }}
                                            onSubmitEditing={() => {
                                                dismissKeyboard();
+                                               this._verifyVCode();
                                            }}
                                 />
 
@@ -237,6 +282,7 @@ export default class LoginPage extends Component {
 
                             </View>
                         </View>
+                        }
 
                         {/*  验证码 */}
                         <View style={styles.textInputContainer}>
@@ -273,7 +319,7 @@ export default class LoginPage extends Component {
                                              ref="timerButton"
                                              style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                              textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                             timerCount={80}
+                                             timerCount={8}
                                              onClick={(shouldStartCountting) => {
                                                  shouldStartCountting(true);
                                                  this._requestSMSCode(shouldStartCountting);
