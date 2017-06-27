@@ -22,7 +22,6 @@ export default class CompanyInfoView extends React.Component {
             ContactsPhone: this.props.ContactsPhone,
             SalesName: this.props.SalesName,
             SalesPhone: this.props.SalesPhone,
-
         }
     }
 
@@ -64,23 +63,30 @@ export default class CompanyInfoView extends React.Component {
                         <Text
                             textAlign='right'
                             style={[{fontSize: 15,marginTop: 10,color:'#323232'}] }>{'公司名称：'}</Text>
-                        <View textAlign='left'
-                              style={styles.textInputWrapper}>
-                            <TextInput
-                                underlineColorAndroid='transparent' value={this.state.companyName}
-                                       style={styles.textInput} placeholder='' returnKeyType='next'
-                                       onChangeText={
-                                           (legalPerson) => {
-                                               this.setState({companyName:legalPerson});
-                                               this._inputContent(legalPerson);
-                                           }
-                                       }/>
+                            <View textAlign='left'
+                                  style={styles.textInputWrapper}>
+                                <TextInput
+                                    underlineColorAndroid='transparent' value={this.state.companyName}
+                                    style={styles.textInput} placeholder='' returnKeyType='next'
+                                    onChangeText={
+                                        (legalPerson) => {
+                                            this.setState({companyName: legalPerson});
+                                            this._inputContent(legalPerson);
+                                        }
+                                    }/>
+                            </View>
+                            {/*<Text*/}
+                                {/*textAlign='left'*/}
+                                {/*numberOfLines={1}*/}
+                                {/*style={[{*/}
+                                    {/*fontSize: 15,*/}
+                                    {/*marginTop: 10,*/}
+                                    {/*marginLeft: 0,*/}
+                                    {/*color: '#323232',*/}
+                                    {/*marginRight: 60*/}
+                                {/*}] }>: {companyName}</Text>*/}
+
                         </View>
-                        {/*<Text*/}
-                            {/*textAlign='left'*/}
-                            {/*numberOfLines={1}*/}
-                            {/*style={[{fontSize: 15,marginTop: 10, marginLeft : 0,color:'#323232', marginRight: 60}] }>: {companyName}</Text>*/}
-                    </View>
 
 
                 </View>
@@ -93,24 +99,31 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='center'
-                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人 '}</Text>
-                        <View textAlign='left'
-                              style={[styles.textInputWrapper,{marginTop:3}]}>
-                            <TextInput
-                                underlineColorAndroid='transparent' value={this.state.ContactsName}
-                                style={styles.textInput} placeholder='' returnKeyType='next'
-                                onChangeText={
-                                    (legalPerson) => {
-                                        this.setState({companyName:legalPerson});
-                                        this._inputContent(legalPerson);
-                                    }
-                                }/>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人 ：'}</Text>
+                            <View textAlign='left'
+                                  style={[styles.textInputWrapper, {marginTop: 3}]}>
+                                <TextInput
+                                    underlineColorAndroid='transparent' value={this.state.ContactsName}
+                                    style={styles.textInput} placeholder='' returnKeyType='next'
+                                    onChangeText={
+                                        (legalPerson) => {
+                                            this.setState({companyName: legalPerson});
+                                            this._inputContent(legalPerson);
+                                        }
+                                    }/>
+                            </View>
+                            {/*<Text*/}
+                                {/*textAlign='left'*/}
+                                {/*numberOfLines={1}*/}
+                                {/*style={[{*/}
+                                    {/*fontSize: 15,*/}
+                                    {/*alignSelf: 'center',*/}
+                                    {/*marginLeft: 2.5,*/}
+                                    {/*marginRight: 0,*/}
+                                    {/*color: '#323232'*/}
+                                {/*}] }>: {ContactsName}</Text>*/}
+
                         </View>
-                        {/*<Text*/}
-                            {/*textAlign='left'*/}
-                            {/*numberOfLines={1}*/}
-                            {/*style={[{fontSize: 15,alignSelf:'center', marginLeft : 2.5,marginRight: 0,color:'#323232'}] }>: {ContactsName}</Text>*/}
-                    </View>
                     <View
                         style={styles.companyInfoRowPhoneStyle}>
 

@@ -113,13 +113,12 @@ export default class BusinessTimeView extends Component{
     };
 
 
-    _selectTimePress(){
+    _selectTimePress(allTimePressBtnSelected){
 
         this.setState({
             selectTimeBtnSelected : true,
             allTimePressBtnSelected : false,
         });
-
     };
 
     _leftTimePress(){
@@ -130,13 +129,12 @@ export default class BusinessTimeView extends Component{
 
     };
 
-    _allTimePress(){
+    _allTimePress(allTimePressBtnSelected){
 
         this.setState({
             selectTimeBtnSelected : false,
             allTimePressBtnSelected : true,
         });
-
     };
 
     renderselectTimeBtn(){
@@ -189,7 +187,7 @@ export default class BusinessTimeView extends Component{
                 <View style={styles.rightViewStyle}>
 
                     <View style={ styles.rightRowViewStyle}>
-                        <TouchableOpacity onPress={() => {this._selectTimePress()}}>
+                        <TouchableOpacity onPress={() => {this._selectTimePress(false)}}>
                             <View style={ styles.selectBtnStyle}>
                                 {this.renderselectTimeBtn()}
                             </View>
@@ -245,7 +243,7 @@ export default class BusinessTimeView extends Component{
 
 
                     <View style={ styles.rightRowViewStyle}>
-                        <TouchableOpacity onPress={() => {this._allTimePress()}}>
+                        <TouchableOpacity onPress={() => {this._allTimePress(true)}}>
                             <View style={ styles.selectBtnStyle}>
                                 {this.renderallTimeBtn()}
 
