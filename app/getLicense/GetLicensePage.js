@@ -4,6 +4,7 @@
  */
 
 import React, { Component,PropTypes } from 'react';
+import Picker from 'react-native-picker';
 
 import {
     Text,
@@ -84,6 +85,13 @@ export default class GetLicensePage extends Component{
             stepId:1,          //步骤 ID
             taskId:1,          //任务ID, 必填
             unlimited:false,        //营业期限不限
+            loadedArea:false,
+            areaArr:[],
+
+            areaCodeArr:[],
+
+            areaCodeIndexArr:[],
+            areaCodeTmpIndexArr:[],
 
         };
         this._loadData = this._loadData.bind(this);
@@ -145,6 +153,11 @@ export default class GetLicensePage extends Component{
     }
 
     _loadAreaData(resolve) {
+        if (this.state.loadedArea){
+            this._showAreaPicker();
+            return;
+        }
+
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -156,10 +169,26 @@ export default class GetLicensePage extends Component{
 
                 if(responseData !== null && responseData.data !== null) {
 
+                   this.state.loadedArea = true;
+                    this.state.areaArr = [];
+                    this.state.areaCodeArr = [];
 
-                    this.setState({
+                    for(let index in responseData.data) {
 
-                    });
+                        let  secDic = new Object();
+                        secDic["" + index + ""] = responseData.data[index].name;
+
+                        // console.log(secDic );
+                        this.state.areaArr = this.state.areaArr.concat(secDic);
+
+                        let  secCodeDic = new Object();
+                        secCodeDic["" + responseData.data[index].code + ""] = responseData.data[index].codes;
+
+                        this.state.areaCodeArr = this.state.areaCodeArr.concat(secCodeDic);
+
+                    }
+
+                    this._showAreaPicker();
 
                 }
             },
@@ -231,6 +260,34 @@ export default class GetLicensePage extends Component{
                 lastDate={this.state.endDate}/>
     }
 
+
+    _showAreaPicker() {
+
+        // selectedValue = ['a', 2];
+        Picker.init({
+            pickerTitleText: '请选择注册地',
+            pickerData: this.state.areaArr,
+            // pickerData: pickerData,
+            selectedValue: [ '北京', '昌平区'],
+            onPickerConfirm: pickedValue => {
+                this.setState({
+                    areaCodeIndexArr : this.state.areaCodeTmpIndexArr,
+                });
+                console.log('area', pickedValue);
+            },
+            onPickerCancel: pickedValue => {
+                console.log('area', pickedValue);
+            },
+            onPickerSelect: (pickedValue, pickedIndex) => {
+                this.state.areaCodeTmpIndexArr = pickedIndex;
+
+                console.log('Select Area 哈哈', pickedValue, pickedIndex);
+            }
+        });
+        Picker.show();
+    }
+
+
     _addressBtnClick(){
         this._loadAreaData();
 
@@ -238,8 +295,28 @@ export default class GetLicensePage extends Component{
 
 
     renderCompanyAddressView(){
+        console.log('刷新地址');
 
-        return <CompanyAddressView callback={this._addressBtnClick.bind(this)}/>
+        if (this.state.areaCodeArr.length == 0 || this.state.areaCodeIndexArr.length == 0 || this.state.areaArr.length == 0 ) {
+            console.log('刷新地址1');
+
+            return   <CompanyAddressView city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+        } else {
+            console.log('刷新地址2');
+
+            console.log(this.state.areaArr[0][this.state.areaCodeIndexArr[0]]);
+            console.log(this.state.areaArr[0]);
+            console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
+            console.log('选择位置' + this.state.areaCodeIndexArr[0][1]);
+
+            console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
+            console.log('刷新地址2');
+
+            return   <CompanyAddressView city={this.state.areaArr[0][this.state.areaCodeIndexArr[0]]} district={this.state.areaArr[1][this.state.areaCodeIndexArr[1]]} callback={this._addressBtnClick.bind(this)}/>
+
+        }
+
+
     }
 
 
