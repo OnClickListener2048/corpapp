@@ -29,10 +29,6 @@ export default class ApplicationCenterPage extends Component{
         super(props);
 
         this.state = {
-            visible: this.props.visible,
-            image: null,
-            date:"",
-            isDateTimePickerVisible:this.props.isDateTimePickerVisible,
         };
 
 
@@ -96,14 +92,6 @@ export default class ApplicationCenterPage extends Component{
         return(
         <View style={styles.container}>
 
-            {this.state.visible==true&&
-            <AlertPhotoModal
-                callback={this._callback.bind(this)}/>}
-            {this.state.isDateTimePickerVisible==true&&
-                <DataTimerView
-                callback={this._callbackData.bind(this)}/>
-            }
-
             <CommunalNavBar
 
                 titleItem = {() => ApplicationCenterPage.renderTitleItem()}
@@ -127,35 +115,22 @@ export default class ApplicationCenterPage extends Component{
                                                  textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                     />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => {this.toAlertModal()}}
-                    style={{marginLeft: 15,marginTop: 15,  height: 100, width: (SCREEN_WIDTH - 45)/2,}}
-
-                >
-                    <TopcenterImgBottomTitleView applicationTitle='CRM'
-                                                 applicationImg = {require('../img/crm_h.png')}
-                                                 style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
-                                                 textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
-                    />
-                </TouchableOpacity>
-                <TouchableOpacity
-                    onPress={() => {this.toMyDataTimer()}}
-                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
-
-                >
-                    <TopcenterImgBottomTitleView applicationTitle='工作统计'
-                                                 applicationImg = {require('../img/statistical_h.png')}
-                                                 style={{ height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
-                                                 textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
-                    />
-                </TouchableOpacity>
+                <TopcenterImgBottomTitleView applicationTitle='CRM'
+                                             applicationImg = {require('../img/crm_h.png')}
+                                             style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                />
+                <TopcenterImgBottomTitleView applicationTitle='工作统计'
+                                             applicationImg = {require('../img/statistical_h.png')}
+                                             style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                />
                 <TopcenterImgBottomTitleView applicationTitle='工作日志'
                                              applicationImg = {require('../img/log_h.png')}
                                              style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
                 />
             </View>
-            <Text style={{fontSize:15,color:'red'}}>{this.state.date+""}</Text>
-            <Image style={{width: 300, height: 300, resizeMode: 'contain'}} source={this.state.image}/>
 
         </View>
         );

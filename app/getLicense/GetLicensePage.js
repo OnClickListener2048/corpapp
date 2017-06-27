@@ -23,6 +23,7 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import DataTimerView from "../view/DataTimerView";
 import AlertPhotoModal from "../view/AlertPhotoModal";
+import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
 
 const window = Dimensions.get('window');
 
@@ -200,6 +201,21 @@ export default class GetLicensePage extends Component{
 
     }
 
+    renderLineView(){
+
+        return      <View style={[{width : SCREEN_WIDTH - 30,marginLeft:15, height : 1}]}>
+            <DottedLine style={{height : 1, flex: 1,marginLeft:15,alignItems:'center',justifyContent:'center', backgroundColor :'#c8c8c8'}}
+                        dottedLineWidth={SCREEN_WIDTH - 30} grayWidth={2} whiteWidth={2}/>
+        </View>
+    }
+
+    renderCompanyTipView(){
+
+        return  <View style={[{width : SCREEN_WIDTH,backgroundColor:'#FFFFFF'}]}>
+            <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
+        </View>
+    }
+
     render() {
         return(
             <View style={styles.container}>
@@ -218,6 +234,8 @@ export default class GetLicensePage extends Component{
 
 
                     {<View style={[{height:15}]}></View>}
+                    {this.renderCompanyTipView()}
+                    {this.renderLineView()}
 
                     {<View >
                         {this.renderTest()}
