@@ -58,7 +58,8 @@ export default class GetLicensePage extends Component{
             detailObj:{},
             loaded:false,
             editables:false,//不可编辑
-            allowEditInfo:false,
+            allowEditInfo:false,//登陆人员权限，是否可编辑
+            inProgressEdit:false,//开始任务才可编辑
 
             //保存数据类型
             legalEntity:null,//法人
@@ -112,6 +113,15 @@ export default class GetLicensePage extends Component{
 
 
         console.log("点我的最新数字是" + status);  //1确认材料完成 2 开始任务完成 3结束任务完成
+        if(status===2){
+            this.setState({
+                inProgressEdit:true,
+            });
+        }else{
+            this.setState({
+                inProgressEdit:false,
+            });
+        }
 
     }
 
@@ -160,6 +170,12 @@ export default class GetLicensePage extends Component{
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                     });
+                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.inProgress)
+                    if(this.state.allowEditInfo&&this.state.detailObj.progress.inProgress===true){
+                        this.setState({
+                            inProgressEdit:true,
+                        });
+                    }
 
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
@@ -248,7 +264,8 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
-                Toast.show('提交失败' + JSON.stringify(e));
+
+                // Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -581,19 +598,19 @@ export default class GetLicensePage extends Component{
 
     renderCompanyTipView(){
         // let allowEditInfo = this.state.detailObj.allowEditInfo;
-        console.log("输出是否可编辑="+this.state.allowEditInfo+this.state.editables);
+        console.log("输出是否可编辑="+this.state.allowEditInfo+","+this.state.inProgressEdit);
 
 
         return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
-            {this.state.editables == false&&this.state.allowEditInfo&&
+            {this.state.editables == false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}>
                 <Image source={require("../img/editor.png")}
                        style={{marginLeft: 210}}/>
                 </TouchableOpacity> }
-            {this.state.editables == true &&this.state.allowEditInfo&&
+            {this.state.editables == true &&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}>
