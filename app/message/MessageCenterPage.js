@@ -49,6 +49,7 @@ export default class MessageCenterPage extends Component {
         this.pageCount = 10;
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
+        this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
         this.props.navigator.setTabBadge({
             badge: 88 // 数字气泡提示, 设置为null会删除
         });
@@ -67,7 +68,6 @@ export default class MessageCenterPage extends Component {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
-        console.log("开始请求1");
 
         apis.loadMessageData(this.pageCount,'').then(
 
@@ -76,15 +76,12 @@ export default class MessageCenterPage extends Component {
 
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
-                console.log("开始请求2");
-
                 this.messageArr = this.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
 
                 if (this.messageArr.length == this.pageCount){
                     this.lastID = this.messageArr[this.pageCount - 1].msgId;
-                    console.log(this.lastID +'你大爷');
-
+                    // console.log(this.lastID +'你大爷');
                 }
 
 
@@ -118,7 +115,7 @@ export default class MessageCenterPage extends Component {
 
     _loadMoreData() {
 
-        if (this.lastID == null){
+        if (this.lastID === null){
             return;
         }
 
@@ -161,9 +158,6 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-
-
-
     componentDidMount() {
 
         Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
@@ -202,7 +196,7 @@ export default class MessageCenterPage extends Component {
 
     }
 
-    toMyOutSideWork() {
+    toMyOutSideWork(statusId) {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
@@ -210,6 +204,9 @@ export default class MessageCenterPage extends Component {
                 // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                passProps: {
+                    taskId:statusId,
+                }
             });
         });
     }
@@ -218,7 +215,8 @@ export default class MessageCenterPage extends Component {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
-                screen: 'MyOutSideTaskPage',
+                screen: 'SystemMessagePage',
+                // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             });
@@ -239,9 +237,14 @@ export default class MessageCenterPage extends Component {
     }
 
     _renderRow(rowData) {
+
+        let a = rowData.content;
+        console.log('rowData===' + rowData.msgId);
+
+
         return (
             <TouchableOpacity onPress={() => {
-                rowData.type == 'outservice'? this.toMyOutSideWork() : this.toMyOutSideWork();
+                rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage();
 
 
             }}>
@@ -251,7 +254,7 @@ export default class MessageCenterPage extends Component {
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
                              messageTime = {rowData.date}
-                             messageIcon={rowData.type == 'outservice'?  rowData.read == 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read == 'true'? require('../img/task_y.png') :  require('../img/task.png')}
+                             messageIcon={rowData.type === 'outservice'?  rowData.read === 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
                 />
 
 
@@ -288,12 +291,27 @@ export default class MessageCenterPage extends Component {
                     </View>
                 </View>);
         }else if(this.state.foot === 2) {//加载中
-            return (
-                <View style={{height:40,backgroundColor:'blue',alignItems:'center',justifyContent:'center',}}>
-                    {this.state.moreText}
 
-                    {/*<Image source={{uri:loadgif}} style={{width:20,height:20}}/>*/}
+            return (
+                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+
+
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+
+                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                        {'历史消息'}
+                    </Text>
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
                 </View>);
+
+            // return (
+            //     <View style={{height:40,backgroundColor:'blue',alignItems:'center',justifyContent:'center',}}>
+            //         {this.state.moreText}
+            //
+            //         {/*<Image source={{uri:loadgif}} style={{width:20,height:20}}/>*/}
+            //     </View>);
         }
     }
 
