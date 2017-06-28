@@ -22,8 +22,6 @@ import {
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import CommunalNavBar from '../main/GDCommunalNavBar';
-
-import SubViewTest from "../test/SubViewTest";
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 import Platform from "react-native";
@@ -305,7 +303,7 @@ export default class MessageCenterPage extends Component {
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    {/*<TouchableOpacity onpress={this._loadData()}>*/}
+                    {/*<TouchableOpacity onPress={() => {this._loadData()}}>*/}
                         {/*<NoMessage*/}
                             {/*textContent='加载失败，点击重试'*/}
                             {/*active={require('../img/load_failed.png')}/>*/}

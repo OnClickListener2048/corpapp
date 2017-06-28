@@ -112,6 +112,8 @@ export default class MyOutSideTaskPage extends Component{
                                  ContactsPhone={this.info.contactPhone}
                                  SalesName={this.info.salesmanName}
                                  SalesPhone={this.info.salesmanPhone}
+                                 isFocusData={false}
+
         />
     }
 
@@ -125,7 +127,7 @@ export default class MyOutSideTaskPage extends Component{
         }else if(this.state.faild === true){
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <TouchableOpacity onPress={() => { this._loadData() }}>
+                    <TouchableOpacity onPress={() => {this._loadData()}}>
                     <NoMessage
                     textContent='加载失败，点击重试'
                     active={require('../img/load_failed.png')}/>

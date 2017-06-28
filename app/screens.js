@@ -8,11 +8,8 @@ import LaunchPage from './main/GDLaunchPage';
 import MessageCenterPage from './message/MessageCenterPage';
 import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
-import SubViewTest from "./test/SubViewTest";
 import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
 import MyOutSideTaskPage from "./myOutSideWork/MyOutSideTaskPage";
-
-import VerifyCompanyName from  './VerifyCompanyInfo/VerifyCompanyName';
 import GetLicensePage from  './getLicense/GetLicensePage';
 import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
 import PersonalInfo from "./pilipaMain/my/PersonalInfo";
@@ -32,9 +29,7 @@ export default function () {
     reg('ApplicationCenterPage', () => ApplicationCenterPage);
     reg('MessageCenterPage', () => MessageCenterPage);
     reg('Mine', () => Mine);
-    reg('SubViewTest', () => SubViewTest);
     reg('MyOutSideWorkPage', () => MyOutSideWorkPage);
-    reg('VerifyCompanyName', () => VerifyCompanyName);
     reg('GetLicensePage', () => GetLicensePage);
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
     reg('MyOutSideTaskPage', () => MyOutSideTaskPage);

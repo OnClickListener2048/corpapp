@@ -5,7 +5,6 @@
 import React,{Component,PropTypes}from 'react';
 import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text} from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
-import SubViewTest from "../test/SubViewTest";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
@@ -119,7 +118,7 @@ export default class MyOutSideWorkItemPage extends Component{
         if (this.state.dataFaild === true) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onPress={() => this._loadList()}>
+                    <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
                         textContent='加载失败，点击重试'
                         active={require('../img/load_failed.png')}/>

@@ -58,6 +58,7 @@ export default class GetLicensePage extends Component{
             detailObj:{},
             loaded:false,
             editables:false,//不可编辑
+            allowEditInfo:false,
 
             //保存数据类型
             legalEntity:null,//法人
@@ -127,6 +128,7 @@ export default class GetLicensePage extends Component{
 
                     this.setState({
                         detailObj : responseData.data,
+                        allowEditInfo:responseData.data.allowEditInfo,
                         loaded:true,
                             bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
@@ -248,13 +250,45 @@ export default class GetLicensePage extends Component{
 
     renderTest() {
         if (this.state.loaded === true) {
+            console.log(""+this.state.editables);
             return <CompanyInfoView companyName={this.state.detailObj.corpName}
                                     ContactsName={this.state.detailObj.contactName}
                                     ContactsPhone={this.state.detailObj.contactPhone}
                                     SalesName={this.state.detailObj.salesmanName}
                                     SalesPhone={this.state.detailObj.salesmanPhone}
+                                    isFocusData={this.state.editables}
+                                    callbackCom={this._callbackComp.bind(this)}
+                                    callbackCon={this._callbackCon.bind(this)}
+                                    callbackPho={this._callbackPho.bind(this)}
             />
         }
+    }
+
+    //输入框回调 公司名
+    _callbackComp(content) {
+        console.log("输入框树枝公司名称="+content+this.state.visible);
+        this.setState({
+            corpName:content,//公司名称
+            visible:false,
+        });
+    }
+
+    //输入框回调 联系人
+    _callbackCon(content) {
+        console.log("输入框树枝联系人="+content+this.state.visible);
+        this.setState({
+            contactName:content,
+            visible:false,
+        });
+    }
+
+    //输入框回调 联系电话
+    _callbackPho(content) {
+        console.log("输入框树枝电话="+content+this.state.visible);
+        this.setState({
+            contactPhone:content,
+            visible:false,
+        });
     }
 
     renderVerifyProcessTipView(){
@@ -348,6 +382,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝fa="+content);
         this.setState({
             legalEntity:content,//法人
+            visible:false,
         });
     }
     //输入框回调 注册号
@@ -355,6 +390,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝zhu="+content);
         this.setState({
             regId:content,//注册号
+            visible:false,
         });
     }
     //输入框回调 国税登记号
@@ -362,6 +398,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝guo ="+content);
         this.setState({
             nationalTaxId:content,//国税登记号
+            visible:false,
         });
     }
     //输入框回调 地税登记号
@@ -369,6 +406,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝di="+content);
         this.setState({
             localTaxId:content,//地税登记号
+            visible:false,
         });
     }
     //输入框回调 注册资金
@@ -376,6 +414,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝jin="+content);
         this.setState({
             regFunds:content,//注册资金
+            visible:false,
         });
     }
     //输入框回调 经营范围
@@ -383,6 +422,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝jing="+content);
         this.setState({
             bizRange:content,//经营范围
+            visible:false,
         });
     }
 
@@ -516,17 +556,20 @@ export default class GetLicensePage extends Component{
     }
 
     renderCompanyTipView(){
+        // let allowEditInfo = this.state.detailObj.allowEditInfo;
+        console.log("输出是否可编辑="+this.state.allowEditInfo+this.state.editables);
+
 
         return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
-            {this.state.editables == false &&
+            {this.state.editables == false&&this.state.allowEditInfo&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}>
                 <Image source={require("../img/editor.png")}
                        style={{marginLeft: 210}}/>
                 </TouchableOpacity> }
-            {this.state.editables == true &&
+            {this.state.editables == true &&this.state.allowEditInfo&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}>
