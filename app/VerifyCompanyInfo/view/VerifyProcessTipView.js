@@ -33,11 +33,7 @@ class VerifyProcessTipView extends Component{
     }
 
     setCurrentNum(num) {
-        console.log("到这里了没" , num);
-
         this.setState({currentNum : num});
-        console.log("currentNum =>" , this.state.currentNum);
-
     }
 
 
@@ -90,7 +86,7 @@ class VerifyProcessTipView extends Component{
     }
 
     renderSubView(){
-        console.log("renderSubView");
+        // console.log("renderSubView");
 
         return   <View style={styles.processImgTipView}>
                  {this._renderCircleTipView(0,this.state.currentNum)}

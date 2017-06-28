@@ -25,13 +25,14 @@ class RegisterCompanyCell extends Component{
         super(props);
         this.tabState = {};
         this.state = {
-
+            processState : this.props.processState
         };
     }
 
     static propTypes = {
         isFirst: PropTypes.bool,
         isLast: PropTypes.bool,
+        processState: PropTypes.string
     };
 
 
@@ -85,7 +86,10 @@ class RegisterCompanyCell extends Component{
 
     _leftTipView() {
 
-        if (this.props.detail.processState == '进行中') {
+        console.log("detail.processState" + this.state.processState);
+
+
+        if (this.state.processState == '进行中' || this.state.processState == '已结束') {
 
             return  <View style={[{width: 10, alignItems:'center'}]}>
 
@@ -115,7 +119,7 @@ class RegisterCompanyCell extends Component{
 
 
     render(){
-        const {isFirst, isLast} = this.state
+        const {isFirst, isLast,processState} = this.state
 
         return(
 

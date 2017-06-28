@@ -6,6 +6,8 @@ import Main from './pilipaMain/PLPMain';
 import LoginPage from './user/LoginPage';
 import LaunchPage from './main/GDLaunchPage';
 import MessageCenterPage from './message/MessageCenterPage';
+import SystemMessagePage from './message/SystemMessagePage';
+
 import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
 import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
@@ -28,6 +30,7 @@ export default function () {
     reg('main.LaunchPage', () => LaunchPage);
     reg('ApplicationCenterPage', () => ApplicationCenterPage);
     reg('MessageCenterPage', () => MessageCenterPage);
+    reg('SystemMessagePage', () => SystemMessagePage);
     reg('Mine', () => Mine);
     reg('MyOutSideWorkPage', () => MyOutSideWorkPage);
     reg('GetLicensePage', () => GetLicensePage);

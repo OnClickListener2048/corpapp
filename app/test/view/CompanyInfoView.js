@@ -38,8 +38,11 @@ export default class CompanyInfoView extends React.Component {
 
     _callPhone(phoneNumber) {
 
-        return Linking.openURL('tel:'+ phoneNumber);
-
+        if (phoneNumber.includes('*')) {
+            return;
+        } else {
+            return Linking.openURL('tel:' + phoneNumber);
+        }
 
     }
 
@@ -166,7 +169,7 @@ export default class CompanyInfoView extends React.Component {
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{ContactsPhone}</Text>}
                         <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
                         <Image
-                            source={require('../../img/phone.png')}
+                            source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}
                             style={[{
                                 resizeMode: "contain",
                                 alignSelf: 'center',
@@ -211,8 +214,7 @@ export default class CompanyInfoView extends React.Component {
 
                         <TouchableOpacity onPress={() => {this._callPhone(SalesPhone)}}>
                         <Image
-                            source={require('../../img/phone.png')}
-                            style={[{
+                            source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}                            style={[{
                                 resizeMode: "contain",
                                 alignSelf: 'center',
                                 marginRight : 0
