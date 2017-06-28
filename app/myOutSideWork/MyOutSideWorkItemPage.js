@@ -119,7 +119,7 @@ export default class MyOutSideWorkItemPage extends Component{
         if (this.state.dataFaild === true) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onpress={this._loadList()}>
+                    <TouchableOpacity onPress={() => this._loadList()}>
                     <NoMessage
                         textContent='加载失败，点击重试'
                         active={require('../img/load_failed.png')}/>

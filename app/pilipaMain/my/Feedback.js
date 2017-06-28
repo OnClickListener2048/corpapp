@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
         flex: 1,
         height: px2dp(352),
         width: px2dp(148),
-        fontSize: 15,
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(28),

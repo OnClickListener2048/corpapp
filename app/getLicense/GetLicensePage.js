@@ -11,6 +11,7 @@ import {
     View,
     ScrollView,InteractionManager,
     Dimensions, Image, TouchableOpacity,NativeModules,
+    KeyboardAvoidingView
 } from 'react-native';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
@@ -28,6 +29,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import DataTimerView from "../view/DataTimerView";
 import AlertPhotoModal from "../view/AlertPhotoModal";
 import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
+import MultiTextInputView from "./view/MultiTextInputView";
 
 const window = Dimensions.get('window');
 
@@ -539,7 +541,7 @@ export default class GetLicensePage extends Component{
         return(
 
 
-        <View style={styles.container}>
+        <KeyboardAvoidingView behavior='padding' style={styles.container}>
             {this.state.visible == true &&
             <AlertPhotoModal
                 callback={this._callbackPhoto.bind(this)}/>}
@@ -649,7 +651,7 @@ export default class GetLicensePage extends Component{
                 {this.renderCompanyAddressView()}
                 <View
                 style={{paddingTop: 15, backgroundColor: 'white'}}>
-                <TextInputView
+                <MultiTextInputView
                 textName={'经营范围：'}
                 inputWidth={{width: 80}}
                 winWidth={{width: SCREEN_WIDTH - 115}}
@@ -687,7 +689,7 @@ export default class GetLicensePage extends Component{
                 </View>
                 </ScrollView>
             }
-        </View>
+        </KeyboardAvoidingView>
         );
     }
 }
