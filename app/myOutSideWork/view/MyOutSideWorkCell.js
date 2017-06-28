@@ -66,14 +66,16 @@ export default class MessageCenterCell extends Component {
                         style={styles.titleViewStyle}>
                         <Text
                             textAlign='left'
+                            numberOfLines={1}
                             style={[{fontSize: 17,marginTop: 15, marginLeft : 20 , color : '#323232'}] }>{statusName}</Text>
                         <Text
                             textAlign='left'
+                            numberOfLines={1}
                             style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : '#969696'}] }>{companyName}</Text>
                     </View>
                     <Text
                         textAlign='center'
-                        style={[styles.timeTitleStyle,{marginRight:30,color:'#323232'}]}>{statusContent}</Text>
+                        style={[styles.timeTitleStyle,{marginRight:20,color:'#323232'}]}>{statusContent}</Text>
 
                     <Text
                         textAlign='right'
