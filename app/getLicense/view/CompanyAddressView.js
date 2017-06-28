@@ -10,7 +10,6 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
-import TextInputView from "./TextInputView";
 
 const window = Dimensions.get('window');
 export const height = window.height;
@@ -20,7 +19,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
-        height:38 * 2,
+        height:42,
         flexDirection: 'row',
         paddingTop:10,
         paddingBottom:2,
@@ -90,12 +89,13 @@ const styles = StyleSheet.create({
 
 });
 
-export default class CompanyAddressView extends Component{
+export default class  CompanyAddressView extends Component{
     constructor(props) {
         super(props)
         this.state = {
             city:this.props.city,
             district:this.props.district,
+            isFouces:this.props.isFouces,
             // city:'市',
             // district:'区',
         }
@@ -110,6 +110,7 @@ export default class CompanyAddressView extends Component{
     static propTypes = {
         city:PropTypes.string,
         district:PropTypes.string,
+        isFouces:PropTypes.bool,
     };
 
     setArea(data:[]) {
@@ -136,9 +137,8 @@ export default class CompanyAddressView extends Component{
                 <Text style = {styles.leftTipStyle}>{'公司地址：'}</Text>
 
                 <View style={styles.rightViewStyle}>
-
+                    {this.props.isFouces?
                     <View style={ styles.rightRowViewStyle}>
-
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
@@ -158,8 +158,22 @@ export default class CompanyAddressView extends Component{
                         {/*</View>*/}
                         </TouchableOpacity>
 
-                    </View>
 
+                    </View>:
+
+                        <View style={ styles.rightRowViewStyle}>
+                                <View style={ styles.leftdownDrapViewStyle}>
+                                <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.city}</Text>
+
+                                </View>
+                            {/*<View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>*/}
+
+                                <View style={ styles.rightdownDrapViewStyle}>
+                                <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.district}</Text>
+
+                                </View>
+
+                        </View>}
 
                     <View style={ styles.rightRowViewStyle}>
 

@@ -74,8 +74,28 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffffff',
         justifyContent: 'center',
         alignItems: 'center'
-    }
+    },
+    textInputWrapper: {
+        height: px2dp(50),
+        width: SCREEN_WIDTH-105,
+        backgroundColor: 'white',
+        // position: 'relative',
+        borderBottomColor: '#dcdcdc',
+        borderBottomWidth: 0.5,
+        marginRight: px2dp(20),
+        flexDirection: 'row',
+        marginLeft:90,
+        marginRight:15,
+    },
 
+    textInput: {
+        flex: 1,
+        width: SCREEN_WIDTH-100,
+        marginLeft: px2dp(0),
+        padding: 0,
+        fontSize: 15,
+        color:'#323232',
+    },
 
 
 });

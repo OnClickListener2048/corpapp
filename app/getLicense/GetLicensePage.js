@@ -9,9 +9,9 @@ import Picker from 'react-native-picker';
 import {
     Text,
     View,
-    ScrollView,InteractionManager,
-    Dimensions, Image, TouchableOpacity,NativeModules,
-    KeyboardAvoidingView
+    ScrollView, InteractionManager,
+    Dimensions, Image, TouchableOpacity, NativeModules,
+    KeyboardAvoidingView, TextInput
 } from 'react-native';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
@@ -348,6 +348,10 @@ export default class GetLicensePage extends Component{
                     let districtArr = secDic[secCode]; //区数组
                     let districtCodeId = districtArr[districtIndex];
                     this.state.selectAreaCode = [cityCodeId,districtCodeId];
+                    this.setState({
+                        city:cityCodeId,
+                        district:districtCodeId,
+                    });
                 }
 
                 console.log('呵呵', this.state.selectAreaCode);
@@ -383,7 +387,9 @@ export default class GetLicensePage extends Component{
 
 
     renderCompanyAddressView(){
-        return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+        return   <CompanyAddressView
+            isFouces={this.state.editables}
+            ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
     }
 
 
@@ -720,6 +726,20 @@ export default class GetLicensePage extends Component{
                 textEditable={this.state.editables}/>
                 </View>
                 {this.renderCompanyAddressView()}
+                {/*公司地址输入框*/}
+                <View style={{height:25,width:SCREEN_WIDTH,backgroundColor:'white'}}>
+                    <View style={[styles.textInputWrapper,]}>
+                        <TextInput underlineColorAndroid='transparent'
+                                   value={this.state.corpAddress}
+                                   editable={this.state.editables}
+                                   style={styles.textInput} placeholder='' returnKeyType='next'
+                                   onChangeText={
+                                       (legalPerson) => {
+                                           this.setState({corpAddress:legalPerson});
+                                       }
+                                   }/>
+                    </View>
+                </View>
                 <View
                 style={{paddingTop: 15, backgroundColor: 'white'}}>
                 <MultiTextInputView
