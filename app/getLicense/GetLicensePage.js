@@ -548,7 +548,7 @@ export default class GetLicensePage extends Component{
     }
 
     _edit(editables){
-        if(editables==false){//点击保存，赋值并保存
+        if(editables===false){//点击保存，赋值并保存
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
                 "city"	: this.state.city,        //市
@@ -619,10 +619,10 @@ export default class GetLicensePage extends Component{
 
 
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
-            {this.state.visible == true &&
+            {this.state.visible === true &&
             <AlertPhotoModal
                 callback={this._callbackPhoto.bind(this)}/>}
-            {this.state.isDateTimePickerVisible == true &&
+            {this.state.isDateTimePickerVisible === true &&
                 <DataTimerView
                 callback={this._callbackData.bind(this)}/>
             }
@@ -741,7 +741,7 @@ export default class GetLicensePage extends Component{
                     </View>
                 </View>
                 <View
-                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                    style={{paddingTop: 0, backgroundColor: 'white', height: 60}}>
                 <MultiTextInputView
                 textName={'经营范围：'}
                 inputWidth={{width: 80}}
@@ -750,13 +750,14 @@ export default class GetLicensePage extends Component{
                 content={this.state.detailObj.bizRange}
                 textEditable={this.state.editables}/>
                 </View>
+
                 <View style={[styles.identityCardPhoto, {height: 150}]}>
                 <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>经营执照：</Text>
                     {this.state.editables === true ?
                         <TouchableOpacity onPress={() => {
                             this.toAlertModal("blicense")
                         }}>
-                            {this.state.linImage != null ?
+                            {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics != null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}

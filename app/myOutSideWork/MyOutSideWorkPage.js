@@ -30,6 +30,7 @@ export default class MyOutSideWorkPage extends Component{
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        this._loadCount = this._loadCount.bind(this);
     }
 
     static navigatorStyle = {
