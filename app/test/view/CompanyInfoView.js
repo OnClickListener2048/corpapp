@@ -22,6 +22,7 @@ export default class CompanyInfoView extends React.Component {
             ContactsPhone: this.props.ContactsPhone,
             SalesName: this.props.SalesName,
             SalesPhone: this.props.SalesPhone,
+            isFocusData:this.props.isFocusData,
         }
     }
 
@@ -32,6 +33,7 @@ export default class CompanyInfoView extends React.Component {
         ContactsPhone:PropTypes.string,
         SalesName:PropTypes.string,
         SalesPhone:PropTypes.string,
+        isFocusData:PropTypes.bool,
     };
 
     _callPhone(phoneNumber) {
@@ -41,13 +43,21 @@ export default class CompanyInfoView extends React.Component {
 
     }
 
-    _inputContent(content){
-        this.props.callback(content);
+    _inputContentCom(contentComp){
+        this.props.callbackCom(contentComp);
+    }
+
+    _inputContentCon(contentCon){
+        this.props.callbackCon(contentCon);
+    }
+
+    _inputContentPho(contentPho){
+        this.props.callbackPho(contentPho);
     }
 
     render() {
        // const { style} = this.props
-        const {ContactsName,ContactsPhone,SalesName,SalesPhone} = this.state
+        const {companyName,ContactsName,ContactsPhone,SalesName,SalesPhone} = this.state
         return (
             <View
                 style={styles.companyInfoViewContainer}>
@@ -63,6 +73,7 @@ export default class CompanyInfoView extends React.Component {
                         <Text
                             textAlign='right'
                             style={[{fontSize: 15,marginTop: 10,color:'#323232'}] }>{'公司名称：'}</Text>
+                        {this.props.isFocusData?
                             <View textAlign='left'
                                   style={styles.textInputWrapper}>
                                 <TextInput
@@ -71,20 +82,20 @@ export default class CompanyInfoView extends React.Component {
                                     onChangeText={
                                         (legalPerson) => {
                                             this.setState({companyName: legalPerson});
-                                            this._inputContent(legalPerson);
+                                            this._inputContentCom(legalPerson);
                                         }
                                     }/>
-                            </View>
-                            {/*<Text*/}
-                                {/*textAlign='left'*/}
-                                {/*numberOfLines={1}*/}
-                                {/*style={[{*/}
-                                    {/*fontSize: 15,*/}
-                                    {/*marginTop: 10,*/}
-                                    {/*marginLeft: 0,*/}
-                                    {/*color: '#323232',*/}
-                                    {/*marginRight: 60*/}
-                                {/*}] }>: {companyName}</Text>*/}
+                            </View>:
+                            <Text
+                                textAlign='left'
+                                numberOfLines={1}
+                                style={[{
+                                    fontSize: 15,
+                                    marginTop: 10,
+                                    marginLeft: 0,
+                                    color: '#323232',
+                                    marginRight: 60
+                                }] }>{companyName}</Text>}
 
 
                         </View>
@@ -101,6 +112,7 @@ export default class CompanyInfoView extends React.Component {
                         <Text
                             textAlign='center'
                             style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人 ：'}</Text>
+                        {this.props.isFocusData?
                             <View textAlign='left'
                                   style={[styles.textInputWrapper, {marginTop: 3}]}>
                                 <TextInput
@@ -108,39 +120,57 @@ export default class CompanyInfoView extends React.Component {
                                     style={styles.textInput} placeholder='' returnKeyType='next'
                                     onChangeText={
                                         (legalPerson) => {
-                                            this.setState({companyName: legalPerson});
-                                            this._inputContent(legalPerson);
+                                            this.setState({ContactsName: legalPerson});
+                                            this._inputContentCon(legalPerson);
                                         }
                                     }/>
-                            </View>
-                            {/*<Text*/}
-                                {/*textAlign='left'*/}
-                                {/*numberOfLines={1}*/}
-                                {/*style={[{*/}
-                                    {/*fontSize: 15,*/}
-                                    {/*alignSelf: 'center',*/}
-                                    {/*marginLeft: 2.5,*/}
-                                    {/*marginRight: 0,*/}
-                                    {/*color: '#323232'*/}
-                                {/*}] }>: {ContactsName}</Text>*/}
+                            </View>:
+                            <Text
+                                textAlign='left'
+                                numberOfLines={1}
+                                style={[{
+                                    fontSize: 15,
+                                    alignSelf: 'center',
+                                    marginLeft: 2.5,
+                                    marginRight: 0,
+                                    color: '#323232'
+                                }] }>{ContactsName}</Text>}
 
                         </View>
                     <View
                         style={styles.companyInfoRowPhoneStyle}>
-
-
+                        {this.props.isFocusData?
+                        <View
+                            style={[{
+                                  alignItems:'center',width:155,flexDirection:'row',height:30}]}>
+                            <Text style={{fontSize: 15,}}>电话：</Text>
+                            <TextInput
+                                underlineColorAndroid='transparent' value={this.state.ContactsPhone}
+                                style={{width: 110,
+                                    marginRight: 10,
+                                    padding: 4,
+                                    flex:1,
+                                    fontSize: 15,
+                                    color:'#323232',}} placeholder='' returnKeyType='next'
+                                onChangeText={
+                                    (legalPerson) => {
+                                        this.setState({ContactsPhone: legalPerson});
+                                        this._inputContentPho(legalPerson);
+                                    }
+                                }/>
+                        </View>:
                         <Text
                             textAlign='right'
                             numberOfLines={1}
 
-                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话: {ContactsPhone}</Text>
+                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{ContactsPhone}</Text>}
                         <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
                         <Image
                             source={require('../../img/phone.png')}
                             style={[{
                                 resizeMode: "contain",
                                 alignSelf: 'center',
-                                marginRight : 0
+                                marginRight : 0,
                             }
                             ]
                             }
@@ -177,7 +207,7 @@ export default class CompanyInfoView extends React.Component {
                             textAlign='right'
                             numberOfLines={1}
 
-                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话: {SalesPhone}</Text>
+                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{SalesPhone}</Text>
 
                         <TouchableOpacity onPress={() => {this._callPhone(SalesPhone)}}>
                         <Image

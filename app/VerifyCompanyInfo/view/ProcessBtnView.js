@@ -26,6 +26,9 @@ class ProcessBtnView extends Component{
             materialConfirm : this.props.materialConfirm,
             titleArr :['确认材料','开始任务','完成','完成'],
             currentNum: 0,
+            stepId:this.props.stepId,          //步骤 ID
+            taskId:this.props.taskId,          //步骤 ID
+            currentName : ''
 
         }
 
@@ -37,43 +40,36 @@ class ProcessBtnView extends Component{
         finished : PropTypes.bool,
         inProgress : PropTypes.bool,
         materialConfirm : PropTypes.bool,
+        stepId : PropTypes.string,
+        taskId : PropTypes.string,
+
     };
 
 
     btnClick() {
-        // 使用原始的DOM API来聚焦输入框。
+
+            // 使用原始的DOM API来聚焦输入框。
         let loading = SActivityIndicator.show(true, "加载中...");
 
+        console.log("finishedhaha" , this.state.materialConfirm);
+        console.log("inProgresshaha" , this.state.inProgress);
+        console.log("materialConfirmhaha" , this.state.materialConfirm);
 
-
-
-
-
-        // export function loadOutSourceTaskStepChange(finished = 'false' , inProgress = 'false' , materialConfirm = 'false' , stepId = '' , taskId = '') {
-
-
-            apis.loadOutSourceTaskStepChange(false,false,true,'1','1').then(
+            apis.loadOutSourceTaskStepChange(this.state.inProgress ? true : false,this.state.materialConfirm ? true : false,true ,this.state.stepId,this.state.taskId).then(
 
             (responseData) => {
                  SActivityIndicator.hide(loading);
-                 this.props.callback(this.state.currentNum);
-
 
                 this.setState({
 
-                     // finished : responseData.data.progress.finished,
-                     // inProgress : responseData.data.progress.inProgress,
-                     // materialConfirm : responseData.data.progress.materialConfirm,
-                    // currentNum : (responseData.data.progress.finished == 'true') ? 3 : (responseData.data.progress.inProgress == 'true') ? 2 : (responseData.data.progress.materialConfirm == 'true') ? 1 : 0,
-                    currentNum : 2,
+                     finished : responseData.data.finished === "true",
+                     inProgress : responseData.data.inProgress=== "true",
+                     materialConfirm : responseData.data.materialConfirm === "true",
+                    currentNum : (responseData.data.finished === 'true') ? 3 : (responseData.data.inProgress === 'true') ? 2 : (responseData.data.materialConfirm === 'true') ? 1 : 0,
+                });
+                this.props.callback(this.state.currentNum);
 
 
-            });
-
-                if(responseData !== null && responseData.data !== null) {
-
-
-                }
             },
             (e) => {
                 console.log("获取失败" , e);
@@ -82,25 +78,22 @@ class ProcessBtnView extends Component{
 
             },
         );
-
-
-
     }
 
-    renderBtnView() {
 
+    renderBtnView() {
         if (this.state.currentNum == this.state.titleArr.length - 1) {      // 无数据
             return(
-                    <View  style={{marginRight: 15,height:40,
-                        width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e6e6e6', justifyContent:'center'}}>
-                        <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#FFFFFF'}}>
-                            {this.state.titleArr[this.state.currentNum]}</Text>
-                    </View>
+                <View  style={{marginRight: 15,height:40,
+                    width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e6e6e6', justifyContent:'center'}}>
+                    <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#FFFFFF'}}>
+                        {this.state.titleArr[this.state.currentNum]}</Text>
+                </View>
             );
         }
 
 
-        if (this.state.currentNum < this.state.titleArr.length - 1) {      // 无数据
+        if (this.state.currentNum < this.state.titleArr.length) {      // 无数据
             return(
                 <TouchableOpacity onPress={this.btnClick}>
                     <View  style={{marginRight: 15,height:40,
@@ -116,12 +109,12 @@ class ProcessBtnView extends Component{
 
 
     render(){
-        const {finished,inProgress,materialConfirm} = this.state
-        if (finished == 'true'){
+        const {finished,inProgress,materialConfirm,stepId,taskId} = this.state
+        if (finished === 'true'){
             this.state.countNum = 3;
-        }else if (inProgress == 'true'){
+        }else if (inProgress === 'true'){
             this.state.countNum = 2;
-        }else if (materialConfirm == 'true'){
+        }else if (materialConfirm === 'true'){
             this.state.countNum = 1;
         }else{
             this.state.countNum = 0;

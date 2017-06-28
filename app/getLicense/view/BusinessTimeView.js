@@ -121,6 +121,7 @@ export default class BusinessTimeView extends Component{
             selectTimeBtnSelected : true,
             allTimePressBtnSelected : false,
         });
+        this.props.callbackAll(allTimePressBtnSelected);
     };
 
     _leftTimePress(){
@@ -137,6 +138,7 @@ export default class BusinessTimeView extends Component{
             selectTimeBtnSelected : false,
             allTimePressBtnSelected : true,
         });
+        this.props.callbackAll(allTimePressBtnSelected);
     };
 
     renderselectTimeBtn(){

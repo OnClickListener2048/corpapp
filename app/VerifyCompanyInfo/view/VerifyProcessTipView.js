@@ -28,7 +28,14 @@ class VerifyProcessTipView extends Component{
 
 
         }
+        this.setCurrentNum = this.setCurrentNum.bind(this);
+
     }
+
+    setCurrentNum(num) {
+        this.setState({currentNum : num});
+    }
+
 
     static propTypes = {
         tipArr: PropTypes.array,

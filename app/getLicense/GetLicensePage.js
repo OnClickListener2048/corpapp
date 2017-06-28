@@ -58,6 +58,7 @@ export default class GetLicensePage extends Component{
             detailObj:{},
             loaded:false,
             editables:false,//不可编辑
+            allowEditInfo:false,
 
             //保存数据类型
             legalEntity:null,//法人
@@ -72,10 +73,10 @@ export default class GetLicensePage extends Component{
             startDate:"",//开始时间
 
             city:"北京",        //市
-            contactName:"烦人",    //联系人名称
-            contactPhone:"12313242131",   //联系人电话
+            contactName:null,    //联系人名称
+            contactPhone:null,   //联系人电话
             corpAddress:"北京市朝阳区",     //公司地址
-            corpName:"爱康鼎",          //公司名称
+            corpName:null,          //公司名称
             corpType:"私营",          //企业类型
             district:"朝阳区",          //县或区
             industry:"IT",         //所属行业
@@ -100,10 +101,17 @@ export default class GetLicensePage extends Component{
     stepBtnClick(status){
 
         this.setState({
-            currentStep:status + 1,
+            // currentStep:status + 1,
         });
 
-        console.log("点我的最新数字是" + this.state.currentStep);
+
+        if(this.refs.verifyProcessTipView) {
+            this.refs.verifyProcessTipView.setCurrentNum(status - 1);
+        }
+
+
+
+        console.log("点我的最新数字是" + status);  //1确认材料完成 2 开始任务完成 3结束任务完成
 
     }
 
@@ -127,6 +135,7 @@ export default class GetLicensePage extends Component{
 
                     this.setState({
                         detailObj : responseData.data,
+                        allowEditInfo:responseData.data.allowEditInfo,
                         loaded:true,
                             bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
@@ -155,6 +164,9 @@ export default class GetLicensePage extends Component{
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
                     }
+
+
+
 
                     this.props.navigator.setTitle({
                         title: this.state.detailObj.stepName // the new title of the screen as appears in the nav bar
@@ -195,7 +207,6 @@ export default class GetLicensePage extends Component{
                         let  secDic = new Object();
                         secDic["" + index + ""] = responseData.data[index].name;
 
-                        // console.log(secDic );
                         this.state.areaArr = this.state.areaArr.concat(secDic);
 
                         let  secCodeDic = new Object();
@@ -249,29 +260,62 @@ export default class GetLicensePage extends Component{
 
     renderTest() {
         if (this.state.loaded === true) {
+            console.log(""+this.state.editables);
             return <CompanyInfoView companyName={this.state.detailObj.corpName}
                                     ContactsName={this.state.detailObj.contactName}
                                     ContactsPhone={this.state.detailObj.contactPhone}
                                     SalesName={this.state.detailObj.salesmanName}
                                     SalesPhone={this.state.detailObj.salesmanPhone}
+                                    isFocusData={this.state.editables}
+                                    callbackCom={this._callbackComp.bind(this)}
+                                    callbackCon={this._callbackCon.bind(this)}
+                                    callbackPho={this._callbackPho.bind(this)}
             />
         }
     }
 
+    //输入框回调 公司名
+    _callbackComp(content) {
+        console.log("输入框树枝公司名称="+content+this.state.visible);
+        this.setState({
+            corpName:content,//公司名称
+            visible:false,
+        });
+    }
+
+    //输入框回调 联系人
+    _callbackCon(content) {
+        console.log("输入框树枝联系人="+content+this.state.visible);
+        this.setState({
+            contactName:content,
+            visible:false,
+        });
+    }
+
+    //输入框回调 联系电话
+    _callbackPho(content) {
+        console.log("输入框树枝电话="+content+this.state.visible);
+        this.setState({
+            contactPhone:content,
+            visible:false,
+        });
+    }
+
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView currentNum={0}/>
+        return <VerifyProcessTipView ref="verifyProcessTipView" currentNum={0}/>
     }
 
     renderVerifyBtnView(){
 
-        return <ProcessBtnView currentNum={this.state.currentStep}  callback={this.stepBtnClick.bind(this)} />
+        return <ProcessBtnView stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView() {
 
             return <BusinessTimeView
                 callback={this._toMyDataTimer.bind(this)}
+                callbackAll={this._unlimit.bind(this)}
                 firstDate={this.state.startDate}
                 lastDate={this.state.endDate}
                 isFocus={this.state.editables}/>
@@ -296,9 +340,20 @@ export default class GetLicensePage extends Component{
                 let  districtIndex = this.state.areaCodeIndexArr[1];
 
 
-                this.state.selectAreaCode = [this.state.areaCodeArr[0][cityIndex],this.state.areaCodeArr[1][districtIndex]];
 
-                 console.log('Selected Area areaCodeTmpIndexArr', pickedValue , this.state.areaCodeIndexArr,this.state.areaArr,this.state.areaCodeArr,this.state.selectAreaCode );
+                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市' : ['区','区']}}
+
+                for(let secCode in secDic) {
+                    let cityCodeId = secCode;
+                    let districtArr = secDic[secCode]; //区数组
+                    let districtCodeId = districtArr[districtIndex];
+                    this.state.selectAreaCode = [cityCodeId,districtCodeId];
+                }
+
+                console.log('呵呵', this.state.selectAreaCode);
+
+
+
                 if(this.refs.companyAddressView) {
                     this.refs.companyAddressView.setArea(this.state.selectArea);
                 }
@@ -338,6 +393,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝fa="+content);
         this.setState({
             legalEntity:content,//法人
+            visible:false,
         });
     }
     //输入框回调 注册号
@@ -345,6 +401,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝zhu="+content);
         this.setState({
             regId:content,//注册号
+            visible:false,
         });
     }
     //输入框回调 国税登记号
@@ -352,6 +409,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝guo ="+content);
         this.setState({
             nationalTaxId:content,//国税登记号
+            visible:false,
         });
     }
     //输入框回调 地税登记号
@@ -359,6 +417,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝di="+content);
         this.setState({
             localTaxId:content,//地税登记号
+            visible:false,
         });
     }
     //输入框回调 注册资金
@@ -366,6 +425,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝jin="+content);
         this.setState({
             regFunds:content,//注册资金
+            visible:false,
         });
     }
     //输入框回调 经营范围
@@ -373,6 +433,7 @@ export default class GetLicensePage extends Component{
         console.log("输入框树枝jing="+content);
         this.setState({
             bizRange:content,//经营范围
+            visible:false,
         });
     }
 
@@ -385,6 +446,13 @@ export default class GetLicensePage extends Component{
             console.log("传值==>>"+isDateTimePickerVisible);
         }
 
+    }
+
+    _unlimit(allTimePressBtnSelected){
+        this.setState({
+            unlimited:allTimePressBtnSelected,
+        });
+        console.log("打印是否限制时间="+this.state.unlimited);
     }
 
     toAlertModal(photoType){
@@ -506,17 +574,20 @@ export default class GetLicensePage extends Component{
     }
 
     renderCompanyTipView(){
+        // let allowEditInfo = this.state.detailObj.allowEditInfo;
+        console.log("输出是否可编辑="+this.state.allowEditInfo+this.state.editables);
+
 
         return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
-            {this.state.editables == false &&
+            {this.state.editables == false&&this.state.allowEditInfo&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}>
                 <Image source={require("../img/editor.png")}
                        style={{marginLeft: 210}}/>
                 </TouchableOpacity> }
-            {this.state.editables == true &&
+            {this.state.editables == true &&this.state.allowEditInfo&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}>
