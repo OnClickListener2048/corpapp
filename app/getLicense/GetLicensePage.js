@@ -911,7 +911,6 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics != null &&this.state.detailObj.bizLics.length!=0?
-                                this.state.detailObj.bizLics !== null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
@@ -921,8 +920,7 @@ export default class GetLicensePage extends Component{
                         <View>
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics != null &&this.state.detailObj.bizLics.length!=0?
-                                this.state.detailObj.bizLics !== null ?
+                                this.state.detailObj.bizLics !== null &&this.state.detailObj.bizLics.length!=0?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
