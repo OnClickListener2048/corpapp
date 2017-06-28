@@ -33,7 +33,11 @@ class VerifyProcessTipView extends Component{
     }
 
     setCurrentNum(num) {
+        console.log("到这里了没" , num);
+
         this.setState({currentNum : num});
+        console.log("currentNum =>" , this.state.currentNum);
+
     }
 
 
@@ -63,9 +67,9 @@ class VerifyProcessTipView extends Component{
 
     }
 
-    _renderCircleTipView(i) {
+    _renderCircleTipView(i,currentNum) {
 
-        if (i > this.props.currentNum){
+        if (i >= currentNum){
             return <View>{this._circleNormalView(i)}</View>
 
 
@@ -85,6 +89,19 @@ class VerifyProcessTipView extends Component{
                            dottedLineWidth={(SCREEN_WIDTH - (15 + 20)* 3 - 43 * 2)/2} grayWidth={2} whiteWidth={2}/>
     }
 
+    renderSubView(){
+        console.log("renderSubView");
+
+        return   <View style={styles.processImgTipView}>
+                 {this._renderCircleTipView(0,this.state.currentNum)}
+                 {this._renderLineView()}
+                 {this._renderCircleTipView(1,this.state.currentNum)}
+                 {this._renderLineView()}
+                 {this._renderCircleTipView(2,this.state.currentNum)}
+              </View>
+
+    }
+
 
     render(){
         const {tipArr,currentNum} = this.state
@@ -93,14 +110,8 @@ class VerifyProcessTipView extends Component{
 
             <View style={{backgroundColor:'#FFFFFF'}}>
                 {/*<TouchableOpacity activeOpacity={0.8} onPress={()=>this.onClick()}>*/}
-                <View style={styles.processImgTipView}>
-                    {this._renderCircleTipView(0)}
-                    {this._renderLineView()}
-                    {this._renderCircleTipView(1)}
-                    {this._renderLineView()}
-                    {this._renderCircleTipView(2)}
-                </View>
 
+                {this.renderSubView()}
 
                 <View style={styles.titleContainer}>
 

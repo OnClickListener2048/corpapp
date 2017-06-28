@@ -106,7 +106,7 @@ export default class GetLicensePage extends Component{
 
 
         if(this.refs.verifyProcessTipView) {
-            this.refs.verifyProcessTipView.setCurrentNum(status - 1);
+            this.refs.verifyProcessTipView.setCurrentNum(status);
         }
 
 
