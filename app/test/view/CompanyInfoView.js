@@ -167,7 +167,7 @@ export default class CompanyInfoView extends React.Component {
                             numberOfLines={1}
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{ContactsPhone}</Text>}
-                        {this.props.isFocusData||ContactsPhone.includes('*')?
+                        {this.props.isFocusData===true||ContactsPhone.includes('*')?
                             <Image
                                 source={require('../../img/phone.png')}
                                 style={[{
@@ -224,7 +224,7 @@ export default class CompanyInfoView extends React.Component {
                             numberOfLines={1}
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{SalesPhone}</Text>
-                        {this.props.isFocusData||ContactsPhone.includes('*') ?
+                        {this.props.isFocusData===true||ContactsPhone.includes('*') ?
                             <Image
                                 source={require('../../img/phone.png')}
                                 style={[{

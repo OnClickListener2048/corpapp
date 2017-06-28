@@ -5,3 +5,7 @@ import {postApi, getApi} from './common';
 export function loadMessageData(count = 15, sinceId = '') {
     return postApi('/app/v0/message/list', {count, sinceId});
 }
+
+export function loadMessageReaded( msgId = '') {
+    return postApi('/app/v0/message/markRead', {msgId});
+}

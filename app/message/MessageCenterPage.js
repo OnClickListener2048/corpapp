@@ -41,6 +41,7 @@ export default class MessageCenterPage extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,                   // 是否初始化 ListView
             // getRowData: getRowData,
+            isReaded:false,
         }
         this.foot = 0;
              // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
@@ -158,6 +159,25 @@ export default class MessageCenterPage extends Component {
         );
     }
 
+    //已读信息
+    _readed(msgid){
+        apis.loadMessageReaded(msgid).then(
+
+            (responseData) => {
+                this.setState({
+                    isReaded:true,
+                });
+                console.log("成功");
+                if(responseData !== null && responseData.data !== null) {
+
+                }
+            },
+            (e) => {
+                console.log("获取失败" , e);
+            },
+        );
+    }
+
     componentDidMount() {
 
         Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
@@ -196,7 +216,8 @@ export default class MessageCenterPage extends Component {
 
     }
 
-    toMyOutSideWork(statusId) {
+    toMyOutSideWork(msgId) {
+        this._readed(msgId);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
@@ -205,13 +226,14 @@ export default class MessageCenterPage extends Component {
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 passProps: {
-                    taskId:statusId,
+                    taskId:msgId,
                 }
             });
         });
     }
 
-    toSystemMessagePage() {
+    toSystemMessagePage(msgId) {
+        this._readed(msgId);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
@@ -240,11 +262,13 @@ export default class MessageCenterPage extends Component {
 
         let a = rowData.content;
         console.log('rowData===' + rowData.msgId);
-
+        this.setState({
+            isReaded:rowData.read,
+        });
 
         return (
             <TouchableOpacity onPress={() => {
-                rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage();
+                rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage(rowData.msgId);
 
 
             }}>
@@ -254,7 +278,7 @@ export default class MessageCenterPage extends Component {
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
                              messageTime = {rowData.date}
-                             messageIcon={rowData.type === 'outservice'?  rowData.read === 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
+                             messageIcon={rowData.type === 'outservice'?  this.state.isReaded === true?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
                 />
 
 
