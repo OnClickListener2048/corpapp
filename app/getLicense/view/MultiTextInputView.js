@@ -75,7 +75,7 @@ const stylesMulti = StyleSheet.create({
     },
     textInputMultiLine: {
         flex: 1,
-        width: px2dp(148),
+        width: width - 100,
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(30),
