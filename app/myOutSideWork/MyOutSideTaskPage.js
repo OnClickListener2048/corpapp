@@ -18,6 +18,7 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import RegisterCompanyCell from '../test/view/RegisterCompanyCell'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import NoMessage from "../test/NoMessage";
 
 export default class MyOutSideTaskPage extends Component{
     static navigatorStyle = {

@@ -189,12 +189,16 @@ export default class BusinessTimeView extends Component{
                 <View style={styles.rightViewStyle}>
 
                     <View style={ styles.rightRowViewStyle}>
+                        {this.props.isFocus === true ?
                         <TouchableOpacity onPress={() => {this._selectTimePress(false)}}>
                             <View style={ styles.selectBtnStyle}>
                                 {this.renderselectTimeBtn()}
                             </View>
 
-                        </TouchableOpacity>
+                        </TouchableOpacity>:
+                            <View style={ styles.selectBtnStyle}>
+                            {this.renderselectTimeBtn()}
+                            </View>}
                         {this.state.selectTimeBtnSelected == true&&this.props.isFocus === true ?
                             <TouchableOpacity style={ styles.leftdownDrapViewStyle} onPress={() => {
                                 this._hideAlert("firstTime")

@@ -28,7 +28,7 @@ export default class MyOutSideWorkItemPage extends Component{
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,
-
+            dataFaild:false,
         }
         this.outList = [];
         this._loadList = this._loadList.bind(this);
@@ -88,7 +88,10 @@ export default class MyOutSideWorkItemPage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                this.setState({
+                    dataFaild:true,
+                });
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -113,14 +116,16 @@ export default class MyOutSideWorkItemPage extends Component{
 
     renderListView() {
 
-        if (this.state.loaded === false) {      // 数据加载失败
-            // return(
-            //     <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-            //         <NoMessage
-            //             textContent='加载失败，点击重试'
-            //             active={require('../img/load_failed.png')}/>
-            //     </View>
-            // );
+        if (this.state.dataFaild === true) {      // 数据加载失败
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    <TouchableOpacity onpress={this._loadList()}>
+                    <NoMessage
+                        textContent='加载失败，点击重试'
+                        active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
+                </View>
+            );
         }else if (this.outList.length == 0){
 
             return(
@@ -148,8 +153,13 @@ export default class MyOutSideWorkItemPage extends Component{
 
 
     render() {
+        if(this.props.label==null){
+            var allListHeight = SCREEN_HEIGHT-65;
+        }else{
+            var allListHeight = SCREEN_HEIGHT-112;
+        }
         return (
-            <View style={styles.container}>
+            <View style={[styles.container,{height:allListHeight}]}>
 
                 {this.renderListView()}
 
@@ -171,7 +181,6 @@ const styles = StyleSheet.create({
         marginRight:50
     },
     container: {
-        height:SCREEN_HEIGHT-112,
         width:SCREEN_WIDTH,
         backgroundColor: '#FAFAFA',
         flexDirection: 'column'
