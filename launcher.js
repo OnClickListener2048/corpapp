@@ -11,6 +11,7 @@ import  './app/storage/UserInfoStore';
 // Navigation.startSingleScreenApp({
 //     screen: {
 //         screen: 'AreaPicker',
+//         title: '选择器',
 //     },
 //     portraitOnlyMode: true,
 // });

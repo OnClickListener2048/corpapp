@@ -93,6 +93,48 @@ export default class PickerTest extends Component {
         Picker.show();
     }
 
+    _showSiglePicker() {
+        let pickerData = [
+                    "东城区",
+                    "西城区",
+                    "崇文区",
+                    "宣武区",
+                    "朝阳区",
+                    "丰台区",
+                    "石景山区",
+                    "海淀区",
+                    "门头沟区",
+                    "房山区",
+                    "通州区",
+                    "顺义区",
+                    "昌平区",
+                    "大兴区",
+                    "平谷区",
+                    "怀柔区",
+                    "密云县",
+                    "延庆县"
+                ];
+        Picker.init({
+            pickerTitleText: '请选择注册地',
+            pickerConfirmBtnText: '确认',
+            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
+            pickerCancelBtnText: '取消',
+            pickerCancelBtnColor: [0, 0 ,0, 1],
+            pickerData: pickerData,
+            selectedValue: [ '宣武区'],
+            onPickerConfirm: (pickedValue, pickedIndex) => {
+                console.log('Confirm Area', pickedValue, pickedIndex);
+            },
+            onPickerCancel: (pickedValue, pickedIndex) => {
+                console.log('Area', pickedValue, pickedIndex);
+            },
+            onPickerSelect: (pickedValue, pickedIndex) => {
+                console.log('Select Area', pickedValue, pickedIndex);
+            }
+        });
+        Picker.show();
+    }
+
     _showAreaPicker() {
         let pickerData = [
             {
@@ -148,6 +190,10 @@ export default class PickerTest extends Component {
         // selectedValue = ['a', 2];
         Picker.init({
             pickerTitleText: '请选择注册地',
+            pickerConfirmBtnText: '确认',
+            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
+            pickerCancelBtnText: '取消',
+            pickerCancelBtnColor: [0, 0 ,0, 1],
             // pickerData: this._createAreaData(),
             pickerData: pickerData,
             selectedValue: [ '北京', '昌平区'],
@@ -249,7 +295,10 @@ export default class PickerTest extends Component {
     render() {
         return (
             <View style={{height: Dimensions.get('window').height}}>
-                <TouchableOpacity style={{marginTop: 40, marginLeft: 20}} onPress={this._showDatePicker.bind(this)}>
+                <TouchableOpacity style={{marginTop: 10, marginLeft: 20}} onPress={this._showSiglePicker.bind(this)}>
+                    <Text>单列选择</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={{marginTop: 10, marginLeft: 20}} onPress={this._showDatePicker.bind(this)}>
                     <Text>DatePicker</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginTop: 10, marginLeft: 20}} onPress={this._showTimePicker.bind(this)}>

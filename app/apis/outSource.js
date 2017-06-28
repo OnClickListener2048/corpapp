@@ -59,6 +59,11 @@ export function loadDicArea(city = '') {
     return postApi('/app/v0/dic/area',{city});
 }
 
+// 行业列表等数据词典
+export function loadDicData() {
+    return postApi('/app/v0/dic/outsource/corp');
+}
+
 /**
  * 我的外勤-主任务-步骤详情-保存修改
  * @param clientObj

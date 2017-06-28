@@ -7,6 +7,7 @@ import React, { Component,PropTypes } from 'react';
 import Picker from 'react-native-picker';
 
 import {
+    Alert,
     Text,
     View,
     ScrollView,InteractionManager,
@@ -30,6 +31,8 @@ import DataTimerView from "../view/DataTimerView";
 import AlertPhotoModal from "../view/AlertPhotoModal";
 import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
 import MultiTextInputView from "./view/MultiTextInputView";
+import SinglePickerView from "./view/SinglePickerView";
+import Toast from 'react-native-root-toast';
 
 const window = Dimensions.get('window');
 
@@ -78,8 +81,10 @@ export default class GetLicensePage extends Component{
             corpAddress:"北京市朝阳区",     //公司地址
             corpName:null,          //公司名称
             corpType:"私营",          //企业类型
+            corpTypeId: null, // 企业类型ID
             district:"朝阳区",          //县或区
             industry:"IT",         //所属行业
+            industryId: null, // 所属行业ID
             stepId:this.props.stepId,          //步骤 ID
             taskId:this.props.taskId,          //任务ID, 必填
             unlimited:false,        //营业期限不限
@@ -372,7 +377,6 @@ export default class GetLicensePage extends Component{
 
 
     _addressBtnClick(){
-
         if (this.state.loadedArea){
             this._showAreaPicker();
             return;
@@ -543,18 +547,34 @@ export default class GetLicensePage extends Component{
 
     _edit(editables){
         if(editables===false){//点击保存，赋值并保存
+            // TODO 有效性检查
+            if(this.state.selectAreaCode.length !== 2) {
+                Alert.alert('请选择公司地址');
+                return;
+            }
+
+            if(this.state.industryId === null) {
+                Alert.alert('请选择所属行业');
+                return;
+            }
+
+            if(this.state.corpTypeId === null) {
+                Alert.alert('请选择企业类型');
+                return;
+            }
+
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
-                "city"	: this.state.city,        //市
+                "city"	: this.state.selectAreaCode[0],        //市ID
                 "contactName":	this.state.contactName,    //联系人名称
                 "contactPhone":	this.state.contactPhone,    //联系人电话
                 "corpAddress":	this.state.corpAddress,     //公司地址
                 "corpName":	this.state.corpName,          //公司名称
-                "corpType":	this.state.corpType,          //企业类型
-                "district":	this.state.district,          //县或区
+                "corpType":	this.state.corpTypeId,          //企业类型ID
+                "district":	this.state.selectAreaCode[1],          //县或区
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
-                "industry":	this.state.industry,           //所属行业
+                "industry":	this.state.industryId,           //所属行业ID
                 "legalEntity":	this.state.legalEntity,//法人
                 "localTaxId":	this.state.localTaxId,//地税登记号
                 "nationalTaxId":	this.state.nationalTaxId,//国税登记号
@@ -608,6 +628,114 @@ export default class GetLicensePage extends Component{
         </View>)
     }
 
+    // 企业类型选择
+    _corpTypePickerClick() {
+        console.log('_corpTypePickerClick');
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.lastID = null;
+
+        apis.loadDicData().then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+                if(responseData !== null && responseData.data !== null
+                    && responseData.data.corpType !== null ) {
+
+                    let industryNames = [];
+                    responseData.data.corpType.forEach(key => industryNames.push(key.Text) );
+                    let corpType = this.state.corpType;
+
+                    let selectedValue = [''];
+                    if(corpType !== undefined) {
+                        selectedValue = [corpType];
+                    }
+
+                    this._showSinglePicker(industryNames, selectedValue,
+                        '请选择企业类型', (value) => {
+                            this.setState({corpType: value});
+                            console.log('选中企业类型' + value);
+                            responseData.data.corpType.forEach(key => {
+                                if(key.Text == value) {
+                                    //Toast.show('选中' + value + ",id=" + key.Id);
+                                    this.setState({corpTypeId: key.Id});
+                                }
+                            } );
+                        });
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
+
+    // 行业选择
+    _industryPickerClick() {
+        console.log('_industryPickerClick');
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.lastID = null;
+
+        apis.loadDicData().then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+                if(responseData !== null && responseData.data !== null
+                    && responseData.data.industry !== null ) {
+
+                    let industryNames = [];
+                    responseData.data.industry.forEach(key => industryNames.push(key.Text) );
+                    let industry = this.state.industry;
+
+                    let selectedValue = [''];
+                    if(industry !== undefined) {
+                        selectedValue = [industry];
+                    }
+
+                    this._showSinglePicker(industryNames, selectedValue,
+                        '请选择所属行业', (value) => {
+                        this.setState({industry: value});
+                        responseData.data.industry.forEach(key => {
+                            if(key.Text == value) {
+                                //Toast.show('选中' + value + ",id=" + key.Id);
+                                this.setState({industryId: key.Id});
+                            }
+                        } );
+                    });
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
+
+    // 显示单列选择框, 参数为类型
+    _showSinglePicker(pickerData, selectedValue, title:string,
+                      confirmValueCallback:Function) {
+
+        // selectedValue = ['a', 2];
+        Picker.init({
+            pickerTitleText: title,
+            pickerConfirmBtnText: '确认',
+            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
+            pickerCancelBtnText: '取消',
+            pickerCancelBtnColor: [0, 0 ,0, 1],
+            pickerData: pickerData,
+            selectedValue: selectedValue,
+            onPickerConfirm: (pickedValue, pickedIndex) => {
+                console.log('Confirm Area', pickedValue, pickedIndex);
+                if(confirmValueCallback) {
+                    confirmValueCallback(pickedValue);
+                }
+            },
+        });
+        Picker.show();
+    }
+
     render() {
         return(
 
@@ -654,18 +782,18 @@ export default class GetLicensePage extends Component{
                         <TouchableOpacity onPress={() => {
                             this.toAlertModal("reverse")
                         }}>
-                            {this.state.reImage != null ?
+                            {this.state.reImage !== null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards != null ?
+                                this.state.detailObj.idCards !== null ?
                                     <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity> :
                         <View>
-                            {this.state.reImage != null ?
+                            {this.state.reImage !== null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards != null ?
+                                this.state.detailObj.idCards !== null ?
                                     <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
@@ -707,6 +835,12 @@ export default class GetLicensePage extends Component{
                 textEditable={this.state.editables}/>
                 </View>
 
+                <SinglePickerView hint={'所属行业：'} value={this.state.industry}
+                                  onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
+
+                <SinglePickerView hint={'企业类型：'} value={this.state.corpType}
+                                  onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
+
                 {this.renderBusinessTimeView()}
 
                 <View
@@ -739,7 +873,7 @@ export default class GetLicensePage extends Component{
                         }}>
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics != null ?
+                                this.state.detailObj.bizLics !== null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
@@ -747,9 +881,9 @@ export default class GetLicensePage extends Component{
 
                         </TouchableOpacity> :
                         <View>
-                            {this.state.linImage != null ?
+                            {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics != null ?
+                                this.state.detailObj.bizLics !== null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
