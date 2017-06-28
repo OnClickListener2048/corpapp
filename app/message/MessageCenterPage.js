@@ -40,7 +40,6 @@ export default class MessageCenterPage extends Component {
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,                   // 是否初始化 ListView
             // getRowData: getRowData,
-            isReaded:false,
         }
         this.foot = 0;
              // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
@@ -81,7 +80,11 @@ export default class MessageCenterPage extends Component {
                     this.lastID = this.messageArr[this.pageCount - 1].msgId;
                     // console.log(this.lastID +'你大爷');
                 }
+                for (let  i = 0 ; i < this.messageArr.length ; i++){
+                    let  secData = this.messageArr[i];
+                    secData.rowIndex = i;
 
+                }
 
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
@@ -125,12 +128,19 @@ export default class MessageCenterPage extends Component {
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = responseData.data[this.pageCount - 1].msgId;
-                    console.log(this.lastID +'你大爷');
 
                 }else {
-
                     this.lastID = null;
                 }
+
+
+                for (let  i = 0 ; i < this.messageArr.length ; i++){
+                    let  secData = this.messageArr[i];
+                    secData.rowIndex = i;
+
+                }
+
+
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
@@ -157,19 +167,36 @@ export default class MessageCenterPage extends Component {
     }
 
     //已读信息
-    _readed(msgid){
+    _readed(msgid,rowData,index){
+
+
         apis.loadMessageReaded(msgid).then(
 
             (responseData) => {
-                this.setState({
-                    isReaded:true,
-                });
-                console.log("成功");
-                if(responseData !== null && responseData.data !== null) {
 
-                }
+                rowData.read = 'false';
+
+                let  a =  this.messageArr[rowData.rowIndex];
+                console.log("点击成功了" + a.read);
+                let data = [];
+                this.messageArr.forEach(row => {
+                    data.push(Object.assign({}, row));
+                } );
+
+
+                this.setState({
+                    dataSource: this.state.dataSource.cloneWithRows(data),
+                    loaded:true,
+                });
+
+                this.messageArr = data;
+
+
+
             },
             (e) => {
+                console.log("点击失败");
+
                 console.log("获取失败" , e);
             },
         );
@@ -241,13 +268,11 @@ export default class MessageCenterPage extends Component {
 
     }
 
-    toMyOutSideWork(msgId) {
-        this._readed(msgId);
+    toMyOutSideWork(msgId,rowData) {
+        this._readed(msgId,rowData);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
-                // screen: 'VerifyCompanyName',
                 screen: 'MyOutSideTaskPage',
-                // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 passProps: {
@@ -258,12 +283,11 @@ export default class MessageCenterPage extends Component {
     }
 
 
-    toSystemMessagePage(contentJson) {
+    toSystemMessagePage(contentJson,msgId,rowData) {
+        this._readed(msgId,rowData);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
-                // screen: 'VerifyCompanyName',
                 screen: 'SystemMessagePage',
-                // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 title: '系统通知',
@@ -288,28 +312,20 @@ export default class MessageCenterPage extends Component {
     }
 
     _renderRow(rowData) {
-        let a = rowData.content;
-        console.log('rowData===' + rowData.msgId);
-        // this.setState({
-        //     isReaded:rowData.read,
-        // });
+
+
+         // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
+        // console.log("点击renderRow" + rowData);
 
         return (
             <TouchableOpacity onPress={() => {
-                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage(rowData.content);
-
-                // rowData.type === 'outservice'? this.toSystemMessagePage(rowData.content) : this.toSystemMessagePage(rowData.content);
-
-            }}>
-                {/*<View style={styles.rowStyle}>*/}
-
+                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
 
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
                              messageTime = {rowData.date}
-                             messageIcon={rowData.type === 'outservice'?  this.state.isReaded === true?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
+                             messageIcon={rowData.type === 'outservice'?  rowData.read === 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
                 />
-
 
             </TouchableOpacity>
         );
@@ -374,11 +390,6 @@ export default class MessageCenterPage extends Component {
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    {/*<TouchableOpacity onPress={() => {this._loadData()}}>*/}
-                        {/*<NoMessage*/}
-                            {/*textContent='加载失败，点击重试'*/}
-                            {/*active={require('../img/load_failed.png')}/>*/}
-                    {/*</TouchableOpacity>*/}
                 </View>
             );
         }else if (this.messageArr.length == 0){

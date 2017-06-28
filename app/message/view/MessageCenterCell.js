@@ -9,13 +9,7 @@ import styles from '../css/MessageCenterStyle'
 export default class MessageCenterCell extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            messageIcon: this.props.messageIcon,
-            messageTitle: this.props.messageTitle,
-            messageSubTitle: this.props.messageSubTitle,
-            messageTime: this.props.messageTime
 
-        }
     }
 
     static propTypes = {
@@ -27,7 +21,7 @@ export default class MessageCenterCell extends React.Component {
 
     render() {
          // const { style} = this.props
-        const {messageTitle, messageSubTitle,messageTime,messageIcon} = this.state
+        const {messageTitle, messageSubTitle,messageTime,messageIcon} = this.props
         return (
             <View
                 style={styles.rowStyle}>

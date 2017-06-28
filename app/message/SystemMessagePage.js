@@ -40,7 +40,7 @@ export default class SystemMessagePage extends Component{
 
     render() {
         const {contentJson} = this.state;
-        let content = JSON.parse(contentJson);
+        // let content = JSON.parse(contentJson);
         // console.log('contentJson ===' + content)
         //
         // console.log('index ===' + content.content)
@@ -50,7 +50,7 @@ export default class SystemMessagePage extends Component{
 
                 <Text
                     textAlign='left'
-                    style={[{fontSize: 12,marginTop: 15, marginLeft : 15,marginRight : 15 , color : '#323232'}] }>{content.content}</Text>
+                    style={[{fontSize: 12,marginTop: 15, marginLeft : 15,marginRight : 15 , color : '#323232'}] }>{contentJson}</Text>
 
 
             </View>
