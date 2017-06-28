@@ -195,7 +195,6 @@ export default class GetLicensePage extends Component{
                         let  secDic = new Object();
                         secDic["" + index + ""] = responseData.data[index].name;
 
-                        // console.log(secDic );
                         this.state.areaArr = this.state.areaArr.concat(secDic);
 
                         let  secCodeDic = new Object();
@@ -296,9 +295,20 @@ export default class GetLicensePage extends Component{
                 let  districtIndex = this.state.areaCodeIndexArr[1];
 
 
-                this.state.selectAreaCode = [this.state.areaCodeArr[0][cityIndex],this.state.areaCodeArr[1][districtIndex]];
 
-                 console.log('Selected Area areaCodeTmpIndexArr', pickedValue , this.state.areaCodeIndexArr,this.state.areaArr,this.state.areaCodeArr,this.state.selectAreaCode );
+                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市' : ['区','区']}}
+
+                for(let secCode in secDic) {
+                    let cityCodeId = secCode;
+                    let districtArr = secDic[secCode]; //区数组
+                    let districtCodeId = districtArr[districtIndex];
+                    this.state.selectAreaCode = [cityCodeId,districtCodeId];
+                }
+
+                console.log('呵呵', this.state.selectAreaCode);
+
+
+
                 if(this.refs.companyAddressView) {
                     this.refs.companyAddressView.setArea(this.state.selectArea);
                 }
