@@ -17,7 +17,6 @@ export default class MultiTextInputView extends Component {
             inputWidth:this.props.inputWidth,
             winWidth:this.props.winWidth,
             textEditable:this.props.textEditable};
-
     }
 
     static propTypes = {
@@ -30,7 +29,8 @@ export default class MultiTextInputView extends Component {
     };
 
     _inputContent(content){
-        this.props.callback(content);
+        if(this.props.callback)
+            this.props.callback(content);
     }
 
     render(){
@@ -41,7 +41,6 @@ export default class MultiTextInputView extends Component {
                         marginLeft : 15,fontSize:15},
                         this.props.inputWidth,]}>{this.props.textName}</Text>
                 <View style={stylesMulti.inputArea}>
-                    <View style={[styles.textInputWrapper,this.props.winWidth,]}>
                         <TextInput underlineColorAndroid='transparent'
                                    multiline={true}
                                    numberOfLines={3}
@@ -54,10 +53,8 @@ export default class MultiTextInputView extends Component {
                                            this._inputContent(legalPerson);
                                        }
                                    }/>
-                    </View>
                 </View>
                 </View>
-
             </View>
 
         )};
@@ -67,20 +64,21 @@ export default class MultiTextInputView extends Component {
 const stylesMulti = StyleSheet.create({
 
     inputArea: {
-        height: px2dp(352),
+        height: px2dp(100),
         width: width,
         justifyContent: 'flex-start',
-        flexDirection: 'row',
-        marginLeft: 15,
-        marginTop: 15,
-        alignItems: 'center'
+        marginLeft: 0,
+        marginTop: 0,
+        alignItems: 'flex-start',
+        borderBottomColor: '#dcdcdc',
+        borderBottomWidth: 0.5,
     },
     textInputMultiLine: {
         flex: 1,
-        height: px2dp(352),
         width: px2dp(148),
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(30),
+        textAlign: 'left'
     },
 });
