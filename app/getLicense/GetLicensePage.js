@@ -73,10 +73,10 @@ export default class GetLicensePage extends Component{
             startDate:"",//开始时间
 
             city:"北京",        //市
-            contactName:"烦人",    //联系人名称
-            contactPhone:"12313242131",   //联系人电话
+            contactName:null,    //联系人名称
+            contactPhone:null,   //联系人电话
             corpAddress:"北京市朝阳区",     //公司地址
-            corpName:"爱康鼎",          //公司名称
+            corpName:null,          //公司名称
             corpType:"私营",          //企业类型
             district:"朝阳区",          //县或区
             industry:"IT",         //所属行业
@@ -305,6 +305,7 @@ export default class GetLicensePage extends Component{
 
             return <BusinessTimeView
                 callback={this._toMyDataTimer.bind(this)}
+                callbackAll={this._unlimit.bind(this)}
                 firstDate={this.state.startDate}
                 lastDate={this.state.endDate}
                 isFocus={this.state.editables}/>
@@ -435,6 +436,13 @@ export default class GetLicensePage extends Component{
             console.log("传值==>>"+isDateTimePickerVisible);
         }
 
+    }
+
+    _unlimit(allTimePressBtnSelected){
+        this.setState({
+            unlimited:allTimePressBtnSelected,
+        });
+        console.log("打印是否限制时间="+this.state.unlimited);
     }
 
     toAlertModal(photoType){
