@@ -82,11 +82,12 @@ export default class GetLicensePage extends Component{
             unlimited:false,        //营业期限不限
             loadedArea:false,
             areaArr:[],
-            selectArea:[],
+            selectArea:[],  //选择的地址信息 ['北京', '朝阳区']  用这个判断到底有没有市区选择 如果没有也没用默认值的话 说明未选择
             areaCodeArr:[],
+            selectAreaCode:[],  //选择地址的 id
 
             areaCodeIndexArr:[],
-            areaCodeTmpIndexArr:[],
+            areaCodeTmpIndexArr:[],   //临时的选择
 
         };
         this._loadData = this._loadData.bind(this);
@@ -146,7 +147,12 @@ export default class GetLicensePage extends Component{
                             stepId:	responseData.data.stepId,          //步骤 ID
                             taskId:	responseData.data.taskId,          //任务ID, 必填
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
+                            selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                     });
+
+                    if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
+                            this.refs.companyAddressView.setArea(this.state.selectArea);
+                    }
 
                     this.props.navigator.setTitle({
                         title: this.state.detailObj.stepName // the new title of the screen as appears in the nav bar
@@ -167,11 +173,6 @@ export default class GetLicensePage extends Component{
     }
 
     _loadAreaData(resolve) {
-        if (this.state.loadedArea){
-            this._showAreaPicker();
-            return;
-        }
-
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -282,13 +283,20 @@ export default class GetLicensePage extends Component{
             pickerTitleText: '请选择注册地',
             pickerData: this.state.areaArr,
             // pickerData: pickerData,
-            selectedValue: [ '北京', '昌平区'],// TODO 请修改
+            selectedValue: this.state.selectArea,
             onPickerConfirm: pickedValue => {
                 this.setState({
                     selectArea : pickedValue,
                     areaCodeIndexArr : this.state.areaCodeTmpIndexArr,
                 });
-                console.log('area', pickedValue);
+
+                let  cityIndex = this.state.areaCodeIndexArr[0];
+                let  districtIndex = this.state.areaCodeIndexArr[1];
+
+
+                this.state.selectAreaCode = [this.state.areaCodeArr[0][cityIndex],this.state.areaCodeArr[1][districtIndex]];
+
+                 console.log('Selected Area areaCodeTmpIndexArr', pickedValue , this.state.areaCodeIndexArr,this.state.areaArr,this.state.areaCodeArr,this.state.selectAreaCode );
                 if(this.refs.companyAddressView) {
                     this.refs.companyAddressView.setArea(this.state.selectArea);
                 }
@@ -299,7 +307,7 @@ export default class GetLicensePage extends Component{
             onPickerSelect: (pickedValue, pickedIndex) => {
                 this.state.areaCodeTmpIndexArr = pickedIndex;
 
-                console.log('Select Area 哈哈', pickedValue, pickedIndex);
+                // console.log('Select Area areaCodeTmpIndexArr', pickedValue, pickedIndex , this.state.areaCodeTmpIndexArr );
             }
         });
         Picker.show();
@@ -307,36 +315,18 @@ export default class GetLicensePage extends Component{
 
 
     _addressBtnClick(){
-        this._loadAreaData();
 
+        if (this.state.loadedArea){
+            this._showAreaPicker();
+            return;
+        }else {
+            this._loadAreaData();
+        }
     }
 
 
     renderCompanyAddressView(){
         return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
-        /*
-        if (this.state.areaCodeArr.length == 0 || this.state.areaCodeIndexArr.length == 0 || this.state.areaArr.length == 0 ) {
-            console.log('刷新地址1');
-
-            // return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
-        } else {
-            console.log('刷新地址2');
-
-            // console.log(this.state.areaArr[0][this.state.areaCodeIndexArr[0]]);
-            // console.log(this.state.areaArr[0]);
-            // console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
-            // console.log('选择位置' + this.state.areaCodeIndexArr[0][1]);
-            // console.log(this.state.areaArr[1][this.state.areaCodeIndexArr[1]]);
-            console.log('市' +  this.state.selectArea[0]);
-            console.log('区' + this.state.selectArea[1]);
-
-            console.log('刷新地址222');
-
-            // return   <CompanyAddressView city={this.state.selectArea[0]} district={this.state.selectArea[1]} callback={this._addressBtnClick.bind(this)}/>
-            // return   <CompanyAddressView city={'北京市'} district={'通州区'} callback={this._addressBtnClick.bind(this)}/>
-
-        }
-*/
     }
 
 

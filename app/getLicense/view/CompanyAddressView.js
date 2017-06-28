@@ -123,7 +123,7 @@ export default class CompanyAddressView extends Component{
     };
 
     _rightTimePress(){
-
+        this.props.callback();
     };
 
 
