@@ -33,7 +33,6 @@ const moreText = "加载完毕";
 export const SCREEN_WIDTH = window.width;
 export default class MessageCenterPage extends Component {
 
-
     constructor(props) {
         super(props)
         this.state = {
@@ -51,9 +50,7 @@ export default class MessageCenterPage extends Component {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
-        this.props.navigator.setTabBadge({
-            badge: 88 // 数字气泡提示, 设置为null会删除
-        });
+        this._loadAllUnRead = this._loadAllUnRead.bind(this);
     }
 
     static navigatorStyle = {
@@ -178,17 +175,41 @@ export default class MessageCenterPage extends Component {
         );
     }
 
+    _loadAllUnRead() {
+        apis.loadMessageTotalReaded().then(
+            (responseData) => {
+
+                if(responseData !== null && responseData.data !== null) {
+                    let cnt = responseData.data.count;
+                    if(cnt !== null && cnt >= 0) {
+                        this.props.navigator.setTabBadge({
+                            badge: cnt // 数字气泡提示, 设置为null会删除
+                        });
+
+                        try {// 只支持iOS
+                            JPushModule.setBadge(cnt, (success) => {
+                                console.log("Badge", success)
+                            });
+                        } catch (e) {
+                        }
+                    }
+                }
+            },
+            (e) => {
+                console.log("所有未读获取失败" , e);
+                this.props.navigator.setTabBadge({
+                    badge: null // 数字气泡提示, 设置为null会删除
+                });
+            },
+        );
+    }
+
     componentDidMount() {
 
         Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
             {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
 
-        try {// 只支持iOS
-            JPushModule.setBadge(5, (success) => {
-                console.log("Badge", success)
-            });
-        } catch (e) {
-        }
+        this._loadAllUnRead();
 
         try {
             if (Platform.OS !== 'ios') {

@@ -9,3 +9,8 @@ export function loadMessageData(count = 15, sinceId = '') {
 export function loadMessageReaded( msgId = '') {
     return postApi('/app/v0/message/markRead', {msgId});
 }
+
+// 获取所有未读消息数
+export function loadMessageTotalReaded( ) {
+    return postApi('/app/v0/message/list/count');
+}
