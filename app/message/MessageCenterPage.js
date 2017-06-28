@@ -232,8 +232,8 @@ export default class MessageCenterPage extends Component {
         });
     }
 
-    toSystemMessagePage(msgId) {
-        this._readed(msgId);
+
+    toSystemMessagePage(contentJson) {
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 // screen: 'VerifyCompanyName',
@@ -241,6 +241,10 @@ export default class MessageCenterPage extends Component {
                 // screen:'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                title: '系统通知',
+                passProps: {
+                    contentJson:contentJson,
+                }
             });
         });
     }
@@ -260,16 +264,16 @@ export default class MessageCenterPage extends Component {
 
     _renderRow(rowData) {
 
-        let a = rowData.content;
-        console.log('rowData===' + rowData.msgId);
         // this.setState({
         //     isReaded:rowData.read,
         // });
 
+
         return (
             <TouchableOpacity onPress={() => {
-                rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage(rowData.msgId);
+                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId) : this.toSystemMessagePage(rowData.content);
 
+                // rowData.type === 'outservice'? this.toSystemMessagePage(rowData.content) : this.toSystemMessagePage(rowData.content);
 
             }}>
                 {/*<View style={styles.rowStyle}>*/}
