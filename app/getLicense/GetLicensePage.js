@@ -101,10 +101,17 @@ export default class GetLicensePage extends Component{
     stepBtnClick(status){
 
         this.setState({
-            currentStep:status + 1,
+            // currentStep:status + 1,
         });
 
-        console.log("点我的最新数字是" + this.state.currentStep);
+
+        if(this.refs.verifyProcessTipView) {
+            this.refs.verifyProcessTipView.setCurrentNum(status - 1);
+        }
+
+
+
+        console.log("点我的最新数字是" + status);  //1确认材料完成 2 开始任务完成 3结束任务完成
 
     }
 
@@ -157,6 +164,9 @@ export default class GetLicensePage extends Component{
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
                     }
+
+
+
 
                     this.props.navigator.setTitle({
                         title: this.state.detailObj.stepName // the new title of the screen as appears in the nav bar
@@ -293,12 +303,12 @@ export default class GetLicensePage extends Component{
 
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView currentNum={0}/>
+        return <VerifyProcessTipView ref="verifyProcessTipView" currentNum={0}/>
     }
 
     renderVerifyBtnView(){
 
-        return <ProcessBtnView currentNum={this.state.currentStep}  callback={this.stepBtnClick.bind(this)} />
+        return <ProcessBtnView stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView() {
