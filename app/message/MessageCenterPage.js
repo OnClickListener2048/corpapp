@@ -263,11 +263,11 @@ export default class MessageCenterPage extends Component {
     }
 
     _renderRow(rowData) {
-
+        let a = rowData.content;
+        console.log('rowData===' + rowData.msgId);
         // this.setState({
         //     isReaded:rowData.read,
         // });
-
 
         return (
             <TouchableOpacity onPress={() => {
