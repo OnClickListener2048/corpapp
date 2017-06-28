@@ -315,11 +315,15 @@ export default class MessageCenterPage extends Component {
         }else if (this.messageArr.length == 0){
 
             return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadData()}}>
+
+                 <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                     <NoMessage
                     textContent='暂无消息'
                     active={require('../img/no_message.png')}/>
-                </View>
+                  </View>
+                </TouchableOpacity>
+
             );
         }else {         // 有数据
             return(
