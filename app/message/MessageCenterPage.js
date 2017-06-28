@@ -182,9 +182,13 @@ export default class MessageCenterPage extends Component {
 
         Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
             {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
-        JPushModule.setBadge(5, (success) => {
-            console.log("Badge", success)
-        });
+
+        try {// 只支持iOS
+            JPushModule.setBadge(5, (success) => {
+                console.log("Badge", success)
+            });
+        } catch (e) {
+        }
 
         try {
             if (Platform.OS !== 'ios') {
