@@ -93,6 +93,7 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
 }
 
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+  NSLog(@"deviceToken %@", deviceToken);
   [JPUSHService registerDeviceToken:deviceToken];
 }
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

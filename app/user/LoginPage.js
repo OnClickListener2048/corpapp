@@ -13,7 +13,7 @@ import {
     View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView, TouchableWithoutFeedback, __DEV__
+    KeyboardAvoidingView, TouchableWithoutFeedback
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -29,6 +29,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
 import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
+import {DEBUG} from '../config';
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
@@ -59,7 +60,7 @@ export default class LoginPage extends Component {
     //debug only
     _setupDebug() {
         this.setState({
-            mobile: '18513417295',     // 手机号
+            mobile: '13333333333',     // 手机号
             mobileValid: true,   // 手机号有效
             smsCode: '888888',         // 短信验证码
             smsCodeValid: true,        // 短信验证码有效
@@ -96,7 +97,10 @@ export default class LoginPage extends Component {
     componentWillMount() {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', true);
-        this._setupDebug();
+        if(DEBUG) {
+            this._setupDebug();
+        }
+
     }
 
     // 准备销毁组件
