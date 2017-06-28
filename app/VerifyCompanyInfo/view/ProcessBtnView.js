@@ -46,25 +46,25 @@ class ProcessBtnView extends Component{
     };
 
 
-    btnClick() {
 
-            // 使用原始的DOM API来聚焦输入框。
+    submitData() {
+        // 使用原始的DOM API来聚焦输入框。
         let loading = SActivityIndicator.show(true, "加载中...");
 
-        console.log("finishedhaha" , this.state.materialConfirm);
-        console.log("inProgresshaha" , this.state.inProgress);
-        console.log("materialConfirmhaha" , this.state.materialConfirm);
+        // console.log("finishedhaha" , this.state.materialConfirm);
+        // console.log("inProgresshaha" , this.state.inProgress);
+        // console.log("materialConfirmhaha" , this.state.materialConfirm);
 
-            apis.loadOutSourceTaskStepChange(this.state.inProgress ? true : false,this.state.materialConfirm ? true : false,true ,this.state.stepId,this.state.taskId).then(
+        apis.loadOutSourceTaskStepChange(this.state.inProgress ? true : false,this.state.materialConfirm ? true : false,true ,this.state.stepId,this.state.taskId).then(
 
             (responseData) => {
-                 SActivityIndicator.hide(loading);
+                SActivityIndicator.hide(loading);
 
                 this.setState({
 
-                     finished : responseData.data.finished === "true",
-                     inProgress : responseData.data.inProgress=== "true",
-                     materialConfirm : responseData.data.materialConfirm === "true",
+                    finished : responseData.data.finished === "true",
+                    inProgress : responseData.data.inProgress=== "true",
+                    materialConfirm : responseData.data.materialConfirm === "true",
                     currentNum : (responseData.data.finished === 'true') ? 3 : (responseData.data.inProgress === 'true') ? 2 : (responseData.data.materialConfirm === 'true') ? 1 : 0,
                 });
                 this.props.callback(this.state.currentNum);
@@ -78,6 +78,20 @@ class ProcessBtnView extends Component{
 
             },
         );
+    }
+
+
+    btnClick() {
+
+            Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : this.state.currentNum === 1 ? '确认开始任务' : '确认任务完成', '',
+                [
+                    {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel'},
+                    {
+                        text: '确定',
+                        onPress: () => this.submitData(),
+                    },]
+                , {cancelable: false}
+            );
     }
 
 

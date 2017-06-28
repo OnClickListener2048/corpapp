@@ -10,9 +10,9 @@ import {
     Alert,
     Text,
     View,
-    ScrollView,InteractionManager,
-    Dimensions, Image, TouchableOpacity,NativeModules,
-    KeyboardAvoidingView
+    ScrollView, InteractionManager,
+    Dimensions, Image, TouchableOpacity, NativeModules,
+    KeyboardAvoidingView, TextInput
 } from 'react-native';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
@@ -61,7 +61,8 @@ export default class GetLicensePage extends Component{
             detailObj:{},
             loaded:false,
             editables:false,//不可编辑
-            allowEditInfo:false,
+            allowEditInfo:false,//登陆人员权限，是否可编辑
+            inProgressEdit:false,//开始任务才可编辑
 
             //保存数据类型
             legalEntity:null,//法人
@@ -111,12 +112,21 @@ export default class GetLicensePage extends Component{
 
 
         if(this.refs.verifyProcessTipView) {
-            this.refs.verifyProcessTipView.setCurrentNum(status - 1);
+            this.refs.verifyProcessTipView.setCurrentNum(status);
         }
 
 
 
         console.log("点我的最新数字是" + status);  //1确认材料完成 2 开始任务完成 3结束任务完成
+        if(status===2){
+            this.setState({
+                inProgressEdit:true,
+            });
+        }else{
+            this.setState({
+                inProgressEdit:false,
+            });
+        }
 
     }
 
@@ -165,6 +175,12 @@ export default class GetLicensePage extends Component{
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                     });
+                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.inProgress)
+                    if(this.state.allowEditInfo&&this.state.detailObj.progress.inProgress===true){
+                        this.setState({
+                            inProgressEdit:true,
+                        });
+                    }
 
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
@@ -253,7 +269,8 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
-                Toast.show('提交失败' + JSON.stringify(e));
+
+                // Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -353,6 +370,10 @@ export default class GetLicensePage extends Component{
                     let districtArr = secDic[secCode]; //区数组
                     let districtCodeId = districtArr[districtIndex];
                     this.state.selectAreaCode = [cityCodeId,districtCodeId];
+                    this.setState({
+                        city:cityCodeId,
+                        district:districtCodeId,
+                    });
                 }
 
                 console.log('呵呵', this.state.selectAreaCode);
@@ -387,7 +408,9 @@ export default class GetLicensePage extends Component{
 
 
     renderCompanyAddressView(){
-        return   <CompanyAddressView ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+        return   <CompanyAddressView
+            isFouces={this.state.editables}
+            ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
     }
 
 
@@ -595,19 +618,19 @@ export default class GetLicensePage extends Component{
 
     renderCompanyTipView(){
         // let allowEditInfo = this.state.detailObj.allowEditInfo;
-        console.log("输出是否可编辑="+this.state.allowEditInfo+this.state.editables);
+        console.log("输出是否可编辑="+this.state.allowEditInfo+","+this.state.inProgressEdit);
 
 
         return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
-            {this.state.editables == false&&this.state.allowEditInfo&&
+            {this.state.editables == false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}>
                 <Image source={require("../img/editor.png")}
                        style={{marginLeft: 210}}/>
                 </TouchableOpacity> }
-            {this.state.editables == true &&this.state.allowEditInfo&&
+            {this.state.editables == true &&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}>
@@ -782,18 +805,18 @@ export default class GetLicensePage extends Component{
                         <TouchableOpacity onPress={() => {
                             this.toAlertModal("reverse")
                         }}>
-                            {this.state.reImage !== null ?
+                            {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards !== null ?
+                                this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
                                     <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity> :
                         <View>
-                            {this.state.reImage !== null ?
+                            {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards !== null ?
+                                this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
                                     <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
@@ -854,6 +877,20 @@ export default class GetLicensePage extends Component{
                 textEditable={this.state.editables}/>
                 </View>
                 {this.renderCompanyAddressView()}
+                {/*公司地址输入框*/}
+                <View style={{height:25,width:SCREEN_WIDTH,backgroundColor:'white'}}>
+                    <View style={[styles.textInputWrapper,]}>
+                        <TextInput underlineColorAndroid='transparent'
+                                   value={this.state.corpAddress}
+                                   editable={this.state.editables}
+                                   style={styles.textInput} placeholder='' returnKeyType='next'
+                                   onChangeText={
+                                       (legalPerson) => {
+                                           this.setState({corpAddress:legalPerson});
+                                       }
+                                   }/>
+                    </View>
+                </View>
                 <View
                     style={{paddingTop: 0, backgroundColor: 'white', height: 60}}>
                 <MultiTextInputView
@@ -873,6 +910,7 @@ export default class GetLicensePage extends Component{
                         }}>
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                this.state.detailObj.bizLics != null &&this.state.detailObj.bizLics.length!=0?
                                 this.state.detailObj.bizLics !== null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
@@ -883,6 +921,7 @@ export default class GetLicensePage extends Component{
                         <View>
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                this.state.detailObj.bizLics != null &&this.state.detailObj.bizLics.length!=0?
                                 this.state.detailObj.bizLics !== null ?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
