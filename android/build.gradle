@@ -2,9 +2,7 @@
 
 buildscript {
     repositories {
-            maven { url('http://maven.aliyun.com/nexus/content/groups/public/') }
-            mavenLocal()
-            jcenter()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -16,14 +14,13 @@ buildscript {
 
 allprojects {
     repositories {
+        mavenLocal()
+        jcenter()
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
-        mavenLocal()
-        maven { url('http://maven.aliyun.com/nexus/content/groups/public/') }
-        maven { url "http://repo1.maven.org/" }
-        jcenter()
+
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
     }
 }
