@@ -167,19 +167,32 @@ export default class CompanyInfoView extends React.Component {
                             numberOfLines={1}
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{ContactsPhone}</Text>}
-                        <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
-                        <Image
-                            source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}
-                            style={[{
-                                resizeMode: "contain",
-                                alignSelf: 'center',
-                                marginRight : 0,
-                            }
-                            ]
-                            }
+                        {this.props.isFocusData||ContactsPhone.includes('*')?
+                            <Image
+                                source={require('../../img/phone.png')}
+                                style={[{
+                                    resizeMode: "contain",
+                                    alignSelf: 'center',
+                                    marginRight : 0,
+                                }
+                                ]
+                                }
 
-                        />
-                        </TouchableOpacity>
+                            />:
+                            <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
+                                <Image
+                                    source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}
+                                    style={[{
+                                        resizeMode: "contain",
+                                        alignSelf: 'center',
+                                        marginRight : 0,
+                                    }
+                                    ]
+                                    }
+
+                                />
+                            </TouchableOpacity>
+                            }
 
 
                     </View>
@@ -211,7 +224,18 @@ export default class CompanyInfoView extends React.Component {
                             numberOfLines={1}
 
                             style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{SalesPhone}</Text>
+                        {this.props.isFocusData||ContactsPhone.includes('*') ?
+                            <Image
+                                source={require('../../img/phone.png')}
+                                style={[{
+                                resizeMode: "contain",
+                                alignSelf: 'center',
+                                marginRight : 0
+                            }
+                            ]
+                            }
 
+                            />:
                         <TouchableOpacity onPress={() => {this._callPhone(SalesPhone)}}>
                         <Image
                             source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}                            style={[{
@@ -223,7 +247,7 @@ export default class CompanyInfoView extends React.Component {
                             }
 
                         />
-                        </TouchableOpacity>
+                        </TouchableOpacity>}
 
                     </View>
 

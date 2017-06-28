@@ -626,16 +626,15 @@ export default class GetLicensePage extends Component{
             {this.state.editables == false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
-                }}>
-                <Image source={require("../img/editor.png")}
-                       style={{marginLeft: 210}}/>
+                }}
+                style={{width:50,height:40,marginLeft: 185,justifyContent:'center',alignItems:'center'}}>
+                <Image source={require("../img/editor.png")}/>
                 </TouchableOpacity> }
             {this.state.editables == true &&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
-                }}>
+                }}style={{width:50,height:40,marginLeft: 185,}}>
                     <View style={{
-                        marginLeft: 185,
                         height: 40,
                         width: 50,
                         borderRadius: 2.5,
