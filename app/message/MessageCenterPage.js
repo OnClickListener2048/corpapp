@@ -39,13 +39,13 @@ export default class MessageCenterPage extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,                   // 是否初始化 ListView
-            // getRowData: getRowData,
+            bagetNum : 0,
         }
         this.foot = 0;
              // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
-        this.pageCount = 10;
+        this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
 
         this._loadData = this._loadData.bind(this);
@@ -228,11 +228,19 @@ export default class MessageCenterPage extends Component {
                 rowData.read = 'true';
 
                 let  a =  this.messageArr[rowData.rowIndex];
-                console.log("点击成功了" + a.read);
+                // console.log("点击成功了" + a.read);
                 let data = [];
                 this.messageArr.forEach(row => {
                     data.push(Object.assign({}, row));
                 } );
+
+                if (this.state.bagetNum > 0) {
+                    this.state.bagetNum--;
+                }
+
+                this.props.navigator.setTabBadge({
+                    badge: this.state.bagetNum <= 0 ? null : this.state.bagetNum // 数字气泡提示, 设置为null会删除
+                });
 
 
                 this.setState({
@@ -241,8 +249,6 @@ export default class MessageCenterPage extends Component {
                 });
 
                 this.messageArr = data;
-
-
 
             },
             (e) => {
@@ -261,8 +267,10 @@ export default class MessageCenterPage extends Component {
                     let cnt = responseData.data.count;
                     if(cnt !== null && cnt >= 0) {
                         this.props.navigator.setTabBadge({
-                            badge: cnt // 数字气泡提示, 设置为null会删除
+                            badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
                         });
+
+                        this.state.bagetNum = cnt;
 
                         try {// 只支持iOS
                             JPushModule.setBadge(cnt, (success) => {
@@ -320,7 +328,9 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
-        this._readed(msgId,rowData);
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
@@ -335,7 +345,9 @@ export default class MessageCenterPage extends Component {
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        this._readed(msgId,rowData);
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'SystemMessagePage',
@@ -363,8 +375,6 @@ export default class MessageCenterPage extends Component {
     }
 
     _renderRow(rowData) {
-
-
          // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
         // console.log("点击renderRow" + rowData);
 
@@ -375,7 +385,7 @@ export default class MessageCenterPage extends Component {
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
                              messageTime = {rowData.date}
-                             messageIcon={rowData.type === 'outservice'?  rowData.read === 'true'?  require('../img/system_y.png') : require('../img/system.png') : rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png')}
+                             messageIcon={rowData.type === 'outservice'?  rowData.read === 'true'? require('../img/task_y.png') :  require('../img/task.png') : rowData.read === 'true'? require('../img/system_y.png') : require('../img/system.png')}
                 />
 
             </TouchableOpacity>

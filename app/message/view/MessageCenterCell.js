@@ -33,12 +33,13 @@ export default class MessageCenterCell extends React.Component {
 
                         <Text
                             textAlign='left'
+                            numberOfLines={1}
                             style={[{fontSize: 12,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{messageTitle}</Text>
 
                         <Text
                             textAlign='left'
+                            numberOfLines={1}
                             style={[{fontSize: 12,marginTop: 10, marginLeft :0 , color : '#969696'}] }>{messageSubTitle}</Text>
-
                     </View>
                     <Text
                         textAlign='right'
@@ -52,7 +53,7 @@ export default class MessageCenterCell extends React.Component {
                 width: 25,
                 height:25,
                 marginLeft:17,
-                marginTop:21,
+                marginTop:12,
             }]}
         />
             </View>
