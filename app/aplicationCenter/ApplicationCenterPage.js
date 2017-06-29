@@ -5,10 +5,11 @@ import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity
 ,InteractionManager} from 'react-native';
 
+import {loadOutSourceCount} from "../apis/outSource";
 import {
     Text,
     Image,
-    View
+    View,
 } from 'react-native';
 import CommunalNavBar from '../main/GDCommunalNavBar';
 
@@ -19,6 +20,8 @@ import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
 import AlertPhotoModal from "../view/AlertPhotoModal";
 import DataTimerView from "../view/DataTimerView";
+import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import Toast from 'react-native-root-toast';
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -29,9 +32,11 @@ export default class ApplicationCenterPage extends Component{
         super(props);
 
         this.state = {
+            bdNum:null,
+            loaded:false,
         };
 
-
+        this._loadCount = this._loadCount.bind(this);
     }
 
     static renderTitleItem() {
@@ -49,14 +54,6 @@ export default class ApplicationCenterPage extends Component{
                 title:'我的外勤',
             });
         });
-    }
-
-    toMyDataTimer(){
-        this.setState({isDateTimePickerVisible:true,visible:false});
-    }
-
-    toAlertModal(){
-        this.setState({ visible: true ,isDateTimePickerVisible:false});
     }
 
     renderImg(){
@@ -80,22 +77,42 @@ export default class ApplicationCenterPage extends Component{
         return imageViews;
     }
 
-    _callback(image,visible) {//获取图片
-        this.setState({
-            image: image,
-            visible:visible,
-        });
+    componentWillMount() {
+        console.log("开始请求,p;.....");
+        this._loadCount();
+
     }
 
-    _callbackData(date,isDateTimePickerVisible){//获取日期
-        this.setState({
-            isDateTimePickerVisible:isDateTimePickerVisible,
-            date:date,
-        });
-        console.log("===>>>"+this.state.date);
+    //获取每个外勤状态数量
+    _loadCount(){
+        let loading = SActivityIndicator.show(true, "加载中...");
+        loadOutSourceCount().then(
+
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+                    this.outSourceCountObj = {};
+                    console.log("开始请求2是"+responseData.data.todoNum+"，"+responseData.data.totalNum+"，"+responseData.data.inProgressNum);
+
+                    this.setState({
+                        bdNum:responseData.data.todoNum+responseData.data.inProgressNum,
+                        loaded:true,
+                    });
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+
     }
 
     render() {
+        console.log("应用中心render="+this.state.bdNum);
         return(
         <View style={styles.container}>
 
@@ -108,7 +125,6 @@ export default class ApplicationCenterPage extends Component{
                 {this.renderImg()}
             </Swiper>
 
-
             <View style={styles.applicationViewContainer}>
 
                 <TouchableOpacity
@@ -120,22 +136,26 @@ export default class ApplicationCenterPage extends Component{
                                                  applicationImg = {require('../img/field.png')}
                                                  style={{height: 100, width: (SCREEN_WIDTH - 45)/2,}}
                                                  textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                                                 badge={this.state.bdNum}
                     />
                 </TouchableOpacity>
                 <TopcenterImgBottomTitleView applicationTitle='CRM'
                                              applicationImg = {require('../img/crm_h.png')}
                                              style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                                             badge={0}
                 />
                 <TopcenterImgBottomTitleView applicationTitle='工作统计'
                                              applicationImg = {require('../img/statistical_h.png')}
                                              style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
+                                             badge={0}
                 />
                 <TopcenterImgBottomTitleView applicationTitle='工作日志'
                                              applicationImg = {require('../img/log_h.png')}
                                              style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
+                                             badge={0}
                 />
             </View>
 

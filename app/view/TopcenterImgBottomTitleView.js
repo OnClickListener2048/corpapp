@@ -3,29 +3,31 @@
  */
 
 import React, {PropTypes} from 'react';
-import {View, Text,Image} from 'react-native';
+import {View, Text,Image,StyleSheet} from 'react-native';
 export default class TopcenterImgBottomTitleView extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             applicationImg: this.props.applicationImg,
-            applicationTitle: this.props.applicationTitle
+            applicationTitle: this.props.applicationTitle,
+            badge:this.props.badge,
         }
     }
 
     static propTypes = {
         style: PropTypes.object,
         applicationTitle: PropTypes.string,
-        applicationImg: PropTypes.number
+        applicationImg: PropTypes.number,
+        badge:PropTypes.number,
     };
 
 
     render() {
         const { style} = this.props
-        const {applicationTitle, applicationImg} = this.state
+        const {applicationTitle, applicationImg,badge} = this.state
         return (
                 <View
-                    style={[{width: 70, height: 44, backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center'}, style]}>
+                    style={[{width: 70, height: 44, backgroundColor: '#FFFFFF', justifyContent: 'center'}, style]}>
 
                     <Image
                         source={applicationImg}
@@ -38,14 +40,45 @@ export default class TopcenterImgBottomTitleView extends React.Component {
                         }
 
                     />
+                    <View style={{position: 'absolute',width: 130, height: 70, backgroundColor: 'transparent'
+                    }}>
 
+                        {badge != null && badge > 0 && badge<100&&
+                        <View style={[styles.badgeBubble,{width:10+5*(badge+"").length}]}>
+                            <Text style={styles.badgeText}>{badge || 0}</Text>
+                        </View>}
 
+                        {badge != null && badge > 99&&
+                        <View style={[styles.badgeBubble,{width:10+5*(200+"").length}]}>
+                            <Text style={styles.badgeText}>{'99+'}</Text>
+                        </View>}
+
+                    </View>
                     <Text
                         textAlign='center'
-                        style={[{fontSize: 12,marginTop: 10}] }>{applicationTitle}</Text>
+                        style={[{fontSize: 12,marginTop: 10,alignSelf:'center'}] }>{applicationTitle}</Text>
                 </View>
         )
     }
 }
 
 //textStyle, {color: textStyle.color}]
+const styles = StyleSheet.create({
+    badgeBubble: {
+        width: 15,
+        height:15,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor:'#e5151d',
+        marginLeft:88,
+    },
+    badgeText: {
+        color: 'white',
+        fontSize: 11,
+        fontWeight: 'bold',
+        backgroundColor: 'transparent',
+        top: -0.5
+    }
+
+});
