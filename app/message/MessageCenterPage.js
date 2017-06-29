@@ -46,6 +46,8 @@ export default class MessageCenterPage extends Component {
         this.messageArr = [];
         this.lastID = null;
         this.pageCount = 10;
+        this._loadInitData = this._loadInitData.bind(this);
+
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
@@ -61,15 +63,60 @@ export default class MessageCenterPage extends Component {
     rowIDs: []
 
 
-    _loadData(resolve) {
+    _loadInitData(resolve) {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
 
         apis.loadMessageData(this.pageCount,'').then(
 
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+                    this.messageArr = [];
+                    this.messageArr = this.messageArr.concat(responseData.data);
+                    // console.log(this.messageArr)
+
+                    if (this.messageArr.length == this.pageCount){
+                        this.lastID = this.messageArr[this.pageCount - 1].msgId;
+                        // console.log(this.lastID +'你大爷');
+                    }
+                    for (let  i = 0 ; i < this.messageArr.length ; i++){
+                        let  secData = this.messageArr[i];
+                        secData.rowIndex = i;
+
+                    }
+
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                        loaded:true,
+                    });
+
+                    if(responseData.length < this.pageCount){
+                        //当当前返回的数据小于PageSize时，认为已加载完毕
+                        this.setState({ foot:1,moreText:moreText});
+                    }else{//设置foot 隐藏Footer
+                        this.setState({foot:0});
+                    }
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                // 关闭刷新动画
+                console.log("获取失败" , e);
+                Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+    }
+
+    _loadData(resolve) {
+
+        this.lastID = null;
+
+        apis.loadMessageData(this.pageCount,'').then(
+
         (responseData) => {
-             SActivityIndicator.hide(loading);
 
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
@@ -107,7 +154,12 @@ export default class MessageCenterPage extends Component {
             }
             },
             (e) => {
-                SActivityIndicator.hide(loading);
+                // 关闭刷新动画
+                if (resolve !== undefined){
+                    setTimeout(() => {
+                        resolve();
+                    }, 1000);
+                }
                 console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -137,9 +189,7 @@ export default class MessageCenterPage extends Component {
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
                     let  secData = this.messageArr[i];
                     secData.rowIndex = i;
-
                 }
-
 
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
@@ -160,6 +210,7 @@ export default class MessageCenterPage extends Component {
                 }
             },
             (e) => {
+                // 关闭刷新动画
                 console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -264,7 +315,7 @@ export default class MessageCenterPage extends Component {
     }
 
     componentWillMount() {
-        this._loadData();
+        this._loadInitData();
 
     }
 
