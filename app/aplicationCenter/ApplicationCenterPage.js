@@ -61,12 +61,19 @@ export default class ApplicationCenterPage extends Component{
 
     renderImg(){
         var imageViews=[];
-        for(var i=0;i<4;i++){
+        for(var i=0;i<3;i++) {
+            if (i === 0) {
+            var image = require('../img/banner.png');
+            }else if(i===1){
+                var image = require('../img/banner1.png');
+            }else if(i===2){
+                var image = require('../img/banner2.png');
+            }
             imageViews.push(
                 <Image
                     key={i}
                     style={{flex:1}}
-                    source={require( '../img/account.png')}
+                    source={image}
                 />
             );
         }

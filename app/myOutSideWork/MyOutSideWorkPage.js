@@ -102,7 +102,7 @@ export default class MyOutSideWorkPage extends Component{
 
                 if(responseData !== null && responseData.data !== null) {
                     this.outSourceCountObj = {};
-                    console.log("开始请求2"+responseData.data.todoNum);
+                    console.log("开始请求2是"+responseData.data.todoNum+"，"+responseData.data.totalNum+"，"+responseData.data.inProgressNum);
 
                     this.setState({
                         outSourceCountObj: responseData.data,
@@ -142,7 +142,7 @@ export default class MyOutSideWorkPage extends Component{
                     />
                     <MyOutSideWorkItemPage tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum,theLast:1}} label="inProgress"
                                            callback={this._callback.bind(this)}/>
-                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: this.state.outSourceCountObj.totalNum,theLast:0}} label="end"
+                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0,theLast:0}} label="end"
                                            callback={this._callback.bind(this)}/>
                 </ScrollableTabView>
             </View>
