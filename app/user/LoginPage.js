@@ -113,7 +113,7 @@ export default class LoginPage extends Component {
     _requestSMSCode(shouldStartCountting) {
         console.log('_requestSMSCode');
         if (this.state.mobileValid) {
-            apis.sendVerifyCode(this.state.phone, this.state.vCodeInputValid ? this.state.vCode : null).then(
+            apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
                    if( responseData.data !== null) {
