@@ -158,7 +158,7 @@ export default class Settings extends Component {
                                      ref="timerButton"
                                      style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                      textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                     timerCount={8}
+                                     timerCount={80}
                                      onClick={(shouldStartCountting) => {
                                          this._requestSMSCode(shouldStartCountting);
                                      }}/>

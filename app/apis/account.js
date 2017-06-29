@@ -15,7 +15,7 @@ export async function sendVerifyCode(phone = '', verifyCode = '') {
 
 // 校验图形验证码
 export async function sendVerifyVCode(phone = '', vcode = '') {
-    return await postApi('app/v0/user/vcode/verify', {phone, vcode});
+    return await postApi('/app/v0/user/vcode/verify', {phone, vcode});
 }
 
 // 问题反馈

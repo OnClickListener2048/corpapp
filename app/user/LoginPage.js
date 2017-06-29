@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
     //debug only
     _setupDebug() {
         this.setState({
-            mobile: '13333333333',     // 手机号
+            mobile: '18513417295',     // 手机号
             mobileValid: true,   // 手机号有效
             smsCode: '888888',         // 短信验证码
             smsCodeValid: true,        // 短信验证码有效
@@ -116,26 +116,29 @@ export default class LoginPage extends Component {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
-                   if( responseData.data !== null) {
-                       let {verifyText, verify} = responseData.data;
-                       if(verify !== null && verify.length > 0) {
-                           let picURL = {uri: verify};
-                           this.setState({picURL});
-                       }
 
-                       if(verifyText !== null && verifyText.length > 0) {
-                           this.setState({vCodeServerValid: false});
-                       }
-
-                       this.setState({verifyText});
-                    }
                 }, (e) => {
+                    console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
                     if(msg !== null) {
                         Alert.alert(msg);
                     } else {
                         Alert.alert('短信验证码获取失败:' + JSON.stringify(e));
                     }
+                    if( e.data !== null) {
+                        let {verifyText, verify} = e.data;
+                        if(verify !== null && verify.length > 0) {
+                            let picURL = {uri: "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime()};
+                            this.setState({picURL});
+                        }
+
+                        if(verifyText !== null && verifyText.length > 0) {
+                            this.setState({vCodeServerValid: false});
+                            this.setState({verifyText});
+                        }
+
+                    }
+
                 }
             );
         }
@@ -145,7 +148,7 @@ export default class LoginPage extends Component {
     _verifyVCode() {
         console.log('_verifyVCode');
         if (this.state.mobileValid) {
-            apis.sendVerifyVCode(this.state.phone, this.state.vCodeInputValid ? this.state.vCode : null).then(
+            apis.sendVerifyVCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('图形验证码已验证');
                     this.setState({vCodeServerValid: true});
@@ -323,7 +326,7 @@ export default class LoginPage extends Component {
                                              ref="timerButton"
                                              style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                              textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                             timerCount={8}
+                                             timerCount={80}
                                              onClick={(shouldStartCountting) => {
                                                  shouldStartCountting(true);
                                                  this._requestSMSCode(shouldStartCountting);
