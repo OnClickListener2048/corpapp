@@ -225,7 +225,7 @@ export default class MessageCenterPage extends Component {
 
             (responseData) => {
 
-                rowData.read = 'false';
+                rowData.read = 'true';
 
                 let  a =  this.messageArr[rowData.rowIndex];
                 console.log("点击成功了" + a.read);
