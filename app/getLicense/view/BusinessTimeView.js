@@ -225,7 +225,7 @@ export default class BusinessTimeView extends Component{
 
                             </View>
                         }
-                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>
+                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 8, marginRight:8,width:20}]}></View>
                         {this.state.selectTimeBtnSelected == true &&this.props.isFocus === true?
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")
@@ -265,7 +265,7 @@ export default class BusinessTimeView extends Component{
                             </View>
                         }
 
-                        <Text style={[{ marginLeft : 4.5,color:'#e6e6e6',minHeight: 15,maxHeight:15}]}>{'无期限'}</Text>
+                        <Text style={[{ marginLeft : 4.5,color:'#e6e6e6',minHeight: 15,maxHeight:20}]}>{'无期限'}</Text>
                     </View>
                 </View>
 

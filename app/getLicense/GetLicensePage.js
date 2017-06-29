@@ -3,7 +3,7 @@
  * Created by jiaxueting on 2017/6/16.
  */
 
-import React, { Component,PropTypes } from 'react';
+import React, { Component,PropTypes} from 'react';
 import Picker from 'react-native-picker';
 
 import {
@@ -12,8 +12,9 @@ import {
     View,
     ScrollView, InteractionManager,
     Dimensions, Image, TouchableOpacity, NativeModules,
-    KeyboardAvoidingView, TextInput
+    KeyboardAvoidingView, TextInput,Platform
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
 import CompanyInfoView from '../test/view/CompanyInfoView'
@@ -562,7 +563,7 @@ export default class GetLicensePage extends Component{
 
     renderLineView(){
 
-        return      <View style={[{width : SCREEN_WIDTH - 30,marginLeft:15, height : 1}]}>
+        return      <View style={[{backgroundColor:'white',width : SCREEN_WIDTH,paddingLeft:15,paddingRight:15, height : 1}]}>
             <DottedLine style={{height : 1, flex: 1,marginLeft:15,alignItems:'center',justifyContent:'center', backgroundColor :'#c8c8c8'}}
                         dottedLineWidth={SCREEN_WIDTH - 30} grayWidth={2} whiteWidth={2}/>
         </View>
@@ -633,7 +634,7 @@ export default class GetLicensePage extends Component{
             {this.state.editables == true &&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
-                }}style={{width:50,height:40,marginLeft: 185,}}>
+                }}style={{width:50,height:40,marginLeft:Platform.OS === 'android'?170: 185,}}>
                     <View style={{
                         height: 40,
                         width: 50,
@@ -758,10 +759,20 @@ export default class GetLicensePage extends Component{
         Picker.show();
     }
 
+    state = {
+        isDateTimePickerVisibl: false,
+    };
+
+    _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
+
+    _handleDatePicked = (date) => {
+        console.log('A date has been picked: ', date);
+        this._callbackData(date,false);
+        this._hideDateTimePicker();
+    };
+
     render() {
         return(
-
-
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             {this.state.visible === true &&
             <AlertPhotoModal
@@ -772,7 +783,13 @@ export default class GetLicensePage extends Component{
             }
             {this.state.loaded === true &&
             <ScrollView style={styles.container}>
-
+                {Platform.OS === 'android' &&
+                < DateTimePicker
+                    isVisible={this.state.isDateTimePickerVisible}
+                    onConfirm={this._handleDatePicked}
+                    onCancel={this._hideDateTimePicker}
+                    />
+                }
                 {this.renderVerifyProcessTipView()}
                 {this.renderVerifyBtnView()}
 
@@ -919,7 +936,7 @@ export default class GetLicensePage extends Component{
                         <View>
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics !== null &&this.state.detailObj.bizLics.length!=0?
+                                this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
                                     <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>

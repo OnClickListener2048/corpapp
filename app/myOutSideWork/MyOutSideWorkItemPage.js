@@ -3,7 +3,7 @@
  */
 
 import React,{Component,PropTypes}from 'react';
-import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text} from "react-native";
+import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text,Platform} from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
@@ -153,9 +153,10 @@ export default class MyOutSideWorkItemPage extends Component{
 
     render() {
         if(this.props.label==null){
-            var allListHeight = SCREEN_HEIGHT-65;
+
+            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-65 : SCREEN_HEIGHT-75;
         }else{
-            var allListHeight = SCREEN_HEIGHT-112;
+            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-102;
         }
         return (
             <View style={[styles.container,{height:allListHeight}]}>

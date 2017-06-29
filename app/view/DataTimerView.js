@@ -1,7 +1,7 @@
 /**
  * Created by jiaxueting on 2017/6/23.
  */
-import React, { Component } from 'react';
+import React, { Component,PropTypes } from 'react';
 import { Text, TouchableOpacity, View,StyleSheet ,Dimensions} from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 const window = Dimensions.get('window');
@@ -15,6 +15,10 @@ export default class DataTimerView extends Component {
         this.state = { isDateTimePickerVisible: this.props.isDateTimePickerVisible,
             date:this.props.date,};
     }
+
+    static propTypes = {
+        isDateTimePickerVisible:PropTypes.bool,
+    };
 
     _showDateTimePicker = () => this.setState({ isDateTimePickerVisible: true });
 
