@@ -33,7 +33,6 @@ export default class ApplicationCenterPage extends Component{
 
         this.state = {
             bdNum:null,
-            loaded:false,
         };
 
         this._loadCount = this._loadCount.bind(this);
@@ -89,7 +88,7 @@ export default class ApplicationCenterPage extends Component{
         loadOutSourceCount().then(
 
             (responseData) => {
-                SActivityIndicator.hide(loading);
+                 SActivityIndicator.hide(loading);
 
                 if(responseData !== null && responseData.data !== null) {
                     this.outSourceCountObj = {};
@@ -97,8 +96,11 @@ export default class ApplicationCenterPage extends Component{
 
                     this.setState({
                         bdNum:responseData.data.todoNum+responseData.data.inProgressNum,
-                        loaded:true,
                     });
+
+                    if(this.refs.myoutItem) {
+                        this.refs.myoutItem._setBageNum(this.state.bdNum);
+                    }
 
                 }
             },
@@ -110,6 +112,8 @@ export default class ApplicationCenterPage extends Component{
         );
 
     }
+
+
 
     render() {
         console.log("应用中心render="+this.state.bdNum);
@@ -132,7 +136,8 @@ export default class ApplicationCenterPage extends Component{
                     style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
 
                 >
-                    <TopcenterImgBottomTitleView applicationTitle='我的外勤'
+                    <TopcenterImgBottomTitleView ref="myoutItem"
+                                                 applicationTitle='我的外勤'
                                                  applicationImg = {require('../img/field.png')}
                                                  style={{height: 100, width: (SCREEN_WIDTH - 45)/2,}}
                                                  textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}

@@ -12,6 +12,8 @@ export default class TopcenterImgBottomTitleView extends React.Component {
             applicationTitle: this.props.applicationTitle,
             badge:this.props.badge,
         }
+        this._setBageNum = this._setBageNum.bind(this);
+
     }
 
     static propTypes = {
@@ -21,6 +23,9 @@ export default class TopcenterImgBottomTitleView extends React.Component {
         badge:PropTypes.number,
     };
 
+    _setBageNum(num){
+        this.setState({badge : num});
+    }
 
     render() {
         const { style} = this.props

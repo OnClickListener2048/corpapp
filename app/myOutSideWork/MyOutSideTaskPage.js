@@ -79,6 +79,11 @@ export default class MyOutSideTaskPage extends Component{
 
     }
 
+    _stepCallBack(){
+
+
+    }
+
     //跳转客户审核具体信息
     toLicense(stepId){
         console.log("i stepId="+stepId);
@@ -87,6 +92,7 @@ export default class MyOutSideTaskPage extends Component{
                 screen: 'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                // callback={this._stepCallBack.bind(this)}
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,
