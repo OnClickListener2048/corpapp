@@ -117,7 +117,7 @@ export default class MessageCenterPage extends Component {
         apis.loadMessageData(this.pageCount,'').then(
 
         (responseData) => {
-
+            {this._loadAllUnRead()}
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
                 this.messageArr = this.messageArr.concat(responseData.data);
@@ -242,13 +242,13 @@ export default class MessageCenterPage extends Component {
                     badge: this.state.bagetNum <= 0 ? null : this.state.bagetNum // 数字气泡提示, 设置为null会删除
                 });
 
+                this.messageArr = data;
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(data),
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
 
-                this.messageArr = data;
 
             },
             (e) => {

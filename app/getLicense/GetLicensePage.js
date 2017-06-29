@@ -211,7 +211,6 @@ export default class GetLicensePage extends Component{
     _loadAreaData(resolve) {
 
         let loading = SActivityIndicator.show(true, "加载中...");
-        this.lastID = null;
 
         apis.loadDicArea().then(
 
@@ -346,28 +345,52 @@ export default class GetLicensePage extends Component{
 
 
     _showAreaPicker() {
-
-        // selectedValue = ['a', 2];
         Picker.init({
             pickerTitleText: '请选择注册地',
             pickerData: this.state.areaArr,
             // pickerData: pickerData,
             selectedValue: this.state.selectArea,
             onPickerConfirm: pickedValue => {
-                this.setState({
-                    selectArea : pickedValue,
-                    areaCodeIndexArr : this.state.areaCodeTmpIndexArr,
-                });
+                //因为若什么都不选择的时候是不会走onPickerSelect方法的 但是会走此方法把默认的值传过来 即不管选择与否都会走这个方法
+                //所以直接在这个方法里面拿到选择的地址名称(pickeValue就是['北京','朝阳区']),去遍历codeId找到选择的'市Id','区Id'
+
+
+                for (let  i = 0 ; i < this.state.areaArr.length ; i++){
+                    let isBreak = false;
+                    let  areaDic = this.state.areaArr[i];
+
+                    for(let areaSec in areaDic) {
+                        let cityName = areaSec;          //市名称
+
+                        if (cityName === pickedValue[0]){
+                            let districtsArr = areaDic[cityName]; //区数组
+
+                            for (let  j = 0 ; j < districtsArr.length ; j++) {
+                                let districtName = districtsArr[j];
+                                if (districtName === pickedValue[1]) {
+                                    this.state.areaCodeTmpIndexArr = [i,j];
+                                    break;
+                                }
+                            }
+                            isBreak = true;
+                            break;
+                        }
+                    }
+                    if (isBreak){
+                        break;
+                    }
+                }
+
+
+                console.log('哈哈自己筛选后==>', this.state.areaCodeTmpIndexArr[0],this.state.areaCodeTmpIndexArr[1]);
 
                 let  cityIndex = this.state.areaCodeIndexArr[0];
                 let  districtIndex = this.state.areaCodeIndexArr[1];
 
-
-
-                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市' : ['区','区']}}
+                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市Id' : ['区Id','区Id']}}
 
                 for(let secCode in secDic) {
-                    let cityCodeId = secCode;
+                    let cityCodeId = secCode;          //市id
                     let districtArr = secDic[secCode]; //区数组
                     let districtCodeId = districtArr[districtIndex];
                     this.state.selectAreaCode = [cityCodeId,districtCodeId];
@@ -377,16 +400,12 @@ export default class GetLicensePage extends Component{
                     });
                 }
 
-                console.log('呵呵', this.state.selectAreaCode);
-
-
-
                 if(this.refs.companyAddressView) {
-                    this.refs.companyAddressView.setArea(this.state.selectArea);
+                    this.refs.companyAddressView.setArea(pickedValue);
                 }
             },
             onPickerCancel: pickedValue => {
-                console.log('area', pickedValue);
+                // console.log('area', pickedValue);
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
                 this.state.areaCodeTmpIndexArr = pickedIndex;
