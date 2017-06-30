@@ -97,7 +97,6 @@ export default class GetLicensePage extends Component{
             selectAreaCode:[],  //选择地址的 id
 
             areaCodeIndexArr:[],
-            areaCodeTmpIndexArr:[],   //临时的选择
 
         };
         this._loadData = this._loadData.bind(this);
@@ -368,7 +367,7 @@ export default class GetLicensePage extends Component{
                             for (let  j = 0 ; j < districtsArr.length ; j++) {
                                 let districtName = districtsArr[j];
                                 if (districtName === pickedValue[1]) {
-                                    this.state.areaCodeTmpIndexArr = [i,j];
+                                    this.state.areaCodeIndexArr = [i,j];
                                     break;
                                 }
                             }
@@ -382,7 +381,7 @@ export default class GetLicensePage extends Component{
                 }
 
 
-                console.log('哈哈自己筛选后==>', this.state.areaCodeTmpIndexArr[0],this.state.areaCodeTmpIndexArr[1]);
+                console.log('哈哈自己筛选后==>', this.state.areaCodeIndexArr[0],this.state.areaCodeIndexArr[1]);
 
                 let  cityIndex = this.state.areaCodeIndexArr[0];
                 let  districtIndex = this.state.areaCodeIndexArr[1];
@@ -408,7 +407,7 @@ export default class GetLicensePage extends Component{
                 // console.log('area', pickedValue);
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
-                this.state.areaCodeTmpIndexArr = pickedIndex;
+                // this.state.areaCodeTmpIndexArr = pickedIndex;
 
                 // console.log('Select Area areaCodeTmpIndexArr', pickedValue, pickedIndex , this.state.areaCodeTmpIndexArr );
             }

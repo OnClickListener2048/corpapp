@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
 
     inputArea: {
         height: px2dp(352),
-        width: width,
+        width: width - 30,
         justifyContent: 'flex-start',
         flexDirection: 'row',
         marginLeft: 15,

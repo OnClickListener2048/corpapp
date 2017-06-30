@@ -92,7 +92,6 @@ export default class MyOutSideTaskPage extends Component{
                 screen: 'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                // callback={this._stepCallBack.bind(this)}
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,
@@ -104,8 +103,7 @@ export default class MyOutSideTaskPage extends Component{
     renderExpenseItem(item , i) {
         return (
             <TouchableOpacity onPress={() => {
-                this.toLicense(this.stepsArr[i].stepId)
-            }}>
+                this.toLicense(this.stepsArr[i].stepId)}}>
                 <RegisterCompanyCell key={i} detail={item} processState={this.stepsArr[i].stepStatus} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
             </TouchableOpacity>
         )
@@ -118,7 +116,7 @@ export default class MyOutSideTaskPage extends Component{
                                  ContactsPhone={this.info.contactPhone}
                                  SalesName={this.info.salesmanName}
                                  SalesPhone={this.info.salesmanPhone}
-        />
+                />
     }
 
     renderScrollView() {
@@ -139,7 +137,6 @@ export default class MyOutSideTaskPage extends Component{
                 </View>
             );
         }else{
-
             return(
                 <ScrollView style={styles.container}>
 
@@ -157,11 +154,7 @@ export default class MyOutSideTaskPage extends Component{
     render() {
         return(
             <View style={styles.container}>
-
-
                 {this.renderScrollView()}
-
-
             </View>
         );
     }
