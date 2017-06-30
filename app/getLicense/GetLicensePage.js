@@ -117,7 +117,7 @@ export default class GetLicensePage extends Component{
 
 
         console.log("点我的最新数字是" + status);  //1确认材料完成 2 任务完成
-        if(status===2){
+        if(status===1){
             this.setState({
                 inProgressEdit:true,
             });
@@ -640,19 +640,19 @@ export default class GetLicensePage extends Component{
         console.log("输出是否可编辑="+this.state.allowEditInfo+","+this.state.inProgressEdit);
 
 
-        return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',flexDirection:'row',alignItems: 'center'}]}>
+        return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',justifyContent:'space-between',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
             {this.state.editables == false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}
-                style={{width:50,height:40,marginLeft: 185,justifyContent:'center',alignItems:'center'}}>
+                style={{width:50,height:40,marginRight: 15,justifyContent:'center',alignItems:'flex-end'}}>
                 <Image source={require("../img/editor.png")}/>
                 </TouchableOpacity> }
             {this.state.editables == true &&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
-                }}style={{width:50,height:40,marginLeft:Platform.OS === 'android'?170: 185,}}>
+                }}style={{width:50,height:40,marginRight:15}}>
                     <View style={{
                         height: 40,
                         width: 50,
