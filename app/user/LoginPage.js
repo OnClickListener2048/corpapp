@@ -45,6 +45,7 @@ export default class LoginPage extends Component {
             smsCode: '',         // 短信验证码
             smsCodeValid: false,          // 短信验证码有效
             acceptLic: false,// 同意许可协议
+            picURLStr: '',// 图片验证码原始地址
             picURL: {uri: 'https://x-crm.i-counting.cn/app/v0/user/vcode/get'} ,// 图片验证码地址
             verifyText: '',// 图片验证码提示语
             vCode: '',         // 图片验证码
@@ -98,9 +99,8 @@ export default class LoginPage extends Component {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', true);
         if(DEBUG) {
-            this._setupDebug();
+            // this._setupDebug();
         }
-
     }
 
     // 准备销毁组件
@@ -116,7 +116,7 @@ export default class LoginPage extends Component {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
-
+                    Alert.alert('测试环境短信验证码:' + responseData.msg);
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
@@ -125,11 +125,15 @@ export default class LoginPage extends Component {
                     } else {
                         Alert.alert('短信验证码获取失败:' + JSON.stringify(e));
                     }
-                    if( e.data !== null) {
+                    if( e.data !== undefined) {
                         let {verifyText, verify} = e.data;
                         if(verify !== null && verify.length > 0) {
-                            let picURL = {uri: "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime()};
+                            let picStr = "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
+                            console.log('***** 请求图片', picStr);
+                            let picURL = {uri: picStr};
                             this.setState({picURL});
+                            let picURLStr = verify;
+                            this.setState({picURLStr});
                         }
 
                         if(verifyText !== null && verifyText.length > 0) {
@@ -153,6 +157,10 @@ export default class LoginPage extends Component {
                     Toast.show('图形验证码已验证');
                     this.setState({vCodeServerValid: true});
                     this.setState({verifyText : null});
+                    // 重置允许获取验证码
+                    if (this.refs.timerButton.state.counting) {
+                        this.refs.timerButton.reset();
+                    }
                 }, (e) => {
                     console.log('_verifyVCode error:' + e.message);
                     let msg = e.msg;
@@ -164,6 +172,15 @@ export default class LoginPage extends Component {
                         Alert.alert(msg, '');
                     } else {
                         Alert.alert('图形验证码校验失败:' + e);
+                    }
+
+                    // 刷新验证码
+                    let picURLStr = this.state.picURLStr;
+                    if(picURLStr !== null && picURLStr.length > 0) {
+                        let picStr = "https://" + picURLStr + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
+                        console.log('***** 请求图片', picStr);
+                        let picURL = {uri: picStr};
+                        this.setState({picURL});
                     }
                 }
             );
@@ -196,8 +213,8 @@ export default class LoginPage extends Component {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
-                console.log("登录错误返回22:", e);
-                Toast.show('登录错误返回22' + JSON.stringify(e));
+                console.log("登录错误返回:", e);
+                Toast.show('登录错误返回:' + JSON.stringify(e));
                 let errMsg = e.msg;
                 if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';

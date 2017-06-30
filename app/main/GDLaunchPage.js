@@ -10,11 +10,10 @@ import {
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
 
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import LoginPage from '../user/LoginPage';
-import Main from '../pilipaMain/PLPMain';
+
 import '../storage/UserInfoStore';
 import * as apis from '../apis';
-import Toast from 'react-native-root-toast';
+// import Toast from 'react-native-root-toast';
 import {navToLogin, navToMainTab} from '../navigation';
 
 // 启动页
@@ -49,7 +48,7 @@ export default class GDLaunchPage extends Component {
             UserInfoStore.getUserToken()
                 .then((value) => {
                     UserInfoStore.token = value;
-                    Toast.show('token=' + value);
+                    // Toast.show('token=' + value);
                     if(value !== null) {
                         this.readUserInfo();
                     } else {
@@ -71,7 +70,7 @@ export default class GDLaunchPage extends Component {
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 console.log("用户信息读取成功返回:" , responseData);
-                Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
+                // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
                     UserInfoStore.setUserInfo(responseData.data);
                     console.log("OK ===> Main:" );
@@ -84,7 +83,7 @@ export default class GDLaunchPage extends Component {
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("用户信息读取错误返回:" , e);
-                Toast.show('用户信息读取错误返回' + e.msg);
+                // Toast.show('用户信息读取错误返回' + e.msg);
                 navToLogin();
             },
         );
