@@ -150,7 +150,7 @@ export default class CompanyInfoView extends React.Component {
                             <TextInput
                                 underlineColorAndroid='transparent' value={this.state.ContactsPhone}
                                 style={{width: 110,
-                                    marginRight: 5,
+                                    marginRight: 3,
                                     padding: 4,
                                     flex:1,
                                     fontSize: 15,
@@ -171,7 +171,7 @@ export default class CompanyInfoView extends React.Component {
                                     numberOfLines={1}
 
                                     style={[{width: 110,
-                                        marginRight: 5,
+                                        marginRight: 3,
                                         padding: 4,
                                         flex:1,
                                         fontSize: 15,
@@ -239,7 +239,7 @@ export default class CompanyInfoView extends React.Component {
                                 numberOfLines={1}
 
                                 style={[{width: 110,
-                                    marginRight: 5,
+                                    marginRight: 3,
                                     padding: 4,
                                     flex:1,
                                     fontSize: 15,

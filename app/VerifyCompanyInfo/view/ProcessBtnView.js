@@ -40,8 +40,8 @@ class ProcessBtnView extends Component{
         finished : PropTypes.bool,
         inProgress : PropTypes.bool,
         materialConfirm : PropTypes.bool,
-        stepId : PropTypes.string,
-        taskId : PropTypes.string,
+        stepId : PropTypes.number,
+        taskId : PropTypes.number,
 
     };
 
