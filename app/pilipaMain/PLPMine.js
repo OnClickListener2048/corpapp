@@ -30,6 +30,8 @@ export default class PLPMine extends Component {
         this.state = {
             userName: '-',     // 用户名
         };
+
+        this._doLogout = this._doLogout.bind(this);
     }
 
     componentWillMount() {
@@ -96,7 +98,7 @@ export default class PLPMine extends Component {
                 </TouchableWithoutFeedback>
                 <View style={styles.lineviewlast}/>
 
-                <TouchableWithoutFeedback onPress={this._doLogout}>
+                <TouchableWithoutFeedback onPress={() => {this._doLogout()}}>
                     <View style={styles.buttonView}>
                         <Text style={styles.submitButtonText}>退出</Text>
                     </View>
@@ -114,12 +116,22 @@ export default class PLPMine extends Component {
                 {
                     text: '确定',
                     onPress: () => apis.logout().then(
-                        () => navToBootstrap({isReset: true}),
-                        (e) => Toast.show("退出失败:" + e.msg)
+                        () => {
+                            // navToBootstrap({isReset: true})
+                            this.props.navigator.push({
+                                screen: 'user.LoginPage',
+                                backButtonTitle: '', // 返回按钮的文字 (可选)
+                                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                                title:'Login',
+                            });
+                        },
+                        (e) => navToBootstrap({isReset: true})//Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
                     ),
                 },]
             , {cancelable: false});
     }
+
+
 
     _goPersonalInfo() {
         this.props.navigator.push({

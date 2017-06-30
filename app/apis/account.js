@@ -33,6 +33,12 @@ export function logout() {
   return postApi('/app/v0/user/logout');
 }
 
+// 关于
+export function about() {
+    return postApi('/app/v0/about');
+}
+
+
 // // 图片验证码
 // export async function sendImageVerifyCode(phone = '') {
 //     return await postRawApi('/app/v0/user/vcode/get', {phone});

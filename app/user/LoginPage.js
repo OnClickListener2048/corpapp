@@ -13,7 +13,8 @@ import {
     View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView, TouchableWithoutFeedback
+    KeyboardAvoidingView, TouchableWithoutFeedback,
+    InteractionManager
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -28,12 +29,13 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
 import {navToBootstrap, navToMainTab} from '../navigation';
-import InternetStatusView from '../modules/react-native-internet-status-view';
+// import InternetStatusView from '../modules/react-native-internet-status-view';
 import {DEBUG} from '../config';
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
+        tabBarHidden: true, // 隐藏默认的底部Tab栏
     };
 
     constructor(props) {
@@ -76,22 +78,6 @@ export default class LoginPage extends Component {
         if (this.props.navigator) {
             this.props.navigator.pop();
         }
-    }
-
-    // 返回左边按钮
-    renderLeftItem() {
-        return (
-            <TouchableOpacity
-                onPress={() => {
-                    this.pop()
-                }}
-            >
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <Image source={{uri: 'back'}} style={styles.navBarLeftItemStyle}/>
-                    <Text>返回</Text>
-                </View>
-            </TouchableOpacity>
-        );
     }
 
     // 准备加载组件
@@ -198,14 +184,14 @@ export default class LoginPage extends Component {
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 console.log("登录成功返回:", responseData);
-                Toast.show('登录成功返回' + responseData.data.name + "token="
-                    + responseData.data.token);
                 if (responseData !== null && responseData.data !== null && responseData.data.token) {
                     UserInfoStore.setUserToken(responseData.data.token).then(
                         v => {
                             // this.readUserInfo();
                             // 到载入页
-                            navToBootstrap();
+                            InteractionManager.runAfterInteractions(() => {
+                                navToBootstrap();
+                            });
                         },
                         e => console.log(e.message)
                     );
@@ -240,16 +226,17 @@ export default class LoginPage extends Component {
                     {/*leftItem={() => this.renderLeftItem()}*/}
                     {/*titleItem={() => this.renderTitleItem()}*/}
                     {/*/>*/}
-                    <InternetStatusView
-                        textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"
-                        style={{
-                            justifyContent: 'center',
-                            alignSelf: 'stretch',
-                            backgroundColor: '#00000088',
-                            marginTop: px2dp(50),
-                            height: 25
-                        }}
-                    />
+
+                    {/*<InternetStatusView*/}
+                        {/*textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"*/}
+                        {/*style={{*/}
+                            {/*justifyContent: 'center',*/}
+                            {/*alignSelf: 'stretch',*/}
+                            {/*backgroundColor: '#00000088',*/}
+                            {/*marginTop: px2dp(50),*/}
+                            {/*height: 25*/}
+                        {/*}}*/}
+                    {/*/>*/}
 
                     <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                     <View style={{height: px2dp(100),}}/>
@@ -295,6 +282,12 @@ export default class LoginPage extends Component {
                                                let vCodeInputValid = (vCode.length == 4);
                                                this.setState({vCode, vCodeInputValid});
                                            }}
+
+                                           onBlur={() => {
+                                               dismissKeyboard();
+                                               this._verifyVCode();
+                                           }}
+
                                            onSubmitEditing={() => {
                                                dismissKeyboard();
                                                this._verifyVCode();

@@ -211,8 +211,12 @@ android {
         }
     }
     buildTypes {
+        debug {
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+            signingConfig signingConfigs.pilipa
+        }
+
         release {
-            minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.pilipa
         }

@@ -65,10 +65,10 @@ export default class GDLaunchPage extends Component {
 
     // 读取用户信息
     readUserInfo() {
-        let loading = SActivityIndicator.show(true, "载入中...");
+        // let loading = SActivityIndicator.show(true, "载入中...");
         apis.userInfo().then(
             (responseData) => {
-                SActivityIndicator.hide(loading);
+                // SActivityIndicator.hide(loading);
                 console.log("用户信息读取成功返回:" , responseData);
                 // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
@@ -81,7 +81,7 @@ export default class GDLaunchPage extends Component {
                 }
             },
             (e) => {
-                SActivityIndicator.hide(loading);
+                // SActivityIndicator.hide(loading);
                 console.log("用户信息读取错误返回:" , e);
                 // Toast.show('用户信息读取错误返回' + e.msg);
                 navToLogin();

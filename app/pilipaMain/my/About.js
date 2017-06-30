@@ -17,6 +17,7 @@ import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 import DeviceInfo from 'react-native-device-info';
+import * as apis from '../../apis';
 
 export default class About extends Component {
     static navigatorStyle = {
@@ -27,11 +28,10 @@ export default class About extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            content: '1.新功能\n2.说明\n3.XXX',     // update notes
+            content: '',     // update notes
         };
 
-        // TODO Change
-        HTTPBase.postEx('http://rapapi.org/mockjsdata/19607/app/v0/about').then(
+        apis.about().then(
             (json) => {
                 if (json !== null && json.data !== null) {
                     this.setState({content:  json.data.content});
