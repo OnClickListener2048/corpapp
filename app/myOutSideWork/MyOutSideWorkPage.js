@@ -89,6 +89,7 @@ export default class MyOutSideWorkPage extends Component{
 
     componentWillMount() {
         this._loadCount();
+        console.log('componentWillMount');
 
     }
 

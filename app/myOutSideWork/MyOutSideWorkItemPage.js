@@ -65,7 +65,7 @@ export default class MyOutSideWorkItemPage extends Component{
     _loadList(){
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
-        loadOutSourceList(15,'',taskType).then(
+        loadOutSourceList(1000,'',taskType).then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
