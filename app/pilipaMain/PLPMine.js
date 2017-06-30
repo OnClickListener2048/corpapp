@@ -51,54 +51,64 @@ export default class PLPMine extends Component {
         return (
             <View style={styles.container}>
                 <Image source={require('../img/bg.png')} style={styles.head_background}>
-                    <TouchableWithoutFeedback onPress={() => {this._goPersonalInfo()}}>
-                    <View style={styles.headimagestyle}>
-                        <Image source={require('../img/logo_circle.png')} style={styles.headPortraint}/>
-                    </View>
+                    <TouchableWithoutFeedback onPress={() => {
+                        this._goPersonalInfo()
+                    }}>
+                        <View style={styles.headimagestyle}>
+                            <Image source={require('../img/logo_circle.png')} style={styles.headPortraint}/>
+                        </View>
                     </TouchableWithoutFeedback>
                     <Text style={styles.textname}>{this.state.userName}</Text>
                     <Text style={styles.textcontentview}>{/* 暂无部门信息*/}</Text>
                 </Image>
 
-                <TouchableWithoutFeedback onPress={() => {this._goSettings()}}>
-                <View style={styles.settingview}>
-                    <Image source={require('../img/set@3x.png')}
-                           style={styles.imgiconview}/>
-                    <Text style={styles.listtextstyle}>
-                        设置
-                    </Text>
-                    <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
-                </View>
+                <TouchableWithoutFeedback onPress={() => {
+                    this._goSettings()
+                }}>
+                    <View style={styles.settingview}>
+                        <Image source={require('../img/set@3x.png')}
+                               style={styles.imgiconview}/>
+                        <Text style={styles.listtextstyle}>
+                            设置
+                        </Text>
+                        <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
+                    </View>
                 </TouchableWithoutFeedback>
 
                 <View style={styles.lineview}/>
 
-                <TouchableWithoutFeedback onPress={() => {this._goFeedback()}}>
-                <View style={styles.settingview}>
-                    <Image source={require('../img/problem@3x.png')}
-                           style={styles.imgiconview}/>
-                    <Text style={styles.listtextstyle}>
-                        问题反馈
-                    </Text>
-                    <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
-                </View>
+                <TouchableWithoutFeedback onPress={() => {
+                    this._goFeedback()
+                }}>
+                    <View style={styles.settingview}>
+                        <Image source={require('../img/problem@3x.png')}
+                               style={styles.imgiconview}/>
+                        <Text style={styles.listtextstyle}>
+                            问题反馈
+                        </Text>
+                        <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
+                    </View>
                 </TouchableWithoutFeedback>
 
                 <View style={styles.lineview}/>
 
-                <TouchableWithoutFeedback onPress={() => {this._goAbout()}}>
-                <View style={styles.settingview}>
-                    <Image source={require('../img/about@3x.png')}
-                           style={styles.imgiconview}/>
-                    <Text style={styles.listtextstyle}>
-                        关于噼里啪v1.0
-                    </Text>
-                    <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
-                </View>
+                <TouchableWithoutFeedback onPress={() => {
+                    this._goAbout()
+                }}>
+                    <View style={styles.settingview}>
+                        <Image source={require('../img/about@3x.png')}
+                               style={styles.imgiconview}/>
+                        <Text style={styles.listtextstyle}>
+                            关于噼里啪v1.0
+                        </Text>
+                        <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
+                    </View>
                 </TouchableWithoutFeedback>
                 <View style={styles.lineviewlast}/>
 
-                <TouchableWithoutFeedback onPress={() => {this._doLogout()}}>
+                <TouchableWithoutFeedback onPress={() => {
+                    this._doLogout()
+                }}>
                     <View style={styles.buttonView}>
                         <Text style={styles.submitButtonText}>退出</Text>
                     </View>
@@ -115,22 +125,44 @@ export default class PLPMine extends Component {
                 {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {
                     text: '确定',
-                    onPress: () => apis.logout().then(
-                        () => {
-                            // navToBootstrap({isReset: true})
-                            this.props.navigator.push({
-                                screen: 'user.LoginPage',
-                                backButtonTitle: '', // 返回按钮的文字 (可选)
-                                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                                title:'Login',
-                            });
-                        },
-                        (e) => navToBootstrap({isReset: true})//Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
-                    ),
+                    onPress: () => {
+                        UserInfoStore.getJPushID().then(
+                            v => {
+                                apis.unbindJPush(v).then(
+                                    (responseData) => {
+                                        console.log("jpush 解除绑定成功")
+                                        this._doLogoutCall();
+                                    },
+                                    (e) => {
+                                        console.log("jpush 解除绑定失败")
+                                        this._doLogoutCall();
+                                    }
+                                );
+                            },
+                            e =>  {
+                                console.log(e.message)
+                                this._doLogoutCall();
+                            }
+                        );
+                    },
                 },]
             , {cancelable: false});
     }
 
+    _doLogoutCall() {
+        apis.logout().then(
+            () => {
+                navToBootstrap({isReset: true})
+                // this.props.navigator.push({
+                //     screen: 'user.LoginPage',
+                //     backButtonTitle: '', // 返回按钮的文字 (可选)
+                //     backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                //     title:'Login',
+                // });
+            },
+            (e) => navToBootstrap({isReset: true})//Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
+        )
+    }
 
 
     _goPersonalInfo() {
@@ -138,7 +170,7 @@ export default class PLPMine extends Component {
             screen: 'pilipaMain.my.PersonalInfo',
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            title:'个人资料',
+            title: '个人资料',
         });
     }
 
@@ -147,7 +179,7 @@ export default class PLPMine extends Component {
             screen: 'pilipaMain.my.Feedback',
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            title:'问题反馈',
+            title: '问题反馈',
         });
     }
 
@@ -156,7 +188,7 @@ export default class PLPMine extends Component {
             screen: 'pilipaMain.my.About',
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            title:'关于噼里啪',
+            title: '关于噼里啪',
         });
     }
 
@@ -165,7 +197,7 @@ export default class PLPMine extends Component {
             screen: 'pilipaMain.my.Settings',
             backButtonTitle: '', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            title:'设置',
+            title: '设置',
         });
     }
 }

@@ -5,7 +5,8 @@
 import {KEY_USER_TOKEN, KEY_USER_INFO} from '../config';
 import './Preferences';
 
-var UserInfoStore = {};
+let UserInfoStore = {};
+let KEY_JPUSH_ID = "KEY_JPUSH_ID";
 
 UserInfoStore.getUserInfo = async function (): Object {
     let value = await Preferences.get(KEY_USER_INFO);
@@ -35,5 +36,13 @@ UserInfoStore.setUserToken = async function (value: string) {
 UserInfoStore.removeUserToken = async function () {
     return Preferences.remove(KEY_USER_TOKEN);
 }
+
+UserInfoStore.getJPushID = async function () {
+    return await Preferences.get(KEY_JPUSH_ID);
+}
+
+UserInfoStore.setJPushID = async function (value: string) {
+    return Preferences.set(KEY_JPUSH_ID, value);
+};
 
 global.UserInfoStore = UserInfoStore;// 全局可用

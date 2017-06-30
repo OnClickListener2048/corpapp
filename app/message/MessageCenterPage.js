@@ -26,8 +26,6 @@ import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 import Platform from "react-native";
 
-var stickyId = 3
-
 const window = Dimensions.get('window');
 const moreText = "加载完毕";
 export const SCREEN_WIDTH = window.width;
@@ -298,22 +296,36 @@ export default class MessageCenterPage extends Component {
         this._loadAllUnRead();
 
         try {
+            JPushModule.getRegistrationID((registrationId) => {
+                console.log("Device register succeed, registrationId " + registrationId);
+                apis.bindJPush(registrationId).then(
+                    (responseData) => {console.log("jpush 绑定成功")},
+                    (e) => {console.log("jpush 绑定失败")}
+                );
+                UserInfoStore.setJPushID(registrationId).then(
+                    v => {},
+                    e => console.log(e.message)
+                );
+            });
+
             if (Platform.OS !== 'ios') {
                 JPushModule.initPush();
                 JPushModule.notifyJSDidLoad();
 
-                JPushModule.addReceiveCustomMsgListener((message) => {
+
+
+                JPushModule.addReceiveOpenNotificationListener((message) => {
                     //this.setState({pushMsg: message});
-                    console.log("receive 自定义消息: " + JSON.stringify(message));
-                    Toast.show('receive 自定义消息: ' + JSON.stringify(message));
+                    console.log("点击通知消息: " + JSON.stringify(message));
+                    Toast.show('点击通知消息: ' + JSON.stringify(message));
                 });
-                JPushModule.addReceiveNotificationListener((message) => {
-                    console.log("receive notification: " + JSON.stringify(message));
-                    Toast.show('receive notification: ' + JSON.stringify(message));
-                })
+                // JPushModule.addReceiveNotificationListener((message) => {
+                //     console.log("receive notification: " + JSON.stringify(message));
+                //     Toast.show('receive notification: ' + JSON.stringify(message));
+                // })
             }
         } catch (e) {
-            // Toast.show('JPush error: ' + e.message);
+            console.log('JPush error: ' + e.message);
         }
     }
 

@@ -19,6 +19,7 @@ import RegisterCompanyCell from '../test/view/RegisterCompanyCell'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from "../test/NoMessage";
+import Toast from 'react-native-root-toast';
 
 export default class MyOutSideTaskPage extends Component{
     static navigatorStyle = {
