@@ -84,12 +84,16 @@ export default class MyOutSideTaskPage extends Component{
 
     }
 
-    //跳转客户审核具体信息
+
+//跳转客户审核具体信息
     toLicense(stepId){
         console.log("i stepId="+stepId);
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'GetLicensePage',
+                // callBack:(msg)=>{
+                //     console.log(d)},
+                
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 passProps: {

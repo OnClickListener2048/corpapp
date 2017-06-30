@@ -65,7 +65,7 @@ class VerifyProcessTipView extends Component{
 
     _renderCircleTipView(i,currentNum) {
 
-        if (i >= currentNum){
+        if (i > currentNum){
             return <View>{this._circleNormalView(i)}</View>
 
 

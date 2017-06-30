@@ -116,7 +116,7 @@ export default class GetLicensePage extends Component{
 
 
 
-        console.log("点我的最新数字是" + status);  //1确认材料完成 2 开始任务完成 3结束任务完成
+        console.log("点我的最新数字是" + status);  //1确认材料完成 2 任务完成
         if(status===2){
             this.setState({
                 inProgressEdit:true,

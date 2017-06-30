@@ -24,7 +24,7 @@ class ProcessBtnView extends Component{
             finished : this.props.finished,
             inProgress : this.props.inProgress,
             materialConfirm : this.props.materialConfirm,
-            titleArr :['确认材料','开始任务','完成','完成'],
+            titleArr :['确认材料','完成','完成'],
             currentNum: 0,
             stepId:this.props.stepId,          //步骤 ID
             taskId:this.props.taskId,          //步骤 ID
@@ -55,7 +55,7 @@ class ProcessBtnView extends Component{
         // console.log("inProgresshaha" , this.state.inProgress);
         // console.log("materialConfirmhaha" , this.state.materialConfirm);
 
-        apis.loadOutSourceTaskStepChange(this.state.inProgress ? true : false,this.state.materialConfirm ? true : false,true ,this.state.stepId,this.state.taskId).then(
+        apis.loadOutSourceTaskStepChange(this.state.materialConfirm ? true : false,false,true ,this.state.stepId,this.state.taskId).then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
@@ -63,9 +63,9 @@ class ProcessBtnView extends Component{
                 this.setState({
 
                     finished : responseData.data.finished === "true",
-                    inProgress : responseData.data.inProgress=== "true",
+                    // inProgress : responseData.data.inProgress=== "true",
                     materialConfirm : responseData.data.materialConfirm === "true",
-                    currentNum : (responseData.data.finished === 'true') ? 3 : (responseData.data.inProgress === 'true') ? 2 : (responseData.data.materialConfirm === 'true') ? 1 : 0,
+                    currentNum : (responseData.data.finished === 'true') ? 2  : (responseData.data.materialConfirm === 'true') ? 1 : 0,
                 });
                 this.props.callback(this.state.currentNum);
 
@@ -83,7 +83,7 @@ class ProcessBtnView extends Component{
 
     btnClick() {
 
-            Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : this.state.currentNum === 1 ? '确认开始任务' : '确认任务完成', '',
+            Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : '确认任务完成', '',
                 [
                     {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel'},
                     {
@@ -125,8 +125,6 @@ class ProcessBtnView extends Component{
     render(){
         const {finished,inProgress,materialConfirm,stepId,taskId} = this.state
         if (finished === 'true'){
-            this.state.countNum = 3;
-        }else if (inProgress === 'true'){
             this.state.countNum = 2;
         }else if (materialConfirm === 'true'){
             this.state.countNum = 1;
