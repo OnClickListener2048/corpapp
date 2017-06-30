@@ -51,8 +51,6 @@ export default class SystemMessagePage extends Component{
                 <Text
                     textAlign='left'
                     style={[{fontSize: 12,marginTop: 15, marginLeft : 15,marginRight : 15 , color : '#323232'}] }>{contentJson}</Text>
-
-
             </View>
         );
     }

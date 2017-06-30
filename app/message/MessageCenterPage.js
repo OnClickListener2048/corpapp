@@ -327,7 +327,7 @@ export default class MessageCenterPage extends Component {
 
     }
 
-    toMyOutSideWork(msgId,rowData) {
+    toMyOutSideWork(msgId,rowData,outPageId) {
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
@@ -336,8 +336,12 @@ export default class MessageCenterPage extends Component {
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+
+
+
+
                 passProps: {
-                    taskId:msgId,
+                    taskId:outPageId,
                 }
             });
         });
@@ -378,9 +382,42 @@ export default class MessageCenterPage extends Component {
          // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
         // console.log("点击renderRow" + rowData);
 
+        // let content = JSON.parse(rowData.content);
+        // console.log('contentJson ===' + content);
+
+        // console.log('jumpUri ===' + JSON.parse(rowData.content).jumpUri);
+
+        // let jumpUri = JSON.parse(rowData.content).jumpUri;
+        let jumpUri = 'outsource?id=36&sec=12';
+        let arr=jumpUri.split('?');
+
+        let outPageId = '';
+
+        if (arr.length > 1){
+            let paramsStr = arr[1];
+            let paramsArr=paramsStr.split('&');
+
+            for (let i = 0 ; i < paramsArr.length ; i++) {
+                let subParam = paramsArr[i];
+
+                let specArr = subParam.split('=');
+                if (specArr.length > 1)
+
+                    if (specArr[0] === 'id') {
+                        outPageId = specArr[1];
+                    }
+            }
+
+        }
+
+        console.log('jumpUriId ===' + outPageId);
+
+        // let  a = jumpUri
+
+
         return (
             <TouchableOpacity onPress={() => {
-                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
+                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData,outPageId) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
 
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}

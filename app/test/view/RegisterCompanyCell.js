@@ -89,7 +89,7 @@ class RegisterCompanyCell extends Component{
         console.log("detail.processState" + this.state.processState);
 
 
-        if (this.state.processState == '进行中' || this.state.processState == '已结束') {
+        if (this.state.processState == '进行中' || this.state.processState == '已结束'|| this.state.processState == '已完成') {
 
             return  <View style={[{width: 10, alignItems:'center'}]}>
 
