@@ -150,7 +150,7 @@ export default class CompanyInfoView extends React.Component {
                             <TextInput
                                 underlineColorAndroid='transparent' value={this.state.ContactsPhone}
                                 style={{width: 110,
-                                    marginRight: 10,
+                                    marginRight: 5,
                                     padding: 4,
                                     flex:1,
                                     fontSize: 15,
@@ -162,11 +162,22 @@ export default class CompanyInfoView extends React.Component {
                                     }
                                 }/>
                         </View>:
-                        <Text
-                            textAlign='right'
-                            numberOfLines={1}
+                            <View
+                                style={[{
+                                    alignItems:'center',width:155,flexDirection:'row',height:30}]}>
+                                <Text style={{fontSize: 15,}}>电话：</Text>
+                                <Text
+                                    textAlign='right'
+                                    numberOfLines={1}
 
-                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{ContactsPhone}</Text>}
+                                    style={[{width: 110,
+                                        marginRight: 5,
+                                        padding: 4,
+                                        flex:1,
+                                        fontSize: 15,
+                                        color:'#323232',}] }>{ContactsPhone}</Text>
+
+                        </View>}
                         {this.props.isFocusData===true||ContactsPhone.includes('*')?
                             <Image
                                 source={require('../../img/phone.png')}
@@ -219,11 +230,22 @@ export default class CompanyInfoView extends React.Component {
                         style={styles.companyInfoRowPhoneStyle}>
 
 
-                        <Text
-                            textAlign='right'
-                            numberOfLines={1}
+                        <View
+                            style={[{
+                                alignItems:'center',width:155,flexDirection:'row',height:30}]}>
+                            <Text style={{fontSize: 15,}}>电话：</Text>
+                            <Text
+                                textAlign='right'
+                                numberOfLines={1}
 
-                            style={[{fontSize: 15, marginRight : 16,alignSelf:'center',color:'#323232'}] }>电话：{SalesPhone}</Text>
+                                style={[{width: 110,
+                                    marginRight: 5,
+                                    padding: 4,
+                                    flex:1,
+                                    fontSize: 15,
+                                    color:'#323232',}] }>{SalesPhone}</Text>
+
+                        </View>
                         {this.props.isFocusData===true||ContactsPhone.includes('*') ?
                             <Image
                                 source={require('../../img/phone.png')}

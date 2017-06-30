@@ -589,6 +589,7 @@ export default class GetLicensePage extends Component{
 
     _edit(editables){
         if(editables===false){//点击保存，赋值并保存
+            console.log("公司地址ID是否唯恐"+this.state.selectAreaCode[0]+","+this.state.selectAreaCode[1]);
             // TODO 有效性检查
             if(this.state.selectAreaCode.length !== 2) {
                 Alert.alert('请选择公司地址');

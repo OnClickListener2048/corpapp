@@ -96,14 +96,14 @@ export default class MyOutSideWorkItemPage extends Component{
     }
 
     _renderRow(rowData) {
-        let statusicon = rowData.stepName.substring(0,1);
+        let statusicon = rowData.taskName.substring(0,1);
         return (
                 <TouchableOpacity onPress={() => {this._press(rowData.taskId)}}>
                 <MyOutSideWorkCell
                     statusIcon = {statusicon}
-                    statusName = {rowData.stepName}
+                    statusName = {rowData.taskName}
                     companyName = {rowData.corpName}
-                    statusContent = {rowData. taskName}
+                    statusContent = {rowData. stepName}
                     statusCourse = {rowData.taskStatus}
                 />
 
@@ -154,9 +154,9 @@ export default class MyOutSideWorkItemPage extends Component{
     render() {
         if(this.props.label==null){
 
-            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-65 : SCREEN_HEIGHT-75;
+            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-65 : SCREEN_HEIGHT-83;
         }else{
-            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-102;
+            var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-127;
         }
         return (
             <View style={[styles.container,{height:allListHeight}]}>
