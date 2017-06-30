@@ -383,12 +383,12 @@ export default class MessageCenterPage extends Component {
         // console.log("点击renderRow" + rowData);
 
         // let content = JSON.parse(rowData.content);
-        // console.log('contentJson ===' + content);
+        console.log('contentJson ===' + content);
 
-        // console.log('jumpUri ===' + JSON.parse(rowData.content).jumpUri);
+        console.log('jumpUri ===' + JSON.parse(rowData.content).jumpUri);
 
-        // let jumpUri = JSON.parse(rowData.content).jumpUri;
-        let jumpUri = 'outsource?id=36&sec=12';
+        let jumpUri = JSON.parse(rowData.content).jumpUri;
+        // let jumpUri = 'outsource?id=36&sec=12';
         let arr=jumpUri.split('?');
 
         let outPageId = '';
