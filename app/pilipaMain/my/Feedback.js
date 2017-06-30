@@ -95,14 +95,19 @@ export default class Feedback extends Component {
     }
 
     _doFeedback() {
-        let loading = SActivityIndicator.show(true, "提交反馈中");
         let message = this.state.message;
+
+        if (message.length == 0){
+            return;
+        }
+
+        let loading = SActivityIndicator.show(true, "提交反馈中");
         let userName = this.state.userName;
 
         apis.sendFeedback({message , userName}).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                Alert.alert('反馈提交成功', '',
+                Alert.alert('您的问题反馈已提交成功', '',
                     [
                         {
                             text: '确定',

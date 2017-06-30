@@ -94,8 +94,7 @@ export default class GetLicensePage extends Component{
             areaArr:[],
             selectArea:[],  //选择的地址信息 ['北京', '朝阳区']  用这个判断到底有没有市区选择 如果没有也没用默认值的话 说明未选择
             areaCodeArr:[],
-            selectAreaCode:[],  //选择地址的 id
-
+            selectAreaCode:[],  //选择地址的 id 保存的时候用
             areaCodeIndexArr:[],
 
         };

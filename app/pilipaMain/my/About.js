@@ -51,7 +51,7 @@ export default class About extends Component {
 
                 <Text allowFontScaling={true} style= {[styles.nameTextStyle,
                     {marginBottom: px2dp(60), alignSelf:'center'}]}>
-                    关于噼里啪v{DeviceInfo.getVersion()}
+                    噼里啪v{DeviceInfo.getVersion()}
                 </Text>
                 <View style={styles.divider}/>
 
