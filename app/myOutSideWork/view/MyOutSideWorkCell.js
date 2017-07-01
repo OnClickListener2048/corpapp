@@ -51,7 +51,7 @@ export default class MessageCenterCell extends Component {
         }else if(this.state.statusCourse=='已完成'){
             return 'red'
         }else if(this.state.statusCourse=='已取消'){
-            return 'grey'
+            return '#e6e6e6'
         }
     }
 
@@ -67,19 +67,19 @@ export default class MessageCenterCell extends Component {
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 17,marginTop: 15, marginLeft : 20 , color : '#323232'}] }>{statusName}</Text>
+                            style={[{fontSize: 17,marginTop: 15, marginLeft : 20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}] }>{statusName}</Text>
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : '#969696'}] }>{companyName}</Text>
+                            style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#969696'}] }>{companyName}</Text>
                     </View>
                     <Text
                         textAlign='center'
-                        style={[styles.timeTitleStyle,{marginRight:20,color:'#323232'}]}>{statusContent}</Text>
+                        style={[styles.timeTitleStyle,{marginRight:20,color:this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}]}>{statusContent}</Text>
 
                     <Text
                         textAlign='right'
-                        style={[styles.timeTitleStyle]}>{statusCourse}</Text>
+                        style={[styles.timeTitleStyle,{color:this.state.statusCourse=='已取消'?'#e6e6e6':'#a2a1a6'}]}>{statusCourse}</Text>
                 </View>
                 <View style={[styles.badgeBubble,
                     {backgroundColor: this._statusCourseColor()}]}>

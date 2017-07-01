@@ -211,7 +211,7 @@ export default class BusinessTimeView extends Component{
                                     textAlign: 'center',
                                     justifyContent: 'center',
                                     flex: 1,
-                                    color: '#e6e6e6'
+                                    color: '#323232',
                                 }]}>{this.props.firstDate + ""}</Text>
 
                             </TouchableOpacity>:
@@ -220,7 +220,7 @@ export default class BusinessTimeView extends Component{
                                     textAlign: 'center',
                                     justifyContent: 'center',
                                     flex: 1,
-                                    color: '#e6e6e6'
+                                    color: '#323232',
                                 }]}>{this.props.firstDate + ""}</Text>
 
                             </View>
@@ -235,7 +235,7 @@ export default class BusinessTimeView extends Component{
                                 textAlign: 'center',
                                 justifyContent: 'center',
                                 flex: 1,
-                                color: '#e6e6e6'
+                                color: '#323232',
                             }]}>{this.props.lastDate + ""}</Text>
                         </TouchableOpacity>:
                             <View style={ styles.rightdownDrapViewStyle}>
@@ -243,7 +243,7 @@ export default class BusinessTimeView extends Component{
                                     textAlign: 'center',
                                     justifyContent: 'center',
                                     flex: 1,
-                                    color: '#e6e6e6'
+                                    color: '#323232',
                                 }]}>{this.props.lastDate + ""}</Text>
                             </View>
                         }
