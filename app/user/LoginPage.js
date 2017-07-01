@@ -111,7 +111,7 @@ export default class LoginPage extends Component {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     // Toast.show('短信验证码已发送');
-                    Alert.alert('测试环境短信验证码:' + responseData.msg);
+                    Toast.show('测试环境短信验证码:' + responseData.msg);
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
@@ -120,7 +120,7 @@ export default class LoginPage extends Component {
                     } else {
                         Alert.alert('短信验证码获取失败' );
                     }
-                    if( e.data !== undefined && e.data.verifyText !== undefined && e.data.verify !== undefined ) {
+                    if( e.data !== null && e.data.verifyText !== null && e.data.verify !== null ) {
                         let {verifyText, verify} = e.data;
                         if(verify !== null && verify.length > 0) {
                             let picStr = "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();

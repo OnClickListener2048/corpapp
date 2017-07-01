@@ -47,9 +47,11 @@ bundle_build_version=`/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" $inf
 bundle_identifier=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $info_plist_path`
 
 # 删除旧.xcarchive文件
-rm -rf ~/Desktop/$scheme_name-IPA/$scheme_name.xcarchive
+#rm -rf ~/Desktop/$scheme_name-IPA/$scheme_name.xcarchive
+rm -rf ../$scheme_name-IPA/$scheme_name.xcarchive
 # 指定输出ipa路径
-export_path=~/Desktop/$scheme_name-IPA
+#export_path=~/Desktop/$scheme_name-IPA
+export_path=../$scheme_name-IPA
 # 指定输出归档文件地址
 export_archive_path="$export_path/$scheme_name.xcarchive"
 # 指定输出ipa地址
@@ -136,7 +138,7 @@ mv $export_ipa_path/$scheme_name.ipa $export_ipa_path/$ipa_name.ipa
 # 检查文件是否存在
 if [ -f "$export_ipa_path/$ipa_name.ipa" ] ; then
 echo "\033[32;1m导出 ${ipa_name}.ipa 包成功 🎉  🎉  🎉   \033[0m"
-open $export_path
+#open $export_path
 else
 echo "\033[31;1m导出 ${ipa_name}.ipa 包失败 😢 😢 😢     \033[0m"
 # 相关的解决方法
