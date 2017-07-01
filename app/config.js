@@ -35,6 +35,7 @@ export const DEFAULT_NAVIGATOR_STYLE = {
     navBarTextColor: 'black',
     navBarButtonColor: '#666666',// 顶部按钮颜色
     statusBarHideWithNavBar: true,
+    navBarTitleTextCentered: true, // Android 有效, 默认是不居中的标题栏
 };
 
 // 底部Tab栏的颜色(react-native-navigation)
@@ -59,6 +60,7 @@ export const appStyle = {
         tabBarSelectedButtonColor: '#ff505c',
         navigationBarColor: '#F5F5F5',
         navBarBackgroundColor: '#F5F5F5',
+        navBarTitleTextCentered: true, // Android 有效, 默认是不居中的标题栏
         // statusBarColor: '#000000',
         // tabFontFamily: 'BioRhyme-Bold',
 }
