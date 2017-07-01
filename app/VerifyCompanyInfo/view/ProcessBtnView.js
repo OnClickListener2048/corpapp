@@ -51,7 +51,6 @@ class ProcessBtnView extends Component{
         // 使用原始的DOM API来聚焦输入框。
         let loading = SActivityIndicator.show(true, "加载中...");
 
-        // console.log("finishedhaha" , this.state.materialConfirm);
         // console.log("inProgresshaha" , this.state.inProgress);
         // console.log("materialConfirmhaha" , this.state.materialConfirm);
 
@@ -96,6 +95,7 @@ class ProcessBtnView extends Component{
 
 
     renderBtnView() {
+
         if (this.state.currentNum == this.state.titleArr.length - 1) {      // 无数据
             return(
                 <View  style={{marginRight: 15,height:40,
@@ -121,20 +121,12 @@ class ProcessBtnView extends Component{
     }
 
 
-
     render(){
         const {finished,inProgress,materialConfirm,stepId,taskId} = this.state
-        if (finished === 'true'){
-            this.state.countNum = 2;
-        }else if (materialConfirm === 'true'){
-            this.state.countNum = 1;
-        }else{
-            this.state.countNum = 0;
-        }
-
         this.state.finished = finished;
         this.state.inProgress = inProgress;
         this.state.materialConfirm = materialConfirm;
+        this.state.currentNum = this.state.finished ? 2 : this.state.materialConfirm ? 1 : 0;
 
         return(
 

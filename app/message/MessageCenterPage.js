@@ -2,6 +2,8 @@
  * Created by jinglan on 2017/6/9.
  */
 import React, {Component} from 'react';
+// import React, {} from 'index';
+
 import {Dimensions, InteractionManager} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
@@ -327,6 +329,30 @@ export default class MessageCenterPage extends Component {
         } catch (e) {
             console.log('JPush error: ' + e.message);
         }
+
+
+        // NativeAppEventEmitter.addListener('networkDidSetup', (token) => {
+        //     this.setState({ connectStatus: '已连接' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidClose', (token) => {
+        //     this.setState({ connectStatus: '连接已断开' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidRegister', (token) => {
+        //     this.setState({ connectStatus: '已注册' });
+        // });
+        // NativeAppEventEmitter.addListener('networkDidLogin', (token) => {
+        //     this.setState({ connectStatus: '已登陆' });
+        // });
+        //
+        //
+        // var subscription = NativeAppEventEmitter.addListener(
+        //     'ReceiveNotification',
+        //     (notification) => console.log(notification)
+        // );
+
+
+
+
     }
 
     componentWillUnmount() {

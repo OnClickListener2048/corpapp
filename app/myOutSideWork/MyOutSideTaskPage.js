@@ -80,7 +80,7 @@ export default class MyOutSideTaskPage extends Component{
     componentWillMount() {
         this._loadData();
         // 发送通知
-        DeviceEventEmitter.emit('toMyOutsideWork', "成功");
+        DeviceEventEmitter.emit('toMyOutsideWork', 99);
     }
 
 

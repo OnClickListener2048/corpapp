@@ -108,13 +108,9 @@ export default class GetLicensePage extends Component{
         this.setState({
             // currentStep:status + 1,
         });
-
-
         if(this.refs.verifyProcessTipView) {
             this.refs.verifyProcessTipView.setCurrentNum(status);
         }
-
-
 
         console.log("点我的最新数字是" + status);  //1确认材料完成 2 任务完成
         if(status===1){
@@ -184,9 +180,6 @@ export default class GetLicensePage extends Component{
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
                     }
-
-
-
 
                     this.props.navigator.setTitle({
                         title: this.state.detailObj.stepName // the new title of the screen as appears in the nav bar
@@ -323,7 +316,7 @@ export default class GetLicensePage extends Component{
 
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView ref="verifyProcessTipView" currentNum={0}/>
+        return <VerifyProcessTipView ref="verifyProcessTipView" currentNum={this.state.detailObj.progress.finished === 'true' ? 2 : this.state.detailObj.progress.materialConfirm === 'true' ? 1 : 0}/>
     }
 
     renderVerifyBtnView(){

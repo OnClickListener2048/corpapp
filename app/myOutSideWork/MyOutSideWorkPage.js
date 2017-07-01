@@ -27,7 +27,7 @@ export default class MyOutSideWorkPage extends Component{
         this.state = {
             outSourceCountObj : {},
             loaded:false,
-            data:"待处理",
+            data:0,
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -93,10 +93,13 @@ export default class MyOutSideWorkPage extends Component{
         console.log('componentWillMount');
 // 注册通知
         this.subscription = DeviceEventEmitter.addListener('toMyOutsideWork', (data) => {
-            if(data==="成功"){
                 // alert(data);
-                console.log(data);
-            }
+                this._loadCount();
+                this.setState({
+                    data:data,
+                });
+                console.log(data + '你大爷');
+
         });
 
     }
@@ -116,7 +119,6 @@ export default class MyOutSideWorkPage extends Component{
                     this.setState({
                         outSourceCountObj: responseData.data,
                         loaded:true,
-                        data:"成功",
                     });
                     if(this.refs.myoutItem) {
                         this.refs.myoutItem._setBageNum(this.state.data);
@@ -133,40 +135,47 @@ export default class MyOutSideWorkPage extends Component{
 
     }
 
+    _renderScrollView(){
+    if (this.state.loaded){
+        return   <ScrollableTabView
+            tabBarUnderlineColor="#FF0000"
+            tabBarActiveTextColor="#FF0000"
+            renderTabBar={() => <TabBar underlineColor={'#FF0000'}
 
+                                        tabBarTextStyle={{fontSize: 18}}/>}
+        >
+            {/*
+             We have to use tabLabel to pass tab options to TabBar component,
+             because ScrollableTabView passing only this prop to tabs.
+             */}
+            <MyOutSideWorkItemPage
+                tabLabel={{label: '待处理', badge: this.state.data, theLast: 1}}
+                label="todo" callback={this._callback.bind(this)}
+            />
+            <MyOutSideWorkItemPage
+                tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 1}}
+                label="inProgress"
+                callback={this._callback.bind(this)}/>
+            <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0, theLast: 0}}
+                                   label="end"
+                                   callback={this._callback.bind(this)}/>
+
+        </ScrollableTabView>
+
+    }else {
+
+        return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+    }
+
+    }
 
 
     render(){
-        console.log("render==="+this.state.data);
+        console.log("render你妹==="+this.state.data);
         return(
             <View style={{flex:1}}>
                 {this.navigatorStyle}
-
-                <ScrollableTabView
-                    tabBarUnderlineColor="#FF0000"
-                    tabBarActiveTextColor="#FF0000"
-                    renderTabBar={() => <TabBar underlineColor={'#FF0000'}
-
-                                                tabBarTextStyle={{fontSize: 18}}/>}
-                >
-                    {/*
-                     We have to use tabLabel to pass tab options to TabBar component,
-                     because ScrollableTabView passing only this prop to tabs.
-                     */}
-                    <MyOutSideWorkItemPage
-                        tabLabel={{label: "待处理", badge: this.state.outSourceCountObj.todoNum, theLast: 1}}
-                        label="todo" callback={this._callback.bind(this)}
-                    />
-                    <MyOutSideWorkItemPage
-                        tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 1}}
-                        label="inProgress"
-                        callback={this._callback.bind(this)}/>
-                    <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0, theLast: 0}}
-                                           label="end"
-                                           callback={this._callback.bind(this)}/>
-
-                </ScrollableTabView>
-
+                {this._renderScrollView()}
             </View>
         );
 }
