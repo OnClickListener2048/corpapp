@@ -105,7 +105,7 @@ export default class MessageCenterPage extends Component {
                 SActivityIndicator.hide(loading);
                 // 关闭刷新动画
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -161,7 +161,7 @@ export default class MessageCenterPage extends Component {
                     }, 1000);
                 }
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -212,7 +212,7 @@ export default class MessageCenterPage extends Component {
             (e) => {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -291,10 +291,8 @@ export default class MessageCenterPage extends Component {
     }
 
     componentDidMount() {
-
-        Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
-            {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
-
+        // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
+        //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         this._loadAllUnRead();
 
         try {
@@ -314,12 +312,10 @@ export default class MessageCenterPage extends Component {
                 JPushModule.initPush();
                 JPushModule.notifyJSDidLoad();
 
-
-
                 JPushModule.addReceiveOpenNotificationListener((message) => {
                     //this.setState({pushMsg: message});
                     console.log("点击通知消息: " + JSON.stringify(message));
-                    Toast.show('点击通知消息: ' + JSON.stringify(message));
+                    // Toast.show('点击通知消息: ' + JSON.stringify(message));
                 });
                 // JPushModule.addReceiveNotificationListener((message) => {
                 //     console.log("receive notification: " + JSON.stringify(message));
@@ -329,7 +325,6 @@ export default class MessageCenterPage extends Component {
         } catch (e) {
             console.log('JPush error: ' + e.message);
         }
-
 
         // NativeAppEventEmitter.addListener('networkDidSetup', (token) => {
         //     this.setState({ connectStatus: '已连接' });
@@ -349,15 +344,14 @@ export default class MessageCenterPage extends Component {
         //     'ReceiveNotification',
         //     (notification) => console.log(notification)
         // );
-
-
-
-
     }
 
     componentWillUnmount() {
-        JPushModule.removeReceiveCustomMsgListener();
-        JPushModule.removeReceiveNotificationListener();
+        try {
+            JPushModule.removeReceiveCustomMsgListener();
+            JPushModule.removeReceiveNotificationListener();
+        } catch (e) {
+        }
     }
 
     componentWillMount() {
@@ -392,7 +386,6 @@ export default class MessageCenterPage extends Component {
                         outPageId = specArr[1];
                     }
             }
-
         }
 
         console.log('jumpUriId ===' + outPageId);
@@ -404,9 +397,6 @@ export default class MessageCenterPage extends Component {
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-
-
-
 
                 passProps: {
                     taskId:outPageId,
@@ -449,10 +439,6 @@ export default class MessageCenterPage extends Component {
     _renderRow(rowData) {
          // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
         // console.log("点击renderRow" + rowData);
-
-
-
-
         return (
             <TouchableOpacity onPress={() => {
                  rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>

@@ -25,6 +25,13 @@ export default class Feedback extends Component {
         navBarHidden: false, // 隐藏默认的顶部导航栏
     };
 
+    static navigatorButtons = {
+        leftButton: {
+            id: 'back',
+            // icon: require('../../img/right_l.png')
+        }
+    };
+
     constructor(props) {
         super(props);
         this.state = {
@@ -56,6 +63,7 @@ export default class Feedback extends Component {
                     <TextInput underlineColorAndroid='transparent'
                                multiline={true}
                                value={this.state.smsCode}
+                               textAlignVertical={'top'}
                                maxLength={1024} keyboardType='default'
                                style={styles.codeInput} placeholder='请输入反馈内容'
                                returnKeyType='done'
@@ -97,31 +105,33 @@ export default class Feedback extends Component {
     _doFeedback() {
         let message = this.state.message;
 
-        if (message.length == 0){
+        if (message.length === 0){
             return;
         }
 
-        let loading = SActivityIndicator.show(true, "提交反馈中");
+        let loading = SActivityIndicator.show(true, "");
         let userName = this.state.userName;
 
         apis.sendFeedback({message , userName}).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                Alert.alert('您的问题反馈已提交成功', '',
-                    [
-                        {
-                            text: '确定',
-                            onPress: () => {
-                                this.props.navigator.pop();
-                            },
-                        },]
-                    , {cancelable: false});
-
+                Toast.show('产品经理已经收到你的反馈，我们会尽快解决你所遇到的问题',
+                    {position: Toast.positions.CENTER, duration: Toast.durations.SHORT, }//backgroundColor: 'green'}
+                    );
+                setTimeout(() => {this.props.navigator.pop()}, 3000);
+                // Alert.alert('产品经理已经收到你的反馈，我们会尽快解决你所遇到的问题', '',
+                //     [
+                //         {
+                //             text: '确定',
+                //             onPress: () => {
+                //                 this.props.navigator.pop();
+                //             },
+                //         },]
+                //     , {cancelable: false});
             },
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("反馈提交失败:" , e);
-                Toast.show('反馈提交失败:' + JSON.stringify(e));
                 Alert.alert('反馈提交失败', '服务器出错了',
                     [
                         {

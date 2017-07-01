@@ -39,6 +39,7 @@ export default class Settings extends Component {
             bindNewMobile: false, // 是否绑定手机号的第二阶段
             newSmsCodeValid: false,        // 短信验证码有效
             submitButtonText: '更换手机号码', // 提交按钮的文本
+            timerButtonClicked: false,//  倒计时按钮是否已点击
         };
     }
 
@@ -91,6 +92,7 @@ export default class Settings extends Component {
                                            if (this.refs.timerButton.state.counting) {
                                                this.refs.timerButton.reset();
                                            }
+                                           this.setState({timerButtonClicked: false});
                                            let newMobileValid = newMobile.length > 0 && (newMobile.match(/^([0-9]{11})?$/)) !== null;
                                            this.setState({newMobile, newMobileValid});
                                        }
@@ -108,18 +110,19 @@ export default class Settings extends Component {
                     <View style={settingStyles.textInputWrapper}>
                         <TextInput underlineColorAndroid='transparent'
                                    value={this.state.smsCode}
+                                   editable={this.state.timerButtonClicked}
                                    secureTextEntry={false} maxLength={6} keyboardType='numeric'
                                    style={settingStyles.codeInput} placeholder='短信验证码'
                                    returnKeyType='done'
                                    onChangeText={(smsCode) => {
-                                           this.setState({smsCode})
-                                           let oldSmsCodeValid = (smsCode.length == 6);
-                                           let newSmsCodeValid = oldSmsCodeValid;
-                                           this.setState({smsCode});
-                                           this.state.bindNewMobile ?
-                                               this.setState({newSmsCodeValid}) :
-                                               this.setState({oldSmsCodeValid});
-                                       }
+                                       this.setState({smsCode})
+                                       let oldSmsCodeValid = (smsCode.length === 6);
+                                       let newSmsCodeValid = oldSmsCodeValid;
+                                       this.setState({smsCode});
+                                       this.state.bindNewMobile ?
+                                           this.setState({newSmsCodeValid}) :
+                                           this.setState({oldSmsCodeValid});
+                                   }
                                    }
 
                                    onSubmitEditing={() => {
@@ -139,8 +142,10 @@ export default class Settings extends Component {
                                      ref="timerButton"
                                      style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                      textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
-                                     timerCount={80}
+                                     timerCount={180}
                                      onClick={(shouldStartCountting) => {
+                                         shouldStartCountting(true);
+                                         this.setState({timerButtonClicked: true});
                                          this._requestSMSCode(shouldStartCountting);
                                      }}/>
                     </View>
@@ -167,18 +172,21 @@ export default class Settings extends Component {
     _requestSMSCode(shouldStartCountting) {
         console.log('_requestSMSCode shouldStartCountting', shouldStartCountting);
         if (!this.state.oldSmsCodeValid || this.state.newMobileValid) {
-            apis.sendVerifyCode(this.state.phone).then(
+            apis.sendVerifyCode( this.state.newMobileValid ?
+                this.state.newMobile : this.state.phone
+            ).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
+                    Alert.alert('测试环境短信验证码:' + responseData.msg);
                 }, (e) => {
-                    Toast.show('短信验证码获取失败:' + JSON.stringify(e));
+                    Toast.show('短信验证码获取失败');
                 }
-                );
+            );
         }
     }
 
     _doSubmit() {
-        let loading = SActivityIndicator.show(true, "提交反馈中");
+        let loading = SActivityIndicator.show(true, "");
 
         if (this.state.bindNewMobile) {
             // 执行最后的绑定操作
@@ -199,7 +207,7 @@ export default class Settings extends Component {
                 (e) => {
                     SActivityIndicator.hide(loading);
                     console.log("短信验证码校验失败:", e);
-                    Toast.show('短信验证码校验失败:' + JSON.stringify(e));
+                    // Toast.show('短信验证码校验失败:' + JSON.stringify(e));
                     Alert.alert('绑定失败', e.msg,
                         [
                             {
@@ -221,12 +229,13 @@ export default class Settings extends Component {
                     });
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
+                        this.setState({timerButtonClicked: false});
                     }
                 },
                 (e) => {
                     SActivityIndicator.hide(loading);
                     console.log("短信验证码校验失败:", e);
-                    Toast.show('短信验证码校验失败:' + JSON.stringify(e));
+                    // Toast.show('短信验证码校验失败:' + JSON.stringify(e));
                     Alert.alert('短信验证码校验失败', '',
                         [
                             {
@@ -312,7 +321,6 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: px2dp(0),
         padding: 0,
-        fontSize: px2dp(28),
         color: '#ef0c35',
         alignSelf: 'center',
     },

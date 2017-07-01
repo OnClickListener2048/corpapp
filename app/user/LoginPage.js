@@ -60,7 +60,7 @@ export default class LoginPage extends Component {
             vCode: '',         // 图片验证码
             vCodeInputValid: false,          // 图片验证码输入有效
             vCodeServerValid: true,          // 图片验证码服务端有效
-            timerButtonEnable: false, // 倒计时按钮是否可用
+            // timerButtonEnable: false, // 倒计时按钮是否可用
             timerButtonClicked: false,//  倒计时按钮是否已点击
         };
 
@@ -110,7 +110,7 @@ export default class LoginPage extends Component {
         if (this.state.mobileValid && this.state.vCodeServerValid) {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
-                    Toast.show('短信验证码已发送');
+                    // Toast.show('短信验证码已发送');
                     Alert.alert('测试环境短信验证码:' + responseData.msg);
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
@@ -118,7 +118,7 @@ export default class LoginPage extends Component {
                     if(msg !== null) {
                         Alert.alert(msg);
                     } else {
-                        Alert.alert('短信验证码获取失败:' + JSON.stringify(e));
+                        Alert.alert('短信验证码获取失败' );
                     }
                     if( e.data !== undefined && e.data.verifyText !== undefined && e.data.verify !== undefined ) {
                         let {verifyText, verify} = e.data;
@@ -140,6 +140,7 @@ export default class LoginPage extends Component {
                         if (this.refs.timerButton.state.counting) {
                             this.refs.timerButton.reset();
                         }
+                        this.setState({timerButtonClicked: false});
                     }
 
                 }
@@ -160,8 +161,9 @@ export default class LoginPage extends Component {
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
                     }
+                    this.setState({timerButtonClicked: false});
 
-                    this.focusField('smsCodeInput');
+                    // this.focusField('smsCodeInput');
                     // if(!this.refs.smsCodeInput.isFocused()) {
                     //     this.refs.smsCodeInput.focus();
                     // }
@@ -171,6 +173,7 @@ export default class LoginPage extends Component {
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
                     }
+                    this.setState({timerButtonClicked: false});
                     let msg = e.msg;
                     if(msg === undefined) {
                         msg = e.message;
@@ -182,7 +185,7 @@ export default class LoginPage extends Component {
                                 {
                                     text: '确定',
                                     onPress: () => {
-                                        this.focusField('vCodeInput');
+                                        // this.focusField('vCodeInput');
                                         // if(!this.refs.vCodeInput.isFocused()) {
                                         //     this.refs.vCodeInput.focus();
                                         // }
@@ -190,8 +193,6 @@ export default class LoginPage extends Component {
                                 },]
                             , {cancelable: true});
                     }
-
-
                     // 刷新验证码
                     let picURLStr = this.state.picURLStr;
                     if(picURLStr !== null && picURLStr.length > 0) {
@@ -290,6 +291,7 @@ export default class LoginPage extends Component {
                                                    if (this.refs.timerButton.state.counting) {
                                                        this.refs.timerButton.reset();
                                                    }
+                                                   this.setState({timerButtonClicked: false});
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
                                                    this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
@@ -340,7 +342,7 @@ export default class LoginPage extends Component {
                         </View>
                         }
 
-                        {/*  验证码 */}
+                        {/*  短信验证码 */}
                         <View style={styles.textInputContainer}>
                             <Image
                                 source={ this.state.smsCodeValid ? require('../img/d123_red.png') :
@@ -350,7 +352,7 @@ export default class LoginPage extends Component {
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.smsCode}
                                            ref="smsCodeInput"
-                                           editable={this.state.mobileValid && this.state.vCodeServerValid}
+                                           editable={this.state.mobileValid && this.state.vCodeServerValid && this.state.timerButtonClicked}
                                            secureTextEntry={false} maxLength={6} keyboardType='numeric'
                                            style={styles.codeInput} placeholder='短信验证码'
                                            returnKeyType='done'
@@ -387,6 +389,7 @@ export default class LoginPage extends Component {
                                              timerCount={80}
                                              onClick={(shouldStartCountting) => {
                                                  shouldStartCountting(true);
+                                                 this.setState({timerButtonClicked: true});
                                                  this._requestSMSCode(shouldStartCountting);
                                              }}/>
                             </View>
