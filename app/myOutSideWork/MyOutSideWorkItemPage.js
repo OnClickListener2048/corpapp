@@ -55,10 +55,10 @@ export default class MyOutSideWorkItemPage extends Component{
 
     }
 
-    // componentWillUnmount() {
-    //     // 移除
-    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
-    // }
+    componentWillUnmount() {
+        // 移除
+        DeviceEventEmitter.emit('toMyOutsideWork', false);
+    }
 
     //将ID传值给父组件
     _press(statusId) {
