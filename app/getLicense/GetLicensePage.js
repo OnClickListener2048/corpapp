@@ -175,8 +175,8 @@ export default class GetLicensePage extends Component{
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                     });
-                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.inProgress)
-                    if(this.state.allowEditInfo&&this.state.detailObj.progress.inProgress===true){
+                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
+                    if(this.state.allowEditInfo&&this.state.detailObj.progress.materialConfirm===true){
                         this.setState({
                             inProgressEdit:true,
                         });
