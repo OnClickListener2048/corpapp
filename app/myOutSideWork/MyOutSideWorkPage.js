@@ -81,6 +81,8 @@ export default class MyOutSideWorkPage extends Component{
                     backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                     passProps: {
                         taskId:statusId,
+                        callback : this._loadCount
+
                     }
                 });
             });
@@ -88,19 +90,36 @@ export default class MyOutSideWorkPage extends Component{
     }
 
     componentWillMount() {
-        this._loadCount();
+        this._loadCount(true);
         console.log('componentWillMount');
 
     }
 
         //获取每个外勤状态数量
-    _loadCount(){
-        let loading = SActivityIndicator.show(true, "加载中...");
+    _loadCount(needLoding){
+
+        let loading;
+
+        if (!needLoding){
+
+            let callback = this.props.callback;
+            if(callback) {
+                callback(false);
+            }
+        }
+
+        if (needLoding){
+            loading  = SActivityIndicator.show(true, "加载中...");
+        }
+
+
+
         loadOutSourceCount().then(
 
             (responseData) => {
-                SActivityIndicator.hide(loading);
-
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }
                 if(responseData !== null && responseData.data !== null) {
                     this.outSourceCountObj = {};
                     console.log("开始请求2是"+responseData.data.todoNum+"，"+responseData.data.totalNum+"，"+responseData.data.inProgressNum);
@@ -113,8 +132,9 @@ export default class MyOutSideWorkPage extends Component{
                 }
             },
             (e) => {
-                SActivityIndicator.hide(loading);
-                console.log("获取失败" , e);
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }                console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
         );

@@ -45,6 +45,15 @@ export default class MyOutSideTaskPage extends Component{
     _loadData(needLoding) {
 
         let loading;
+
+        if (!needLoding){
+
+            let callback = this.props.callback;
+            if(callback) {
+                callback(false);
+            }
+        }
+
         if (needLoding){
             loading  = SActivityIndicator.show(true, "加载中...");
         }
