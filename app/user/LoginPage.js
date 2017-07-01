@@ -274,12 +274,13 @@ export default class LoginPage extends Component {
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.vCode}
+                                           editable={this.state.mobileValid}
                                            secureTextEntry={false} maxLength={4} keyboardType='default'
                                            style={styles.codeInput} placeholder={this.state.verifyText}
                                            returnKeyType='done'
                                            onChangeText={(vCode) => {
                                                this.setState({vCode})
-                                               let vCodeInputValid = (vCode.length == 4);
+                                               let vCodeInputValid = (vCode.length === 4);
                                                this.setState({vCode, vCodeInputValid});
                                            }}
 
@@ -310,6 +311,7 @@ export default class LoginPage extends Component {
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.smsCode}
+                                           editable={this.state.mobileValid && this.state.vCodeServerValid}
                                            secureTextEntry={false} maxLength={6} keyboardType='numeric'
                                            style={styles.codeInput} placeholder='短信验证码'
                                            returnKeyType='done'
