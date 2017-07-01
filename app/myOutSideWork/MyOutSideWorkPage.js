@@ -27,7 +27,7 @@ export default class MyOutSideWorkPage extends Component{
         this.state = {
             outSourceCountObj : {},
             loaded:false,
-            data:false,
+            data:0,
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -91,7 +91,7 @@ export default class MyOutSideWorkPage extends Component{
     componentWillMount() {
         this._loadCount();
         console.log('componentWillMount');
-        // 注册通知
+// 注册通知
         this.subscription = DeviceEventEmitter.addListener('toMyOutsideWork', (data) => {
                 // alert(data);
                 this._loadCount();
@@ -102,11 +102,6 @@ export default class MyOutSideWorkPage extends Component{
 
         });
 
-    }
-
-    componentWillUnmount() {
-        // 移除
-        DeviceEventEmitter.emit('toMyOutsideWork', false);
     }
 
         //获取每个外勤状态数量
@@ -125,6 +120,9 @@ export default class MyOutSideWorkPage extends Component{
                         outSourceCountObj: responseData.data,
                         loaded:true,
                     });
+                    if(this.refs.myoutItem) {
+                        this.refs.myoutItem._setBageNum(this.state.data);
+                    }
                     console.log("===>>>"+this.state.outSourceCountObj.todoNum+this.state.outSourceCountObj.inProgressNum+this.state.outSourceCountObj.totalNum);
                 }
             },
@@ -151,7 +149,7 @@ export default class MyOutSideWorkPage extends Component{
              because ScrollableTabView passing only this prop to tabs.
              */}
             <MyOutSideWorkItemPage
-                tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 1}}
+                tabLabel={{label: '待处理', badge: this.state.data, theLast: 1}}
                 label="todo" callback={this._callback.bind(this)}
             />
             <MyOutSideWorkItemPage

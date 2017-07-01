@@ -82,10 +82,6 @@ export default class MyOutSideTaskPage extends Component{
         // 发送通知
 
         // status 1确认材料完成 2 任务完成
-        DeviceEventEmitter.emit('toMyOutsideWork', 5);
-    }
-
-    _stepCallBack(){
 
         this.subscription = DeviceEventEmitter.addListener('refreshProcessItemNotification', (status) => {
             // alert(data);
@@ -96,7 +92,7 @@ export default class MyOutSideTaskPage extends Component{
 
     componentWillUnmount() {
         // 移除
-        DeviceEventEmitter.emit('toMyOutsideWork', false);
+        this.subscription.remove();
     }
 
 //
