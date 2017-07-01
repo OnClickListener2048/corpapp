@@ -60,7 +60,8 @@ export default class LoginPage extends Component {
             vCode: '',         // 图片验证码
             vCodeInputValid: false,          // 图片验证码输入有效
             vCodeServerValid: true,          // 图片验证码服务端有效
-            timerButtonEnable: false, // 倒计时输入框是否可用
+            timerButtonEnable: false, // 倒计时按钮是否可用
+            timerButtonClicked: false,//  倒计时按钮是否已点击
         };
 
         this._doLogin = this._doLogin.bind(this);
@@ -154,12 +155,10 @@ export default class LoginPage extends Component {
                 (responseData) => {
                     Toast.show('图形验证码已验证');
                     this.setState({vCodeServerValid: true});
-                    this.setState({verifyText : null});
+                    // this.setState({verifyText : null});
                     // 重置允许获取验证码
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
-                        if(this)
-                        this.refs.timerButton._shouldStartCountting(true);
                     }
 
                     this.focusField('smsCodeInput');
@@ -366,9 +365,6 @@ export default class LoginPage extends Component {
 
                                            onBlur={() => {
                                                dismissKeyboard();
-                                               if(this.state.smsCodeValid) {
-                                                   this._doLogin();
-                                               }
                                            }}
 
                                            onSubmitEditing={() => {
