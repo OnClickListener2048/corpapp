@@ -51,6 +51,7 @@ export default class ApplicationCenterPage extends Component{
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 title:'我的外勤',
+                callback : this._loadCount
             });
         });
     }
@@ -77,19 +78,30 @@ export default class ApplicationCenterPage extends Component{
     }
 
     componentWillMount() {
-        console.log("开始请求,p;.....");
-        this._loadCount();
+        this._loadCount(true);
 
     }
 
     //获取每个外勤状态数量
-    _loadCount(){
-        let loading = SActivityIndicator.show(true, "加载中...");
+    _loadCount(needLoding){
+
+        let loading;
+
+
+        console.log("呀呀呀==="+ needLoding);
+
+
+        if (needLoding){
+            loading  = SActivityIndicator.show(true, "加载中...");
+        }
+
+
         loadOutSourceCount().then(
 
             (responseData) => {
-                 SActivityIndicator.hide(loading);
-
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }
                 if(responseData !== null && responseData.data !== null) {
                     this.outSourceCountObj = {};
                     console.log("开始请求2是"+responseData.data.todoNum+"，"+responseData.data.totalNum+"，"+responseData.data.inProgressNum);
@@ -105,8 +117,9 @@ export default class ApplicationCenterPage extends Component{
                 }
             },
             (e) => {
-                SActivityIndicator.hide(loading);
-                console.log("获取失败" , e);
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }                console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
         );

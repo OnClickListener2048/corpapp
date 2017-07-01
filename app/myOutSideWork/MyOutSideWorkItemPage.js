@@ -28,17 +28,26 @@ export default class MyOutSideWorkItemPage extends Component{
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,
             dataFaild:false,
+            refresh:this.props.refresh,
         }
         this.outList = [];
         this._loadList = this._loadList.bind(this);
+        this.setRefresh = this.setRefresh.bind(this);
 
     }
 
     static propTypes = {
         label: PropTypes.string,
+        refresh:PropTypes.bool,
     };
 
     componentWillMount() {
+        this._loadList();
+
+    }
+
+    setRefresh(needRefresh){
+        console.log("看这里看这里====>>>"+needRefresh);
         this._loadList();
 
     }

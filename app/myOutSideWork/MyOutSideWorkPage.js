@@ -27,6 +27,7 @@ export default class MyOutSideWorkPage extends Component{
         this.state = {
             outSourceCountObj : {},
             loaded:false,
+            needLoding:true,
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -100,11 +101,30 @@ export default class MyOutSideWorkPage extends Component{
 
         let loading;
 
+
+        console.log("你你你==="+ needLoding);
+
         if (!needLoding){
+
+            this.setState({
+                needLoding:false,
+            })
 
             let callback = this.props.callback;
             if(callback) {
                 callback(false);
+            }
+
+            if(this.refs.toDo) {
+                this.refs.toDo.setRefresh(true);
+            }
+
+            if(this.refs.doing) {
+                this.refs.doing.setRefresh(true);
+            }
+
+            if(this.refs.done) {
+                this.refs.done.setRefresh(true);
             }
         }
 
@@ -141,6 +161,8 @@ export default class MyOutSideWorkPage extends Component{
 
     }
 
+
+
     _renderScrollView(){
     if (this.state.loaded){
         return   <ScrollableTabView
@@ -155,15 +177,19 @@ export default class MyOutSideWorkPage extends Component{
              because ScrollableTabView passing only this prop to tabs.
              */}
             <MyOutSideWorkItemPage
+                ref="toDo"
                 tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 1}}
                 label="todo" callback={this._callback.bind(this)}
+                refresh={this.state.needLoding}
             />
-            <MyOutSideWorkItemPage
+            <MyOutSideWorkItemPage  ref="doing"
                 tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 1}}
                 label="inProgress"
+                refresh={this.state.needLoding}
                 callback={this._callback.bind(this)}/>
-            <MyOutSideWorkItemPage tabLabel={{label: "已完成", badge: 0, theLast: 0}}
+            <MyOutSideWorkItemPage  ref="done" tabLabel={{label: "已完成", badge: 0, theLast: 0}}
                                    label="end"
+                                   refresh={this.state.needLoding}
                                    callback={this._callback.bind(this)}/>
 
         </ScrollableTabView>
