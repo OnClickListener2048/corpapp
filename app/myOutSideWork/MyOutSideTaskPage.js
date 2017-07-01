@@ -9,7 +9,8 @@ import {
     ScrollView,
     Dimensions,
     TouchableOpacity,
-    InteractionManager
+    InteractionManager,
+    DeviceEventEmitter
 } from 'react-native';
 
 import styles from './css/MyOutSideTaskStyle'
@@ -61,6 +62,7 @@ export default class MyOutSideTaskPage extends Component{
                         title: this.info.taskName // the new title of the screen as appears in the nav bar
                     });
 
+
                 }
             },
             (e) => {
@@ -77,8 +79,11 @@ export default class MyOutSideTaskPage extends Component{
 
     componentWillMount() {
         this._loadData();
-
+        // 发送通知
+        DeviceEventEmitter.emit('toMyOutsideWork', "成功");
     }
+
+
 
     _stepCallBack(){
 
@@ -157,6 +162,8 @@ export default class MyOutSideTaskPage extends Component{
         }
     }
 
+
+
     render() {
         return(
             <View style={styles.container}>
@@ -165,5 +172,5 @@ export default class MyOutSideTaskPage extends Component{
         );
     }
 
-    
+
 }

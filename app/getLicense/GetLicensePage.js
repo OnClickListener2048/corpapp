@@ -513,6 +513,7 @@ export default class GetLicensePage extends Component{
                 type: 'reImage/jpeg',
                 name: 'reImage.jpg',
             };
+            console.log("图片地址显示="+image);
             this.setState({
                 reImage: image,
                 visible:visible,

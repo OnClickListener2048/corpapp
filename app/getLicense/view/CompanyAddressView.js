@@ -142,7 +142,7 @@ export default class  CompanyAddressView extends Component{
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.city}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.city}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>
@@ -153,7 +153,7 @@ export default class  CompanyAddressView extends Component{
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.district}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.district}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>
@@ -163,13 +163,13 @@ export default class  CompanyAddressView extends Component{
 
                         <View style={ styles.rightRowViewStyle}>
                                 <View style={ styles.leftdownDrapViewStyle}>
-                                <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.city}</Text>
+                                <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color: '#323232'}]}>{this.state.city}</Text>
 
                                 </View>
                             {/*<View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>*/}
 
                                 <View style={ styles.rightdownDrapViewStyle}>
-                                <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color:'#e6e6e6'}]}>{this.state.district}</Text>
+                                <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color: '#323232'}]}>{this.state.district}</Text>
 
                                 </View>
 

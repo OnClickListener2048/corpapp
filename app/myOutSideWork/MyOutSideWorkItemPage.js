@@ -97,19 +97,33 @@ export default class MyOutSideWorkItemPage extends Component{
 
     _renderRow(rowData) {
         let statusicon = rowData.taskName.substring(0,1);
-        return (
-                <TouchableOpacity onPress={() => {this._press(rowData.taskId)}}>
-                <MyOutSideWorkCell
-                    statusIcon = {statusicon}
-                    statusName = {rowData.taskName}
-                    companyName = {rowData.corpName}
-                    statusContent = {rowData. stepName}
-                    statusCourse = {rowData.taskStatus}
-                />
+        if(rowData.taskStatus==='已取消'){
+            return (
+                    <MyOutSideWorkCell
+                        statusIcon = {statusicon}
+                        statusName = {rowData.taskName}
+                        companyName = {rowData.corpName}
+                        statusContent = {rowData. stepName}
+                        statusCourse = {rowData.taskStatus}
+                    />
+            );
+        }else {
+            return (
+                <TouchableOpacity onPress={() => {
+                    this._press(rowData.taskId)
+                }}>
+                    <MyOutSideWorkCell
+                        statusIcon={statusicon}
+                        statusName={rowData.taskName}
+                        companyName={rowData.corpName}
+                        statusContent={rowData.stepName}
+                        statusCourse={rowData.taskStatus}
+                    />
 
 
-            </TouchableOpacity>
-        );
+                </TouchableOpacity>
+            );
+        }
     }
 
 

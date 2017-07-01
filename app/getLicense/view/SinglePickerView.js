@@ -82,7 +82,7 @@ export default class SinglePickerView extends Component {
                                 marginRight: 5,
                                 justifyContent: 'center',
                                 flex: 1,
-                                color: '#dcdcdc'
+                                color: '#323232',
                             }]}>{this.props.value}</Text>
                         </TouchableOpacity>
                         }
@@ -102,7 +102,7 @@ export default class SinglePickerView extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 38 * 2,
+        height: 42,
         flexDirection: 'row',
         paddingTop: 10,
         paddingBottom: 2,
