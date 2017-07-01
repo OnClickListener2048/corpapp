@@ -34,7 +34,7 @@ export default class MyOutSideTaskPage extends Component{
             loaded:false,                   // 是否初始化 ListView
             taskId:this.props.taskId,
             faild:false,                   // 是否初始化 ListView
-
+            currentStepId : '',
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
@@ -80,27 +80,37 @@ export default class MyOutSideTaskPage extends Component{
     componentWillMount() {
         this._loadData();
         // 发送通知
-        DeviceEventEmitter.emit('toMyOutsideWork', 99);
+
+        // status 1确认材料完成 2 任务完成
+
+        this.subscription = DeviceEventEmitter.addListener('refreshProcessItemNotification', (status) => {
+            // alert(data);
+            DeviceEventEmitter.emit('toMyOutsideWork', true);
+            this._loadData();
+        });
     }
 
-
-
-    _stepCallBack(){
-
-
+    componentWillUnmount() {
+        // 移除
+        this.subscription.remove();
     }
+
+//
+//
 
 
 //跳转客户审核具体信息
     toLicense(stepId){
+        this.state.currentStepId = stepId;
         console.log("i stepId="+stepId);
+
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'GetLicensePage',
-                callBack:(msg)=>{
-                    console.log(d)
-                },
-                
+                // callBack:(msg)=>{
+                //     console.log(d)
+                // },
+                //
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 passProps: {
@@ -112,6 +122,8 @@ export default class MyOutSideTaskPage extends Component{
     }
 
     renderExpenseItem(item , i) {
+
+
         return (
             <TouchableOpacity onPress={() => {
                 this.toLicense(this.stepsArr[i].stepId)}}>
@@ -131,6 +143,8 @@ export default class MyOutSideTaskPage extends Component{
     }
 
     renderScrollView() {
+        console.log( '点击renderScrollView');
+
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
@@ -148,7 +162,10 @@ export default class MyOutSideTaskPage extends Component{
                 </View>
             );
         }else{
+            console.log( '点击else');
+
             return(
+
                 <ScrollView style={styles.container}>
 
                     {this.renderTest()}

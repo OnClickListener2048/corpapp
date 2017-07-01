@@ -25,7 +25,6 @@ class RegisterCompanyCell extends Component{
         super(props);
         this.tabState = {};
         this.state = {
-            processState : this.props.processState
         };
     }
 
@@ -86,10 +85,10 @@ class RegisterCompanyCell extends Component{
 
     _leftTipView() {
 
-        console.log("detail.processState" + this.state.processState);
+        console.log("detail.processState" + this.props.processState);
 
 
-        if (this.state.processState == '进行中' || this.state.processState == '已结束'|| this.state.processState == '已完成') {
+        if (this.props.processState == '进行中' || this.props.processState == '已结束'|| this.props.processState == '已完成') {
 
             return  <View style={[{width: 10, alignItems:'center'}]}>
 
@@ -119,7 +118,8 @@ class RegisterCompanyCell extends Component{
 
 
     render(){
-        const {isFirst, isLast,processState} = this.state
+        const {isFirst, isLast,processState} = this.props
+        console.log( '点击里面render' + processState);
 
         return(
 

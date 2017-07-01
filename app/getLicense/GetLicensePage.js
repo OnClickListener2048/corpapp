@@ -12,7 +12,9 @@ import {
     View,
     ScrollView, InteractionManager,
     Dimensions, Image, TouchableOpacity, NativeModules,
-    KeyboardAvoidingView, TextInput,Platform
+    KeyboardAvoidingView, TextInput,Platform,
+    DeviceEventEmitter
+
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -104,6 +106,9 @@ export default class GetLicensePage extends Component{
     }
 
     stepBtnClick(status){
+
+        DeviceEventEmitter.emit('refreshProcessItemNotification', status);
+
 
         this.setState({
             // currentStep:status + 1,
