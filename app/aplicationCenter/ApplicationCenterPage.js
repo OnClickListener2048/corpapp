@@ -51,7 +51,9 @@ export default class ApplicationCenterPage extends Component{
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 title:'我的外勤',
-                callback : this._loadCount
+                passProps: {
+                    callback: this._loadCount
+                }
             });
         });
     }
