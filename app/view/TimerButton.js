@@ -43,7 +43,7 @@ export default class TimerButton extends React.Component {
         onClick: PropTypes.func,
         disableColor: PropTypes.string,
         timerTitle: PropTypes.string,
-        enable: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.number])
+        enable: React.PropTypes.oneOfType([React.PropTypes.bool, React.PropTypes.number])// 组件是否可用
     };
 
     _countDownAction() {
@@ -78,6 +78,7 @@ export default class TimerButton extends React.Component {
             selfEnable: true,
         })
     }
+
 
     _shouldStartCountting(shouldStart) {
         console.log('_shouldStartCountting(', shouldStart, ')')

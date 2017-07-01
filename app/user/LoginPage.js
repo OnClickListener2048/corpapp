@@ -38,6 +38,13 @@ export default class LoginPage extends Component {
         tabBarHidden: true, // 隐藏默认的底部Tab栏
     };
 
+    // usage: this.focusField('smsCodeInput');
+    focusField = (nextField) => {
+        if(this.refs[nextField] !== undefined && !this.refs[nextField].isFocused()) {
+            this.refs[nextField].focus();
+        }
+    };
+
     constructor(props) {
         super(props);
 
@@ -48,11 +55,12 @@ export default class LoginPage extends Component {
             smsCodeValid: false,          // 短信验证码有效
             acceptLic: true,// 同意许可协议
             picURLStr: '',// 图片验证码原始地址
-            picURL: {uri: 'https://x-crm.i-counting.cn/app/v0/user/vcode/get'} ,// 图片验证码地址
+            picURL: {uri: ''} ,// 图片验证码地址
             verifyText: '',// 图片验证码提示语
             vCode: '',         // 图片验证码
             vCodeInputValid: false,          // 图片验证码输入有效
             vCodeServerValid: true,          // 图片验证码服务端有效
+            timerButtonEnable: false, // 倒计时输入框是否可用
         };
 
         this._doLogin = this._doLogin.bind(this);
@@ -111,7 +119,7 @@ export default class LoginPage extends Component {
                     } else {
                         Alert.alert('短信验证码获取失败:' + JSON.stringify(e));
                     }
-                    if( e.data !== undefined) {
+                    if( e.data !== undefined && e.data.verifyText !== undefined && e.data.verify !== undefined ) {
                         let {verifyText, verify} = e.data;
                         if(verify !== null && verify.length > 0) {
                             let picStr = "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
@@ -127,6 +135,10 @@ export default class LoginPage extends Component {
                             this.setState({verifyText});
                         }
 
+                        // 重置允许获取验证码
+                        if (this.refs.timerButton.state.counting) {
+                            this.refs.timerButton.reset();
+                        }
                     }
 
                 }
@@ -147,18 +159,37 @@ export default class LoginPage extends Component {
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
                     }
+
+                    this.focusField('smsCodeInput');
+                    // if(!this.refs.smsCodeInput.isFocused()) {
+                    //     this.refs.smsCodeInput.focus();
+                    // }
                 }, (e) => {
                     console.log('_verifyVCode error:' + e.message);
+                    // 重置允许获取验证码
+                    if (this.refs.timerButton.state.counting) {
+                        this.refs.timerButton.reset();
+                    }
                     let msg = e.msg;
                     if(msg === undefined) {
                         msg = e.message;
                     }
 
                     if(msg !== undefined) {
-                        Alert.alert(msg, '');
-                    } else {
-                        Alert.alert('图形验证码校验失败:' + e);
+                        Alert.alert(msg, '',
+                            [
+                                {
+                                    text: '确定',
+                                    onPress: () => {
+                                        this.focusField('vCodeInput');
+                                        // if(!this.refs.vCodeInput.isFocused()) {
+                                        //     this.refs.vCodeInput.focus();
+                                        // }
+                                    },
+                                },]
+                            , {cancelable: true});
                     }
+
 
                     // 刷新验证码
                     let picURLStr = this.state.picURLStr;
@@ -166,7 +197,7 @@ export default class LoginPage extends Component {
                         let picStr = "https://" + picURLStr + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
                         console.log('***** 请求图片', picStr);
                         let picURL = {uri: picStr};
-                        this.setState({picURL});
+                        this.setState({picURL, vCode: '', vCodeInputValid: false});
                     }
                 }
             );
@@ -199,8 +230,6 @@ export default class LoginPage extends Component {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
-                console.log("登录错误返回:", e);
-                Toast.show('登录错误返回:' + JSON.stringify(e));
                 let errMsg = e.msg;
                 if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';
@@ -210,6 +239,8 @@ export default class LoginPage extends Component {
                         {
                             text: '确定',
                             onPress: () => {
+                                this.setState({smsCode: '', smsCodeValid: false});
+                                this.focusField('smsCodeInput');
                             },
                         },]
                     , {cancelable: false});
@@ -259,7 +290,7 @@ export default class LoginPage extends Component {
                                                        this.refs.timerButton.reset();
                                                    }
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
-                                                   this.setState({mobile, mobileValid});
+                                                   this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
                                            }/>
                             </View>
@@ -273,6 +304,7 @@ export default class LoginPage extends Component {
                                 style={styles.inputLogo}/>
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
+                                           ref="vCodeInput"
                                            value={this.state.vCode}
                                            editable={this.state.mobileValid}
                                            secureTextEntry={false} maxLength={4} keyboardType='default'
@@ -286,12 +318,14 @@ export default class LoginPage extends Component {
 
                                            onBlur={() => {
                                                dismissKeyboard();
-                                               this._verifyVCode();
+                                               if(this.state.vCodeInputValid) {
+                                                   this._verifyVCode();
+                                               }
                                            }}
 
                                            onSubmitEditing={() => {
                                                dismissKeyboard();
-                                               this._verifyVCode();
+                                               //this._verifyVCode();
                                            }}
                                 />
 
@@ -311,14 +345,25 @@ export default class LoginPage extends Component {
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.smsCode}
+                                           ref="smsCodeInput"
                                            editable={this.state.mobileValid && this.state.vCodeServerValid}
                                            secureTextEntry={false} maxLength={6} keyboardType='numeric'
                                            style={styles.codeInput} placeholder='短信验证码'
                                            returnKeyType='done'
                                            onChangeText={(smsCode) => {
                                                this.setState({smsCode})
-                                               let smsCodeValid = (smsCode.length == 6);
+                                               let smsCodeValid = (smsCode.length === 6);
                                                this.setState({smsCode, smsCodeValid});
+                                               if(smsCodeValid) {
+                                                   dismissKeyboard();
+                                               }
+                                           }}
+
+                                           onBlur={() => {
+                                               dismissKeyboard();
+                                               if(this.state.smsCodeValid) {
+                                                   this._doLogin();
+                                               }
                                            }}
 
                                            onSubmitEditing={() => {
@@ -334,7 +379,7 @@ export default class LoginPage extends Component {
                                     marginRight: 1
                                 }}/>
 
-                                <TimerButton enable={this.state.mobileValid}
+                                <TimerButton enable={this.state.mobileValid && this.state.vCodeServerValid }
                                              ref="timerButton"
                                              style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                              textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
@@ -351,6 +396,7 @@ export default class LoginPage extends Component {
                             {marginTop: -2}]}>
                             <TouchableOpacity
                                 style={{alignSelf: 'center'}} onPress={ () => {
+                                dismissKeyboard();
                                 let _acceptLic = !this.state.acceptLic;
                                 console.log('_acceptLic', _acceptLic);
                                 this.setState({acceptLic: _acceptLic});
