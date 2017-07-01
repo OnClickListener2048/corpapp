@@ -29,7 +29,7 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
 import {navToBootstrap, navToMainTab} from '../navigation';
-// import InternetStatusView from '../modules/react-native-internet-status-view';
+import InternetStatusView from '../modules/react-native-internet-status-view';
 import {DEBUG} from '../config';
 
 export default class LoginPage extends Component {
@@ -46,7 +46,7 @@ export default class LoginPage extends Component {
             mobileValid: false,   // 手机号有效
             smsCode: '',         // 短信验证码
             smsCodeValid: false,          // 短信验证码有效
-            acceptLic: false,// 同意许可协议
+            acceptLic: true,// 同意许可协议
             picURLStr: '',// 图片验证码原始地址
             picURL: {uri: 'https://x-crm.i-counting.cn/app/v0/user/vcode/get'} ,// 图片验证码地址
             verifyText: '',// 图片验证码提示语
@@ -227,16 +227,16 @@ export default class LoginPage extends Component {
                     {/*titleItem={() => this.renderTitleItem()}*/}
                     {/*/>*/}
 
-                    {/*<InternetStatusView*/}
-                        {/*textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"*/}
-                        {/*style={{*/}
-                            {/*justifyContent: 'center',*/}
-                            {/*alignSelf: 'stretch',*/}
-                            {/*backgroundColor: '#00000088',*/}
-                            {/*marginTop: px2dp(50),*/}
-                            {/*height: 25*/}
-                        {/*}}*/}
-                    {/*/>*/}
+                    <InternetStatusView
+                        textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"
+                        style={{
+                            justifyContent: 'center',
+                            alignSelf: 'stretch',
+                            backgroundColor: '#00000088',
+                            marginTop: px2dp(50),
+                            height: 25
+                        }}
+                    />
 
                     <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                     <View style={{height: px2dp(100),}}/>
@@ -374,7 +374,7 @@ export default class LoginPage extends Component {
                                     textDecorationLine: 'underline',
                                     marginRight: 1
                                 }}
-                                >《XXXX协议》</Text>
+                                >《爱康鼎应用许可协议》</Text>
                             </View>
 
                         </View>
