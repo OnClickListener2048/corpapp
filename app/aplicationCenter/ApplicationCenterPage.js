@@ -91,10 +91,10 @@ export default class ApplicationCenterPage extends Component{
         });
     }
 
-    componentWillUnmount() {
-        // 移除
-        DeviceEventEmitter.emit('toMyOutsideWork', false);
-    }
+    // componentWillUnmount() {
+    //     // 移除
+    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
+    // }
 
     //获取每个外勤状态数量
     _loadCount(){

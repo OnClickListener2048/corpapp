@@ -94,10 +94,10 @@ export default class MyOutSideTaskPage extends Component{
         });
     }
 
-    componentWillUnmount() {
-        // 移除
-        DeviceEventEmitter.emit('toMyOutsideWork', false);
-    }
+    // componentWillUnmount() {
+    //     // 移除
+    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
+    // }
 
 //
 //
