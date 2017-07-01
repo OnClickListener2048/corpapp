@@ -34,7 +34,7 @@ export default class Settings extends Component {
             phone: '', //手机号
             newMobile: '',     // 新手机号
             newMobileValid: false,   // 手机号有效
-            smsCode: '88888',         // 短信验证码
+            smsCode: '',         // 短信验证码
             oldSmsCodeValid: false,        // 短信验证码有效
             bindNewMobile: false, // 是否绑定手机号的第二阶段
             newSmsCodeValid: false,        // 短信验证码有效
@@ -43,24 +43,6 @@ export default class Settings extends Component {
     }
 
     componentWillMount() {
-        Date.prototype.Format = function (fmt) { //author: meizz
-            var o = {
-                "M+": this.getMonth() + 1, //月份
-                "d+": this.getDate(), //日
-                "h+": this.getHours(), //小时
-                "m+": this.getMinutes(), //分
-                "s+": this.getSeconds(), //秒
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-                "S": this.getMilliseconds() //毫秒
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-        }
-        Toast.show(new Date().Format("yyyy-MM-dd"));
-
-
         UserInfoStore.getUserInfo().then(
             (user) => {
                 if (user !== null) {
@@ -116,7 +98,6 @@ export default class Settings extends Component {
                     </View>
                 </View>
                 }
-
 
                 {/*  验证码 */}
                 <View style={styles.textInputContainer}>
