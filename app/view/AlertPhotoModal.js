@@ -46,8 +46,9 @@ export default class AlertPhotoModal extends Component{
             compressImageMaxHeight: 480,
             compressImageQuality: 0.5,
             compressVideoPreset: 'MediumQuality',
+            mediaType:'photo',
         }).then(image => {
-            console.log('received image', image);
+            console.log('received image===', image);
             this.setState({
                 visible: false,
                 image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
@@ -67,7 +68,7 @@ export default class AlertPhotoModal extends Component{
             width: 500,
             height: 500,
         }).then(image => {
-            console.log('received image', image);
+            console.log('received image===', image);
             this.setState({
                 visible: false,
                 image: {uri: image.path, width: image.width, height: image.height},

@@ -506,7 +506,8 @@ export default class GetLicensePage extends Component{
                 type: 'reImage/jpeg',
                 name: 'reImage.jpg',
             };
-            console.log("图片地址显示="+image);
+            console.log("图片地址显示image==="+image);
+
             this.setState({
                 reImage: image,
                 visible:visible,
@@ -636,6 +637,7 @@ export default class GetLicensePage extends Component{
 
         return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',justifyContent:'space-between',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
+
             {this.state.editables == false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
@@ -643,7 +645,7 @@ export default class GetLicensePage extends Component{
                 style={{width:50,height:40,marginRight: 15,justifyContent:'center',alignItems:'flex-end'}}>
                 <Image source={require("../img/editor.png")}/>
                 </TouchableOpacity> }
-            {this.state.editables == true &&this.state.inProgressEdit===true&&
+            {this.state.editables == true&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}style={{width:50,height:40,marginRight:15}}>
