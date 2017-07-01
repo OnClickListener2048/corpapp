@@ -106,7 +106,7 @@ export default class LoginPage extends Component {
     // 请求短信验证码
     _requestSMSCode(shouldStartCountting) {
         console.log('_requestSMSCode');
-        if (this.state.mobileValid) {
+        if (this.state.mobileValid && this.state.vCodeServerValid) {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
@@ -158,6 +158,8 @@ export default class LoginPage extends Component {
                     // 重置允许获取验证码
                     if (this.refs.timerButton.state.counting) {
                         this.refs.timerButton.reset();
+                        if(this)
+                        this.refs.timerButton._shouldStartCountting(true);
                     }
 
                     this.focusField('smsCodeInput');
@@ -314,11 +316,14 @@ export default class LoginPage extends Component {
                                                this.setState({vCode})
                                                let vCodeInputValid = (vCode.length === 4);
                                                this.setState({vCode, vCodeInputValid});
+                                               if(vCodeInputValid) {
+                                                   dismissKeyboard();
+                                               }
                                            }}
 
                                            onBlur={() => {
                                                dismissKeyboard();
-                                               if(this.state.vCodeInputValid) {
+                                               if(this.state.vCodeInputValid&& !this.state.vCodeServerValid) {
                                                    this._verifyVCode();
                                                }
                                            }}
