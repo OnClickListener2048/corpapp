@@ -3,7 +3,7 @@
  */
 
 import React,{Component,PropTypes}from 'react';
-import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text,Platform,DeviceEventEmitter} from "react-native";
+import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text,Platform} from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
@@ -28,7 +28,6 @@ export default class MyOutSideWorkItemPage extends Component{
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,
             dataFaild:false,
-            data:false,
         }
         this.outList = [];
         this._loadList = this._loadList.bind(this);
@@ -40,25 +39,9 @@ export default class MyOutSideWorkItemPage extends Component{
     };
 
     componentWillMount() {
-        this._loadList(this.state.data);
-
-        // 注册通知
-        this.subscription = DeviceEventEmitter.addListener('toMyOutsideWork', (data) => {
-            // alert(data);
-            this.setState({
-                data:data,
-            });
-            console.log(data + '你大爷1');
-            this._loadList(data);
-        });
-
+        this._loadList();
 
     }
-
-    // componentWillUnmount() {
-    //     // 移除
-    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
-    // }
 
     //将ID传值给父组件
     _press(statusId) {
@@ -79,7 +62,7 @@ export default class MyOutSideWorkItemPage extends Component{
         }
     }
 
-    _loadList(data){
+    _loadList(){
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
         loadOutSourceList(1000,'',taskType).then(
@@ -91,7 +74,7 @@ export default class MyOutSideWorkItemPage extends Component{
                     this.outList = [];
                     console.log("开始请求2----"+responseData.data);
                     this.outList= this.outList.concat(responseData.data);
-                    console.log("开始请求outlist----"+this.outList.length);
+                    console.log("开始请求outlist----"+this.outList);
 
                         this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
@@ -149,7 +132,7 @@ export default class MyOutSideWorkItemPage extends Component{
         if (this.state.dataFaild === true) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onPress={() => {this._loadList(this.state.data)}}>
+                    <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
                         textContent='加载失败，点击重试'
                         active={require('../img/load_failed.png')}/>
@@ -165,9 +148,9 @@ export default class MyOutSideWorkItemPage extends Component{
                         active={require('../img/no_message.png')}/>
                 </View>
             );
-        }else if(this.state.loaded===true){
-            console.log(this.state.data + '=renderlist你大爷1');
+        }else {
             return (
+
                 <ListView
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) => this._renderRow(rowData)}
@@ -189,14 +172,13 @@ export default class MyOutSideWorkItemPage extends Component{
         }else{
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-127;
         }
-            console.log(this.state.data + '=render你大爷1');
-            return (
-                <View style={[styles.container, {height: allListHeight}]}>
+        return (
+            <View style={[styles.container,{height:allListHeight}]}>
 
-                    {this.renderListView()}
+                {this.renderListView()}
 
-                </View>
-            );
+            </View>
+        );
     }
 
 }

@@ -27,7 +27,6 @@ export default class MyOutSideWorkPage extends Component{
         this.state = {
             outSourceCountObj : {},
             loaded:false,
-            data:false,
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -91,23 +90,8 @@ export default class MyOutSideWorkPage extends Component{
     componentWillMount() {
         this._loadCount();
         console.log('componentWillMount');
-        // 注册通知
-        this.subscription = DeviceEventEmitter.addListener('toMyOutsideWork', (data) => {
-                // alert(data);
-                this._loadCount();
-                this.setState({
-                    data:data,
-                });
-                console.log(data + '你大爷');
-
-        });
 
     }
-
-    // componentWillUnmount() {
-    //     // 移除
-    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
-    // }
 
         //获取每个外勤状态数量
     _loadCount(){

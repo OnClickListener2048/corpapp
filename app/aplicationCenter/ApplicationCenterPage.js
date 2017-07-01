@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity
-,InteractionManager,DeviceEventEmitter} from 'react-native';
+,InteractionManager} from 'react-native';
 
 import {loadOutSourceCount} from "../apis/outSource";
 import {
@@ -33,7 +33,6 @@ export default class ApplicationCenterPage extends Component{
 
         this.state = {
             bdNum:null,
-            data:false,
         };
 
         this._loadCount = this._loadCount.bind(this);
@@ -80,21 +79,8 @@ export default class ApplicationCenterPage extends Component{
     componentWillMount() {
         console.log("开始请求,p;.....");
         this._loadCount();
-        // 注册通知
-        this.subscription = DeviceEventEmitter.addListener('toMyOutsideWork', (data) => {
-            // alert(data);
-            this.setState({
-                data:data,
-            });
-            this._loadCount();
-            console.log(data + '你大爷1');
-        });
-    }
 
-    // componentWillUnmount() {
-    //     // 移除
-    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
-    // }
+    }
 
     //获取每个外勤状态数量
     _loadCount(){
