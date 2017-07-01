@@ -107,8 +107,11 @@ export default class GetLicensePage extends Component{
 
     stepBtnClick(status){
 
-        DeviceEventEmitter.emit('refreshProcessItemNotification', status);
 
+        let callback = this.props.callback;
+        if(callback) {
+            callback(false);
+        }
 
         this.setState({
             // currentStep:status + 1,

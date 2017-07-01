@@ -42,13 +42,20 @@ export default class MyOutSideTaskPage extends Component{
 
     }
 
-    _loadData() {
-        let loading = SActivityIndicator.show(true, "加载中...");
+    _loadData(needLoding) {
+
+        let loading;
+        if (needLoding){
+            loading  = SActivityIndicator.show(true, "加载中...");
+        }
+
 
         apis.loadOutSourceTask(this.props.taskId).then(
 
             (responseData) => {
-                  SActivityIndicator.hide(loading);
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }
 
                 if(responseData !== null && responseData.data !== null) {
                     this.stepsArr = [];
@@ -66,7 +73,9 @@ export default class MyOutSideTaskPage extends Component{
                 }
             },
             (e) => {
-                SActivityIndicator.hide(loading);
+                if (needLoding){
+                    SActivityIndicator.hide(loading);
+                }
                 this.setState({
                     faild:true,
                 });
@@ -78,48 +87,27 @@ export default class MyOutSideTaskPage extends Component{
     }
 
     componentWillMount() {
-        this._loadData();
-        // 发送通知
+        this._loadData(true);
 
-        // status 1确认材料完成 2 任务完成
-        DeviceEventEmitter.emit('toMyOutsideWork', 5);
     }
 
-    _stepCallBack(){
 
-        this.subscription = DeviceEventEmitter.addListener('refreshProcessItemNotification', (status) => {
-            // alert(data);
-            DeviceEventEmitter.emit('toMyOutsideWork', true);
-            this._loadData();
-        });
-    }
-
-    // componentWillUnmount() {
-    //     // 移除
-    //     DeviceEventEmitter.emit('toMyOutsideWork', false);
-    // }
-
-//
-//
 
 
 //跳转客户审核具体信息
     toLicense(stepId){
         this.state.currentStepId = stepId;
-        console.log("i stepId="+stepId);
+
 
         InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'GetLicensePage',
-                // callBack:(msg)=>{
-                //     console.log(d)
-                // },
-                //
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,
+                    callback : this._loadData
                 }
             });
         });
