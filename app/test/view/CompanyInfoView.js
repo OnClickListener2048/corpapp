@@ -24,6 +24,7 @@ export default class CompanyInfoView extends React.Component {
             SalesPhone: this.props.SalesPhone,
             isFocusData:this.props.isFocusData,
         }
+        this.setCompanyInfo = this.setCompanyInfo.bind(this);
     }
 
     static propTypes = {
@@ -35,6 +36,19 @@ export default class CompanyInfoView extends React.Component {
         SalesPhone:PropTypes.string,
         isFocusData:PropTypes.bool,
     };
+
+    setCompanyInfo(companyName,ContactsName,ContactsPhone,SalesName,SalesPhone,isFocusData) {
+        this.setState({
+            companyName: companyName,
+            ContactsName:ContactsName,
+            ContactsPhone:ContactsPhone,
+            SalesName:SalesName,
+            SalesPhone:SalesPhone,
+            isFocusData:isFocusData,
+
+        });
+    }
+
 
     _callPhone(phoneNumber) {
 

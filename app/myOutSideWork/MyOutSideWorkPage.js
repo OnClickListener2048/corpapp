@@ -83,24 +83,20 @@ export default class MyOutSideWorkPage extends Component{
                     passProps: {
                         taskId:statusId,
                         callback : this._loadCount
-
                     }
                 });
             });
-
     }
 
     componentWillMount() {
         this._loadCount(true);
         console.log('componentWillMount');
-
     }
 
         //获取每个外勤状态数量
     _loadCount(needLoding){
 
         let loading;
-
 
         console.log("你你你==="+ needLoding);
 

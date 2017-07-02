@@ -329,7 +329,7 @@ export default class GetLicensePage extends Component{
 
     renderVerifyBtnView(){
 
-        return <ProcessBtnView stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
+        return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'} stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView() {

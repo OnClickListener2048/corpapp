@@ -24,6 +24,7 @@ class ProcessBtnView extends Component{
             finished : this.props.finished,
             inProgress : this.props.inProgress,
             materialConfirm : this.props.materialConfirm,
+            allowEdit : this.props.allowEdit,
             titleArr :['确认材料','完成','完成'],
             currentNum: 0,
             stepId:this.props.stepId,          //步骤 ID
@@ -42,6 +43,7 @@ class ProcessBtnView extends Component{
         materialConfirm : PropTypes.bool,
         stepId : PropTypes.number,
         taskId : PropTypes.number,
+        allowEdit : PropTypes.bool,
 
     };
 
@@ -96,7 +98,29 @@ class ProcessBtnView extends Component{
 
     renderBtnView() {
 
-        if (this.state.currentNum == this.state.titleArr.length - 1) {      // 无数据
+        if (this.state.allowEdit){
+            if (this.state.currentNum == this.state.titleArr.length - 1) {      // 无数据
+                return(
+                    <View  style={{marginRight: 15,height:40,
+                        width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e6e6e6', justifyContent:'center'}}>
+                        <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#FFFFFF'}}>
+                            {this.state.titleArr[this.state.currentNum]}</Text>
+                    </View>
+                );
+            }
+
+            if (this.state.currentNum < this.state.titleArr.length) {      // 无数据
+                return(
+                    <TouchableOpacity onPress={this.btnClick}>
+                        <View  style={{marginRight: 15,height:40,
+                            width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e5151b', justifyContent:'center'}}>
+                            <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#FFFFFF'}}>
+                                {this.state.titleArr[this.state.currentNum]}</Text>
+                        </View>
+                    </TouchableOpacity>
+                );
+            }
+        }else {
             return(
                 <View  style={{marginRight: 15,height:40,
                     width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e6e6e6', justifyContent:'center'}}>
@@ -104,30 +128,21 @@ class ProcessBtnView extends Component{
                         {this.state.titleArr[this.state.currentNum]}</Text>
                 </View>
             );
+
         }
 
 
-        if (this.state.currentNum < this.state.titleArr.length) {      // 无数据
-            return(
-                <TouchableOpacity onPress={this.btnClick}>
-                    <View  style={{marginRight: 15,height:40,
-                        width:90,marginTop: 20,borderRadius:2.5 ,alignItems:'center', backgroundColor:'#e5151b', justifyContent:'center'}}>
-                        <Text style={{fontSize:15,width:80, textAlign:'center', justifyContent: 'center',color:'#FFFFFF'}}>
-                            {this.state.titleArr[this.state.currentNum]}</Text>
-                    </View>
-                </TouchableOpacity>
-            );
-        }
+
     }
 
 
     render(){
-        const {finished,inProgress,materialConfirm,stepId,taskId} = this.state
+        const {finished,inProgress,materialConfirm,allowEdit,stepId,taskId} = this.state
         this.state.finished = finished;
         this.state.inProgress = inProgress;
         this.state.materialConfirm = materialConfirm;
         this.state.currentNum = this.state.finished ? 2 : this.state.materialConfirm ? 1 : 0;
-
+        this.state.allowEdit = allowEdit;
         return(
 
             <View style={{backgroundColor:'#FFFFFF',width: SCREEN_WIDTH,height :80 ,flexDirection:'row-reverse'}}>
