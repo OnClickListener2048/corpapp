@@ -151,9 +151,11 @@ export default class GetLicensePage extends Component{
                 if(responseData !== null && responseData.data !== null) {
 
 
+
                     this.setState({
                         detailObj : responseData.data,
                         allowEditInfo:responseData.data.allowEditInfo,
+                        inProgressEdit : (responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
                             bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
@@ -163,10 +165,12 @@ export default class GetLicensePage extends Component{
                             corpAddress:	responseData.data.corpAddress,     //公司地址
                             corpName:	responseData.data.corpName,          //公司名称
                             corpType:	responseData.data.corpType,          //企业类型
-                            district:	responseData.data.district,          //县或区
+                            corpTypeId:responseData.data.corpTypeId,
+                        district:	responseData.data.district,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
                             idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
                             industry:	responseData.data.industry,           //所属行业
+                        industryId:responseData.data.industryId,
                             legalEntity:	responseData.data.legalEntity,//法人
                             localTaxId:	responseData.data.localTaxId,//地税登记号
                             nationalTaxId:	responseData.data.nationalTaxId,//国税登记号
@@ -178,12 +182,8 @@ export default class GetLicensePage extends Component{
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                     });
-                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.inProgress)
-                    if(this.state.allowEditInfo&&this.state.detailObj.progress.inProgress===true){
-                        this.setState({
-                            inProgressEdit:true,
-                        });
-                    }
+                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
+
 
                     if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
@@ -329,7 +329,7 @@ export default class GetLicensePage extends Component{
 
     renderVerifyBtnView(){
 
-        return <ProcessBtnView stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
+        return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'} stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView() {
@@ -640,20 +640,21 @@ export default class GetLicensePage extends Component{
 
     renderCompanyTipView(){
         // let allowEditInfo = this.state.detailObj.allowEditInfo;
-        console.log("输出是否可编辑="+this.state.allowEditInfo+","+this.state.inProgressEdit);
 
+        if(this.state.loaded===true){
+            console.log("输出是否可编辑="+this.state.allowEditInfo+","+this.state.inProgressEdit);
 
-        return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',justifyContent:'space-between',flexDirection:'row',alignItems: 'center'}]}>
+            return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',justifyContent:'space-between',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
 
-            {this.state.editables == false&&this.state.inProgressEdit===true&&
+            {this.state.editables === false&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(true)
                 }}
                 style={{width:50,height:40,marginRight: 15,justifyContent:'center',alignItems:'flex-end'}}>
                 <Image source={require("../img/editor.png")}/>
                 </TouchableOpacity> }
-            {this.state.editables == true&&this.state.inProgressEdit===true&&
+            {this.state.editables === true&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
                     this._edit(false)
                 }}style={{width:50,height:40,marginRight:15}}>
@@ -670,7 +671,7 @@ export default class GetLicensePage extends Component{
                     </View>
                 </TouchableOpacity>
             }
-        </View>)
+        </View>)}
     }
 
     // 企业类型选择
@@ -959,7 +960,7 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
-                                    <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
+                                    <Image source={{uri: 'https://' + this.state.detailObj.bizLics}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
                             }

@@ -77,9 +77,12 @@ export default class MyOutSideTaskPage extends Component{
                     this.props.navigator.setTitle({
                         title: this.info.taskName // the new title of the screen as appears in the nav bar
                     });
-
-
-                }
+                    if(this.refs.companyInfoView) {
+                        this.refs.companyInfoView.setCompanyInfo(this.info.corpName,this.info.contactName,this.info.contactPhone,
+                            this.info.salesmanName,this.info.salesmanPhone,false);
+                    }
+                    // this.info.salesmanPhone
+                    }
             },
             (e) => {
                 if (needLoding){
@@ -137,9 +140,10 @@ export default class MyOutSideTaskPage extends Component{
         )
     }
 
-    renderTest() {
+    renderCompanyInfoView() {
 
-        return  <CompanyInfoView companyName= {this.info.corpName}
+        return  <CompanyInfoView ref="companyInfoView"
+                                 companyName= {this.info.corpName}
                                  ContactsName={this.info.contactName}
                                  ContactsPhone={this.info.contactPhone}
                                  SalesName={this.info.salesmanName}
@@ -173,7 +177,7 @@ export default class MyOutSideTaskPage extends Component{
 
                 <ScrollView style={styles.container}>
 
-                    {this.renderTest()}
+                    {this.renderCompanyInfoView()}
 
                     {<View style={[{height:15}]}></View>}
 

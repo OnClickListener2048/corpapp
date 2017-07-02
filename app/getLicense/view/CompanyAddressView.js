@@ -113,6 +113,7 @@ export default class  CompanyAddressView extends Component{
         isFouces:PropTypes.bool,
     };
 
+
     setArea(data:[]) {
         this.setState({city:data[0],
             district:data[1]});
