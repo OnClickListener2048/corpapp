@@ -62,13 +62,20 @@ export default class SinglePickerView extends Component {
 
                         {!enable &&
                         <View style={styles.textShowStyle}>
+                            {this.props.value===''?<Text numberOfLines={1} style={[{
+                                    textAlign: 'left',
+                                    marginRight: 5,
+                                    justifyContent: 'center',
+                                    flex: 1,
+                                    color: '#323232'
+                                }]}>{'请选择'}</Text>:
                             <Text numberOfLines={1} style={[{
                                 textAlign: 'left',
                                 marginRight: 5,
                                 justifyContent: 'center',
                                 flex: 1,
                                 color: '#323232'
-                            }]}>{this.props.value}</Text>
+                            }]}>{this.props.value}</Text>}
                         </View>
                         }
 
@@ -77,13 +84,20 @@ export default class SinglePickerView extends Component {
                             this._Press()
                         }}>
                             <Image source={require('../../img/down.png')}/>
-                            <Text numberOfLines={1} style={[{
+                            {this.props.value===''?<Text numberOfLines={1} style={[{
                                 textAlign: 'center',
                                 marginRight: 5,
                                 justifyContent: 'center',
                                 flex: 1,
                                 color: '#323232',
-                            }]}>{this.props.value}</Text>
+                            }]}>{'请选择'}</Text>
+                            :<Text numberOfLines={1} style={[{
+                                textAlign: 'center',
+                                marginRight: 5,
+                                justifyContent: 'center',
+                                flex: 1,
+                                color: '#323232',
+                            }]}>{this.props.value}</Text>}
                         </TouchableOpacity>
                         }
 
