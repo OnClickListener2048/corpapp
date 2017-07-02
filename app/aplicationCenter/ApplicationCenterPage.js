@@ -36,8 +36,13 @@ export default class ApplicationCenterPage extends Component{
         };
 
         this._loadCount = this._loadCount.bind(this);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        // console.log('ApplicationCenterPage event.type', event.type);
+        console.log('ApplicationCenterPage event', JSON.stringify(event));
+    }
     static renderTitleItem() {
         return(
             <Text style={styles.navbarTitleItemStyle}>应用中心</Text>
