@@ -203,7 +203,7 @@ export default class GetLicensePage extends Component{
                     loaded:false,
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -244,7 +244,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -256,7 +256,7 @@ export default class GetLicensePage extends Component{
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 console.log("提交成功cc" , responseData);
-                Toast.show('提交成功');
+                // Toast.show('提交成功');
                 if(responseData !== null && responseData.data !== null) {
 
                     console.log("提交成功" , responseData.data);
@@ -270,7 +270,7 @@ export default class GetLicensePage extends Component{
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                Toast.show('提交失败' + JSON.stringify(e));
+                // Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -718,7 +718,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -760,7 +760,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -911,8 +911,7 @@ export default class GetLicensePage extends Component{
 
                 {this.renderBusinessTimeView()}
 
-                <View
-                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                <View style={{paddingTop: 0, backgroundColor: 'white'}}>
                 <TextInputView
                 textName={'注册资金：'}
                 inputWidth={{width: 80}}
