@@ -67,6 +67,7 @@ export default class LoginPage extends Component {
         this._doLogin = this._doLogin.bind(this);
         this._requestSMSCode = this._requestSMSCode.bind(this);
         this._verifyVCode = this._verifyVCode.bind(this);
+        this._doChangeVCode = this._doChangeVCode.bind(this);
     }
 
     //debug only
@@ -193,16 +194,20 @@ export default class LoginPage extends Component {
                                 },]
                             , {cancelable: true});
                     }
-                    // 刷新验证码
-                    let picURLStr = this.state.picURLStr;
-                    if(picURLStr !== null && picURLStr.length > 0) {
-                        let picStr = "https://" + picURLStr + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
-                        console.log('***** 请求图片', picStr);
-                        let picURL = {uri: picStr};
-                        this.setState({picURL, vCode: '', vCodeInputValid: false});
-                    }
+                    this._doChangeVCode();
                 }
             );
+        }
+    }
+
+    _doChangeVCode() {
+        // 刷新验证码
+        let picURLStr = this.state.picURLStr;
+        if(picURLStr !== null && picURLStr.length > 0) {
+            let picStr = "https://" + picURLStr + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
+            console.log('***** 请求图片', picStr);
+            let picURL = {uri: picStr};
+            this.setState({picURL, vCode: '', vCodeInputValid: false});
         }
     }
 
@@ -260,16 +265,16 @@ export default class LoginPage extends Component {
                     {/*titleItem={() => this.renderTitleItem()}*/}
                     {/*/>*/}
 
-                    <InternetStatusView
-                        textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"
-                        style={{
-                            justifyContent: 'center',
-                            alignSelf: 'stretch',
-                            backgroundColor: '#00000088',
-                            marginTop: px2dp(50),
-                            height: 25
-                        }}
-                    />
+                    {/*<InternetStatusView*/}
+                        {/*textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"*/}
+                        {/*style={{*/}
+                            {/*justifyContent: 'center',*/}
+                            {/*alignSelf: 'stretch',*/}
+                            {/*backgroundColor: '#00000088',*/}
+                            {/*marginTop: px2dp(50),*/}
+                            {/*height: 25*/}
+                        {/*}}*/}
+                    {/*/>*/}
 
                     <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                     <View style={{height: px2dp(100),}}/>
@@ -292,6 +297,8 @@ export default class LoginPage extends Component {
                                                        this.refs.timerButton.reset();
                                                    }
                                                    this.setState({timerButtonClicked: false});
+
+                                                   mobile = mobile.replace(/[^\d]/g,'');
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
                                                    this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
@@ -335,8 +342,10 @@ export default class LoginPage extends Component {
                                            }}
                                 />
 
+                                <TouchableWithoutFeedback onPress={this._doChangeVCode}>
                                 <Image  style={{width: 69, marginRight: 0, height: 34, alignSelf: 'center',}}
-                                              source={this.state.picURL}      />
+                                              source={this.state.picURL}     />
+                                </TouchableWithoutFeedback>
 
                             </View>
                         </View>
