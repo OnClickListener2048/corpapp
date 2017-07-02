@@ -347,6 +347,10 @@ export default class GetLicensePage extends Component{
 
     _showAreaPicker() {
         Picker.init({
+            pickerConfirmBtnText: '确认',
+            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
+            pickerCancelBtnText: '取消',
+            pickerCancelBtnColor: [0, 0 ,0, 1],
             pickerTitleText: '请选择注册地',
             pickerData: this.state.areaArr,
             // pickerData: pickerData,
