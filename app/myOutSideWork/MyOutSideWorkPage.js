@@ -106,10 +106,6 @@ export default class MyOutSideWorkPage extends Component{
                 needLoding:false,
             })
 
-            let callback = this.props.callback;
-            if(callback) {
-                callback(false);
-            }
 
             if(this.refs.toDo) {
                 this.refs.toDo.setRefresh(true);

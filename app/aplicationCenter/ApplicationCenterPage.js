@@ -42,6 +42,9 @@ export default class ApplicationCenterPage extends Component{
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
         console.log('ApplicationCenterPage event', JSON.stringify(event));
+        if(event.id==='willAppear'){
+            this._loadCount();
+        }
     }
     static renderTitleItem() {
         return(
@@ -56,9 +59,7 @@ export default class ApplicationCenterPage extends Component{
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                 title:'我的外勤',
-                passProps: {
-                    callback: this._loadCount
-                }
+
             });
         });
     }
@@ -90,25 +91,13 @@ export default class ApplicationCenterPage extends Component{
     }
 
     //获取每个外勤状态数量
-    _loadCount(needLoding){
+    _loadCount(){
 
-        let loading;
-
-
-        console.log("呀呀呀==="+ needLoding);
-
-
-        if (needLoding){
-            loading  = SActivityIndicator.show(true, "加载中...");
-        }
-
-
+        let loading  = SActivityIndicator.show(true, "加载中...");
         loadOutSourceCount().then(
 
             (responseData) => {
-                if (needLoding){
-                    SActivityIndicator.hide(loading);
-                }
+                SActivityIndicator.hide(loading);
                 if(responseData !== null && responseData.data !== null) {
                     this.outSourceCountObj = {};
                     console.log("开始请求2是"+responseData.data.todoNum+"，"+responseData.data.totalNum+"，"+responseData.data.inProgressNum);
@@ -124,9 +113,8 @@ export default class ApplicationCenterPage extends Component{
                 }
             },
             (e) => {
-                if (needLoding){
                     SActivityIndicator.hide(loading);
-                }                console.log("获取失败" , e);
+                          console.log("获取失败" , e);
                 Toast.show('获取失败' + JSON.stringify(e));
             },
         );
