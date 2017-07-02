@@ -18,6 +18,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +32,12 @@ public class MainApplication extends NavigationApplication {
     @Override
     public boolean isDebug() {
         return BuildConfig.DEBUG;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        CrashReport.initCrashReport(getApplicationContext(), "c2c07c0373", true);
     }
 
     @Nullable

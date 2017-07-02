@@ -250,6 +250,7 @@ dependencies {
     compile project(':jcore-react-native')
     compile "com.android.support:appcompat-v7:24.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
+    compile 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
 }
 
 buildscript {
