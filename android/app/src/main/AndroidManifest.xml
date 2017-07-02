@@ -1,7 +1,8 @@
 <manifest package="cn.pilipa.corpapp"
           xmlns:android="http://schemas.android.com/apk/res/android"
           android:versionCode="1"
-          android:versionName="1.0">
+          android:versionName="1.0"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -38,12 +39,13 @@
             </intent-filter>
         </activity>
 
-        <!-- bugly 灰度测试 -->
+        <!-- bugly 灰度测试
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
-
+-->
+        
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${APP_CHANNEL}"/>
@@ -53,15 +55,19 @@
 
         <activity android:name="com.facebook.react.devsupport.DevSettingsActivity"/>
 
+        <!--
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="com.tencent.bugly.beta.utils.BuglyFileProvider"
             android:authorities="${applicationId}.fileProvider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="name,authorities,exported,grantUriPermissions">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths"
+                tools:replace="name,resource"/>
         </provider>
+        -->
     </application>
 
 </manifest>
