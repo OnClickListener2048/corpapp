@@ -93,8 +93,7 @@ export default class BusinessTimeView extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            selectTimeBtnSelected : true,
-            allTimePressBtnSelected : false,
+            allTimePressBtnSelected : this.props.allTimePressBtnSelected,
             firstDate:this.props.firstDate,
             lastDate:this.props.lastDate,
             isFocus:this.props.isFocus,//是否可编辑
@@ -112,14 +111,15 @@ export default class BusinessTimeView extends Component{
         firstDate: PropTypes.string,
         lastDate:PropTypes.string,
         isFocus:PropTypes.bool,
+        allTimePressBtnSelected:PropTypes.string,
     };
 
 
     _selectTimePress(allTimePressBtnSelected){
+        console.log("false有限，TRUE无限s="+this.state.allTimePressBtnSelected);
 
         this.setState({
-            selectTimeBtnSelected : true,
-            allTimePressBtnSelected : false,
+            allTimePressBtnSelected : 'false',
         });
         this.props.callbackAll(allTimePressBtnSelected);
     };
@@ -133,18 +133,18 @@ export default class BusinessTimeView extends Component{
     };
 
     _allTimePress(allTimePressBtnSelected){
+        console.log("false有限，TRUE无限a="+this.state.allTimePressBtnSelected);
 
         this.setState({
-            selectTimeBtnSelected : false,
-            allTimePressBtnSelected : true,
+            allTimePressBtnSelected : 'true',
         });
         this.props.callbackAll(allTimePressBtnSelected);
     };
 
     renderselectTimeBtn(){
 
-
-        if (this.state.selectTimeBtnSelected) {
+        console.log("false有限，TRUE无限time="+this.state.allTimePressBtnSelected);
+        if (this.state.allTimePressBtnSelected==='false') {
             return(
                 <View  style={{height:8, width:8, borderRadius:4,backgroundColor:'#e5151d'}}>
                 </View>
@@ -160,8 +160,9 @@ export default class BusinessTimeView extends Component{
     }
 
     renderallTimeBtn(){
+        console.log("false有限，TRUE无限all="+this.state.allTimePressBtnSelected);
 
-        if (this.state.allTimePressBtnSelected) {
+        if (this.state.allTimePressBtnSelected==='true') {
             return(
                 <View  style={{height:8, width:8, borderRadius:4,backgroundColor:'#e5151d'}}>
                 </View>
@@ -183,6 +184,7 @@ export default class BusinessTimeView extends Component{
     }
 
     render() {
+        console.log("false有限，TRUE无限render="+this.state.allTimePressBtnSelected);
         return (
             <View
                 style = {styles.container}>
@@ -201,7 +203,7 @@ export default class BusinessTimeView extends Component{
                             <View style={ styles.selectBtnStyle}>
                             {this.renderselectTimeBtn()}
                             </View>}
-                        {this.state.selectTimeBtnSelected == true&&this.props.isFocus === true ?
+                        {this.state.allTimePressBtnSelected === 'false' &&this.props.isFocus === true ?
                             <TouchableOpacity style={ styles.leftdownDrapViewStyle} onPress={() => {
                                 this._hideAlert("firstTime")
                             }}>
@@ -226,7 +228,7 @@ export default class BusinessTimeView extends Component{
                             </View>
                         }
                         <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 8, marginRight:8,width:20}]}></View>
-                        {this.state.selectTimeBtnSelected == true &&this.props.isFocus === true?
+                        {this.state.allTimePressBtnSelected ==='false' &&this.props.isFocus === true?
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")
                         }}>

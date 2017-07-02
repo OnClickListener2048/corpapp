@@ -159,14 +159,14 @@ export default class GetLicensePage extends Component{
                         loaded:true,
                             bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
-                            city	: responseData.data.city,        //市
+                            city	: responseData.data.corpAddressArea.cityId,        //市
                             contactName:	responseData.data.contactName,    //联系人名称
                             contactPhone:	responseData.data.contactPhone,    //联系人电话
                             corpAddress:	responseData.data.corpAddress,     //公司地址
                             corpName:	responseData.data.corpName,          //公司名称
                             corpType:	responseData.data.corpType,          //企业类型
                             corpTypeId:responseData.data.corpTypeId,
-                        district:	responseData.data.district,          //县或区
+                            district:	responseData.data.corpAddressArea.districtId,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
                             idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
                             industry:	responseData.data.industry,           //所属行业
@@ -181,6 +181,7 @@ export default class GetLicensePage extends Component{
                             taskId:	responseData.data.taskId,          //任务ID, 必填
                             unlimited:responseData.data.bizTime.unlimited,        //营业期限不限
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
+                            selectAreaCode:[responseData.data.corpAddressArea.cityId,responseData.data.corpAddressArea.districtId],
                     });
                     console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
 
@@ -255,7 +256,7 @@ export default class GetLicensePage extends Component{
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 console.log("提交成功cc" , responseData);
-
+                Toast.show('提交成功');
                 if(responseData !== null && responseData.data !== null) {
 
                     console.log("提交成功" , responseData.data);
@@ -269,7 +270,7 @@ export default class GetLicensePage extends Component{
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                // Toast.show('提交失败' + JSON.stringify(e));
+                Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -339,7 +340,8 @@ export default class GetLicensePage extends Component{
                 callbackAll={this._unlimit.bind(this)}
                 firstDate={this.state.startDate}
                 lastDate={this.state.endDate}
-                isFocus={this.state.editables}/>
+                isFocus={this.state.editables}
+                allTimePressBtnSelected={this.state.unlimited}/>
     }
 
 
@@ -847,7 +849,7 @@ export default class GetLicensePage extends Component{
                             {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
                                 this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
-                                    <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
+                                    <Image source={{uri: this.state.detailObj.idCards+""}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
@@ -856,7 +858,7 @@ export default class GetLicensePage extends Component{
                             {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
                                 this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
-                                    <Image source={{uri: 'https://' + this.state.detailObj.idCards}}
+                                    <Image source={{uri: this.state.detailObj.idCards+""}}
                                            style={{marginTop: 15, height: 75, width: 110}}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
@@ -950,7 +952,7 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
-                                    <Image source={{uri: 'http://' + this.state.detailObj.bizLics}}
+                                    <Image source={{uri:this.state.detailObj.bizLics+""}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
                             }
@@ -960,7 +962,7 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
-                                    <Image source={{uri: 'https://' + this.state.detailObj.bizLics}}
+                                    <Image source={{uri: this.state.detailObj.bizLics+""}}
                                            style={{marginTop: 10, height: 75, width: 110}}/> :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
                             }
