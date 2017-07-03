@@ -47,6 +47,8 @@ export default class MessageCenterPage extends Component {
              // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
+        this.isLoading = false;
+
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
 
@@ -122,6 +124,12 @@ export default class MessageCenterPage extends Component {
 
         this.lastID = null;
 
+        if (this.isLoading){
+            return;
+        }
+
+        this.isLoading = true;
+
         apis.loadMessageData(this.pageCount,'').then(
 
         (responseData) => {
@@ -159,6 +167,8 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
+                this.isLoading = false;
+
             }
             },
             (e) => {
@@ -168,6 +178,8 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
+                this.isLoading = false;
+
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -180,9 +192,16 @@ export default class MessageCenterPage extends Component {
             return;
         }
 
+        if (this.isLoading){
+            return;
+        }
+
+        this.isLoading = true;
+
         apis.loadMessageData(this.pageCount,this.lastID).then(
 
             (responseData) => {
+
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
                 this.lastID = null
@@ -213,10 +232,14 @@ export default class MessageCenterPage extends Component {
                     this.setState({ foot:1});
 
                 }
+                this.isLoading = false;
+
             },
             (e) => {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
+                this.isLoading = false;
+
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
