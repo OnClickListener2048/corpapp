@@ -372,21 +372,6 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
-
-            this.props.navigator.push({
-                screen: 'MyOutSideTaskPage',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-
-                passProps: {
-                    taskId:outPageId,
-                }
-            });
-
-        if (rowData.read === 'false'){
-            this._readed(msgId,rowData);
-        }
-
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
 
@@ -410,6 +395,21 @@ export default class MessageCenterPage extends Component {
                     }
             }
         }
+            this.props.navigator.push({
+                screen: 'MyOutSideTaskPage',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+
+                passProps: {
+                    taskId:outPageId,
+                }
+            });
+
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
+
+
 
     }
 
