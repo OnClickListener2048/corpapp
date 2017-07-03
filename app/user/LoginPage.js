@@ -300,7 +300,7 @@ export default class LoginPage extends Component {
                                                    }
                                                    this.setState({timerButtonClicked: false});
 
-                                                   mobile = mobile.replace(/[^\d]/g,'');
+                                                   mobile = mobile.replace(/[^\d]/g,'');// 过滤非数字输入
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
                                                    this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
