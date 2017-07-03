@@ -367,6 +367,17 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
+
+            this.props.navigator.push({
+                screen: 'MyOutSideTaskPage',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+
+                passProps: {
+                    taskId:outPageId,
+                }
+            });
+
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
@@ -395,25 +406,11 @@ export default class MessageCenterPage extends Component {
             }
         }
 
-        // console.log('jumpUriId ===' + outPageId);
-
-            this.props.navigator.push({
-                screen: 'MyOutSideTaskPage',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-
-                passProps: {
-                    taskId:outPageId,
-                }
-            });
-
     }
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        if (rowData.read === 'false'){
-            this._readed(msgId,rowData);
-        }
+
             this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -423,6 +420,9 @@ export default class MessageCenterPage extends Component {
                     contentJson:contentJson,
                 }
             });
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
     }
 
 
