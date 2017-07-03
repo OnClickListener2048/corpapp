@@ -55,14 +55,12 @@ export default class MyOutSideWorkPage extends Component{
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
-                InteractionManager.runAfterInteractions(() => {
                     this.props.navigator.push({
                         screen: 'MyOutSideWorkItemPage',
                         backButtonTitle: '返回', // 返回按钮的文字 (可选)
                         backButtonHidden: false, // 是否隐藏返回按钮 (可选)
                         title:'我的外勤',
                     });
-                });
             }
         }
 
@@ -75,7 +73,6 @@ export default class MyOutSideWorkPage extends Component{
             status: statusId,
         });
 
-            InteractionManager.runAfterInteractions(() => {
                 this.props.navigator.push({
                     screen: 'MyOutSideTaskPage',
                     backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -85,7 +82,6 @@ export default class MyOutSideWorkPage extends Component{
                         callback : this._loadCount
                     }
                 });
-            });
     }
 
     componentWillMount() {

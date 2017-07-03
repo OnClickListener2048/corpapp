@@ -115,8 +115,13 @@ export default class  CompanyAddressView extends Component{
 
 
     setArea(data:[]) {
-        this.setState({city:data[0],
-            district:data[1]});
+
+        if (data.length == 1 && data[0].length > 0 ){
+            this.setState({city:data[0]});
+        }else if (data.length > 1){
+            this.setState({city:data[0].length > 0 ? data[0] : '市',
+                district:data[1].length > 0 ? data[1] : '区'});
+        }
     }
 
     _leftTimePress(){

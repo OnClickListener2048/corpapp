@@ -228,9 +228,7 @@ export default class LoginPage extends Component {
                         v => {
                             // this.readUserInfo();
                             // 到载入页
-                            InteractionManager.runAfterInteractions(() => {
                                 navToBootstrap();
-                            });
                         },
                         e => console.log(e.message)
                     );
