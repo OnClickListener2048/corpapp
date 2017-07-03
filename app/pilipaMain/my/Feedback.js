@@ -57,6 +57,7 @@ export default class Feedback extends Component {
 
     render() {
         return (
+            <TouchableWithoutFeedback onPress={dismissKeyboard}>
             <View style={styles.container}>
 
                 <View style={styles.inputArea}>
@@ -99,6 +100,7 @@ export default class Feedback extends Component {
                 </TouchableWithoutFeedback>
 
             </View>
+            </TouchableWithoutFeedback>
         );
     }
 

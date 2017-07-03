@@ -4,12 +4,13 @@
 import React, {Component} from 'react';
 // import React, {} from 'index';
 
-import {Dimensions, InteractionManager} from 'react-native';
+import {Dimensions, InteractionManager, DeviceEventEmitter} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import { PullList } from 'react-native-pull';
 import NoMessage from '../test/NoMessage';
+import {navToLogin, navToMainTab} from '../navigation';
 
 import {
     AppRegistry,
@@ -293,6 +294,11 @@ export default class MessageCenterPage extends Component {
     componentDidMount() {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
+        // 跳转登录页的通知
+        this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
+            navToLogin();
+        });
+
         this._loadAllUnRead();
 
         try {
@@ -352,6 +358,8 @@ export default class MessageCenterPage extends Component {
             JPushModule.removeReceiveNotificationListener();
         } catch (e) {
         }
+        // 销毁
+        this.subscription.remove();
     }
 
     componentWillMount() {

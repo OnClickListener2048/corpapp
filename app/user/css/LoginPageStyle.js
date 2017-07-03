@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     textInputContainer: {
         height: px2dp(88),
         // width: SCREEN_WIDTH,
-        // backgroundColor: '#FFDDFF',
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent:'center'
     },
