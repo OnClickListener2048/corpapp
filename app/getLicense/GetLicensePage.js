@@ -36,6 +36,7 @@ import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
 import MultiTextInputView from "./view/MultiTextInputView";
 import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
+import ImageLoad from "../view/ImageLoad";
 
 const window = Dimensions.get('window');
 
@@ -208,7 +209,7 @@ export default class GetLicensePage extends Component{
                     loaded:false,
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -249,7 +250,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -275,7 +276,7 @@ export default class GetLicensePage extends Component{
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                Toast.show('提交失败' + JSON.stringify(e));
+                // Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -725,7 +726,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -767,7 +768,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -860,8 +861,10 @@ export default class GetLicensePage extends Component{
                             {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
                                 this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
-                                    <Image source={{uri: this.state.detailObj.idCards+""}}
-                                           style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    <ImageLoad
+                                        style={{ marginTop: 15, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.idCards+"" }}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity> :
@@ -869,8 +872,11 @@ export default class GetLicensePage extends Component{
                             {this.state.reImage != null ?
                                 <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
                                 this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
-                                    <Image source={{uri: this.state.detailObj.idCards+""}}
-                                           style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    <ImageLoad
+                                        style={{ marginTop: 15, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.idCards+"" }}
+                                    />:
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </View>
@@ -964,8 +970,10 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
-                                    <Image source={{uri:this.state.detailObj.bizLics+""}}
-                                           style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    <ImageLoad
+                                        style={{ marginTop: 20, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.bizLics+"" }}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
@@ -974,8 +982,10 @@ export default class GetLicensePage extends Component{
                             {this.state.linImage !== null ?
                                 <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
-                                    <Image source={{uri: this.state.detailObj.bizLics+""}}
-                                           style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    <ImageLoad
+                                        style={{ marginTop: 20, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.bizLics+"" }}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
