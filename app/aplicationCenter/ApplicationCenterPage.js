@@ -86,6 +86,10 @@ export default class ApplicationCenterPage extends Component{
                         this.refs.myoutItem._setBageNum(this.state.bdNum);
                     }
 
+                    this.props.navigator.setTabBadge({
+                        badge: this.state.bdNum <= 0 ? null : this.state.bdNum // 数字气泡提示, 设置为null会删除
+                    });
+
                 }
             },
             (e) => {

@@ -81,7 +81,8 @@ export default class Settings extends Component {
                 {/*   手机号 */}
                 {this.state.bindNewMobile &&
                 <View style={styles.textInputContainer}>
-                    <Image source={require('../../img/account_red.png')} style={settingStyles.inputLogo}/>
+                    <Image source={ this.state.newMobileValid ? require('../../img/account_red.png') :
+                        require('../../img/account.png')} style={settingStyles.inputLogo}/>
                     <View style={settingStyles.textInputWrapper}>
                         <TextInput underlineColorAndroid='transparent' maxLength={11}
                                    keyboardType='numeric' value={this.state.newMobile}
@@ -89,11 +90,16 @@ export default class Settings extends Component {
                                    onChangeText={
                                        (newMobile) => {
                                            // 如果手机号改了, 马上就重置获取验证码?
-                                           if (this.refs.timerButton.state.counting) {
+                                           if (!this.refs.timerButton.state.counting) {
                                                this.refs.timerButton.reset();
                                            }
                                            this.setState({timerButtonClicked: false});
+                                           newMobile = newMobile.replace(/[^\d]/g, '');// 过滤非数字输入
                                            let newMobileValid = newMobile.length > 0 && (newMobile.match(/^([0-9]{11})?$/)) !== null;
+                                           if(newMobile === this.state.phone) {
+                                               Toast.show("对不起, 不能输入当前登录用户的手机号进行绑定");
+                                               newMobileValid = false;
+                                           }
                                            this.setState({newMobile, newMobileValid});
                                        }
                                    }/>
@@ -104,7 +110,7 @@ export default class Settings extends Component {
                 {/*  验证码 */}
                 <View style={styles.textInputContainer}>
                     <Image
-                        source={ this.state.smsCodeValid ? require('../../img/d123_red.png') :
+                        source={ this.state.oldSmsCodeValid || this.state.newSmsCodeValid ? require('../../img/d123_red.png') :
                             require('../../img/d123.png')}
                         style={settingStyles.inputLogo}/>
                     <View style={settingStyles.textInputWrapper}>
@@ -138,7 +144,7 @@ export default class Settings extends Component {
                             marginRight: 1
                         }}/>
 
-                        <TimerButton enable={!this.state.oldSmsCodeValid || this.state.newMobileValid }
+                        <TimerButton enable={this.state.bindNewMobile ? this.state.newMobileValid  : !this.state.oldSmsCodeValid }
                                      ref="timerButton"
                                      style={{width: 70, marginRight: 0, height: 44, alignSelf: 'flex-end',}}
                                      textStyle={{color: '#ef0c35', alignSelf: 'flex-end'}}
@@ -172,7 +178,7 @@ export default class Settings extends Component {
     _requestSMSCode(shouldStartCountting) {
         console.log('_requestSMSCode shouldStartCountting', shouldStartCountting);
         if (!this.state.oldSmsCodeValid || this.state.newMobileValid) {
-            apis.sendVerifyCode( this.state.newMobileValid ?
+            apis.sendVerifyCode(this.state.newMobileValid ?
                 this.state.newMobile : this.state.phone
             ).then(
                 (responseData) => {
@@ -193,7 +199,7 @@ export default class Settings extends Component {
             apis.editPhoneBind(this.state.newMobile, this.state.smsCode).then(
                 (responseData) => {
                     SActivityIndicator.hide(loading);
-                    Alert.alert('您的手机号码已更换成功\n需重新登录', '',
+                    Alert.alert('绑定成功', '',
                         [
                             {
                                 text: '确定',
@@ -227,10 +233,8 @@ export default class Settings extends Component {
                         bindNewMobile: true, smsCode: '',
                         oldSmsCodeValid: false, newSmsCodeValid: false, submitButtonText: '绑定'
                     });
-                    if (this.refs.timerButton.state.counting) {
-                        this.refs.timerButton.reset();
-                        this.setState({timerButtonClicked: false});
-                    }
+                    this.refs.timerButton.reset();
+                    this.setState({timerButtonClicked: false});
                 },
                 (e) => {
                     SActivityIndicator.hide(loading);

@@ -10,7 +10,7 @@
  * Created by beansoft on 17/5/22.
  */
 import {
-    Platform,
+    Platform, DeviceEventEmitter
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
@@ -50,8 +50,12 @@ HTTPBase.postEx = async function (url, params= {}, headers= null) {
 
 // 通用的处理响应报文的方法
 HTTPBase._handleResponse = async function(responseJson) {
-    if(responseJson.success == true && responseJson.code == 200) {
+    if(responseJson.success === true && responseJson.code === 200) {
         return responseJson;
+    } else if(responseJson.success === false && responseJson.code === 40000003) {
+        // Token无效时自动跳转到登录页
+        DeviceEventEmitter.emit('goLoginPage', true);
+        return;
     }
     console.log("后台响应报文有误");
     return Promise.reject(responseJson);
@@ -183,7 +187,8 @@ HTTPBase._parseHttpResult = async function (response) {
         try {
             let responseJson = JSON.parse(text);
             console.log("post() will throw2 ", JSON.stringify(responseJson));
-            return Promise.reject(responseJson);
+            return HTTPBase._handleResponse(responseJson);
+            // return Promise.reject(responseJson);
         } catch (e) {
             console.log("post() will throw2 error ", e);
             return Promise.reject(this._makeErrorMsg(response));

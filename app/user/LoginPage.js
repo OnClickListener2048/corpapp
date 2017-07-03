@@ -238,6 +238,7 @@ export default class LoginPage extends Component {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
+                this._doChangeVCode();
                 let errMsg = e.msg;
                 if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';
@@ -281,7 +282,7 @@ export default class LoginPage extends Component {
                     <View style={{height: px2dp(100),}}/>
                     <KeyboardAvoidingView behavior='padding' style={[styles.containerKeyboard,
                         {backgroundColor: 'white'}]}
-                                          keyboardVerticalOffset={10}>
+                                          keyboardVerticalOffset={0}>
                         <View style={{height: 40,}}/>
                         {/*   手机号 */}
                         <View style={styles.textInputContainer}>
@@ -299,7 +300,7 @@ export default class LoginPage extends Component {
                                                    }
                                                    this.setState({timerButtonClicked: false});
 
-                                                   mobile = mobile.replace(/[^\d]/g,'');
+                                                   mobile = mobile.replace(/[^\d]/g,'');// 过滤非数字输入
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
                                                    this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
