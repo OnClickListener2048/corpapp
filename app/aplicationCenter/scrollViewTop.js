@@ -82,12 +82,12 @@ export  default class scrollViewTop extends Component {
     /**3.页面指针实现 */
     _renderAllIndicator() {
         let indicatorArr = [];
-        let style;
+        let style;//3,图片数量
         for (let i = 0; i < 3; i++) {
             //判断
             style = (i==this.state.currentPage)?{color:'#157efb'}:{color:'rgba(0,0,0,0.2)'};
             indicatorArr.push(
-                <Text key={i} style={[{fontSize:35},style]}>
+                <Text key={i} style={[{fontSize:30},style]}>
                     •
                 </Text>
             );
@@ -100,10 +100,6 @@ export  default class scrollViewTop extends Component {
 const styles = StyleSheet.create({
     continer:{
         backgroundColor: '#dddddd'
-    },
-    imageStyle:{
-        height:400,
-        width:ScreenWidth
     },
     pageViewStyle:{
         height:30,
