@@ -97,7 +97,8 @@ export default class Settings extends Component {
                                            newMobile = newMobile.replace(/[^\d]/g, '');// 过滤非数字输入
                                            let newMobileValid = newMobile.length > 0 && (newMobile.match(/^([0-9]{11})?$/)) !== null;
                                            if(newMobile === this.state.phone) {
-                                               Toast.show("对不起, 不能输入当前登录用户的手机号进行绑定");
+                                               Toast.show('对不起, 不能输入当前登录用户的手机号进行绑定 ',
+                                                   {position: Toast.positions.CENTER, duration: Toast.durations.LONG, backgroundColor: 'black'});
                                                newMobileValid = false;
                                            }
                                            this.setState({newMobile, newMobileValid});
@@ -183,7 +184,9 @@ export default class Settings extends Component {
             ).then(
                 (responseData) => {
                     // Toast.show('短信验证码已发送');
-                    Toast.show('测试环境短信验证码:' + responseData.msg);
+                    // Toast.show('测试环境短信验证码:' + responseData.msg);
+                    Toast.show('测试环境短信验证码 ' + responseData.msg,
+                        {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
                 }, (e) => {
                     Toast.show('短信验证码获取失败');
                 }
