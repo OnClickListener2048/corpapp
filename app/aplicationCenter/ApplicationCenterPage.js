@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity
-,InteractionManager} from 'react-native';
+,InteractionManager,Platform} from 'react-native';
 
 import {loadOutSourceCount} from "../apis/outSource";
 import {
@@ -18,10 +18,8 @@ import styles from './css/ApplictionCenterPageStyle'
 const window = Dimensions.get('window');
 import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
-import AlertPhotoModal from "../view/AlertPhotoModal";
-import DataTimerView from "../view/DataTimerView";
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
+import ScrollViewTop from "./scrollViewTop";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -132,10 +130,13 @@ export default class ApplicationCenterPage extends Component{
 
                 titleItem = {() => ApplicationCenterPage.renderTitleItem()}
             />
+            {Platform.OS === 'ios' ?
             <Swiper height={200}
             >
                 {this.renderImg()}
-            </Swiper>
+            </Swiper>:
+                <ScrollViewTop/>
+            }
 
             <View style={styles.applicationViewContainer}>
 
