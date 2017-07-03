@@ -10,6 +10,7 @@ import NoMessage from "../test/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
+import { PullList } from 'react-native-pull';
 
 export default class MyOutSideWorkItemPage extends Component{
 
@@ -104,6 +105,48 @@ export default class MyOutSideWorkItemPage extends Component{
         );
     }
 
+    _loadAgainList(resolve){
+        let taskType = this.props.label==null?'all':this.props.label;
+        loadOutSourceList(1000,'',taskType).then(
+
+            (responseData) => {
+
+                if(responseData !== null && responseData.data !== null) {
+                    this.outList = [];
+                    console.log("开始请求2----"+responseData.data);
+                    this.outList= this.outList.concat(responseData.data);
+                    console.log("开始请求outlist----"+this.outList);
+
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                    });
+                    // 关闭刷新动画
+                    if (resolve !== undefined){
+                        setTimeout(() => {
+                            resolve();
+                        }, 1000);
+                    }
+
+                }
+            },
+            (e) => {
+                // 关闭刷新动画
+                if (resolve !== undefined){
+                    setTimeout(() => {
+                        resolve();
+                    }, 1000);
+                }
+                console.log("获取失败" , e);
+                this.setState({
+                    dataFaild:true,
+                });
+                // Toast.show('获取失败' + JSON.stringify(e));
+            },
+        );
+
+    }
+
     _renderRow(rowData) {
         let statusicon = rowData.taskName.substring(0,1);
         if(rowData.taskStatus==='已取消'){
@@ -160,9 +203,14 @@ export default class MyOutSideWorkItemPage extends Component{
         }else {
             return (
 
-                <ListView
+                <PullList
+                    onPullRelease={(resolve) => this._loadAgainList(resolve)}     // 下拉刷新操作
                     dataSource={this.state.dataSource}
                     renderRow={(rowData) => this._renderRow(rowData)}
+                    showsHorizontalScrollIndicator={false}      // 隐藏水平指示器
+                    initialListSize={7}                         // 优化:一次渲染几条数据
+                    enableEmptySections={true}
+                    removeClippedSubviews={true}                // 优化
                 />
 
 
