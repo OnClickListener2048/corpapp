@@ -124,7 +124,12 @@ export default class GetLicensePage extends Component{
         if(status===1){
             this.setState({
                 inProgressEdit:true,
+
             });
+            this._loadData();
+            if(this.refs.companyInfoView) {
+                this.refs.companyInfoView.setRefresh(true);
+            }
         }else{
             this.setState({
                 inProgressEdit:false,
@@ -283,7 +288,9 @@ export default class GetLicensePage extends Component{
     renderTest() {
         if (this.state.loaded === true) {
             console.log(""+this.state.editables);
-            return <CompanyInfoView companyName={this.state.detailObj.corpName}
+            return <CompanyInfoView
+                ref="companyInfoView"
+                companyName={this.state.detailObj.corpName}
                                     ContactsName={this.state.detailObj.contactName}
                                     ContactsPhone={this.state.detailObj.contactPhone}
                                     SalesName={this.state.detailObj.salesmanName}
