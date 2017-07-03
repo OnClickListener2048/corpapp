@@ -79,6 +79,7 @@ const stylesMulti = StyleSheet.create({
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(30),
-        textAlign: 'left'
+        textAlign: 'left',
+        color:'#323232',
     },
 });
