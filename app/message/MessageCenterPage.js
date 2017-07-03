@@ -411,11 +411,13 @@ export default class MessageCenterPage extends Component {
                 let subParam = paramsArr[i];
 
                 let specArr = subParam.split('=');
-                if (specArr.length > 1)
+                if (specArr.length > 1) {
 
                     if (specArr[0] === 'id') {
                         outPageId = specArr[1];
+                        break;
                     }
+                }
             }
         }
             this.props.navigator.push({
