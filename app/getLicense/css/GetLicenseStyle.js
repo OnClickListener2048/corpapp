@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
         width: px2dp(438),
         marginLeft: px2dp(0),
         padding: 0,
+        color:'#323232',
         fontSize: px2dp(30),
     },
 
