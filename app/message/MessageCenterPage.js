@@ -177,6 +177,9 @@ export default class MessageCenterPage extends Component {
 
             (responseData) => {
 
+                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
+
+
                 this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
@@ -203,10 +206,6 @@ export default class MessageCenterPage extends Component {
                     //当当前返回的数据小于PageSize时，认为已加载完毕
                 }else{//设置foot 隐藏Footer
                     this.setState({ foot:1});
-
-                }
-
-                if(responseData !== null && responseData.data !== null) {
 
                 }
             },
@@ -396,11 +395,8 @@ export default class MessageCenterPage extends Component {
             }
         }
 
-        console.log('jumpUriId ===' + outPageId);
+        // console.log('jumpUriId ===' + outPageId);
 
-        // let  a = jumpUri
-
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -410,7 +406,7 @@ export default class MessageCenterPage extends Component {
                     taskId:outPageId,
                 }
             });
-        });
+
     }
 
 
@@ -418,7 +414,6 @@ export default class MessageCenterPage extends Component {
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -428,7 +423,6 @@ export default class MessageCenterPage extends Component {
                     contentJson:contentJson,
                 }
             });
-        });
     }
 
 
@@ -462,9 +456,9 @@ export default class MessageCenterPage extends Component {
     }
 
     _endReached(){
-        if(this.state.foot != 0 ){
-            return ;
-        }
+        // if(this.state.foot != 0 ){
+        //     return ;
+        // }
         this.setState({
             foot:2,
         });

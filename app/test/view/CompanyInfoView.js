@@ -23,8 +23,10 @@ export default class CompanyInfoView extends React.Component {
             SalesName: this.props.SalesName,
             SalesPhone: this.props.SalesPhone,
             isFocusData:this.props.isFocusData,
+            isRefresh:true,
         }
         this.setCompanyInfo = this.setCompanyInfo.bind(this);
+        this.setRefresh = this.setRefresh.bind(this);
     }
 
     static propTypes = {
@@ -72,9 +74,15 @@ export default class CompanyInfoView extends React.Component {
         this.props.callbackPho(contentPho);
     }
 
+    setRefresh(refresh) {
+        this.setState({isRefresh : refresh});
+    }
+
     render() {
        // const { style} = this.props
-        const {companyName,ContactsName,ContactsPhone,SalesName,SalesPhone} = this.state
+        const {companyName,ContactsName,ContactsPhone,SalesName,SalesPhone} = this.props
+        if(this.state.isRefresh || !this.state.isRefresh){
+            console.log("isrefresh" + this.state.ContactsPhone);
         return (
             <View
                 style={styles.companyInfoViewContainer}>
@@ -290,7 +298,7 @@ export default class CompanyInfoView extends React.Component {
                 </View>
 
             </View>
-        )
+        )}
     }
 }
 

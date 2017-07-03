@@ -3,7 +3,7 @@
  */
 import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity
-,InteractionManager} from 'react-native';
+,InteractionManager,Platform} from 'react-native';
 
 import {loadOutSourceCount} from "../apis/outSource";
 import {
@@ -16,12 +16,9 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
 import styles from './css/ApplictionCenterPageStyle'
 const window = Dimensions.get('window');
-import Swiper from 'react-native-swiper'
 import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
-import AlertPhotoModal from "../view/AlertPhotoModal";
-import DataTimerView from "../view/DataTimerView";
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
+import ScrollViewTop from "./scrollViewTop";
 
 export const SCREEN_WIDTH = window.width;
 export default class ApplicationCenterPage extends Component{
@@ -53,7 +50,6 @@ export default class ApplicationCenterPage extends Component{
     }
 
     toMyOutSideWork(){
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'MyOutSideWorkPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -61,28 +57,6 @@ export default class ApplicationCenterPage extends Component{
                 title:'我的外勤',
 
             });
-        });
-    }
-
-    renderImg(){
-        var imageViews=[];
-        for(var i=0;i<3;i++) {
-            if (i === 0) {
-            var image = require('../img/banner.png');
-            }else if(i===1){
-                var image = require('../img/banner1.png');
-            }else if(i===2){
-                var image = require('../img/banner2.png');
-            }
-            imageViews.push(
-                <Image
-                    key={i}
-                    style={{flex:1}}
-                    source={image}
-                />
-            );
-        }
-        return imageViews;
     }
 
     componentWillMount() {
@@ -136,10 +110,7 @@ export default class ApplicationCenterPage extends Component{
 
                 titleItem = {() => ApplicationCenterPage.renderTitleItem()}
             />
-            <Swiper height={200}
-            >
-                {this.renderImg()}
-            </Swiper>
+            <ScrollViewTop/>
 
             <View style={styles.applicationViewContainer}>
 
