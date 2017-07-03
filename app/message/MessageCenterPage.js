@@ -40,6 +40,7 @@ export default class MessageCenterPage extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,                   // 是否初始化 ListView
+            faild : false,
             bagetNum : 0,
         }
         this.foot = 0;
@@ -105,6 +106,12 @@ export default class MessageCenterPage extends Component {
             (e) => {
                 SActivityIndicator.hide(loading);
                 // 关闭刷新动画
+                this.setState({
+                    loaded:true,
+                    faild: true,
+                });
+
+
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -178,15 +185,13 @@ export default class MessageCenterPage extends Component {
             (responseData) => {
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
+                this.lastID = null
 
 
                 this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = responseData.data[this.pageCount - 1].msgId;
-
-                }else {
-                    this.lastID = null;
                 }
 
 
@@ -515,6 +520,17 @@ export default class MessageCenterPage extends Component {
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                 </View>
+            );
+        }else if (this.state.faild == true) {      // 数据加载失败
+            return(
+                    <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadData()}}>
+
+                         <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                         <NoMessage
+                            textContent='加载失败，点击重试'
+                          active={require('../img/load_failed.png')}/>
+                     </View>
+            </TouchableOpacity>
             );
         }else if (this.messageArr.length == 0){
 
