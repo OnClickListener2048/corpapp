@@ -50,7 +50,6 @@ export default class ApplicationCenterPage extends Component{
     }
 
     toMyOutSideWork(){
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'MyOutSideWorkPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -58,7 +57,6 @@ export default class ApplicationCenterPage extends Component{
                 title:'我的外勤',
 
             });
-        });
     }
 
     componentWillMount() {

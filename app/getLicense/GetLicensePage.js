@@ -191,7 +191,7 @@ export default class GetLicensePage extends Component{
                     console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
 
 
-                    if(this.state.selectArea.length > 1 && this.state.selectArea[0].length > 0 && this.state.selectArea[1].length > 0 && this.refs.companyAddressView) {
+                    if(this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
                     }
 

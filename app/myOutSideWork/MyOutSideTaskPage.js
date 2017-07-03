@@ -113,9 +113,6 @@ export default class MyOutSideTaskPage extends Component{
 //跳转客户审核具体信息
     toLicense(stepId){
         this.state.currentStepId = stepId;
-
-
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -126,7 +123,6 @@ export default class MyOutSideTaskPage extends Component{
                     callback : this._loadData
                 }
             });
-        });
     }
 
     renderExpenseItem(item , i) {

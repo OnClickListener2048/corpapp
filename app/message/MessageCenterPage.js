@@ -208,10 +208,6 @@ export default class MessageCenterPage extends Component {
                     this.setState({ foot:1});
 
                 }
-
-                // if(responseData !== null && responseData.data !== null) {
-                //
-                // }
             },
             (e) => {
                 // 关闭刷新动画
@@ -399,11 +395,8 @@ export default class MessageCenterPage extends Component {
             }
         }
 
-        console.log('jumpUriId ===' + outPageId);
+        // console.log('jumpUriId ===' + outPageId);
 
-        // let  a = jumpUri
-
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -413,7 +406,7 @@ export default class MessageCenterPage extends Component {
                     taskId:outPageId,
                 }
             });
-        });
+
     }
 
 
@@ -421,7 +414,6 @@ export default class MessageCenterPage extends Component {
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
-        InteractionManager.runAfterInteractions(() => {
             this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -431,7 +423,6 @@ export default class MessageCenterPage extends Component {
                     contentJson:contentJson,
                 }
             });
-        });
     }
 
 
