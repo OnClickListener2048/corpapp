@@ -40,12 +40,15 @@ export default class MessageCenterPage extends Component {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             loaded:false,                   // 是否初始化 ListView
+            faild : false,
             bagetNum : 0,
         }
         this.foot = 0;
              // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
+        this.isLoading = false;
+
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
 
@@ -105,6 +108,12 @@ export default class MessageCenterPage extends Component {
             (e) => {
                 SActivityIndicator.hide(loading);
                 // 关闭刷新动画
+                this.setState({
+                    loaded:true,
+                    faild: true,
+                });
+
+
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -114,6 +123,12 @@ export default class MessageCenterPage extends Component {
     _loadData(resolve) {
 
         this.lastID = null;
+
+        if (this.isLoading){
+            return;
+        }
+
+        this.isLoading = true;
 
         apis.loadMessageData(this.pageCount,'').then(
 
@@ -152,6 +167,8 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
+                this.isLoading = false;
+
             }
             },
             (e) => {
@@ -161,6 +178,8 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
+                this.isLoading = false;
+
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -173,20 +192,25 @@ export default class MessageCenterPage extends Component {
             return;
         }
 
+        if (this.isLoading){
+            return;
+        }
+
+        this.isLoading = true;
+
         apis.loadMessageData(this.pageCount,this.lastID).then(
 
             (responseData) => {
 
+
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
+                this.lastID = null
 
 
                 this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = responseData.data[this.pageCount - 1].msgId;
-
-                }else {
-                    this.lastID = null;
                 }
 
 
@@ -208,10 +232,14 @@ export default class MessageCenterPage extends Component {
                     this.setState({ foot:1});
 
                 }
+                this.isLoading = false;
+
             },
             (e) => {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
+                this.isLoading = false;
+
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
@@ -367,10 +395,6 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
-        if (rowData.read === 'false'){
-            this._readed(msgId,rowData);
-        }
-
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
 
@@ -387,16 +411,15 @@ export default class MessageCenterPage extends Component {
                 let subParam = paramsArr[i];
 
                 let specArr = subParam.split('=');
-                if (specArr.length > 1)
+                if (specArr.length > 1) {
 
                     if (specArr[0] === 'id') {
                         outPageId = specArr[1];
+                        break;
                     }
+                }
             }
         }
-
-        // console.log('jumpUriId ===' + outPageId);
-
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -407,13 +430,17 @@ export default class MessageCenterPage extends Component {
                 }
             });
 
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
+
+
+
     }
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        if (rowData.read === 'false'){
-            this._readed(msgId,rowData);
-        }
+
             this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -423,6 +450,9 @@ export default class MessageCenterPage extends Component {
                     contentJson:contentJson,
                 }
             });
+        if (rowData.read === 'false'){
+            this._readed(msgId,rowData);
+        }
     }
 
 
@@ -515,6 +545,17 @@ export default class MessageCenterPage extends Component {
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                 </View>
+            );
+        }else if (this.state.faild == true) {      // 数据加载失败
+            return(
+                    <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadData()}}>
+
+                         <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                         <NoMessage
+                            textContent='加载失败，点击重试'
+                          active={require('../img/load_failed.png')}/>
+                     </View>
+            </TouchableOpacity>
             );
         }else if (this.messageArr.length == 0){
 
