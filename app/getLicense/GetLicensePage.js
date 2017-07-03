@@ -157,7 +157,7 @@ export default class GetLicensePage extends Component{
                         allowEditInfo:responseData.data.allowEditInfo,
                         inProgressEdit : (responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
-                            bizLics:	responseData.data.bizLics,//营业执照
+                            // bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
                             city	: responseData.data.corpAddressArea.cityId,        //市
                             contactName:	responseData.data.contactName,    //联系人名称
@@ -168,7 +168,7 @@ export default class GetLicensePage extends Component{
                             corpTypeId:responseData.data.corpTypeId,
                             district:	responseData.data.corpAddressArea.districtId,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
-                            idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
+                            // idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
                             industry:	responseData.data.industry,           //所属行业
                         industryId:responseData.data.industryId,
                             legalEntity:	responseData.data.legalEntity,//法人
@@ -516,7 +516,7 @@ export default class GetLicensePage extends Component{
 
         if(this.state.photoType=="reverse"){
             let rePhoto = {
-                uri: image,
+                uri: image.uri,
                 type: 'reImage/jpeg',
                 name: 'reImage.jpg',
             };
@@ -526,11 +526,11 @@ export default class GetLicensePage extends Component{
                 reImage: image,
                 visible:visible,
                 idCards:rePhoto,
-
+                // idCards:image,
             });
         }else{
             let linPhoto = {
-                uri: image,
+                uri: image.uri,
                 type: 'linImage/jpeg',
                 name: 'linImage.jpg',
             };
@@ -538,7 +538,7 @@ export default class GetLicensePage extends Component{
                 linImage: image,
                 visible:visible,
                 bizLics:linPhoto,
-
+                // bizLics:image,
             });
         }
 
