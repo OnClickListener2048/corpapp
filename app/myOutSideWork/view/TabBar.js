@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     paddingRight: 0,
   },
   tabs: {
-    height:46,
+    height:47,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
