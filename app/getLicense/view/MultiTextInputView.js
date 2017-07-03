@@ -35,10 +35,10 @@ export default class MultiTextInputView extends Component {
 
     render(){
         return(
-            <View style={styles.container}>
+            <View style={[styles.container,]}>
                 <View style={styles.registerNumStyle}>
                     <Text style={[{
-                        marginLeft : 15,fontSize:15},
+                        marginLeft : 15,fontSize:15,marginTop:5},
                         this.props.inputWidth,]}>{this.props.textName}</Text>
                 <View style={stylesMulti.inputArea}>
                         <TextInput underlineColorAndroid='transparent'
@@ -64,8 +64,8 @@ export default class MultiTextInputView extends Component {
 const stylesMulti = StyleSheet.create({
 
     inputArea: {
-        height: px2dp(100),
-        width: width,
+        height: px2dp(110),
+        width: width- 110,
         justifyContent: 'flex-start',
         marginLeft: 0,
         marginTop: 0,
@@ -75,7 +75,7 @@ const stylesMulti = StyleSheet.create({
     },
     textInputMultiLine: {
         flex: 1,
-        width: width - 100,
+        width: width - 110,
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(30),

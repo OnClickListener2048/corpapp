@@ -935,8 +935,9 @@ export default class GetLicensePage extends Component{
                                    }/>
                     </View>
                 </View>
+                <View style={{paddingTop: 10,backgroundColor:'white'}}>
                 <View
-                    style={{paddingTop: 0, backgroundColor: 'white', height: 60}}>
+                    style={{ backgroundColor: 'white', height: 60}}>
                 <MultiTextInputView
                 textName={'经营范围：'}
                 inputWidth={{width: 80}}
@@ -945,29 +946,30 @@ export default class GetLicensePage extends Component{
                 content={this.state.detailObj.bizRange}
                 textEditable={this.state.editables}/>
                 </View>
+                </View>
 
                 <View style={[styles.identityCardPhoto, {height: 150}]}>
-                <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>经营执照：</Text>
+                <Text style={{marginLeft: 20, fontSize: 15, marginTop: 20}}>经营执照：</Text>
                     {this.state.editables === true ?
                         <TouchableOpacity onPress={() => {
                             this.toAlertModal("blicense")
                         }}>
                             {this.state.linImage !== null ?
-                                <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
                                     <Image source={{uri:this.state.detailObj.bizLics+""}}
-                                           style={{marginTop: 10, height: 75, width: 110}}/> :
-                                    <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
+                                           style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
                         </TouchableOpacity> :
                         <View>
                             {this.state.linImage !== null ?
-                                <Image source={this.state.linImage} style={{marginTop: 10, height: 75, width: 110}}/> :
+                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
                                     <Image source={{uri: this.state.detailObj.bizLics+""}}
-                                           style={{marginTop: 10, height: 75, width: 110}}/> :
-                                    <Image source={require('../img/blicense.png')} style={{marginTop: 10}}/>
+                                           style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
                         </View>
