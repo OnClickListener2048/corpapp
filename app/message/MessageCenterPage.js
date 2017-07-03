@@ -177,6 +177,9 @@ export default class MessageCenterPage extends Component {
 
             (responseData) => {
 
+                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
+
+
                 this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
@@ -206,9 +209,9 @@ export default class MessageCenterPage extends Component {
 
                 }
 
-                if(responseData !== null && responseData.data !== null) {
-
-                }
+                // if(responseData !== null && responseData.data !== null) {
+                //
+                // }
             },
             (e) => {
                 // 关闭刷新动画
@@ -462,9 +465,9 @@ export default class MessageCenterPage extends Component {
     }
 
     _endReached(){
-        if(this.state.foot != 0 ){
-            return ;
-        }
+        // if(this.state.foot != 0 ){
+        //     return ;
+        // }
         this.setState({
             foot:2,
         });
