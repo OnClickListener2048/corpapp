@@ -178,12 +178,13 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
         manifestPlaceholders = [
-                JPUSH_APPKEY: "e8f5ec679b9976aa36858ebb",	//在此替换你的APPKey
-                APP_CHANNEL: "developer-default"		//应用渠道号
+                JPUSH_APPKEY: "e8f5ec679b9976aa36858ebb",	// JPush 的APPKey
+                APP_CHANNEL: "developer-default"		//JPush 应用渠道号
         ]
     }
 
@@ -252,8 +253,9 @@ dependencies {
     compile "com.android.support:appcompat-v7:24.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     //注释掉原有bugly的仓库
-    compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
-//    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    compile 'com.android.support:multidex:1.0.1'
+//    compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
 
 }
 

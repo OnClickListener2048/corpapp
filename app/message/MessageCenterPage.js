@@ -12,6 +12,13 @@ import { PullList } from 'react-native-pull';
 import NoMessage from '../test/NoMessage';
 import {navToLogin, navToMainTab} from '../navigation';
 
+// import {
+//     SwRefreshScrollView, //支持下拉刷新的ScrollView
+//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+// } from '../../node_modules/react-native-swRefresh-master'
+
 import {
     AppRegistry,
     StyleSheet,
@@ -43,8 +50,6 @@ export default class MessageCenterPage extends Component {
             faild : false,
             bagetNum : 0,
         }
-        this.foot = 0;
-             // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
         this.isLoading = false;
@@ -56,7 +61,8 @@ export default class MessageCenterPage extends Component {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
-        this._loadAllUnRead = this._loadAllUnRead.bind(this);
+        this.setisJumping = this.setisJumping.bind(this);
+
     }
 
     static navigatorStyle = {
@@ -76,7 +82,23 @@ export default class MessageCenterPage extends Component {
         apis.loadMessageData(this.pageCount,'').then(
 
             (responseData) => {
+
                 SActivityIndicator.hide(loading);
+                let cnt = responseData.unReadNum;
+                if(cnt !== null && cnt >= 0) {
+                    this.props.navigator.setTabBadge({
+                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                    });
+
+                    this.state.bagetNum = cnt;
+
+                    try {// 只支持iOS
+                        JPushModule.setBadge(responseData.unReadNum, (success) => {
+                            console.log("Badge", success)
+                        });
+                    } catch (e) {
+                    }
+                }
 
                 if(responseData !== null && responseData.data !== null) {
                     this.messageArr = [];
@@ -98,12 +120,6 @@ export default class MessageCenterPage extends Component {
                         loaded:true,
                     });
 
-                    if(responseData.length < this.pageCount){
-                        //当当前返回的数据小于PageSize时，认为已加载完毕
-                        this.setState({ foot:1,moreText:moreText});
-                    }else{//设置foot 隐藏Footer
-                        this.setState({foot:0});
-                    }
                 }
             },
             (e) => {
@@ -123,8 +139,9 @@ export default class MessageCenterPage extends Component {
                     });
 
                 }
-
-
+                this.props.navigator.setTabBadge({
+                    badge: null // 数字气泡提示, 设置为null会删除
+                });
 
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
@@ -136,16 +153,25 @@ export default class MessageCenterPage extends Component {
 
         this.lastID = null;
 
-        if (this.isLoading === true){
-            return;
-        }
-
-        this.isLoading = true;
 
         apis.loadMessageData(this.pageCount,'').then(
 
         (responseData) => {
-            {this._loadAllUnRead()}
+            let cnt = responseData.unReadNum;
+            if(cnt !== null && cnt >= 0) {
+                this.props.navigator.setTabBadge({
+                    badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                });
+
+                this.state.bagetNum = cnt;
+
+                try {// 只支持iOS
+                    JPushModule.setBadge(cnt, (success) => {
+                        console.log("Badge", success)
+                    });
+                } catch (e) {
+                }
+            }
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
                 this.messageArr = this.messageArr.concat(responseData.data);
@@ -166,21 +192,12 @@ export default class MessageCenterPage extends Component {
                     loaded:true,
                 });
 
-                if(responseData.length < this.pageCount){
-                    //当当前返回的数据小于PageSize时，认为已加载完毕
-                    this.setState({ foot:1,moreText:moreText});
-                }else{//设置foot 隐藏Footer
-                    this.setState({foot:0});
-                }
-
                 // 关闭刷新动画
                 if (resolve !== undefined){
                     setTimeout(() => {
                         resolve();
                     }, 1000);
                 }
-                this.isLoading = false;
-
             }
             },
             (e) => {
@@ -191,7 +208,6 @@ export default class MessageCenterPage extends Component {
                     }, 1000);
                 }
 
-                this.isLoading = false;
 
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
@@ -214,7 +230,21 @@ export default class MessageCenterPage extends Component {
         apis.loadMessageData(this.pageCount,this.lastID).then(
 
             (responseData) => {
+                let cnt = responseData.unReadNum;
+                if(cnt !== null && cnt >= 0) {
+                    this.props.navigator.setTabBadge({
+                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                    });
 
+                    this.state.bagetNum = cnt;
+
+                    try {// 只支持iOS
+                        JPushModule.setBadge(cnt, (success) => {
+                            console.log("Badge", success)
+                        });
+                    } catch (e) {
+                    }
+                }
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
                 this.lastID = null
@@ -237,14 +267,6 @@ export default class MessageCenterPage extends Component {
                     loaded:true,
                 });
 
-                if(responseData.length < this.pageCount){
-                    this.setState({foot:0});
-
-                    //当当前返回的数据小于PageSize时，认为已加载完毕
-                }else{//设置foot 隐藏Footer
-                    this.setState({ foot:1});
-
-                }
                 this.isLoading = false;
 
             },
@@ -283,6 +305,12 @@ export default class MessageCenterPage extends Component {
                     badge: this.state.bagetNum <= 0 ? null : this.state.bagetNum // 数字气泡提示, 设置为null会删除
                 });
 
+                try {// 只支持iOS
+                    JPushModule.setBadge(this.state.bagetNum, (success) => {
+                    });
+                } catch (e) {
+                }
+
                 this.messageArr = data;
 
                 this.setState({
@@ -300,37 +328,6 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    _loadAllUnRead() {
-        apis.loadMessageTotalReaded().then(
-            (responseData) => {
-
-                if(responseData !== null && responseData.data !== null) {
-                    let cnt = responseData.data.count;
-                    if(cnt !== null && cnt >= 0) {
-                        this.props.navigator.setTabBadge({
-                            badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
-                        });
-
-                        this.state.bagetNum = cnt;
-
-                        try {// 只支持iOS
-                            JPushModule.setBadge(cnt, (success) => {
-                                console.log("Badge", success)
-                            });
-                        } catch (e) {
-                        }
-                    }
-                }
-            },
-            (e) => {
-                console.log("所有未读获取失败" , e);
-                this.props.navigator.setTabBadge({
-                    badge: null // 数字气泡提示, 设置为null会删除
-                });
-            },
-        );
-    }
-
     componentDidMount() {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
@@ -338,8 +335,6 @@ export default class MessageCenterPage extends Component {
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             navToLogin();
         });
-
-        this._loadAllUnRead();
 
         try {
             JPushModule.getRegistrationID((registrationId) => {
@@ -408,7 +403,7 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
-
+        // console.log(this.props.navigator.subarray().length);
         if (this.isJumping === true){
             return;
         }
@@ -422,13 +417,23 @@ export default class MessageCenterPage extends Component {
         let arr=jumpUri.split('?');
 
         let outPageId = '';
+        let paramsStr1 = '';
+        let paramsArr1 = [];
+        let subParam1 = '';
+        let specArr1 = [];
 
         if (arr.length > 1){
+            paramsStr1 = arr[1];
+            paramsArr1=paramsStr1.split('&');
+
             let paramsStr = arr[1];
             let paramsArr=paramsStr.split('&');
 
             for (let i = 0 ; i < paramsArr.length ; i++) {
+                subParam1 = paramsArr[i];
+
                 let subParam = paramsArr[i];
+                specArr1 = subParam.split('=');
 
                 let specArr = subParam.split('=');
                 if (specArr.length > 1) {
@@ -440,6 +445,13 @@ export default class MessageCenterPage extends Component {
                 }
             }
         }
+
+        let a = 'arrCount' + arr.length + 'msgId' + rowData.msgId  + 'content信息' + rowData.content + 'outPageId' + outPageId  + 'paramsStr' + paramsStr1 + 'paramsArrLength'
+            + paramsArr1.length + 'subParam' + subParam1 + 'specArr' + specArr1.length;
+
+
+        // Toast.show(a);
+
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -447,6 +459,7 @@ export default class MessageCenterPage extends Component {
 
                 passProps: {
                     taskId:outPageId,
+                    toastStr : a,
                 }
             });
 
@@ -475,13 +488,17 @@ export default class MessageCenterPage extends Component {
                 title: '系统通知',
                 passProps: {
                     contentJson:contentJson,
+                    callback : this.setisJumping
                 }
             });
-        this.isJumping = false;
 
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
+    }
+
+    setisJumping(){
+        this.isJumping = false;
     }
 
 
@@ -515,56 +532,28 @@ export default class MessageCenterPage extends Component {
     }
 
     _endReached(){
-        // if(this.state.foot != 0 ){
-        //     return ;
-        // }
-        this.setState({
-            foot:2,
-        });
+
         this.timer = setTimeout(
             () => {
                 this._loadMoreData();
-            },50);
+            },1000);
     }
 
     _renderFooter() {
-        if(this.state.foot === 1){//加载完毕 没有下一页
-            return (
-                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+        return (
+            <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
 
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
+                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                </View>
 
-                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                        {'历史消息'}
-                    </Text>
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-                </View>);
-        }else if(this.state.foot === 2) {//加载中
+                <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                    {'历史消息'}
+                </Text>
+                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                </View>
+            </View>);
 
-            return (
-                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
-
-
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-
-                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                        {'历史消息'}
-                    </Text>
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-                </View>);
-
-            // return (
-            //     <View style={{height:40,backgroundColor:'blue',alignItems:'center',justifyContent:'center',}}>
-            //         {this.state.moreText}
-            //
-            //         {/*<Image source={{uri:loadgif}} style={{width:20,height:20}}/>*/}
-            //     </View>);
-        }
     }
 
     // 根据网络状态决定是否渲染 ListView
