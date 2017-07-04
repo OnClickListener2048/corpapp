@@ -73,7 +73,7 @@ export default class MessageCenterPage extends Component {
     rowIDs: []
 
 
-    _loadInitData(resolve) {
+    _loadInitData(end) {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -104,10 +104,8 @@ export default class MessageCenterPage extends Component {
                     this.messageArr = this.messageArr.concat(responseData.data);
                     // console.log(this.messageArr)
 
-                    if (this.messageArr.length == this.pageCount){
-                        this.lastID = this.messageArr[this.pageCount - 1].msgId;
-                        // console.log(this.lastID +'你大爷');
-                    }
+
+
                     for (let  i = 0 ; i < this.messageArr.length ; i++){
                         let  secData = this.messageArr[i];
                         secData.rowIndex = i;
@@ -118,6 +116,19 @@ export default class MessageCenterPage extends Component {
                         dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                         loaded:true,
                     });
+
+                    if (responseData.data.length == this.pageCount){
+                        this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                        this.refs.listView.resetStatus() //重置上拉加载的状态
+
+                        // console.log(this.lastID +'你大爷');
+                    }else {
+
+                        this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
+
+                    }
+                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+
 
                 }
             },
@@ -141,6 +152,9 @@ export default class MessageCenterPage extends Component {
                 this.props.navigator.setTabBadge({
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
+
+                end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+
 
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
