@@ -48,6 +48,7 @@ export default class MessageCenterPage extends Component {
         this.messageArr = [];
         this.lastID = null;
         this.isLoading = false;
+        this.isJumping = false;  //只要这个在进行就不可以跳转其他任何一页
 
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
@@ -107,11 +108,22 @@ export default class MessageCenterPage extends Component {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
-                // 关闭刷新动画
-                this.setState({
-                    loaded:true,
-                    faild: true,
-                });
+
+                if ( this.messageArr.length > 0){
+                    // 关闭刷新动画
+                    this.setState({
+                        loaded:true,
+                        faild: false,
+                    });
+                }else {
+                    // 关闭刷新动画
+                    this.setState({
+                        loaded:true,
+                        faild: true,
+                    });
+
+                }
+
 
 
                 console.log("获取失败" , e);
@@ -124,7 +136,7 @@ export default class MessageCenterPage extends Component {
 
         this.lastID = null;
 
-        if (this.isLoading){
+        if (this.isLoading === true){
             return;
         }
 
@@ -178,6 +190,7 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
+
                 this.isLoading = false;
 
                 console.log("获取失败" , e);
@@ -192,7 +205,7 @@ export default class MessageCenterPage extends Component {
             return;
         }
 
-        if (this.isLoading){
+        if (this.isLoading === true){
             return;
         }
 
@@ -395,6 +408,13 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
+
+        if (this.isJumping === true){
+            return;
+        }
+
+        this.isJumping = true;
+
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
 
@@ -430,6 +450,9 @@ export default class MessageCenterPage extends Component {
                 }
             });
 
+        this.isJumping = false;
+
+
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
@@ -440,8 +463,12 @@ export default class MessageCenterPage extends Component {
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
+        if (this.isJumping === true){
+            return;
+        }
+        this.isJumping = true;
 
-            this.props.navigator.push({
+        this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
@@ -450,6 +477,8 @@ export default class MessageCenterPage extends Component {
                     contentJson:contentJson,
                 }
             });
+        this.isJumping = false;
+
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
@@ -548,7 +577,7 @@ export default class MessageCenterPage extends Component {
             );
         }else if (this.state.faild == true) {      // 数据加载失败
             return(
-                    <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadData()}}>
+                    <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
                          <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                          <NoMessage
@@ -560,7 +589,7 @@ export default class MessageCenterPage extends Component {
         }else if (this.messageArr.length == 0){
 
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadData()}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
                  <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                     <NoMessage
