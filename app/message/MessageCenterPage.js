@@ -8,16 +8,15 @@ import {Dimensions, InteractionManager, DeviceEventEmitter} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import { PullList } from 'react-native-pull';
 import NoMessage from '../test/NoMessage';
 import {navToLogin, navToMainTab} from '../navigation';
 
-// import {
-//     SwRefreshScrollView, //支持下拉刷新的ScrollView
-//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
-//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
-//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
-// } from '../../node_modules/react-native-swRefresh-master'
+import {
+    SwRefreshScrollView, //支持下拉刷新的ScrollView
+    SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+    RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+    LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+} from '../../node_modules/react-native-swRefresh-master'
 
 import {
     AppRegistry,
@@ -149,7 +148,7 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    _loadData(resolve) {
+    _loadData(end) {
 
         this.lastID = null;
 
@@ -177,45 +176,50 @@ export default class MessageCenterPage extends Component {
                 this.messageArr = this.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
 
-                if (this.messageArr.length == this.pageCount){
-                    this.lastID = this.messageArr[this.pageCount - 1].msgId;
+                if (responseData.data.length == this.pageCount){
+                    this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.refs.listView.resetStatus() //重置上拉加载的状态
+
                     // console.log(this.lastID +'你大爷');
+                }else {
+
+                    this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
+
                 }
+
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
                     let  secData = this.messageArr[i];
                     secData.rowIndex = i;
 
                 }
 
+
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
 
-                // 关闭刷新动画
-                if (resolve !== undefined){
-                    setTimeout(() => {
-                        resolve();
-                    }, 1000);
-                }
+                let timer =  setTimeout(()=>{
+                    clearTimeout(timer)
+                end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+                },1500)
+
             }
             },
             (e) => {
                 // 关闭刷新动画
-                if (resolve !== undefined){
-                    setTimeout(() => {
-                        resolve();
-                    }, 1000);
-                }
 
-
+                let timer =  setTimeout(()=>{
+                    clearTimeout(timer)
+                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+                },1500)
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
 
-    _loadMoreData() {
+    _loadMoreData(end) {
 
         if (this.lastID === null){
             return;
@@ -246,16 +250,22 @@ export default class MessageCenterPage extends Component {
                     }
                 }
 
-                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
                 this.lastID = null
 
 
                 this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
-                    this.lastID = responseData.data[this.pageCount - 1].msgId;
+                    this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.refs.listView.resetStatus() //重置上拉加载的状态
+
+                    // console.log(this.lastID +'你大爷');
+                }else {
+                    this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
+
                 }
 
+                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
 
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
                     let  secData = this.messageArr[i];
@@ -268,13 +278,18 @@ export default class MessageCenterPage extends Component {
                 });
 
                 this.isLoading = false;
+                this.refs.listView.endLoadMore(responseData.data.length < this.pageCount)
+
 
             },
             (e) => {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
                 this.isLoading = false;
-
+                let timer =  setTimeout(()=>{
+                    clearTimeout(timer)
+                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+                },1500)
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
@@ -590,24 +605,28 @@ export default class MessageCenterPage extends Component {
             );
         }else {         // 有数据
             return(
-                <PullList ref="pullList"
-                          onPullRelease={(resolve) => this._loadData(resolve)}     // 下拉刷新操作
-                         // onEndReachedThreshold={30}                  // 当接近底部60时调用
-                          dataSource={this.state.dataSource}          // 设置数据源
-                          renderRow={(rowData) => this._renderRow(rowData)}  // 根据数据创建相应 cell
-                          showsHorizontalScrollIndicator={false}      // 隐藏水平指示器
-                          style={styles.listViewcontainer}                // 样式
-                          initialListSize={7}                         // 优化:一次渲染几条数据
-                         // onEndReached={this._loadMoreData}                // 当接近底部特定距离时调用
-                          enableEmptySections={true}
-                          renderFooter={this._renderFooter.bind(this)}
-                          onEndReached={this._endReached.bind(this)}
 
-                    // renderHeader={this._renderHeader}            // 设置头部视图
-                    //renderHeader={this.renderHeader}            // 设置头部视图
-                    // removeClippedSubviews={true}                // 优化
-                    // renderFooter={this.renderFooter}            // 设置尾部视图
-                     removeClippedSubviews={true}                // 优化
+
+                <SwRefreshListView
+            dataSource={this.state.dataSource}
+            ref="listView"
+            renderRow={this._renderRow.bind(this)}
+            onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
+            onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
+            //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
+            // customRefreshView={(refresStatus,offsetY)=>{
+            //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
+            // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
+
+            // renderFooter={()=>{return
+            //     (<View style={{backgroundColor:'blue',height:30}}>
+            //         <Text>我是footer</Text>
+            //     </View>)
+            // }}
+
+            noMoreDataTitle = '  历史消息  '
+
+            // customRefreshViewHeight={60} //自定义刷新视图时必须指定高度
 
                 />
             );
