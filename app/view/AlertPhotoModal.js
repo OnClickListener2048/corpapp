@@ -21,6 +21,7 @@ const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 import ImagePicker from "react-native-image-crop-picker"
+import Toast from 'react-native-root-toast';
 
 export default class AlertPhotoModal extends Component{
     constructor(props){
@@ -67,6 +68,12 @@ export default class AlertPhotoModal extends Component{
             cropping: false,
             width: 500,
             height: 500,
+            cropperCircleOverlay: false,
+            compressImageMaxWidth: 640,
+            compressImageMaxHeight: 480,
+            compressImageQuality: 0.5,
+            compressVideoPreset: 'MediumQuality',
+            mediaType:'photo',
         }).then(image => {
             console.log('received image===', image);
             this.setState({
@@ -76,6 +83,8 @@ export default class AlertPhotoModal extends Component{
             this.props.callback(this.state.image,this.state.visible);//将图片传递给页面
         }).catch(e => {
             this.setState({ visible: false });
+            console.log('received image失败='+e);
+            Toast.show('调用相机失败');
             // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
         });
     }

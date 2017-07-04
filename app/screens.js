@@ -21,6 +21,7 @@ import Settings from "./pilipaMain/my/Settings";
 import NoMessage from "./test/NoMessage";
 import DataTimerView from "./view/DataTimerView";
 import AreaPicker from "../picker_demo";
+import MultiTextInputPage from "./getLicense/view/MultiTextInputPage";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -34,6 +35,7 @@ export default function () {
     reg('Mine', () => Mine);
     reg('MyOutSideWorkPage', () => MyOutSideWorkPage);
     reg('GetLicensePage', () => GetLicensePage);
+    reg('MultiTextInputPage', () => MultiTextInputPage);
     reg('MyOutSideWorkItemPage', () => MyOutSideWorkItemPage);
     reg('MyOutSideTaskPage', () => MyOutSideTaskPage);
     reg('NoMessage', () => NoMessage);

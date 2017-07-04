@@ -191,7 +191,6 @@ export default class MyOutSideWorkPage extends Component{
 
 
     render(){
-        console.log("render你妹==="+this.state.data);
         return(
             <View style={{flex:1}}>
                 {this.navigatorStyle}

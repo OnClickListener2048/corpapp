@@ -156,12 +156,10 @@ export default class GetLicensePage extends Component{
 
                 if(responseData !== null && responseData.data !== null) {
 
-
-
                     this.setState({
                         detailObj : responseData.data,
                         allowEditInfo:responseData.data.allowEditInfo,
-                        inProgressEdit : (responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
+                        inProgressEdit :(responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
                             // bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
@@ -337,8 +335,13 @@ export default class GetLicensePage extends Component{
     }
 
     renderVerifyBtnView(){
-
-        return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'} stepId={this.state.stepId} taskId={this.state.taskId} finished={this.state.detailObj.progress.finished === 'true'} materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'} inProgress={this.state.detailObj.progress.inProgress === 'true'}  callback={this.stepBtnClick.bind(this)} />
+        return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'}
+                               stepId={this.state.stepId}
+                               taskId={this.state.taskId}
+                               finished={this.state.detailObj.progress.finished === 'true'}
+                               materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'}
+                               inProgress={this.state.detailObj.progress.inProgress === 'true'}
+                               callback={this.stepBtnClick.bind(this)} />
     }
 
     renderBusinessTimeView() {
@@ -951,13 +954,15 @@ export default class GetLicensePage extends Component{
                 <View style={{paddingTop: 10,backgroundColor:'white'}}>
                 <View
                     style={{ backgroundColor: 'white', height: 60}}>
-                <MultiTextInputView
-                textName={'经营范围：'}
-                inputWidth={{width: 80}}
-                winWidth={{width: SCREEN_WIDTH - 115}}
-                callback={this._callbackbiz.bind(this)}
-                content={this.state.detailObj.bizRange}
-                textEditable={this.state.editables}/>
+                    {/*<TouchableOpacity onPress={() => {this.toMultiTextInput()}}>*/}
+                        <MultiTextInputView
+                        textName={'经营范围：'}
+                        inputWidth={{width: 80}}
+                        winWidth={{width: SCREEN_WIDTH - 115}}
+                        callback={this._callbackbiz.bind(this)}
+                        content={this.state.detailObj.bizRange}
+                        textEditable={this.state.editables}/>
+                    {/*</TouchableOpacity>*/}
                 </View>
                 </View>
 
@@ -997,5 +1002,15 @@ export default class GetLicensePage extends Component{
             }
         </KeyboardAvoidingView>
         );
+    }
+
+    toMultiTextInput(){
+        this.props.navigator.push({
+            screen: 'MultiTextInputPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title:'我的外勤',
+
+        });
     }
 }

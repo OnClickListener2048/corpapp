@@ -127,7 +127,6 @@ export default class MyOutSideTaskPage extends Component{
 
     renderExpenseItem(item , i) {
 
-
         return (
             <TouchableOpacity onPress={() => {
                 this.toLicense(this.stepsArr[i].stepId)}}>
