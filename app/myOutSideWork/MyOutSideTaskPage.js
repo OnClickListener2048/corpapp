@@ -35,6 +35,7 @@ export default class MyOutSideTaskPage extends Component{
             taskId:this.props.taskId,
             faild:false,                   // 是否初始化 ListView
             currentStepId : '',
+            toastStr : this.props.toastStr,
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
@@ -95,6 +96,9 @@ export default class MyOutSideTaskPage extends Component{
                 Toast.show('获取失败' + JSON.stringify(e));
             },
         );
+
+        Toast.show(this.props.toastStr);
+
 
     }
 

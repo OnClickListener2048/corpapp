@@ -56,7 +56,8 @@ export default class MessageCenterPage extends Component {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
-        this._loadAllUnRead = this._loadAllUnRead.bind(this);
+        this.setisJumping = this.setisJumping.bind(this);
+
     }
 
     static navigatorStyle = {
@@ -76,7 +77,23 @@ export default class MessageCenterPage extends Component {
         apis.loadMessageData(this.pageCount,'').then(
 
             (responseData) => {
+
                 SActivityIndicator.hide(loading);
+                let cnt = responseData.unReadNum;
+                if(cnt !== null && cnt >= 0) {
+                    this.props.navigator.setTabBadge({
+                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                    });
+
+                    this.state.bagetNum = cnt;
+
+                    try {// 只支持iOS
+                        JPushModule.setBadge(cnt, (success) => {
+                            console.log("Badge", success)
+                        });
+                    } catch (e) {
+                    }
+                }
 
                 if(responseData !== null && responseData.data !== null) {
                     this.messageArr = [];
@@ -123,8 +140,9 @@ export default class MessageCenterPage extends Component {
                     });
 
                 }
-
-
+                this.props.navigator.setTabBadge({
+                    badge: null // 数字气泡提示, 设置为null会删除
+                });
 
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
@@ -136,16 +154,25 @@ export default class MessageCenterPage extends Component {
 
         this.lastID = null;
 
-        if (this.isLoading === true){
-            return;
-        }
-
-        this.isLoading = true;
 
         apis.loadMessageData(this.pageCount,'').then(
 
         (responseData) => {
-            {this._loadAllUnRead()}
+            let cnt = responseData.unReadNum;
+            if(cnt !== null && cnt >= 0) {
+                this.props.navigator.setTabBadge({
+                    badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                });
+
+                this.state.bagetNum = cnt;
+
+                try {// 只支持iOS
+                    JPushModule.setBadge(cnt, (success) => {
+                        console.log("Badge", success)
+                    });
+                } catch (e) {
+                }
+            }
             if(responseData !== null && responseData.data !== null) {
                 this.messageArr = [];
                 this.messageArr = this.messageArr.concat(responseData.data);
@@ -179,8 +206,6 @@ export default class MessageCenterPage extends Component {
                         resolve();
                     }, 1000);
                 }
-                this.isLoading = false;
-
             }
             },
             (e) => {
@@ -191,7 +216,6 @@ export default class MessageCenterPage extends Component {
                     }, 1000);
                 }
 
-                this.isLoading = false;
 
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
@@ -214,7 +238,21 @@ export default class MessageCenterPage extends Component {
         apis.loadMessageData(this.pageCount,this.lastID).then(
 
             (responseData) => {
+                let cnt = responseData.unReadNum;
+                if(cnt !== null && cnt >= 0) {
+                    this.props.navigator.setTabBadge({
+                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                    });
 
+                    this.state.bagetNum = cnt;
+
+                    try {// 只支持iOS
+                        JPushModule.setBadge(cnt, (success) => {
+                            console.log("Badge", success)
+                        });
+                    } catch (e) {
+                    }
+                }
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
                 this.lastID = null
@@ -283,6 +321,12 @@ export default class MessageCenterPage extends Component {
                     badge: this.state.bagetNum <= 0 ? null : this.state.bagetNum // 数字气泡提示, 设置为null会删除
                 });
 
+                try {// 只支持iOS
+                    JPushModule.setBadge(this.state.bagetNum <= 0 ? null : this.state.bagetNum, (success) => {
+                    });
+                } catch (e) {
+                }
+
                 this.messageArr = data;
 
                 this.setState({
@@ -300,37 +344,6 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    _loadAllUnRead() {
-        apis.loadMessageTotalReaded().then(
-            (responseData) => {
-
-                if(responseData !== null && responseData.data !== null) {
-                    let cnt = responseData.data.count;
-                    if(cnt !== null && cnt >= 0) {
-                        this.props.navigator.setTabBadge({
-                            badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
-                        });
-
-                        this.state.bagetNum = cnt;
-
-                        try {// 只支持iOS
-                            JPushModule.setBadge(cnt, (success) => {
-                                console.log("Badge", success)
-                            });
-                        } catch (e) {
-                        }
-                    }
-                }
-            },
-            (e) => {
-                console.log("所有未读获取失败" , e);
-                this.props.navigator.setTabBadge({
-                    badge: null // 数字气泡提示, 设置为null会删除
-                });
-            },
-        );
-    }
-
     componentDidMount() {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
@@ -338,8 +351,6 @@ export default class MessageCenterPage extends Component {
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             navToLogin();
         });
-
-        this._loadAllUnRead();
 
         try {
             JPushModule.getRegistrationID((registrationId) => {
@@ -422,13 +433,23 @@ export default class MessageCenterPage extends Component {
         let arr=jumpUri.split('?');
 
         let outPageId = '';
+        let paramsStr1 = '';
+        let paramsArr1 = [];
+        let subParam1 = '';
+        let specArr1 = [];
 
         if (arr.length > 1){
+            paramsStr1 = arr[1];
+            paramsArr1=paramsStr1.split('&');
+
             let paramsStr = arr[1];
             let paramsArr=paramsStr.split('&');
 
             for (let i = 0 ; i < paramsArr.length ; i++) {
+                subParam1 = paramsArr[i];
+
                 let subParam = paramsArr[i];
+                specArr1 = subParam.split('=');
 
                 let specArr = subParam.split('=');
                 if (specArr.length > 1) {
@@ -440,6 +461,13 @@ export default class MessageCenterPage extends Component {
                 }
             }
         }
+
+        let a = 'arrCount' + arr.length + 'msgId' + rowData.msgId  + 'content信息' + rowData.content + 'outPageId' + outPageId  + 'paramsStr' + paramsStr1 + 'paramsArrLength'
+            + paramsArr1.length + 'subParam' + subParam1 + 'specArr' + specArr1.length;
+
+
+        // Toast.show(a);
+
             this.props.navigator.push({
                 screen: 'MyOutSideTaskPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -447,6 +475,7 @@ export default class MessageCenterPage extends Component {
 
                 passProps: {
                     taskId:outPageId,
+                    toastStr : a,
                 }
             });
 
@@ -475,13 +504,17 @@ export default class MessageCenterPage extends Component {
                 title: '系统通知',
                 passProps: {
                     contentJson:contentJson,
+                    callback : this.setisJumping
                 }
             });
-        this.isJumping = false;
 
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
+    }
+
+    setisJumping(){
+        this.isJumping = false;
     }
 
 

@@ -40,6 +40,12 @@ export default class SystemMessagePage extends Component{
 
     render() {
         const {contentJson} = this.state;
+
+        let callback = this.props.callback;
+        if(callback) {
+            callback();
+        }
+
         // let content = JSON.parse(contentJson);
         // console.log('contentJson ===' + content)
         //
