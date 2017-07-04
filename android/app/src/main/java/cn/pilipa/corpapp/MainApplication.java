@@ -2,6 +2,7 @@ package cn.pilipa.corpapp;
 
 import android.app.Application;
 import android.support.annotation.Nullable;
+import android.support.multidex.MultiDex;
 
 import com.facebook.react.ReactApplication;
 import com.beefe.picker.PickerViewPackage;
@@ -19,6 +20,8 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 //import com.tencent.bugly.Bugly;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import java.util.Arrays;
@@ -38,8 +41,10 @@ public class MainApplication extends NavigationApplication {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashReport.initCrashReport(getApplicationContext(), "c2c07c0373", true);
-//        Bugly.init(getApplicationContext(), "c2c07c0373", true);
+        MultiDex.install(this);
+//        CrashReport.initCrashReport(getApplicationContext(), "c2c07c0373", true);
+        Bugly.init(getApplicationContext(), "c2c07c0373", true);
+        Beta.checkUpgrade(false,false);
     }
 
     @Nullable

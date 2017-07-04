@@ -89,13 +89,13 @@ HTTPBase.get = async function (url, params= {}, headers= null) {
         }
     }
 
-    console.log("======> ", url, "\n");
+    console.log(new Date().toString() + "======> ", url, "\n");
     let response = await  fetch(url, {
         method:'GET',
         headers:this._commonHeaders(headers)
     });
 
-    console.log(response);
+    console.log(new Date().toString() + "<<<<<<== " + response);
 
     if (!response.ok) {
         let text = await response.text();
@@ -142,12 +142,16 @@ HTTPBase.post = async function (url, params= {}, headers= null) {
             formData.append(k, v);
         }
     }
-    console.log("POST======> ", url, "params", formData, "\n");
+
+    let start = new Date().getTime();
+    console.log( "======> POST " + new Date() , " ", url, "params", formData, "\n");
     let response = await fetch(url, {
         method:'POST',
         headers:this._commonHeaders(headers),
         body:formData,
     });
+    let end = new Date().getTime();
+    console.log( "<====== 耗时 " + (end - start) + "毫秒");
 
     return this._parseHttpResult(response);
 };
