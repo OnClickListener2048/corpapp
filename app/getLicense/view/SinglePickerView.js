@@ -80,9 +80,10 @@ export default class SinglePickerView extends Component {
                         }
 
                         {enable &&
-                        <TouchableOpacity style={ styles.leftdownDrapViewStyle} onPress={() => {
+                        <TouchableOpacity style={{paddingTop:10,paddingBottom:15,height:50,flex:1,backgroundColor:'white',alignItems: 'center',justifyContent:'center'}} onPress={() => {
                             this._Press()
                         }}>
+                            <View style={styles.leftdownDrapViewStyle}>
                             <Image source={require('../../img/down.png')}/>
                             {this.props.value===''?<Text numberOfLines={1} style={[{
                                 textAlign: 'center',
@@ -98,6 +99,7 @@ export default class SinglePickerView extends Component {
                                 flex: 1,
                                 color: '#323232',
                             }]}>{this.props.value}</Text>}
+                            </View>
                         </TouchableOpacity>
                         }
 

@@ -938,7 +938,7 @@ export default class GetLicensePage extends Component{
                 </View>
                 {this.renderCompanyAddressView()}
                 {/*公司地址输入框*/}
-                <View style={{height:25,width:SCREEN_WIDTH,backgroundColor:'white'}}>
+                <View style={{height:30,width:SCREEN_WIDTH,paddingTop:5,backgroundColor:'white'}}>
                     <View style={[styles.textInputWrapper,]}>
                         <TextInput underlineColorAndroid='transparent'
                                    value={this.state.corpAddress}

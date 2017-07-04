@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     },
     leftTipStyle: {
         marginLeft: 15,
-        marginRight: 4,
         paddingTop:5,
 
     },
@@ -52,8 +51,9 @@ const styles = StyleSheet.create({
     selectBtnStyle: {
 
         width : 20,
-        height : 20,
-        backgroundColor: 'white',
+        height : 35,
+        backgroundColor:'white',
+
         justifyContent: 'center',
         alignItems:'center',
     },
@@ -238,7 +238,7 @@ export default class BusinessTimeView extends Component{
                                 justifyContent: 'center',
                                 flex: 1,
                                 color: '#323232',
-                            }]}>{this.props.lastDate + ""}</Text>
+                            }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
                         </TouchableOpacity>:
                             <View style={ styles.rightdownDrapViewStyle}>
                                 <Text numberOfLines={1} style={[{
@@ -246,7 +246,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
-                                }]}>{this.props.lastDate + ""}</Text>
+                                }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
                             </View>
                         }
                     </View>
