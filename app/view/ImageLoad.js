@@ -47,13 +47,14 @@ class ImageLoad extends React.Component {
                         <Image
                             style={this.props.placeholderStyle ? this.props.placeholderStyle : styles.imagePlaceholderStyles}
                             source={this.props.placeholderSource ? this.props.placeholderSource : require('../img/empty-image.png')}
+                            resizeMode={'contain'}
                         >
                             {
                                 this.props.children  ? this.props.children :
                                     this.props.isShowActivity ?
                                         <ActivityIndicator
                                             size={this.props.loadingStyle ? this.props.loadingStyle.size : 'small'}
-                                            color={this.props.loadingStyle ? this.props.loadingStyle.color : 'gray'}
+                                            color={this.props.loadingStyle ? this.props.loadingStyle.color : 'white'}
                                         /> :
                                         null
                             }
@@ -69,7 +70,9 @@ const styles = {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'gray'
+        backgroundColor: 'white',
+        width:110,
+        height:75,
     }
 }
 
