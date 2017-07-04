@@ -93,11 +93,10 @@ export default class MyOutSideTaskPage extends Component{
                     faild:true,
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show(this.props.toastStr + '获取失败' + JSON.stringify(e));
             },
         );
 
-        Toast.show(this.props.toastStr);
 
 
     }
