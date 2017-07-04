@@ -118,27 +118,36 @@ export default class LoginPage extends Component {
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
-                    if(msg !== null) {
+                    if(msg !== undefined) {
                         Alert.alert(msg);
                     } else {
                         Alert.alert('短信验证码获取失败' );
                     }
-                    if( e.data !== null && e.data.verifyText !== null && e.data.verify !== null ) {
-                        let {verifyText, verify} = e.data;
-                        if(verify !== null && verify.length > 0) {
-                            let picStr = "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
-                            console.log('***** 请求图片', picStr);
-                            let picURL = {uri: picStr};
-                            this.setState({picURL});
-                            let picURLStr = verify;
-                            this.setState({picURLStr});
-                        }
+                    try {
+                        if (e.data !== undefined && e.data.verifyText !== null && e.data.verify !== null) {
+                            let {verifyText, verify} = e.data;
+                            if (verify !== null && verify.length > 0) {
+                                let picStr = "https://" + verify + "?phone=" + this.state.mobile + "&t=" + new Date().getTime();
+                                console.log('***** 请求图片', picStr);
+                                let picURL = {uri: picStr};
+                                this.setState({picURL});
+                                let picURLStr = verify;
+                                this.setState({picURLStr});
+                            }
 
-                        if(verifyText !== null && verifyText.length > 0) {
-                            this.setState({vCodeServerValid: false});
-                            this.setState({verifyText});
-                        }
+                            if (verifyText !== null && verifyText.length > 0) {
+                                this.setState({vCodeServerValid: false});
+                                this.setState({verifyText});
+                            }
 
+                            // 重置允许获取验证码
+                            if (this.refs.timerButton.state.counting) {
+                                this.refs.timerButton.reset();
+                            }
+                            this.setState({timerButtonClicked: false});
+                        }
+                    } catch(e) {
+                        console.log(e);
                         // 重置允许获取验证码
                         if (this.refs.timerButton.state.counting) {
                             this.refs.timerButton.reset();
