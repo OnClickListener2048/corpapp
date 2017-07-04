@@ -43,8 +43,6 @@ export default class MessageCenterPage extends Component {
             faild : false,
             bagetNum : 0,
         }
-        this.foot = 0;
-             // 控制foot， 0：隐藏foot  1：已加载完成   2 ：显示加载中
         this.messageArr = [];
         this.lastID = null;
         this.isLoading = false;
@@ -115,12 +113,6 @@ export default class MessageCenterPage extends Component {
                         loaded:true,
                     });
 
-                    if(responseData.length < this.pageCount){
-                        //当当前返回的数据小于PageSize时，认为已加载完毕
-                        this.setState({ foot:1,moreText:moreText});
-                    }else{//设置foot 隐藏Footer
-                        this.setState({foot:0});
-                    }
                 }
             },
             (e) => {
@@ -192,13 +184,6 @@ export default class MessageCenterPage extends Component {
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
-
-                if(responseData.length < this.pageCount){
-                    //当当前返回的数据小于PageSize时，认为已加载完毕
-                    this.setState({ foot:1,moreText:moreText});
-                }else{//设置foot 隐藏Footer
-                    this.setState({foot:0});
-                }
 
                 // 关闭刷新动画
                 if (resolve !== undefined){
@@ -275,14 +260,6 @@ export default class MessageCenterPage extends Component {
                     loaded:true,
                 });
 
-                if(responseData.length < this.pageCount){
-                    this.setState({foot:0});
-
-                    //当当前返回的数据小于PageSize时，认为已加载完毕
-                }else{//设置foot 隐藏Footer
-                    this.setState({ foot:1});
-
-                }
                 this.isLoading = false;
 
             },
@@ -419,7 +396,7 @@ export default class MessageCenterPage extends Component {
     }
 
     toMyOutSideWork(msgId,rowData) {
-
+        // console.log(this.props.navigator.subarray().length);
         if (this.isJumping === true){
             return;
         }
@@ -548,56 +525,28 @@ export default class MessageCenterPage extends Component {
     }
 
     _endReached(){
-        // if(this.state.foot != 0 ){
-        //     return ;
-        // }
-        this.setState({
-            foot:2,
-        });
+
         this.timer = setTimeout(
             () => {
                 this._loadMoreData();
-            },50);
+            },1000);
     }
 
     _renderFooter() {
-        if(this.state.foot === 1){//加载完毕 没有下一页
-            return (
-                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+        return (
+            <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
 
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
+                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                </View>
 
-                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                        {'历史消息'}
-                    </Text>
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-                </View>);
-        }else if(this.state.foot === 2) {//加载中
+                <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                    {'历史消息'}
+                </Text>
+                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                </View>
+            </View>);
 
-            return (
-                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
-
-
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-
-                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                        {'历史消息'}
-                    </Text>
-                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                    </View>
-                </View>);
-
-            // return (
-            //     <View style={{height:40,backgroundColor:'blue',alignItems:'center',justifyContent:'center',}}>
-            //         {this.state.moreText}
-            //
-            //         {/*<Image source={{uri:loadgif}} style={{width:20,height:20}}/>*/}
-            //     </View>);
-        }
     }
 
     // 根据网络状态决定是否渲染 ListView
