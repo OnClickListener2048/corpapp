@@ -12,6 +12,13 @@ import { PullList } from 'react-native-pull';
 import NoMessage from '../test/NoMessage';
 import {navToLogin, navToMainTab} from '../navigation';
 
+// import {
+//     SwRefreshScrollView, //支持下拉刷新的ScrollView
+//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+// } from '../../node_modules/react-native-swRefresh-master'
+
 import {
     AppRegistry,
     StyleSheet,
@@ -86,7 +93,7 @@ export default class MessageCenterPage extends Component {
                     this.state.bagetNum = cnt;
 
                     try {// 只支持iOS
-                        JPushModule.setBadge(cnt, (success) => {
+                        JPushModule.setBadge(responseData.unReadNum, (success) => {
                             console.log("Badge", success)
                         });
                     } catch (e) {
@@ -299,7 +306,7 @@ export default class MessageCenterPage extends Component {
                 });
 
                 try {// 只支持iOS
-                    JPushModule.setBadge(this.state.bagetNum <= 0 ? null : this.state.bagetNum, (success) => {
+                    JPushModule.setBadge(this.state.bagetNum, (success) => {
                     });
                 } catch (e) {
                 }
