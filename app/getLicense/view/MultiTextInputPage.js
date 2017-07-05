@@ -10,15 +10,13 @@ import {
     StyleSheet,
     Text,
     View,
-    TouchableWithoutFeedback, TextInput,
+    TouchableWithoutFeedback, TextInput,InteractionManager
 }from 'react-native';
 import px2dp from '../../util/index'
 import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
-import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
-import * as apis from '../../apis';
 
 export default class MultiTextInputPage extends Component {
     static navigatorStyle = {
@@ -30,25 +28,28 @@ export default class MultiTextInputPage extends Component {
         super(props);
         this.state = {
 
-            message: '',//经营范围
+            bizRange: this.props.bizRange,//经营范围
             messageValid: false,// 内容有效可提交
         };
+        // if you want to listen on navigator events, set this up
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
     render(){
+
         return(
             <View style={styles.container}>
             <View style={styles.inputArea}>
                 <TextInput underlineColorAndroid='transparent'
                            multiline={true}
-                           value={this.state.smsCode}
+                           value={this.state.bizRange}
                            textAlignVertical={'top'}
                            maxLength={1024} keyboardType='default'
                            style={styles.codeInput} placeholder='请输入经营范围'
                            returnKeyType='done'
-                           onChangeText={(message) => {
-                               let messageValid = (message.length > 0 && message.length <= 1024);
-                               this.setState({message, messageValid});
+                           onChangeText={(bizRange) => {
+                               let messageValid = (bizRange.length > 0 && bizRange.length <= 1024);
+                               this.setState({bizRange, messageValid});
                            }}
 
                            onSubmitEditing={() => {
@@ -60,6 +61,35 @@ export default class MultiTextInputPage extends Component {
         )
     }
 
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: '完成', // for a textual button, provide the button title (label)
+                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+                id: 'edit'
+            }]
+
+    }
+
+    //点击右按钮
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
+            if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+                console.log("完成返回" + this.props.that);
+                let callback = this.props.callback;
+                if(callback) {
+                    callback(this.state.bizRange);
+                }
+                // this.props.callback(this.state.bizRange);
+                this.props.navigator.pop();
+
+            }
+        }
+
+    }
+
 }
 
 const styles = StyleSheet.create({
@@ -68,12 +98,28 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     inputArea: {
-        height: px2dp(352),
-        width: width - 30,
+        height: px2dp(252),
+        width: width,
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        marginLeft: 15,
+        alignItems: 'center',
         marginTop: 15,
-        alignItems: 'center'
+        backgroundColor:'white',
+        borderColor:'#dcdcdc',
+        borderTopWidth:0.5,
+        borderBottomWidth:0.5,
     },
+    codeInput: {
+        flex: 1,
+        height: px2dp(252),
+        marginLeft: 15,
+        marginRight:15,
+        padding: 0,
+        fontSize: px2dp(28),
+        color:'#323232',
+        fontSize: px2dp(30),
+        alignSelf: 'center',
+    },
+
+
 })

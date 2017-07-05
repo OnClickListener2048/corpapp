@@ -50,6 +50,8 @@ export default class GetLicensePage extends Component{
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
 
+
+
     constructor(props) {
         super(props);
 
@@ -74,7 +76,7 @@ export default class GetLicensePage extends Component{
             nationalTaxId:null,//国税登记号
             localTaxId:null,//地税登记号
             regFunds:null,//注册资金
-            bizRange:null,//经营范围
+            bizRange:this.props.bizRange,//经营范围
             bizLics:null,//营业执照
             idCards:null,//身份证
             endDate:"",//结束时间
@@ -104,7 +106,11 @@ export default class GetLicensePage extends Component{
         this._loadData = this._loadData.bind(this);
         this._loadAreaData = this._loadAreaData.bind(this);
         this._postClientData = this._postClientData.bind(this);
+        this._bizRanageContent = this._bizRanageContent.bind(this);
+
+
     }
+
 
     stepBtnClick(status){
 
@@ -952,23 +958,41 @@ export default class GetLicensePage extends Component{
                     </View>
                 </View>
                 <View style={{paddingTop: 10,backgroundColor:'white'}}>
-                <View
-                    style={{ backgroundColor: 'white', height: 60}}>
-                    {/*<TouchableOpacity onPress={() => {this.toMultiTextInput()}}>*/}
-                        <MultiTextInputView
-                        textName={'经营范围：'}
-                        inputWidth={{width: 80}}
-                        winWidth={{width: SCREEN_WIDTH - 115}}
-                        callback={this._callbackbiz.bind(this)}
-                        content={this.state.detailObj.bizRange}
-                        textEditable={this.state.editables}/>
-                    {/*</TouchableOpacity>*/}
-                </View>
+                    {this.state.editables === true ?
+                        <TouchableOpacity onPress={() => {
+                            this.toMultiTextInput()
+                        }}>
+
+                            <View
+                                style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
+                                <MultiTextInputView
+                                    ref="MultiTextInputView"
+                                    textName={'经营范围：'}
+                                    inputWidth={{width: 80}}
+                                    winWidth={{width: SCREEN_WIDTH - 115}}
+                                    callback={this._callbackbiz.bind(this)}
+                                    content={this.state.detailObj.bizRange}
+                                    textEditable={this.state.editables}/>
+                            </View>
+                        </TouchableOpacity> :
+                        <View
+                            style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
+                            <MultiTextInputView
+                                ref="MultiTextInputView"
+                                textName={'经营范围：'}
+                                inputWidth={{width: 80}}
+                                winWidth={{width: SCREEN_WIDTH - 115}}
+                                callback={this._callbackbiz.bind(this)}
+                                content={this.state.detailObj.bizRange}
+                                textEditable={this.state.editables}/>
+                        </View> }
+
                 </View>
 
                 <View style={[styles.identityCardPhoto, {height: 150}]}>
-                <Text style={{marginLeft: 20, fontSize: 15, marginTop: 20}}>经营执照：</Text>
-                    {this.state.editables === true ?
+                        <Text style={{marginLeft: 20, fontSize: 15, marginTop: 20}}>经营执照：</Text>
+
+                        {this.state.editables === true ?
                         <TouchableOpacity onPress={() => {
                             this.toAlertModal("blicense")
                         }}>
@@ -1009,8 +1033,29 @@ export default class GetLicensePage extends Component{
             screen: 'MultiTextInputPage',
             backButtonTitle: '返回', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-            title:'我的外勤',
-
+            title:'经营范围',
+            passProps: {
+                bizRange:this.state.bizRange,
+                //回调!
+                callback: this._bizRanageContent,
+            }
         });
     }
+
+    _bizRanageContent(bizRange){
+
+        if(bizRange!=null){
+            console.log("返回经营范围="+bizRange);
+            this.setState({
+                bizRange: bizRange
+            })
+
+            if(this.refs.MultiTextInputView) {
+                this.refs.MultiTextInputView.setBiz(bizRange);
+            }
+        }
+
+    }
+
+
 }
