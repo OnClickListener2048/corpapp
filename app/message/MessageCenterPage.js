@@ -18,6 +18,8 @@ import {
     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
 } from '../../node_modules/react-native-swRefresh-master'
 
+// import UltimateListView from "../../node_modules/react-native-ultimate-listview";
+
 import {
     AppRegistry,
     StyleSheet,
@@ -48,11 +50,11 @@ export default class MessageCenterPage extends Component {
             loaded:false,                   // 是否初始化 ListView
             faild : false,
             bagetNum : 0,
+            canClickBtn : false,
         }
         this.messageArr = [];
         this.lastID = null;
         this.isLoading = false;
-        this.isJumping = false;  //只要这个在进行就不可以跳转其他任何一页
 
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
@@ -60,17 +62,20 @@ export default class MessageCenterPage extends Component {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
-        this.setisJumping = this.setisJumping.bind(this);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        // console.log('ApplicationCenterPage event.type', event.type);
+        if(event.id==='willAppear'){
+            this.state.canClickBtn = true;
+        }
     }
 
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
     };
-
-    dataBlob: {}
-    sectionIDs: []
-    rowIDs: []
 
 
     _loadInitData(end) {
@@ -432,11 +437,13 @@ export default class MessageCenterPage extends Component {
 
     toMyOutSideWork(msgId,rowData) {
         // console.log(this.props.navigator.subarray().length);
-        if (this.isJumping === true){
+        if (this.state.canClickBtn === false){
             return;
         }
 
-        this.isJumping = true;
+        this.state.canClickBtn = false;
+
+
 
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
@@ -491,7 +498,6 @@ export default class MessageCenterPage extends Component {
                 }
             });
 
-        this.isJumping = false;
 
 
         if (rowData.read === 'false'){
@@ -504,10 +510,11 @@ export default class MessageCenterPage extends Component {
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        if (this.isJumping === true){
+        if (this.state.canClickBtn === false){
             return;
         }
-        this.isJumping = true;
+
+        this.state.canClickBtn = false;
 
         this.props.navigator.push({
                 screen: 'SystemMessagePage',
@@ -516,7 +523,6 @@ export default class MessageCenterPage extends Component {
                 title: '系统通知',
                 passProps: {
                     contentJson:contentJson,
-                    callback : this.setisJumping
                 }
             });
 
@@ -524,11 +530,6 @@ export default class MessageCenterPage extends Component {
             this._readed(msgId,rowData);
         }
     }
-
-    setisJumping(){
-        this.isJumping = false;
-    }
-
 
     static renderTitleItem() {
         return (
