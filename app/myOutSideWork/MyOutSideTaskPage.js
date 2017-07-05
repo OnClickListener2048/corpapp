@@ -36,14 +36,24 @@ export default class MyOutSideTaskPage extends Component{
             faild:false,                   // 是否初始化 ListView
             currentStepId : '',
             toastStr : this.props.toastStr,
+            canClickBtn : false,
         };
         this._loadData = this._loadData.bind(this);
         this.stepsArr = [];
         this.info;
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
     }
 
-    _loadData(needLoding) {
+onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+    // console.log('ApplicationCenterPage event.type', event.type);
+    if(event.id==='willAppear'){
+        this.state.canClickBtn = true;
+    }
+}
+
+
+_loadData(needLoding) {
 
         let loading;
 
@@ -115,6 +125,12 @@ export default class MyOutSideTaskPage extends Component{
 
 //跳转客户审核具体信息
     toLicense(stepId){
+        if (this.state.canClickBtn === false){
+            return;
+        }
+
+        this.state.canClickBtn = false;
+
         this.state.currentStepId = stepId;
             this.props.navigator.push({
                 screen: 'GetLicensePage',
