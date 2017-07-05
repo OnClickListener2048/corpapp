@@ -30,7 +30,9 @@ export default class ApplicationCenterPage extends Component{
 
         this.state = {
             bdNum:null,
+            canClickBtn : false,
         };
+
 
         this._loadCount = this._loadCount.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -42,6 +44,10 @@ export default class ApplicationCenterPage extends Component{
         if(event.id==='willAppear'){
             this._loadCount();
         }
+            if(event.id==='willAppear'){
+                this.state.canClickBtn = true;
+            }
+
     }
     static renderTitleItem() {
         return(
@@ -50,7 +56,15 @@ export default class ApplicationCenterPage extends Component{
     }
 
     toMyOutSideWork(){
-            this.props.navigator.push({
+
+        if (this.state.canClickBtn === false){
+            return;
+        }
+
+        this.state.canClickBtn = false;
+
+
+        this.props.navigator.push({
                 screen: 'MyOutSideWorkPage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)

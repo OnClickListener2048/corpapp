@@ -28,6 +28,7 @@ export default class MyOutSideWorkPage extends Component{
             outSourceCountObj : {},
             loaded:false,
             needLoding:true,
+            canClickBtn : false,
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -38,6 +39,7 @@ export default class MyOutSideWorkPage extends Component{
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
+
 
     static navigatorButtons = {
         rightButtons: [
@@ -55,6 +57,12 @@ export default class MyOutSideWorkPage extends Component{
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+                if (this.state.canClickBtn === false){
+                    return;
+                }
+
+                this.state.canClickBtn = false;
+
                     this.props.navigator.push({
                         screen: 'MyOutSideWorkItemPage',
                         backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -62,6 +70,12 @@ export default class MyOutSideWorkPage extends Component{
                         title:'我的外勤',
                     });
             }
+        }
+
+
+        console.log('ApplicationCenterPage event.type', event.type);
+        if(event.id==='willAppear'){
+            this.state.canClickBtn = true;
         }
 
     }
@@ -72,6 +86,11 @@ export default class MyOutSideWorkPage extends Component{
         this.setState({
             status: statusId,
         });
+        if (this.state.canClickBtn === false){
+            return;
+        }
+
+        this.state.canClickBtn = false;
 
                 this.props.navigator.push({
                     screen: 'MyOutSideTaskPage',

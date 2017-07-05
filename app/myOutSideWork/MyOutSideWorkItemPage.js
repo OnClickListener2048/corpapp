@@ -100,7 +100,7 @@ export default class MyOutSideWorkItemPage extends Component{
                 this.setState({
                     dataFaild:true,
                 });
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -141,7 +141,7 @@ export default class MyOutSideWorkItemPage extends Component{
                 this.setState({
                     dataFaild:true,
                 });
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
 

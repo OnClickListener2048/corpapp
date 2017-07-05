@@ -101,7 +101,7 @@ export default class GetLicensePage extends Component{
             areaCodeArr:[],
             selectAreaCode:[],  //选择地址的 id 保存的时候用
             areaCodeIndexArr:[],
-
+            canClickBtn : false,
         };
         this._loadData = this._loadData.bind(this);
         this._loadAreaData = this._loadAreaData.bind(this);
@@ -109,6 +109,13 @@ export default class GetLicensePage extends Component{
         this._bizRanageContent = this._bizRanageContent.bind(this);
 
 
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        // console.log('ApplicationCenterPage event.type', event.type);
+        if(event.id==='willAppear'){
+            this.state.canClickBtn = true;
+        }
     }
 
 
@@ -213,7 +220,7 @@ export default class GetLicensePage extends Component{
                     loaded:false,
                 });
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -262,7 +269,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -288,7 +295,7 @@ export default class GetLicensePage extends Component{
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                // Toast.show('提交失败' + JSON.stringify(e));
+                Toast.show('提交失败' + JSON.stringify(e));
             },
         );
     }
@@ -743,7 +750,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -785,7 +792,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -1037,6 +1044,12 @@ export default class GetLicensePage extends Component{
     }
 
     toMultiTextInput(){
+        if (this.state.canClickBtn === false){
+            return;
+        }
+
+        this.state.canClickBtn = false;
+
         this.props.navigator.push({
             screen: 'MultiTextInputPage',
             backButtonTitle: '返回', // 返回按钮的文字 (可选)
