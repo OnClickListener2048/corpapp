@@ -979,7 +979,7 @@ export default class GetLicensePage extends Component{
                                     inputWidth={{width: 80}}
                                     winWidth={{width: SCREEN_WIDTH - 115}}
                                     callback={this._callbackbiz.bind(this)}
-                                    content={this.state.detailObj.bizRange}
+                                    content={this.state.bizRange}
                                     textEditable={this.state.editables}/>
                             </View>
                         </TouchableOpacity> :
@@ -991,7 +991,7 @@ export default class GetLicensePage extends Component{
                                 inputWidth={{width: 80}}
                                 winWidth={{width: SCREEN_WIDTH - 115}}
                                 callback={this._callbackbiz.bind(this)}
-                                content={this.state.detailObj.bizRange}
+                                content={this.state.bizRange}
                                 textEditable={this.state.editables}/>
                         </View> }
 
