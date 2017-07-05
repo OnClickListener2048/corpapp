@@ -127,9 +127,8 @@ export default class MessageCenterPage extends Component {
                         this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
 
                     }
-                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
-
-
+                    // end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
+                    this.refs.listView.endRefresh();
                 }
             },
             (e) => {

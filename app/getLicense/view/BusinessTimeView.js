@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
 
     selectBtnStyle: {
 
-        width : 20,
+        width : 35,
         height : 35,
         backgroundColor:'white',
 
@@ -227,7 +227,7 @@ export default class BusinessTimeView extends Component{
 
                             </View>
                         }
-                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 8, marginRight:8,width:20}]}></View>
+                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 3, marginRight:5,width:10}]}></View>
                         {this.state.allTimePressBtnSelected ==='false' &&this.props.isFocus === true?
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")

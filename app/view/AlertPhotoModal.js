@@ -84,7 +84,7 @@ export default class AlertPhotoModal extends Component{
         }).catch(e => {
             this.setState({ visible: false });
             console.log('received image失败='+e);
-            Toast.show('调用相机失败');
+            Toast.show('调取相机失败，请更改相机设置');
             // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
         });
     }

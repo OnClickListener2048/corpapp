@@ -58,29 +58,26 @@ export default class SinglePickerView extends Component {
 
                 <View style={styles.rightViewStyle}>
 
-                    <View style={ styles.rightRowViewStyle}>
-
                         {!enable &&
                         <View style={styles.textShowStyle}>
                             {this.props.value===''?<Text numberOfLines={1} style={[{
                                     textAlign: 'left',
                                     marginRight: 5,
-                                    justifyContent: 'center',
+                                    justifyContent: 'flex-end',
                                     flex: 1,
-                                    color: '#323232'
+                                    color: '#323232',
                                 }]}>{'请选择'}</Text>:
                             <Text numberOfLines={1} style={[{
                                 textAlign: 'left',
                                 marginRight: 5,
-                                justifyContent: 'center',
-                                flex: 1,
-                                color: '#323232'
+                                color: '#323232',
+                                justifyContent:'flex-end',
                             }]}>{this.props.value}</Text>}
                         </View>
                         }
 
                         {enable &&
-                        <TouchableOpacity style={{paddingTop:10,paddingBottom:15,height:50,flex:1,backgroundColor:'white',alignItems: 'center',justifyContent:'center'}} onPress={() => {
+                        <TouchableOpacity style={{paddingBottom:17,paddingTop:1,flex:1,backgroundColor:'white',alignItems: 'flex-start',justifyContent:'flex-start'}} onPress={() => {
                             this._Press()
                         }}>
                             <View style={styles.leftdownDrapViewStyle}>
@@ -103,11 +100,6 @@ export default class SinglePickerView extends Component {
                         </TouchableOpacity>
                         }
 
-                    </View>
-
-
-                    <View style={ styles.rightRowViewStyle}>
-                    </View>
                 </View>
 
 
@@ -118,17 +110,21 @@ export default class SinglePickerView extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: 42,
+        height: 50,
         flexDirection: 'row',
-        paddingTop: 10,
+        paddingTop: 5,
         paddingBottom: 2,
-        backgroundColor: '#FFFFFF'
+        backgroundColor: 'white'
     },
 
     textShowStyle: {
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,
-        width: SCREEN_WIDTH- 130
+        width: SCREEN_WIDTH- 110,
+        backgroundColor:'white',
+        flex:1,
+        marginBottom:18,
+        justifyContent:'flex-end'
     },
 
     leftTipStyle: {
@@ -141,50 +137,29 @@ const styles = StyleSheet.create({
         marginRight: 15,
         flexDirection: 'column',
         justifyContent: 'space-between',
-        flex: 1
+        flex: 1,
+        backgroundColor:'white'
 
     },
 
     rightRowViewStyle: {
         flexDirection: 'row',
-        height: 25,
-        backgroundColor: 'white',
-        // justifyContent:'center',
-        alignItems: 'center',
-    },
-
-    selectBtnStyle: {
-
-        width: 20,
         height: 20,
-        backgroundColor: 'white',
-        justifyContent: 'center',
+        // backgroundColor: 'white',
+        backgroundColor:'white',
+        // justifyContent:'center',
         alignItems: 'center',
     },
     leftdownDrapViewStyle: {
         flexDirection: 'row-reverse',
         alignItems: 'center',
-        // width : 105.5,
+        // width : SCREEN_WIDTH-105,
         flex: 1,
         marginLeft: 4.5,
         marginRight: 0,
-        height: 23,
+        // height: 23,
         borderRadius: 2.5,
         borderWidth: 1,
-        borderColor: '#e6e6e6',
-        backgroundColor: 'white',
-    },
-
-    rightdownDrapViewStyle: {
-        flexDirection: 'row-reverse',
-        alignItems: 'center',
-        marginLeft: 0,
-        marginRight: 0,
-        // width : 105.5,
-        flex: 1,
-        height: 23,
-        borderWidth: 1,
-        borderRadius: 2.5,
         borderColor: '#e6e6e6',
         backgroundColor: 'white',
     },

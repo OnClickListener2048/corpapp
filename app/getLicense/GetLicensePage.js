@@ -909,7 +909,7 @@ export default class GetLicensePage extends Component{
                 textEditable={this.state.editables}/>
                 </View>
                 <View
-                style={{paddingTop: 15, backgroundColor: 'white'}}>
+                style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
                 <TextInputView
                 textName={'地税登记号：'}
                 inputWidth={{width: 93}}
