@@ -14,7 +14,8 @@ import {
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
     KeyboardAvoidingView, TouchableWithoutFeedback,
-    InteractionManager
+    InteractionManager,
+    Platform
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -439,12 +440,12 @@ export default class LoginPage extends Component {
                                 >我已经阅读并同意</Text>
                                 <Text style={{
                                     color: ( this.state.acceptLic ? '#ef0c35' : '#c8c8c8'),
-                                    fontSize: 12,
+                                    fontSize: (Platform.OS === 'ios') ? 12: 11,
                                     alignSelf: 'center',
                                     textDecorationLine: 'underline',
                                     marginRight: 1
                                 }}
-                                >《爱康鼎应用许可协议》</Text>
+                                >《噼里啪应用许可协议》</Text>
                             </View>
 
                         </View>
