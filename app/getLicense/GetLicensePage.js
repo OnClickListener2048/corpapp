@@ -232,10 +232,18 @@ export default class GetLicensePage extends Component{
                         let  secDic = new Object();
                         secDic["" + index + ""] = responseData.data[index].name;
 
+                        if (responseData.data[index].name.length == 0){
+                            secDic["" + index + ""] = ['(空)']
+                        }
+
                         this.state.areaArr = this.state.areaArr.concat(secDic);
 
                         let  secCodeDic = new Object();
                         secCodeDic["" + responseData.data[index].code + ""] = responseData.data[index].codes;
+
+                        if (responseData.data[index].name.length == 0){
+                            secCodeDic["" + responseData.data[index].code + ""] = ['']
+                        }
 
                         this.state.areaCodeArr = this.state.areaCodeArr.concat(secCodeDic);
 
