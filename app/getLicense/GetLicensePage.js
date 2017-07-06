@@ -37,6 +37,7 @@ import MultiTextInputView from "./view/MultiTextInputView";
 import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
 import ImageLoad from "../view/ImageLoad";
+import WatchImageModal from "./view/WatchImageModal";
 
 const window = Dimensions.get('window');
 
@@ -59,6 +60,8 @@ export default class GetLicensePage extends Component{
             renderUnderline: true,
             currentStep : 0,
             visible: this.props.visible,
+            imgVisible:false,
+            imgVisibles:this.props.imgVisibles,
             reImage: null,
             linImage:null,
             photoType:null,
@@ -107,12 +110,13 @@ export default class GetLicensePage extends Component{
         this._loadAreaData = this._loadAreaData.bind(this);
         this._postClientData = this._postClientData.bind(this);
         this._bizRanageContent = this._bizRanageContent.bind(this);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
 
     }
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
-        // console.log('ApplicationCenterPage event.type', event.type);
+        console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
             this.state.canClickBtn = true;
         }
@@ -542,11 +546,35 @@ export default class GetLicensePage extends Component{
     toAlertModal(photoType){
         this.setState({ visible: true,isDateTimePickerVisible:false,
             photoType:photoType});
+        console.log("photoType="+photoType);
+        this._watchImVisible(photoType);
+    }
+
+    componentWillReceiveProps(props) {
+        this.setState({ visible: props.visible,
+            imgVisible:this.props.imgVisible,
+            photoType:this.props.photoType,
+            imgVisibles:this.props.imgVisibles,
+        });
+    }
+
+    _callbackWatchPhoto(){
+        this.setState({
+            imgVisible: false,
+            visible:false,
+        });
     }
 
     _callbackPhoto(image,visible) {//获取图片
+        if(image===null){
+            this.setState({
+                imgVisible:true,
 
+            })
+            return;
+        }
         if(this.state.photoType=="reverse"){
+
             let rePhoto = {
                 uri: image.uri,
                 type: 'reImage/jpeg',
@@ -574,6 +602,23 @@ export default class GetLicensePage extends Component{
             });
         }
 
+    }
+
+    _watchImVisible(photoType){
+        let imgVisibles = true;
+        console.log("photoTypeWatch="+photoType);
+        console.log("imgVisibles="+imgVisibles);
+        if(photoType==="reverse"&&this.state.reImage === null&&(this.state.detailObj.idCards === null ||this.state.detailObj.idCards.length===0)){
+            imgVisibles = false;
+            console.log("imgVisibles,reverse="+imgVisibles);
+        }else if(photoType==="blicense"&&this.state.linImage === null&&(this.state.detailObj.bizLics === null ||this.state.detailObj.bizLics.length===0)){
+            imgVisibles = false;
+            console.log("imgVisibles,blicense="+imgVisibles);
+
+        }
+        this.setState({
+            imgVisibles:imgVisibles
+        })
     }
     _dateFormat(fmt) {
         Date.prototype.Format = function (fmt) { //author: meizz
@@ -837,7 +882,12 @@ export default class GetLicensePage extends Component{
         <KeyboardAvoidingView behavior='padding' style={styles.container}>
             {this.state.visible === true &&
             <AlertPhotoModal
+                watchImagevi={this.state.imgVisibles}
                 callback={this._callbackPhoto.bind(this)}/>}
+            {this.state.imgVisible === true &&
+            <WatchImageModal
+                image={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
+                callback={this._callbackWatchPhoto.bind(this)}/>}
             {this.state.isDateTimePickerVisible === true &&
                 <DataTimerView
                 callback={this._callbackData.bind(this)}/>
@@ -1044,6 +1094,7 @@ export default class GetLicensePage extends Component{
     }
 
     toMultiTextInput(){
+        console.log("canClickBtn="+this.state.canClickBtn);
         if (this.state.canClickBtn === false){
             return;
         }

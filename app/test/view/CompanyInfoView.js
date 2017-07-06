@@ -81,6 +81,7 @@ export default class CompanyInfoView extends React.Component {
     render() {
        // const { style} = this.props
         const {companyName,ContactsName,ContactsPhone,SalesName,SalesPhone} = this.props
+
         if(this.state.isRefresh || !this.state.isRefresh){
             console.log("isrefresh" + this.state.ContactsPhone);
         return (

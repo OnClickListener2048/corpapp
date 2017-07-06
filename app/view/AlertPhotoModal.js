@@ -27,14 +27,19 @@ export default class AlertPhotoModal extends Component{
     constructor(props){
         super(props)
         this.state = { visible: this.props.visible,
-        image: this.props.image};
+        image: this.props.image,
+            watchImagevi:this.props.watchImagevi,
+        };
     }
 
     close=()=>{
         this.setState({ visible: false });
     }
+
     componentWillReceiveProps(props) {
-        this.setState({ visible: props.visible });
+        this.setState({ visible: props.visible,
+            watchImagevi:props.watchImagevi,
+        });
     }
 
     pickSingle=()=> {
@@ -61,6 +66,11 @@ export default class AlertPhotoModal extends Component{
             // Alert.alert(e.message ? e.message : e);
             // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
         });
+    }
+
+    watchSingle=()=>{
+        this.setState({ visible: false });
+        this.props.callback(null,this.state.visible);//将图片传递给父组件
     }
 
     pickSingleWithCamera=()=> {
@@ -90,7 +100,20 @@ export default class AlertPhotoModal extends Component{
     }
 
     renderContent=()=>{
-        return ( <View style={[styles.background,{width: SCREEN_WIDTH , height: SCREEN_HEIGHT * 0.3}]}>
+        console.log("AlertPhoto,watch="+this.state.watchImagevi);
+        return ( <View style={[styles.background,{width: SCREEN_WIDTH , height: SCREEN_HEIGHT * 0.38}]}>
+            {this.state.watchImagevi===true?
+            <TouchableOpacity onPress={this.watchSingle}>
+                <View style={styles.alertStyle}>
+                    <Text style={{fontSize:18, color:'#323232', margin:15}}>查看大图</Text>
+                </View>
+            </TouchableOpacity>:
+                <View style={{height:44,
+                    width:SCREEN_WIDTH-50,
+                    backgroundColor:'rgba(0, 0, 0, 0)',
+                    marginBottom:15,}}>
+                </View>
+            }
             <TouchableOpacity activeOpacity={0.5} onPress={this.pickSingleWithCamera}>
                 <View style={styles.alertStyle}>
                     <Text style={{fontSize:18, color:'#323232',margin:15}}>相机拍照</Text>
@@ -101,6 +124,7 @@ export default class AlertPhotoModal extends Component{
                     <Text style={{fontSize:18, color:'#323232', margin:15}}>去相册选择</Text>
                 </View>
             </TouchableOpacity>
+
             <TouchableOpacity activeOpacity={0.5} onPress={this.close}>
                 <View style={styles.alertCancelStyle}>
                     <Text style={{fontSize:18, color:'white',margin:15}}>取消</Text>
@@ -160,7 +184,7 @@ const styles = StyleSheet.create({
         height:44,
         width:SCREEN_WIDTH-50,
         backgroundColor:'rgba(0, 0, 0, 0.25)',
-        marginBottom:30,
+        marginBottom:10,
         borderRadius: 22,
         borderWidth:1,
         borderColor:'white',

@@ -2,11 +2,15 @@
  * Created by jiaxueting on 2017/7/3.
  */
 import React, { PropTypes } from 'react';
-import { Image, ActivityIndicator } from 'react-native';
+import { Image, ActivityIndicator,Dimensions } from 'react-native';
+const window = Dimensions.get('window');
+export const SCREEN_HEIGHT = window.height;
+export const SCREEN_WIDTH = window.width;
 
 class ImageLoad extends React.Component {
     static propTypes = {
         isShowActivity: PropTypes.bool,
+        isWatch:PropTypes.bool,
     };
 
     static defaultProps = {
@@ -17,7 +21,8 @@ class ImageLoad extends React.Component {
         super(props);
         this.state = {
             isLoaded: false,
-            isError: false
+            isError: false,
+            isWatch:this.props.isWatch,
         };
     }
 
@@ -45,7 +50,7 @@ class ImageLoad extends React.Component {
                 {
                     this.state.isLoaded && !this.state.isError ? null :
                         <Image
-                            style={this.props.placeholderStyle ? this.props.placeholderStyle : styles.imagePlaceholderStyles}
+                            style={[this.props.isWatch===false?this.props.placeholderStyle ? this.props.placeholderStyle : styles.imagePlaceholderStyles:styles.imagePlaceholderStyle]}
                             source={this.props.placeholderSource ? this.props.placeholderSource : require('../img/empty-image.png')}
                             resizeMode={'contain'}
                         >
@@ -73,6 +78,14 @@ const styles = {
         backgroundColor: 'white',
         width:110,
         height:75,
+    },
+    imagePlaceholderStyle: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+        width:SCREEN_WIDTH,
+        height:SCREEN_HEIGHT,
     }
 }
 
