@@ -146,7 +146,11 @@ export default class GetLicensePage extends Component{
             });
             this._loadData();
             if(this.refs.companyInfoView) {
-                this.refs.companyInfoView.setRefresh(true);
+                this.refs.companyInfoView.setRefresh(true,
+                    this.state.detailObj.corpName,
+                    this.state.detailObj.contactName,
+                    this.state.detailObj.contactPhone
+                );
             }
         }else{
             this.setState({
