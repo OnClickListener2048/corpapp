@@ -356,22 +356,16 @@ export default class MessageCenterPage extends Component {
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
             console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
-            // if (loginJumpSingleton.isJumpingLogin === true){
-            //     return;
-            // }
-            //
-            // loginJumpSingleton.isJumpingLogin = true;
-            //
-            // this.props.navigator.push({
-            //     screen: 'user.LoginPage',
-            //     backButtonTitle: '', // 返回按钮的文字 (可选)
-            //     backButtonHidden: true, // 是否隐藏返回按钮 (可选)
-            //     overrideBackPress: true, // 覆盖Android返回键
-            //     passProps: {
-            //         isReset: true
-            //     }
-            // });
             loginJumpSingleton.goToLogin(this.props.navigator);
+        });
+
+        this.subscription = DeviceEventEmitter.addListener('loginSuccess', (data)=>{
+            console.log('我的消息 loginSuccess');
+            try {
+                this._loadInitData();
+            } catch(e) {
+                console.log(e + "");
+            }
         });
 
         try {

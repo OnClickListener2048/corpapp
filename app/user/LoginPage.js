@@ -72,6 +72,8 @@ export default class LoginPage extends Component {
         this._requestSMSCode = this._requestSMSCode.bind(this);
         this._verifyVCode = this._verifyVCode.bind(this);
         this._doChangeVCode = this._doChangeVCode.bind(this);
+        this.readUserInfo = this.readUserInfo.bind(this);
+
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -101,6 +103,9 @@ export default class LoginPage extends Component {
         // if (this.props.navigator) {
         //     this.props.navigator.pop();
         // }
+        // 发送通知
+        DeviceEventEmitter.emit('loginSuccess', true);
+
         Navigation.dismissModal({
             animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
         });
@@ -275,7 +280,7 @@ export default class LoginPage extends Component {
                             // this.readUserInfo();
                             // 到载入页
                             //     navToBootstrap();
-                            this.pop();// TODO Event emitter
+                            this.readUserInfo();
                         },
                         e => console.log(e.message)
                     );
@@ -298,6 +303,29 @@ export default class LoginPage extends Component {
                             },
                         },]
                     , {cancelable: false});
+            },
+        );
+    }
+
+    // 读取用户信息
+    readUserInfo() {
+        let loading = SActivityIndicator.show(true, "载入中...");
+        apis.userInfo().then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+                console.log("用户信息读取成功返回:" , responseData);
+                // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
+                if(responseData !== null && responseData.data !== null) {
+                    UserInfoStore.setUserInfo(responseData.data);
+                    console.log("OK ===> Main:" );
+                    this.pop();
+                } else {
+                    console.log("OK ===> LoginPage:" );
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("用户信息读取错误返回:" , e);
             },
         );
     }
