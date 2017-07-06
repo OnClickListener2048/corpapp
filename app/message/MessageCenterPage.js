@@ -644,7 +644,7 @@ export default class MessageCenterPage extends Component {
                              onEndReached={this._loadMoreData}
                              renderFooter={this.renderFooter}
                              enableEmptySections={true}
-                             onEndReachedThreshold={0}
+                             onEndReachedThreshold={10}
                              renderRow={this._renderRow.bind(this)}
                              refreshControl = {
                                  <RefreshControl
