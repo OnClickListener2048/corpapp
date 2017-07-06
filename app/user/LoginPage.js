@@ -153,10 +153,11 @@ export default class LoginPage extends Component {
         if (this.state.mobileValid && this.state.vCodeServerValid) {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
-                    // Toast.show('短信验证码已发送');
+                    Toast.show('短信验证码已发送');
+
                     // Toast.show('测试环境短信验证码:' + responseData.msg);
-                    Toast.show('测试环境短信验证码 ' + responseData.msg,
-                        {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
+                    // Toast.show('测试环境短信验证码 ' + responseData.msg,
+                    //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
@@ -313,7 +314,7 @@ export default class LoginPage extends Component {
         apis.userInfo().then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                console.log("用户信息读取成功返回:" , responseData);
+                console.log("用户信息读取成功返回:" , JSON.stringify(responseData));
                 // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
 
