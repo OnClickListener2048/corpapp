@@ -69,6 +69,7 @@ export default class AlertPhotoModal extends Component{
     }
 
     watchSingle=()=>{
+        console.log("传值发放=");
         this.setState({ visible: false });
         this.props.callback(null,this.state.visible);//将图片传递给父组件
     }

@@ -74,8 +74,22 @@ export default class CompanyInfoView extends React.Component {
         this.props.callbackPho(contentPho);
     }
 
-    setRefresh(refresh) {
-        this.setState({isRefresh : refresh});
+    setRefresh(refresh,companyName,ContactsName,ContactsPhone) {
+        console.log("contactsphone="+ContactsPhone);
+        this.setState({isRefresh : refresh,
+            companyName:companyName,
+        ContactsName:ContactsName,
+        ContactsPhone:ContactsPhone});
+    }
+
+    componentWillReceiveProps(props) {
+        if(this.state.isRefresh===true){
+            console.log("....."+this.state.isRefresh);
+            this.setState({isRefresh : false,
+                companyName:this.props.companyName,
+                ContactsName:this.props.ContactsName,
+                ContactsPhone:this.props.ContactsPhone,});
+        }
     }
 
     render() {

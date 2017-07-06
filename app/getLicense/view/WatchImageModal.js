@@ -22,7 +22,7 @@ const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
-export default class AlertPhotoModal extends Component{
+export default class WatchImageModal extends Component{
     constructor(props){
         super(props)
         this.state = { visible: this.props.visible,
@@ -35,11 +35,12 @@ export default class AlertPhotoModal extends Component{
         this.props.callback();//将图片传递给父组件
     }
 
-    componentWillReceiveProps(props) {
-        this.setState({ visible: props.visible });
-    }
+    // componentWillReceiveProps(props) {
+    //     this.setState({ visible: props.visible });
+    // }
 
     render(){
+        console.log("WatchImageModal=>image="+this.state.image+this.state.visible);
         return(
             <Modal
                 animationType='none'//进场动画 fade
@@ -57,7 +58,7 @@ export default class AlertPhotoModal extends Component{
                             isWatch={true}
                             style={{ marginTop: 0, justifyContent: 'center',
                                 alignItems: 'center',height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
-                            source={{ uri:this.props.image+"" }}
+                            source={{ uri:this.props.image+""}}
                         ></ImageLoad>
                     </View>
                 </TouchableOpacity>
@@ -75,37 +76,8 @@ const styles = StyleSheet.create({
         bottom: 0,
         left: 0,
         right: 0,
-        justifyContent: 'flex-end',
-        alignItems: 'center'
-    },
-    background: {
-        backgroundColor: '#00000000',
-        // backgroundColor:'yellow',
-        width:SCREEN_WIDTH,
         justifyContent: 'center',
         alignItems: 'center'
     },
-    alertStyle: {
-        height:44,
-        width:SCREEN_WIDTH-50,
-        backgroundColor:'#ffffffff',
-        marginBottom:15,
-        borderRadius: 22,
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    },
-    alertCancelStyle: {
-        height:44,
-        width:SCREEN_WIDTH-50,
-        backgroundColor:'rgba(0, 0, 0, 0.25)',
-        marginBottom:30,
-        borderRadius: 22,
-        borderWidth:1,
-        borderColor:'white',
-        alignItems: 'center',
-        justifyContent: 'center',
-
-    }
 
 })

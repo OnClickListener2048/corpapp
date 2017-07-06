@@ -59,9 +59,9 @@ export default class GetLicensePage extends Component{
         this.state = {
             renderUnderline: true,
             currentStep : 0,
-            visible: this.props.visible,
-            imgVisible:false,
-            imgVisibles:this.props.imgVisibles,
+            visible: this.props.visible,//是否显示图片选择方式AlertPhotoModal
+            imgVisible:false,//是否显示大图
+            imgVisibles:this.props.imgVisibles,//是否显示查看大图项
             reImage: null,
             linImage:null,
             photoType:null,
@@ -146,7 +146,7 @@ export default class GetLicensePage extends Component{
             });
             this._loadData();
             if(this.refs.companyInfoView) {
-                this.refs.companyInfoView.setRefresh(true);
+                this.refs.companyInfoView.setRefresh(true,this.state.detailObj.corpName,this.state.detailObj.contactName,this.state.detailObj.contactPhone);
             }
         }else{
             this.setState({
@@ -566,7 +566,9 @@ export default class GetLicensePage extends Component{
     }
 
     _callbackPhoto(image,visible) {//获取图片
+        console.log("callback="+image);
         if(image===null){
+            console.log("callback=1"+image);
             this.setState({
                 imgVisible:true,
 
@@ -878,15 +880,17 @@ export default class GetLicensePage extends Component{
     };
 
     render() {
+        console.log("render,imgVisible="+this.state.imgVisible);
         return(
         <View style={styles.container}>
             {this.state.visible === true &&
             <AlertPhotoModal
-                // watchImagevi={this.state.imgVisibles}
-                watchImagevi={false}
+                watchImagevi={this.state.imgVisibles}
+                // watchImagevi={false}
                 callback={this._callbackPhoto.bind(this)}/>}
             {this.state.imgVisible === true &&
             <WatchImageModal
+                visible={true}
                 image={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
                 callback={this._callbackWatchPhoto.bind(this)}/>}
             {this.state.isDateTimePickerVisible === true &&
