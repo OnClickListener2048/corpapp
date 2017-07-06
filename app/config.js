@@ -18,7 +18,7 @@ export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
 // TODO 线上API服务器接口地址
 export let SCHEME = 'https';
-export let DOMAIN_API = 'app.i-counting.cn/erp';
+export let DOMAIN_API = 'app.i-counting.cn';//app.i-counting.cn/erp
 // if(DEBUG) {// 测试环境变量, 上线时应删除
 //     SCHEME = 'https';
 //     DOMAIN_API = 'x-crm.i-counting.cn';
