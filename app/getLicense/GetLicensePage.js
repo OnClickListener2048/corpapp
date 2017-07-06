@@ -571,7 +571,7 @@ export default class GetLicensePage extends Component{
             console.log("callback=1"+image);
             this.setState({
                 imgVisible:true,
-
+                visible:false,
             })
             return;
         }
