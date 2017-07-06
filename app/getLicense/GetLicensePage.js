@@ -891,7 +891,8 @@ export default class GetLicensePage extends Component{
             {this.state.imgVisible === true &&
             <WatchImageModal
                 visible={true}
-                image={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
+                imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
+                imageFile={this.state.photoType=="reverse"?this.state.reImage:this.state.linImage}
                 callback={this._callbackWatchPhoto.bind(this)}/>}
             {this.state.isDateTimePickerVisible === true &&
                 <DataTimerView

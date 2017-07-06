@@ -50,7 +50,7 @@ export default class AlertPhotoModal extends Component{
             cropperCircleOverlay: false,
             compressImageMaxWidth: 640,
             compressImageMaxHeight: 480,
-            compressImageQuality: 0.5,
+            compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',
         }).then(image => {
@@ -82,7 +82,7 @@ export default class AlertPhotoModal extends Component{
             cropperCircleOverlay: false,
             compressImageMaxWidth: 640,
             compressImageMaxHeight: 480,
-            compressImageQuality: 0.5,
+            compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',
         }).then(image => {
