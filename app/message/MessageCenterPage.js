@@ -128,6 +128,7 @@ export default class MessageCenterPage extends Component {
 
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                        faild: false,
                         loaded:true,
                     });
 
