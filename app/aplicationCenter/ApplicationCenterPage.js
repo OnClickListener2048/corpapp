@@ -2,8 +2,9 @@
  * Created by jinglan on 2017/6/7.
  */
 import React, {Component} from 'react';
-import {Dimensions, TouchableOpacity
-,InteractionManager,Platform} from 'react-native';
+import {Dimensions, TouchableOpacity,
+    DeviceEventEmitter,
+    InteractionManager,Platform} from 'react-native';
 
 import {loadOutSourceCount} from "../apis/outSource";
 import {
@@ -71,9 +72,24 @@ export default class ApplicationCenterPage extends Component{
             });
     }
 
-    componentWillMount() {
-        this._loadCount(true);
+    componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('loginSuccess', (data) => {
+            console.log('应用 loginSuccess');
+            try {
+                this._loadCount();
+            } catch (e) {
+                console.log(e + "");
+            }
+        });
+    }
 
+    componentWillUnmount() {
+        // 销毁
+        this.subscription.remove();
+    }
+
+    componentWillMount() {
+        this._loadCount();
     }
 
     //获取每个外勤状态数量

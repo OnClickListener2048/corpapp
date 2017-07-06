@@ -34,9 +34,26 @@ export default class PLPMine extends Component {
         };
 
         this._doLogout = this._doLogout.bind(this);
+        this._updateUserData = this._updateUserData.bind(this);
     }
 
-    componentWillMount() {
+    componentDidMount() {
+        this.subscription = DeviceEventEmitter.addListener('loginSuccess', (data) => {
+            console.log('我的 loginSuccess');
+            try {
+                this._updateUserData();
+            } catch (e) {
+                console.log(e + "");
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        // 销毁
+        this.subscription.remove();
+    }
+
+    _updateUserData() {
         UserInfoStore.getUserInfo().then(
             (user) => {
                 if (user !== null) {
