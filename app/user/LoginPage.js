@@ -316,9 +316,17 @@ export default class LoginPage extends Component {
                 console.log("用户信息读取成功返回:" , responseData);
                 // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
-                    UserInfoStore.setUserInfo(responseData.data);
-                    console.log("OK ===> Main:" );
-                    this.pop();
+
+                    UserInfoStore.setUserInfo(responseData.data).then(// 保存成功后再跳转
+                        (user) => {
+                            console.log("OK ===> Main:" );
+                            this.pop();
+                        },
+                        (e) => {
+                            console.log("用户信息保存错误:", e);
+                            this.pop();
+                        },
+                    );
                 } else {
                     console.log("OK ===> LoginPage:" );
                 }

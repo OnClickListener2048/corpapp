@@ -87,13 +87,14 @@ export default class MessageCenterPage extends Component {
             this.state.canClickBtn = true;
         }
     }
+
+    // 载入初始化数据
     _loadInitData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
 
         apis.loadMessageData(this.pageCount,'').then(
-
             (responseData) => {
 
                 SActivityIndicator.hide(loading);
@@ -117,13 +118,9 @@ export default class MessageCenterPage extends Component {
                     this.messageArr = [];
                     this.messageArr = this.messageArr.concat(responseData.data);
                     // console.log(this.messageArr)
-
-
-
                     for (let  i = 0 ; i < this.messageArr.length ; i++){
                         let  secData = this.messageArr[i];
                         secData.rowIndex = i;
-
                     }
 
                     this.setState({
@@ -134,7 +131,6 @@ export default class MessageCenterPage extends Component {
 
                     if (responseData.data.length == this.pageCount){
                         this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
-
                         // console.log(this.lastID +'你大爷');
                     }
                     // end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
@@ -160,9 +156,6 @@ export default class MessageCenterPage extends Component {
                 this.props.navigator.setTabBadge({
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
-
-
-
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
@@ -483,7 +476,6 @@ export default class MessageCenterPage extends Component {
 
         let a = 'arrCount' + arr.length + 'msgId' + rowData.msgId  + 'content信息' + rowData.content + 'outPageId' + outPageId  + 'paramsStr' + paramsStr1 + 'paramsArrLength'
             + paramsArr1.length + 'subParam' + subParam1 + 'specArr' + specArr1.length;
-
 
         // Toast.show(a);
 
