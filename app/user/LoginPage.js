@@ -314,7 +314,7 @@ export default class LoginPage extends Component {
         apis.userInfo().then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
-                console.log("用户信息读取成功返回:" , responseData);
+                console.log("用户信息读取成功返回:" , JSON.stringify(responseData));
                 // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
 
