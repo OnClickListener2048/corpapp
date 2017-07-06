@@ -39,9 +39,9 @@ export  default class scrollViewTop extends Component {
                 >
                     {this._renderAllImage()}
                 </ScrollView>
-                <View style={styles.pageViewStyle}>
-                    {this._renderAllIndicator()}
-                </View>
+                {/*<View style={styles.pageViewStyle}>*/}
+                    {/*{this._renderAllIndicator()}*/}
+                {/*</View>*/}
             </View>
         );
     }
@@ -49,23 +49,32 @@ export  default class scrollViewTop extends Component {
     /**1.轮播图片展示 */
     _renderAllImage(){
         let imageViews=[];
-        for(var i=0;i<3;i++) {
-            if (i === 0) {
-                var image = require('../img/banner.png');
-            }else if(i===1){
-                var image = require('../img/banner1.png');
-            }else if(i===2){
-                var image = require('../img/banner2.png');
-            }
-            imageViews.push(
+        // for(var i=0;i<3;i++) {
+        //     if (i === 0) {
+        //         var image = require('../img/banner.png');
+        //     }else if(i===1){
+        //         var image = require('../img/banner1.png');
+        //     }else if(i===2){
+        //         var image = require('../img/banner2.png');
+        //     }
+        //     imageViews.push(
+        //         <Image
+        //             key={i}
+        //             style={{flex:1,width:ScreenWidth}}
+        //             source={image}
+        //
+        //         />
+        //     );
+        // }
+
+        imageViews.push(
                 <Image
-                    key={i}
+                    key={0}
                     style={{flex:1,width:ScreenWidth}}
-                    source={image}
+                    source={require('../img/banner3.png')}
 
                 />
             );
-        }
         return imageViews;
     }
 
