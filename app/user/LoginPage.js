@@ -154,6 +154,7 @@ export default class LoginPage extends Component {
             apis.sendVerifyCode(this.state.mobile, this.state.vCodeInputValid ? this.state.vCode : null).then(
                 (responseData) => {
                     Toast.show('短信验证码已发送');
+
                     // Toast.show('测试环境短信验证码:' + responseData.msg);
                     // Toast.show('测试环境短信验证码 ' + responseData.msg,
                     //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
