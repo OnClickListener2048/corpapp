@@ -267,6 +267,8 @@ HTTPBase._commonParams = async function (params) {
         console.log('_commonParams token', token);
         if (token !== null){
             paramsArray.token = token;
+        } else {
+            paramsArray.token = '0';// 给一个空token
         }
     } catch (error) {
     }

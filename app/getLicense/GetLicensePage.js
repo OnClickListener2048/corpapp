@@ -879,7 +879,7 @@ export default class GetLicensePage extends Component{
 
     render() {
         return(
-        <KeyboardAvoidingView behavior='padding' style={styles.container}>
+        <View style={styles.container}>
             {this.state.visible === true &&
             <AlertPhotoModal
                 watchImagevi={this.state.imgVisibles}
@@ -1089,7 +1089,7 @@ export default class GetLicensePage extends Component{
                 </View>
                 </ScrollView>
             }
-        </KeyboardAvoidingView>
+        </View>
         );
     }
 

@@ -3,20 +3,17 @@
  */
 import React, {Component} from 'react';
 // import React, {} from 'index';
-
-import {Dimensions, InteractionManager, DeviceEventEmitter} from 'react-native';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../test/NoMessage';
-import {navToLogin, navToMainTab} from '../navigation';
 
-import {
-    SwRefreshScrollView, //支持下拉刷新的ScrollView
-    SwRefreshListView, //支持下拉刷新和上拉加载的ListView
-    RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
-    LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
-} from '../../node_modules/react-native-swRefresh-master'
+// import {
+//     SwRefreshScrollView, //支持下拉刷新的ScrollView
+//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+// } from '../../node_modules/react-native-swRefresh-master'
 
 // import UltimateListView from "../../node_modules/react-native-ultimate-listview";
 
@@ -30,6 +27,12 @@ import {
     AlertIndicatorIOS,
     ActivityIndicatorIOS,
     AlertIOS,
+    Dimensions,
+    InteractionManager,
+    DeviceEventEmitter,
+    RefreshControl,
+    ActivityIndicator
+
 } from 'react-native';
 import Toast from 'react-native-root-toast';
 import CommunalNavBar from '../main/GDCommunalNavBar';
@@ -50,7 +53,9 @@ export default class MessageCenterPage extends Component {
             loaded:false,                   // 是否初始化 ListView
             faild : false,
             bagetNum : 0,
+            loadingMore : 0,
             canClickBtn : false,
+            isRefreshing: false,
         }
         this.messageArr = [];
         this.lastID = null;
@@ -62,9 +67,19 @@ export default class MessageCenterPage extends Component {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
+
     }
+
+    static navigatorStyle = {
+        navBarHidden: true, // 隐藏默认的顶部导航栏
+    };
+
+    dataBlob: {}
+    sectionIDs: []
+    rowIDs: []
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
@@ -72,13 +87,7 @@ export default class MessageCenterPage extends Component {
             this.state.canClickBtn = true;
         }
     }
-
-    static navigatorStyle = {
-        navBarHidden: true, // 隐藏默认的顶部导航栏
-    };
-
-
-    _loadInitData(end) {
+    _loadInitData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -119,21 +128,16 @@ export default class MessageCenterPage extends Component {
 
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                        faild: false,
                         loaded:true,
                     });
 
                     if (responseData.data.length == this.pageCount){
                         this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
-                        this.refs.listView.resetStatus() //重置上拉加载的状态
 
                         // console.log(this.lastID +'你大爷');
-                    }else {
-
-                        this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
-
                     }
                     // end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
-                    this.refs.listView.endRefresh();
                 }
             },
             (e) => {
@@ -157,7 +161,6 @@ export default class MessageCenterPage extends Component {
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
 
-                end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
 
 
                 console.log("获取失败" , e);
@@ -166,10 +169,11 @@ export default class MessageCenterPage extends Component {
         );
     }
 
-    _loadData(end) {
+    _loadData() {
 
         this.lastID = null;
 
+        this.setState({isRefreshing: true});
 
         apis.loadMessageData(this.pageCount,'').then(
 
@@ -196,13 +200,8 @@ export default class MessageCenterPage extends Component {
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
-                    this.refs.listView.resetStatus() //重置上拉加载的状态
 
                     // console.log(this.lastID +'你大爷');
-                }else {
-
-                    this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
-
                 }
 
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
@@ -211,33 +210,28 @@ export default class MessageCenterPage extends Component {
 
                 }
 
-
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
+                this.setState({isRefreshing: false});
 
-                let timer =  setTimeout(()=>{
-                    clearTimeout(timer)
-                end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
-                },1500)
+
 
             }
             },
             (e) => {
                 // 关闭刷新动画
+                this.setState({isRefreshing: false});
 
-                let timer =  setTimeout(()=>{
-                    clearTimeout(timer)
-                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
-                },1500)
                 console.log("获取失败" , e);
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
 
-    _loadMoreData(end) {
+    _loadMoreData() {
+        console.log('加载更多哈哈');
 
         if (this.lastID === null){
             return;
@@ -246,6 +240,7 @@ export default class MessageCenterPage extends Component {
         if (this.isLoading === true){
             return;
         }
+        this.setState({loadingMore: 1});
 
         this.isLoading = true;
 
@@ -275,12 +270,8 @@ export default class MessageCenterPage extends Component {
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
-                    this.refs.listView.resetStatus() //重置上拉加载的状态
 
                     // console.log(this.lastID +'你大爷');
-                }else {
-                    this.refs.listView.setNoMoreData() //设置为没有更多数据了的状态
-
                 }
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
@@ -296,7 +287,7 @@ export default class MessageCenterPage extends Component {
                 });
 
                 this.isLoading = false;
-                this.refs.listView.endLoadMore(responseData.data.length < this.pageCount)
+                this.setState({loadingMore: 0});
 
 
             },
@@ -304,10 +295,7 @@ export default class MessageCenterPage extends Component {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
                 this.isLoading = false;
-                let timer =  setTimeout(()=>{
-                    clearTimeout(timer)
-                    end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
-                },1500)
+
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
@@ -366,7 +354,24 @@ export default class MessageCenterPage extends Component {
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         // 跳转登录页的通知
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
-            navToLogin();
+            // navToLogin();
+            console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
+            // if (loginJumpSingleton.isJumpingLogin === true){
+            //     return;
+            // }
+            //
+            // loginJumpSingleton.isJumpingLogin = true;
+            //
+            // this.props.navigator.push({
+            //     screen: 'user.LoginPage',
+            //     backButtonTitle: '', // 返回按钮的文字 (可选)
+            //     backButtonHidden: true, // 是否隐藏返回按钮 (可选)
+            //     overrideBackPress: true, // 覆盖Android返回键
+            //     passProps: {
+            //         isReset: true
+            //     }
+            // });
+            loginJumpSingleton.goToLogin(this.props.navigator);
         });
 
         try {
@@ -444,6 +449,7 @@ export default class MessageCenterPage extends Component {
         this.state.canClickBtn = false;
 
 
+        this.isJumping = true;
 
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
@@ -498,6 +504,7 @@ export default class MessageCenterPage extends Component {
                 }
             });
 
+        this.isJumping = false;
 
 
         if (rowData.read === 'false'){
@@ -510,11 +517,10 @@ export default class MessageCenterPage extends Component {
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        if (this.state.canClickBtn === false){
+        if (this.isJumping === true){
             return;
         }
-
-        this.state.canClickBtn = false;
+        this.isJumping = true;
 
         this.props.navigator.push({
                 screen: 'SystemMessagePage',
@@ -568,21 +574,34 @@ export default class MessageCenterPage extends Component {
             },1000);
     }
 
-    _renderFooter() {
-        return (
-            <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
 
-                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                </View>
+    renderFooter(){
+      if (this.state.loadingMore == 1){
+          return(
+              <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+                  <ActivityIndicator size={'small'}/>
+                  <Text style={{marginLeft: 10}}>加载中...</Text>
 
-                <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                    {'历史消息'}
-                </Text>
-                <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                </View>
-            </View>);
+              </View>
+              );
+    //加载中..
+      }else {
+          return (
+              <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
+
+                  <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                  </View>
+
+                  <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                      {'历史消息'}
+                  </Text>
+                  <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                  </View>
+              </View>);
+
+      }
     }
 
     // 根据网络状态决定是否渲染 ListView
@@ -620,29 +639,42 @@ export default class MessageCenterPage extends Component {
         }else {         // 有数据
             return(
 
-
-                <SwRefreshListView
-            dataSource={this.state.dataSource}
-            ref="listView"
-            renderRow={this._renderRow.bind(this)}
-            onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
-            onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
-            //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
-            // customRefreshView={(refresStatus,offsetY)=>{
-            //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
-            // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
-
-            // renderFooter={()=>{return
-            //     (<View style={{backgroundColor:'blue',height:30}}>
-            //         <Text>我是footer</Text>
-            //     </View>)
-            // }}
-
-            noMoreDataTitle = '  历史消息  '
+                <ListView    style={[{flex : 1 }]}
+                             dataSource={this.state.dataSource}
+                             onEndReached={this._loadMoreData}
+                             renderFooter={this.renderFooter}
+                             enableEmptySections={true}
+                             onEndReachedThreshold={0}
+                             renderRow={this._renderRow.bind(this)}
+                             refreshControl = {
+                                 <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._loadData}
+                                    title={'加载中...'}
+                                    titleColor={'#b1b1b1'}
+                                    colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
+                                    progressBackgroundColor={'orange'}
+                                />
+                    }
+                />
+            // onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
+            // onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
+            // //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
+            // // customRefreshView={(refresStatus,offsetY)=>{
+            // //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
+            // // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
+            //
+            // // renderFooter={()=>{return
+            // //     (<View style={{backgroundColor:'blue',height:30}}>
+            // //         <Text>我是footer</Text>
+            // //     </View>)
+            // // }}
+            //
+            // noMoreDataTitle = '  历史消息  '
 
             // customRefreshViewHeight={60} //自定义刷新视图时必须指定高度
 
-                />
+
             );
         }
     }

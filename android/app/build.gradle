@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
+import com.android.builder.core.DefaultManifestParser
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -230,12 +231,33 @@ android {
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
             def versionCodes = ["armeabi-v7a":1, "x86":2]
             def abi = output.getFilter(OutputFile.ABI)
+            println('abi = ' + abi);
+
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
+
+            //修改生成的apk名字
+            def oldFile = output.outputFile
+            def manifestParser = new DefaultManifestParser(android.sourceSets.main.manifest.srcFile);
+            def versionName =manifestParser.getVersionName()
+//            def newName = "pi_v_" + defaultConfig.versionName;
+            def newName = "pi_" + abi + "_v" + versionName + "_" + releaseTime() ;
+            if (variant.buildType.name == 'release') {
+                def releaseApkName = newName + '.apk'
+                output.outputFile = new File(oldFile.parent, releaseApkName)
+            }
+//            if (variant.buildType.name.equals('debug')) {
+//                def releaseApkName = newName + '_debug.apk'
+//                output.outputFile = new File(oldFile.parent, releaseApkName)
+//            }
         }
     }
+}
+
+def releaseTime() {
+    return new Date().format("yyyy_MM_dd_HH_mm_ss", TimeZone.getTimeZone("UTC"))
 }
 
 dependencies {
