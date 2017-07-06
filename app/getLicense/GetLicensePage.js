@@ -720,6 +720,7 @@ export default class GetLicensePage extends Component{
         }
         this.setState({
             editables:editables,
+            visible:false,
         });
     }
 
