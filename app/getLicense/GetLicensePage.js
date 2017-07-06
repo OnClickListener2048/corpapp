@@ -104,7 +104,7 @@ export default class GetLicensePage extends Component{
             areaCodeArr:[],
             selectAreaCode:[],  //选择地址的 id 保存的时候用
             areaCodeIndexArr:[],
-            canClickBtn : false,
+            canClickBtn : true,
         };
         this._loadData = this._loadData.bind(this);
         this._loadAreaData = this._loadAreaData.bind(this);
@@ -882,7 +882,8 @@ export default class GetLicensePage extends Component{
         <View style={styles.container}>
             {this.state.visible === true &&
             <AlertPhotoModal
-                watchImagevi={this.state.imgVisibles}
+                // watchImagevi={this.state.imgVisibles}
+                watchImagevi={false}
                 callback={this._callbackPhoto.bind(this)}/>}
             {this.state.imgVisible === true &&
             <WatchImageModal

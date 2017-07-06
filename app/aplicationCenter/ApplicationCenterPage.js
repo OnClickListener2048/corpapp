@@ -43,11 +43,9 @@ export default class ApplicationCenterPage extends Component{
         console.log('ApplicationCenterPage event', JSON.stringify(event));
         if(event.id==='willAppear'){
             this._loadCount();
-        }
-            if(event.id==='willAppear'){
-                this.state.canClickBtn = true;
-            }
+            this.state.canClickBtn = true;
 
+        }
     }
     static renderTitleItem() {
         return(
