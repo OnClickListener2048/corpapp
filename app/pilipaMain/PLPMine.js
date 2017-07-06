@@ -12,9 +12,11 @@ import {
     StyleSheet,
     Text,
     View,
-    Dimensions, TouchableWithoutFeedback,
+    Dimensions,
+    TouchableWithoutFeedback,
+    DeviceEventEmitter
 }from 'react-native';
-import CommunalNavBar from '../main/GDCommunalNavBar';
+
 import px2dp from '../util'
 import {navToBootstrap, navToMainTab} from '../navigation';
 import Toast from 'react-native-root-toast';
@@ -152,7 +154,9 @@ export default class PLPMine extends Component {
     _doLogoutCall() {
         apis.logout().then(
             () => {
-                navToBootstrap({isReset: true})
+                loginJumpSingleton.goToLogin(this.props.navigator);
+                // navToBootstrap({isReset: true})
+                // DeviceEventEmitter.emit('goLoginPage', true);
                 // this.props.navigator.push({
                 //     screen: 'user.LoginPage',
                 //     backButtonTitle: '', // 返回按钮的文字 (可选)
@@ -160,7 +164,11 @@ export default class PLPMine extends Component {
                 //     title:'Login',
                 // });
             },
-            (e) => navToBootstrap({isReset: true})//Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
+            (e) => {
+                DeviceEventEmitter.emit('goLoginPage', true);
+                // navToBootstrap({isReset: true})
+                //Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
+            }
         )
     }
 

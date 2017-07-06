@@ -33,6 +33,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
 import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
+import {Navigation} from 'react-native-navigation';
 import {DEBUG} from '../config';
 
 export default class LoginPage extends Component {
@@ -97,9 +98,12 @@ export default class LoginPage extends Component {
 
     // 返回
     pop() {
-        if (this.props.navigator) {
-            this.props.navigator.pop();
-        }
+        // if (this.props.navigator) {
+        //     this.props.navigator.pop();
+        // }
+        Navigation.dismissModal({
+            animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
+        });
     }
 
     // 准备加载组件
@@ -109,11 +113,18 @@ export default class LoginPage extends Component {
         if(DEBUG) {
             // this._setupDebug();
         }
+
+        let {isReset = false } = this.props;// 重置, 清理所有登录信息
+
+        if (isReset) {
+            loginJumpSingleton.reset();
+        }
     }
 
     // 屏蔽返回按键
     componentDidMount() {
         console.log('BackAndroid=', BackAndroid);
+
         // if(BackAndroid !== null) {
         //     console.log('BackAndroid !== null', BackAndroid !== null);
         //     BackAndroid.addEventListener('hardwareBackPress',function(){
@@ -128,6 +139,7 @@ export default class LoginPage extends Component {
     componentWillUnmount() {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', false);
+        loginJumpSingleton.isJumpingLogin = false;
     }
 
     // 请求短信验证码
@@ -262,7 +274,8 @@ export default class LoginPage extends Component {
                         v => {
                             // this.readUserInfo();
                             // 到载入页
-                                navToBootstrap();
+                            //     navToBootstrap();
+                            this.pop();// TODO Event emitter
                         },
                         e => console.log(e.message)
                     );

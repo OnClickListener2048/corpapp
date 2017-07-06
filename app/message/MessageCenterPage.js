@@ -9,7 +9,6 @@ import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../test/NoMessage';
-import {navToLogin, navToMainTab} from '../navigation';
 
 import {
     SwRefreshScrollView, //支持下拉刷新的ScrollView
@@ -70,7 +69,6 @@ export default class MessageCenterPage extends Component {
         // console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
             this.state.canClickBtn = true;
-            this.isJumpingLogin = false;// 是否跳转登录页中
         }
     }
 
@@ -368,21 +366,23 @@ export default class MessageCenterPage extends Component {
         // 跳转登录页的通知
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
-            if (this.isJumpingLogin === true){
-                return;
-            }
-
-            this.isJumpingLogin = true;
-
-            this.props.navigator.push({
-                screen: 'user.LoginPage',
-                backButtonTitle: '', // 返回按钮的文字 (可选)
-                backButtonHidden: true, // 是否隐藏返回按钮 (可选)
-                overrideBackPress: true, // 覆盖返回键
-                passProps: {
-                    isReset: true
-                }
-            });
+            console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
+            // if (loginJumpSingleton.isJumpingLogin === true){
+            //     return;
+            // }
+            //
+            // loginJumpSingleton.isJumpingLogin = true;
+            //
+            // this.props.navigator.push({
+            //     screen: 'user.LoginPage',
+            //     backButtonTitle: '', // 返回按钮的文字 (可选)
+            //     backButtonHidden: true, // 是否隐藏返回按钮 (可选)
+            //     overrideBackPress: true, // 覆盖Android返回键
+            //     passProps: {
+            //         isReset: true
+            //     }
+            // });
+            loginJumpSingleton.goToLogin(this.props.navigator);
         });
 
         try {
