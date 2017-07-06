@@ -653,7 +653,7 @@ export default class MessageCenterPage extends Component {
                                     title={'加载中...'}
                                     titleColor={'#b1b1b1'}
                                     colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
-                                    progressBackgroundColor={'orange'}
+                                    progressBackgroundColor={'#fafafa'}
                                 />
                     }
                 />
