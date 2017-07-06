@@ -74,7 +74,7 @@ class ProcessBtnView extends Component{
             },
             (e) => {
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' );
                 SActivityIndicator.hide(loading);
 
             },

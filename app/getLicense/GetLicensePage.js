@@ -228,7 +228,7 @@ export default class GetLicensePage extends Component{
                     loaded:false,
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' );
             },
         );
     }
@@ -277,7 +277,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
@@ -303,7 +303,7 @@ export default class GetLicensePage extends Component{
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                Toast.show('提交失败' + JSON.stringify(e));
+                Toast.show('提交失败');
             },
         );
     }
@@ -799,7 +799,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
@@ -841,7 +841,7 @@ export default class GetLicensePage extends Component{
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
