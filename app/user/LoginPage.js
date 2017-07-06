@@ -15,7 +15,9 @@ import {
     DeviceEventEmitter, TouchableOpacity,
     KeyboardAvoidingView, TouchableWithoutFeedback,
     InteractionManager,
-    Platform
+    Platform,
+    BackAndroid,
+    ToastAndroid,
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
@@ -69,6 +71,15 @@ export default class LoginPage extends Component {
         this._requestSMSCode = this._requestSMSCode.bind(this);
         this._verifyVCode = this._verifyVCode.bind(this);
         this._doChangeVCode = this._doChangeVCode.bind(this);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        // console.log('ApplicationCenterPage event.type', event.type);
+        console.log('ApplicationCenterPage event', JSON.stringify(event));
+        if(event.id==='backPress'){
+            BackAndroid.exitApp();
+        }
     }
 
     //debug only
@@ -98,6 +109,19 @@ export default class LoginPage extends Component {
         if(DEBUG) {
             // this._setupDebug();
         }
+    }
+
+    // 屏蔽返回按键
+    componentDidMount() {
+        console.log('BackAndroid=', BackAndroid);
+        // if(BackAndroid !== null) {
+        //     console.log('BackAndroid !== null', BackAndroid !== null);
+        //     BackAndroid.addEventListener('hardwareBackPress',function(){
+        //         console.log('hardwareBackPress');
+        //             BackAndroid.exitApp();
+        //             return false;
+        //     });
+        // }
     }
 
     // 准备销毁组件

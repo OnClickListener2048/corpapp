@@ -70,6 +70,7 @@ export default class MessageCenterPage extends Component {
         // console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
             this.state.canClickBtn = true;
+            this.isJumpingLogin = false;// 是否跳转登录页中
         }
     }
 
@@ -366,7 +367,22 @@ export default class MessageCenterPage extends Component {
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         // 跳转登录页的通知
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
-            navToLogin();
+            // navToLogin();
+            if (this.isJumpingLogin === true){
+                return;
+            }
+
+            this.isJumpingLogin = true;
+
+            this.props.navigator.push({
+                screen: 'user.LoginPage',
+                backButtonTitle: '', // 返回按钮的文字 (可选)
+                backButtonHidden: true, // 是否隐藏返回按钮 (可选)
+                overrideBackPress: true, // 覆盖返回键
+                passProps: {
+                    isReset: true
+                }
+            });
         });
 
         try {
