@@ -20,8 +20,8 @@ export const SCREEN_HEIGHT = height;
 export let SCHEME = 'https';
 export let DOMAIN_API = 'app.i-counting.cn';//app.i-counting.cn/erp
 // if(DEBUG) {// 测试环境变量, 上线时应删除
-//     SCHEME = 'https';
-//     DOMAIN_API = 'x-crm.i-counting.cn';
+    SCHEME = 'https';
+    DOMAIN_API = 'x-crm.i-counting.cn';
 // }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
