@@ -55,8 +55,6 @@ onNavigatorEvent(event) { // this is the onPress handler for the two buttons tog
 
 _loadData(needLoding) {
 
-        let loading;
-
         if (!needLoding){
 
             let callback = this.props.callback;
@@ -66,15 +64,14 @@ _loadData(needLoding) {
         }
 
         if (needLoding){
-            loading  = SActivityIndicator.show(true, "加载中...");
+            this.loading  = SActivityIndicator.show(true, "加载中...");
         }
-
 
         apis.loadOutSourceTask(this.props.taskId).then(
 
             (responseData) => {
                 if (needLoding){
-                    SActivityIndicator.hide(loading);
+                    SActivityIndicator.hide(this.loading);
                 }
 
                 if(responseData !== null && responseData.data !== null) {
@@ -97,7 +94,7 @@ _loadData(needLoding) {
             },
             (e) => {
                 if (needLoding){
-                    SActivityIndicator.hide(loading);
+                    SActivityIndicator.hide(this.loading);
                 }
                 this.setState({
                     faild:true,
@@ -113,10 +110,17 @@ _loadData(needLoding) {
 
     componentWillMount() {
         this._loadData(true);
-
     }
 
-
+    componentWillUnmount() {
+        try {
+            if(this.loading) {
+                console.log("外勤任务 componentWillUnmount()");
+                SActivityIndicator.hide(this.loading);
+            }
+        } catch (e) {
+        }
+    }
 
 
 //
