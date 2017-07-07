@@ -54,9 +54,10 @@ export default class MessageCenterPage extends Component {
             faild : false,
             bagetNum : 0,
             loadingMore : 0,
-            canClickBtn : false,
             isRefreshing: false,
         }
+
+        this.isJumping = false;// 是否跳转中
         this.messageArr = [];
         this.lastID = null;
         this.isLoading = false;
@@ -84,7 +85,7 @@ export default class MessageCenterPage extends Component {
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
-            this.state.canClickBtn = true;
+            this.isJumping = false;
         }
     }
 
@@ -352,7 +353,7 @@ export default class MessageCenterPage extends Component {
             loginJumpSingleton.goToLogin(this.props.navigator);
         });
 
-        this.subscription = DeviceEventEmitter.addListener('loginSuccess', (data)=>{
+        this.subscriptionLogin = DeviceEventEmitter.addListener('loginSuccess', (data)=>{
             console.log('我的消息 loginSuccess');
             try {
                 this._loadInitData();
@@ -420,6 +421,7 @@ export default class MessageCenterPage extends Component {
         }
         // 销毁
         this.subscription.remove();
+        this.subscriptionLogin.remove();
     }
 
     componentWillMount() {
@@ -427,14 +429,12 @@ export default class MessageCenterPage extends Component {
 
     }
 
+    // 跳转到外勤通知页
     toMyOutSideWork(msgId,rowData) {
         // console.log(this.props.navigator.subarray().length);
-        if (this.state.canClickBtn === false){
+        if (this.isJumping === true){
             return;
         }
-
-        this.state.canClickBtn = false;
-
 
         this.isJumping = true;
 
@@ -490,14 +490,9 @@ export default class MessageCenterPage extends Component {
                 }
             });
 
-        this.isJumping = false;
-
-
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
         }
-
-
 
     }
 
