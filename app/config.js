@@ -17,11 +17,11 @@ let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
 // TODO 线上API服务器接口地址
-export let SCHEME = 'https';
-export let DOMAIN_API = 'x-crm.i-counting.cn';
+export let SCHEME = 'http';
+export let DOMAIN_API = '192.168.100.234:8081';
 if(DEBUG) {// 测试环境变量, 上线时应删除
-    SCHEME = 'https';
-    DOMAIN_API = 'x-crm.i-counting.cn';
+    SCHEME = 'http';
+    DOMAIN_API = '192.168.100.234:8081';
 }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
