@@ -42,6 +42,8 @@ export default class WatchImageModal extends Component{
             imageFile:props.imageFile,});
     }
 
+
+
     render(){
         console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible);
         return(
@@ -67,6 +69,7 @@ export default class WatchImageModal extends Component{
                                         alignItems: 'center',height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
                                     source={{ uri:this.state.imageUrl+""}}
                                 />}
+
 
                     </View>
                 </TouchableOpacity>
