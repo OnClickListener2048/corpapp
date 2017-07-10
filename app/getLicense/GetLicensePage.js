@@ -945,7 +945,8 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.idCards+"" }}/> :
+                                        source={{ uri:this.state.detailObj.idCards+"" }}
+                                        placeholderSource={require('../img/reverse.png')}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity> :
@@ -1075,7 +1076,8 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics+"" }}/>  :
+                                        source={{ uri:this.state.detailObj.bizLics+"" }}
+                                        placeholderSource={require('../img/blicense.png')}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
