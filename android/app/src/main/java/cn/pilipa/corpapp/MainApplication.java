@@ -29,9 +29,9 @@ import java.util.List;
 
 public class MainApplication extends NavigationApplication {
     // 设置为 true 将不弹出 toast
-    private boolean SHUTDOWN_TOAST = false;
+    private boolean SHUTDOWN_TOAST = true;
     // 设置为 true 将不打印 log
-    private boolean SHUTDOWN_LOG = false;
+    private boolean SHUTDOWN_LOG = true;
 
     @Override
     public boolean isDebug() {
@@ -59,7 +59,7 @@ public class MainApplication extends NavigationApplication {
                     new VectorIconsPackage(),
                     new SplashScreenReactPackage(),
                     new BlurViewPackage(),
-                      new JPushPackage(false, false)
+                      new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
               );
     }
 

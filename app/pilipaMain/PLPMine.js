@@ -48,6 +48,17 @@ export default class PLPMine extends Component {
         });
     }
 
+    // 准备加载组件
+    componentWillMount() {
+        try {
+            // 启动时载入一次用户信息
+            this._updateUserData();
+        } catch (e) {
+            console.log(e + "");
+        }
+    }
+
+
     componentWillUnmount() {
         // 销毁
         this.subscription.remove();
@@ -56,6 +67,7 @@ export default class PLPMine extends Component {
     _updateUserData() {
         UserInfoStore.getUserInfo().then(
             (user) => {
+                console.log("用户信息读取返回:" , JSON.stringify(user));
                 if (user !== null) {
                     this.setState({userName: user.name});
                 }
