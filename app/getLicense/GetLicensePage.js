@@ -128,7 +128,7 @@ export default class GetLicensePage extends Component{
 
         let callback = this.props.callback;
         if(callback) {
-            callback(false);
+            callback();
         }
 
         this.setState({
