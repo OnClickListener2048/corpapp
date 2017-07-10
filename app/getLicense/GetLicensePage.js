@@ -943,7 +943,7 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.idCards+"" }}
+                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
                                         placeholderSource={require('../img/reverse.png')}/> :
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
@@ -955,7 +955,7 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.idCards+"" }}
+                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
                                         placeholderSource={require('../img/reverse.png')}
                                     />:
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
@@ -1074,7 +1074,8 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics+"" }}
+                                        source={{ uri:this.state.detailObj.bizLics[0]+"" }}
+                                        // source={{ uri:"https://x-qd.i-counting.cn/FileUploads/Order/BusinessLicense/201705/BodyPart_d9171961-2b39-4678-a7d5-b4581c28b771.jpg"}}
                                         placeholderSource={require('../img/blicense.png')}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
@@ -1087,8 +1088,8 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics+"" }}
-                                        // source={{ uri:"https://qd.pilipa.cnhttp://pilipa.oss-cn-beijing.aliyuncs.com/FileUploads/Order/BusinessLicense/201701/BodyPart_80417919-391c-4575-a65b-3c22153a5ae7.jpg" }}
+                                        source={{ uri:this.state.detailObj.bizLics[0]+"" }}
+                                        // source={{ uri:"https://x-qd.i-counting.cn/FileUploads/Order/BusinessLicense/201705/BodyPart_d9171961-2b39-4678-a7d5-b4581c28b771.jpg" }}
                                         placeholderSource={require('../img/blicense.png')}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
