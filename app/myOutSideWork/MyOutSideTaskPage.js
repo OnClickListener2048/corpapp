@@ -37,8 +37,11 @@ export default class MyOutSideTaskPage extends Component{
             currentStepId : '',
             toastStr : this.props.toastStr,
             canClickBtn : false,
+            needRefresh : false,  //在willViewAppear里面需不需要重新请求数据
         };
         this._loadData = this._loadData.bind(this);
+        this._setNeedRefrsh = this._setNeedRefrsh.bind(this);
+
         this.stepsArr = [];
         this.info;
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -48,31 +51,33 @@ export default class MyOutSideTaskPage extends Component{
 onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
     // console.log('ApplicationCenterPage event.type', event.type);
     if(event.id==='willAppear'){
+        console.log('需要刷新吗' +  this.state.needRefresh);
         this.state.canClickBtn = true;
+        if (this.state.needRefresh == true){
+            this._loadData();
+            this.state.needRefresh = false;
+
+        }
+    }
+}
+
+_setNeedRefrsh(){
+    this.state.needRefresh = true;
+    let callback = this.props.callback;
+    if(callback) {
+        callback(false);
     }
 }
 
 
-_loadData(needLoding) {
+_loadData() {
 
-        if (!needLoding){
-
-            let callback = this.props.callback;
-            if(callback) {
-                callback(false);
-            }
-        }
-
-        if (needLoding){
-            this.loading  = SActivityIndicator.show(true, "加载中...");
-        }
+        this.loading  = SActivityIndicator.show(true, "加载中...");
 
         apis.loadOutSourceTask(this.props.taskId).then(
 
             (responseData) => {
-                if (needLoding){
                     SActivityIndicator.hide(this.loading);
-                }
 
                 if(responseData !== null && responseData.data !== null) {
                     this.stepsArr = [];
@@ -93,9 +98,8 @@ _loadData(needLoding) {
                     }
             },
             (e) => {
-                if (needLoding){
-                    SActivityIndicator.hide(this.loading);
-                }
+                SActivityIndicator.hide(this.loading);
+
                 this.setState({
                     faild:true,
                 });
@@ -143,7 +147,7 @@ _loadData(needLoding) {
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,
-                    callback : this._loadData
+                    callback : this._setNeedRefrsh
                 }
             });
     }
