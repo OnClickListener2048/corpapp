@@ -17,12 +17,16 @@ let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
 // TODO 线上API服务器接口地址
+// export let SCHEME = 'http';
 export let SCHEME = 'https';
-export let DOMAIN_API = 'app.i-counting.cn';//app.i-counting.cn/erp
-// if(DEBUG) {// 测试环境变量, 上线时应删除
-   // SCHEME = 'https';
-   // DOMAIN_API = 'x-crm.i-counting.cn';
-// }
+// export let DOMAIN_API = '192.168.100.234:8081';
+export let DOMAIN_API = 'x-crm.i-counting.cn';
+if(DEBUG) {// 测试环境变量, 上线时应删除
+    // SCHEME = 'http';
+    SCHEME = 'https';
+    // DOMAIN_API = '192.168.100.234:8081';
+    DOMAIN_API = 'x-crm.i-counting.cn';
+}
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
 // export let WWW_BASE_URL = `${SCHEME}://${DOMAIN_WWW}`;

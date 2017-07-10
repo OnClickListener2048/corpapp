@@ -10,8 +10,8 @@ console.disableYellowBox = true;
 console.warn('YellowBox is disabled.');
 
 //SplashScreen.hide();
-//  navToBootstrap();
-navToMainTab();
+ navToBootstrap();
+// navToMainTab();
 
 // Navigation.startSingleScreenApp({
 //     screen: {

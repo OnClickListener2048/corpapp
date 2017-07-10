@@ -955,6 +955,7 @@ export default class GetLicensePage extends Component{
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
                                         source={{ uri:this.state.detailObj.idCards+"" }}
+                                        placeholderSource={require('../img/reverse.png')}
                                     />:
                                     <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
@@ -1084,7 +1085,9 @@ export default class GetLicensePage extends Component{
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics+"" }}/>  :
+                                        source={{ uri:this.state.detailObj.bizLics+"" }}
+                                        // source={{ uri:"https://qd.pilipa.cnhttp://pilipa.oss-cn-beijing.aliyuncs.com/FileUploads/Order/BusinessLicense/201701/BodyPart_80417919-391c-4575-a65b-3c22153a5ae7.jpg" }}
+                                        placeholderSource={require('../img/blicense.png')}/>  :
                                     <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
