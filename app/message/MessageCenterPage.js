@@ -133,6 +133,9 @@ export default class MessageCenterPage extends Component {
                     if (responseData.data.length == this.pageCount){
                         this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
                         // console.log(this.lastID +'你大爷');
+                    }else {
+                        this.setState({loadingMore: 2});
+
                     }
                     // end()//刷新成功后需要调用end结束刷新 不管成功或者失败都应该结束
                 }
@@ -194,8 +197,12 @@ export default class MessageCenterPage extends Component {
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.setState({loadingMore: 0});
 
                     // console.log(this.lastID +'你大爷');
+                }else {
+                    this.setState({loadingMore: 2});
+
                 }
 
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
@@ -264,8 +271,12 @@ export default class MessageCenterPage extends Component {
 
                 if (responseData.data.length == this.pageCount){
                     this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.setState({loadingMore: 0});
 
                     // console.log(this.lastID +'你大爷');
+                }else {
+                    this.setState({loadingMore: 2});
+
                 }
 
                 console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
@@ -281,7 +292,6 @@ export default class MessageCenterPage extends Component {
                 });
 
                 this.isLoading = false;
-                this.setState({loadingMore: 0});
 
 
             },
@@ -567,7 +577,7 @@ export default class MessageCenterPage extends Component {
               </View>
               );
     //加载中..
-      }else {
+      }else if (this.state.loadingMore == 0){
           return (
               <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
@@ -582,6 +592,8 @@ export default class MessageCenterPage extends Component {
                   </View>
               </View>);
 
+      }else {
+          return null;
       }
     }
 

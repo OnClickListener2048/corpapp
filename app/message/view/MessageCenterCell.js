@@ -25,6 +25,14 @@ export default class MessageCenterCell extends React.Component {
         return (
             <View
                 style={styles.rowStyle}>
+                {/*<Image*/}
+                    {/*source={require('../../img/bigk@2x.png')}*/}
+                    {/*style={[styles.messageBottomStyle*/}
+                    {/*]*/}
+                    {/*}*/}
+                {/*/>*/}
+
+
                 <View
                     style={styles.realRowStyle}>
 
@@ -34,7 +42,7 @@ export default class MessageCenterCell extends React.Component {
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 12,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{messageTitle}</Text>
+                            style={[{fontSize: 15,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{messageTitle}</Text>
 
                         <Text
                             textAlign='left'
