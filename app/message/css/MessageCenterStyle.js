@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
             flexDirection: 'column'
         },
 
+
     listViewcontainer: {
         flex: 1,
         backgroundColor: '#FAFAFA',
@@ -21,30 +22,41 @@ const styles = StyleSheet.create({
     },
          rowStyle: {
              marginTop: 15,
-             height : 65,
+             height : 69,
              backgroundColor: '#FAFAFA',
-             flexDirection: 'column'
+             flexDirection: 'column',
 
          },
     realRowStyle: {
         marginLeft: 27.5,
         marginRight: 15,
-        height : 65,
-        // justifyContent : 'space-between',
-        // borderBottomColor: 'blue',
-        borderBottomWidth: 1,
-        backgroundColor: '#FFFFFF',
-        flexDirection: 'row',
-
-        borderColor: '#FAFAFA',
-        borderRadius: 6,
-        borderWidth: 1,
+        height : 68,
+        // // justifyContent : 'space-between',
+        // // borderBottomColor: 'blue',
+        // borderBottomWidth: 1,
+        // backgroundColor: '#FFFFFF',
+        // flexDirection: 'row',
+        //
+        // borderColor: '#FAFAFA',
+        // borderRadius: 6,
+        // borderWidth: 1,
 
     },
+
+    messageBottomStyle: {
+        resizeMode: "stretch",
+        width: SCREEN_WIDTH - 27.5 - 15,
+        height : 69,
+        flexDirection: 'row',
+
+    },
+
     titleViewStyle: {
         marginLeft: 20,
          marginRight: 22.5,
         flex: 1,
+        backgroundColor: '#FFFFFF',
+
         height : 65,
         // maxWidth: SCREEN_WIDTH - 120,
         // width : 200,
@@ -52,11 +64,14 @@ const styles = StyleSheet.create({
 
     },
     timeTitleStyle: {
-        fontSize: 14,
-        marginTop: 15,
+        fontSize: 12,
+        marginBottom: 15,
+        marginTop: 16.5,
         marginLeft : 10,
         marginRight : 15,
         color : '#969696',
+        backgroundColor: '#FFFFFF',
+
         // marginRight: 22.5,
         // width : 200,
 

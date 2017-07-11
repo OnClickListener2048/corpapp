@@ -25,17 +25,14 @@ export default class MessageCenterCell extends React.Component {
         return (
             <View
                 style={styles.rowStyle}>
-                {/*<Image*/}
-                    {/*source={require('../../img/bigk@2x.png')}*/}
-                    {/*style={[styles.messageBottomStyle*/}
-                    {/*]*/}
-                    {/*}*/}
-                {/*/>*/}
+
 
 
                 <View
                     style={styles.realRowStyle}>
-
+                    <Image
+                           source={require('../../img/bigk.png')}
+                            style={[styles.messageBottomStyle]}>
                     <View
                         style={styles.titleViewStyle}>
 
@@ -52,6 +49,7 @@ export default class MessageCenterCell extends React.Component {
                     <Text
                         textAlign='right'
                         style={styles.timeTitleStyle}>{messageTime}</Text>
+                    </Image>
                 </View>
         <Image
             source={messageIcon}
