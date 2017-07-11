@@ -112,7 +112,7 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='right'
-                            style={[{fontSize: 15,marginTop: 10,color:'#323232'}] }>{'公司名称：'}</Text>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'公司名称：'}</Text>
                         {this.props.isFocusData?
                             <View textAlign='left'
                                   style={styles.textInputWrapper}>

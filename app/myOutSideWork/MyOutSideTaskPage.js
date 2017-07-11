@@ -10,7 +10,8 @@ import {
     Dimensions,
     TouchableOpacity,
     InteractionManager,
-    DeviceEventEmitter
+    DeviceEventEmitter,
+    Image
 } from 'react-native';
 
 import styles from './css/MyOutSideTaskStyle'
@@ -157,7 +158,8 @@ _loadData() {
         return (
             <TouchableOpacity onPress={() => {
                 this.toLicense(this.stepsArr[i].stepId)}}>
-                <RegisterCompanyCell key={i} detail={item} processState={this.stepsArr[i].stepStatus} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
+                <RegisterCompanyCell key={i} detail={item} textColor={(this.stepsArr[i].stepStatus === '进行中' || this.stepsArr[i].stepStatus === '已结束'|| this.stepsArr[i].stepStatus === '已完成') ? '#E5151d' : '#323232'}
+                                     processState={this.stepsArr[i].stepStatus} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
             </TouchableOpacity>
         )
     }
@@ -202,9 +204,13 @@ _loadData() {
                     {this.renderCompanyInfoView()}
 
                     {<View style={[{height:15}]}></View>}
+                    {<View style={[{height:12.5,backgroundColor:'#FFFFFF'}]}></View>}
 
                     {this.stepsArr.map((item,i)=>this.renderExpenseItem(item,i))}
-
+                    {<View style={[{height:12.5,backgroundColor:'#FFFFFF'}]}></View>}
+                    <Image
+                        source={require('../img/yinying.png')}
+                        style={[styles.bttomLineStyle]}/>
                 </ScrollView>
             );
         }

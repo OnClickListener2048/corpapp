@@ -31,7 +31,8 @@ class RegisterCompanyCell extends Component{
     static propTypes = {
         isFirst: PropTypes.bool,
         isLast: PropTypes.bool,
-        processState: PropTypes.string
+        processState: PropTypes.string,
+        textColor: PropTypes.string,
     };
 
 
@@ -118,7 +119,7 @@ class RegisterCompanyCell extends Component{
 
 
     render(){
-        const {isFirst, isLast,processState} = this.props
+        const {isFirst, isLast,processState,textColor} = this.props
         console.log( '点击里面render' + processState);
 
         return(
@@ -129,12 +130,12 @@ class RegisterCompanyCell extends Component{
 
                         <View style={styles.left}>
                             {this._leftTipView()}
-                            <Text numberOfLines={1} style={{fontSize:15,marginLeft:15,color:'#323232'}}>{this.props.detail.stepName}</Text>
+                            <Text numberOfLines={1} style={{fontSize:15,marginLeft:15,color:textColor}}>{this.props.detail.stepName}</Text>
 
                         </View>
 
                         <View style={styles.center}>
-                            <Text numberOfLines={1} style={{fontSize:15,color:'#323232',justifyContent:'center'}}>{this.props.detail.stepContact}</Text>
+                            <Text numberOfLines={1} style={{fontSize:15,color:textColor,justifyContent:'center'}}>{this.props.detail.stepContact}</Text>
 
                         </View>
 
@@ -142,7 +143,7 @@ class RegisterCompanyCell extends Component{
                             <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
 
                             <Text numberOfLines={1} textAlign='right'
-                                  style={{fontSize:15,color:'#323232',marginRight:10}}>{this.props.detail.stepStatus}</Text>
+                                  style={{fontSize:15,color:textColor,marginRight:10}}>{this.props.detail.stepStatus}</Text>
 
                         </View>
                     </View>
@@ -169,7 +170,7 @@ class RegisterCompanyCell extends Component{
 
 var styles = StyleSheet.create({
     container:{
-        height:50,
+        height:40,
         backgroundColor:'#FFFFFF',
         flexDirection:'row'
     },

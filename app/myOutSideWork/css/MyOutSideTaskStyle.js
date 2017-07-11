@@ -13,6 +13,14 @@ const styles = StyleSheet.create({
         backgroundColor: '#FAFAFA',
         flexDirection: 'column'
     },
+    bttomLineStyle: {
+        resizeMode: "stretch",
+        width: SCREEN_WIDTH,
+        height : 2,
+        flexDirection: 'row',
+
+    },
+
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
         height:130,
