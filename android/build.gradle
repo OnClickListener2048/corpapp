@@ -3,7 +3,9 @@
 buildscript {
     repositories {
         maven { url('http://maven.aliyun.com/nexus/content/groups/public/') }
-        jcenter()
+               //jcenter() 使用国内镜像加速jcenter
+               maven { url('http://maven.aliyun.com/nexus/content/repositories/jcenter/') }
+               maven { url('http://maven.aliyun.com/nexus/content/repositories/gradle-plugin/') }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.2.2'
@@ -21,7 +23,10 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
         maven { url('http://maven.aliyun.com/nexus/content/groups/public/') }
-        jcenter()
+        //jcenter() 使用国内镜像加速jcenter
+        maven { url('http://maven.aliyun.com/nexus/content/repositories/jcenter/') }
+        maven { url('http://maven.aliyun.com/nexus/content/repositories/gradle-plugin/') }
+
 
         maven { url 'https://github.com/500px/500px-android-blur/raw/master/releases/' }
     }
