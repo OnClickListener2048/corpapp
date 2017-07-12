@@ -183,7 +183,7 @@ export default class CompanyInfoView extends React.Component {
                         <View
                             style={[{
                                   alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                            <Text style={{fontSize: 15,}}>电话：</Text>
+                            <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
                             <TextInput
                                 underlineColorAndroid='transparent' value={this.state.ContactsPhone}
                                 style={{width: 110,
@@ -202,7 +202,7 @@ export default class CompanyInfoView extends React.Component {
                             <View
                                 style={[{
                                     alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                                <Text style={{fontSize: 15,}}>电话：</Text>
+                                <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
                                 <Text
                                     textAlign='right'
                                     numberOfLines={1}
@@ -270,7 +270,7 @@ export default class CompanyInfoView extends React.Component {
                         <View
                             style={[{
                                 alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                            <Text style={{fontSize: 15,}}>电话：</Text>
+                            <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
                             <Text
                                 textAlign='right'
                                 numberOfLines={1}

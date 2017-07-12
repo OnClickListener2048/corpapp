@@ -62,6 +62,9 @@ export default class MessageCenterCell extends Component {
                 style={styles.rowStyle}>
                 <View
                     style={styles.realRowStyle}>
+                    <Image
+                        source={require('../../img/bigk.png')}
+                        style={[styles.messageBottomStyle]}>
                     <View
                         style={styles.titleViewStyle}>
                         <Text
@@ -80,6 +83,7 @@ export default class MessageCenterCell extends Component {
                     <Text
                         textAlign='right'
                         style={[styles.timeTitleStyle,{color:this.state.statusCourse=='已取消'?'#e6e6e6':'#a2a1a6'}]}>{statusCourse}</Text>
+                    </Image>
                 </View>
                 <View style={[styles.badgeBubble,
                     {backgroundColor: this._statusCourseColor()}]}>
