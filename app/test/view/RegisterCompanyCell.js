@@ -116,6 +116,18 @@ class RegisterCompanyCell extends Component{
     }
 
 
+    _renderRightImg(){
+        if (this.props.processState == '进行中' || this.props.processState == '已结束'|| this.props.processState == '已完成') {
+            return <Image style={{height: 22, width: 22, marginRight: 15, resizeMode: 'stretch'}}
+                          source={require('../../img/right_red.png')}/>
+        }else {
+
+            return <Image style={{height: 22, width: 22, marginRight: 15, resizeMode: 'stretch'}}
+                          source={require('../../img/right_l.png')}/>
+
+        }
+
+    }
 
 
     render(){
@@ -140,7 +152,8 @@ class RegisterCompanyCell extends Component{
                         </View>
 
                         <View style={styles.right}>
-                            <Image style={{height:22,width:22,marginRight: 15,resizeMode: 'stretch'}} source={require('../../img/right_l.png')}/>
+
+                            {this._renderRightImg()}
 
                             <Text numberOfLines={1} textAlign='right'
                                   style={{fontSize:15,color:textColor,marginRight:10}}>{this.props.detail.stepStatus}</Text>
