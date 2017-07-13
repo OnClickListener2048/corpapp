@@ -21,10 +21,9 @@ export let SCHEME = 'https';
 
 export let DOMAIN_API = 'x-crm.i-counting.cn';
 if(DEBUG) {// 测试环境变量, 上线时应删除
-    // SCHEME = 'http';
     SCHEME = 'https';
     // DOMAIN_API = '192.168.100.234:8081';
-    DOMAIN_API = 'app.i-counting.cn';
+    DOMAIN_API = 'x-crm.i-counting.cn';
 }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
