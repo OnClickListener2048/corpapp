@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Text,
     View,
+    DeviceEventEmitter,
     TouchableWithoutFeedback, TextInput,
 }from 'react-native';
 import px2dp from '../../util/index'
@@ -183,10 +184,10 @@ export default class Settings extends Component {
                 this.state.newMobile : this.state.phone
             ).then(
                 (responseData) => {
-                    // Toast.show('短信验证码已发送');
+                    Toast.show('短信验证码已发送');
                     // Toast.show('测试环境短信验证码:' + responseData.msg);
-                    Toast.show('测试环境短信验证码 ' + responseData.msg,
-                        {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
+                    // Toast.show('测试环境短信验证码 ' + responseData.msg,
+                    //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
                 }, (e) => {
                     Toast.show('短信验证码获取失败');
                 }
@@ -207,7 +208,8 @@ export default class Settings extends Component {
                             {
                                 text: '确定',
                                 onPress: () => {
-                                    navToBootstrap({isReset: true});
+                                    this.props.navigator.pop();
+                                    DeviceEventEmitter.emit('goLoginPage', true);
                                 },
                             },]
                         , {cancelable: false});
