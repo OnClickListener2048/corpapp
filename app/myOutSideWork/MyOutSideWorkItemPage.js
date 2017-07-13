@@ -3,14 +3,15 @@
  */
 
 import React,{Component,PropTypes}from 'react';
-import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text,Platform} from "react-native";
+import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image, Text,Platform,
+    RefreshControl,ActivityIndicator
+} from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
 import NoMessage from "../test/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
-import { PullList } from 'react-native-pull';
 
 export default class MyOutSideWorkItemPage extends Component{
 
@@ -30,10 +31,18 @@ export default class MyOutSideWorkItemPage extends Component{
             loaded:false,
             dataFaild:false,
             refresh:this.props.refresh,
+            isRefreshing: false,
+            loadingMore : 0,
+
         }
+        this.lastID = null;
+        this.isLoading = false;
         this.outList = [];
+        this.pageCount = 15;
         this._loadList = this._loadList.bind(this);
-        this.setRefresh = this.setRefresh.bind(this);
+        this._loadMoreData = this._loadMoreData.bind(this);
+        this._loadAgainList = this._loadAgainList.bind(this);
+        this.renderFooter = this.renderFooter.bind(this);
 
     }
 
@@ -43,12 +52,6 @@ export default class MyOutSideWorkItemPage extends Component{
     };
 
     componentWillMount() {
-        this._loadList();
-
-    }
-
-    setRefresh(needRefresh){
-        console.log("看这里看这里====>>>"+needRefresh);
         this._loadList();
 
     }
@@ -75,7 +78,8 @@ export default class MyOutSideWorkItemPage extends Component{
     _loadList(){
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
-        loadOutSourceList(1000,'',taskType).then(
+        this.lastID = null;
+        loadOutSourceList(this.pageCount,'',taskType).then(
 
             (responseData) => {
                 SActivityIndicator.hide(loading);
@@ -92,23 +96,45 @@ export default class MyOutSideWorkItemPage extends Component{
                             dataFaild : false,
                     });
 
+                    if (responseData.data.length === this.pageCount){
+                        this.lastID = this.outList[this.outList.length - 1].stepId;
+
+                    }else {
+                        this.setState({loadingMore: 2});
+
+                    }
 
                 }
+
             },
             (e) => {
                 SActivityIndicator.hide(loading);
+
+                if ( this.outList.length > 0){
+                    // 关闭刷新动画
+                    this.setState({
+                        loaded:true,
+                        dataFaild: false,
+                    });
+                }else {
+                    // 关闭刷新动画
+                    this.setState({
+                        loaded:true,
+                        dataFaild: true,
+                    });
+
+                }
                 console.log("获取失败" , e);
-                this.setState({
-                    dataFaild:true,
-                });
-                Toast.show('获取失败');
+                Toast.show('获取失败',JSON.stringify(e));
             },
         );
     }
 
-    _loadAgainList(resolve){
+    _loadAgainList(){
         let taskType = this.props.label==null?'all':this.props.label;
-        loadOutSourceList(1000,'',taskType).then(
+        this.setState({isRefreshing: true});
+        this.lastID = null;
+        loadOutSourceList(this.pageCount,'',taskType).then(
 
             (responseData) => {
 
@@ -121,31 +147,120 @@ export default class MyOutSideWorkItemPage extends Component{
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
+                        dataFaild : false,
                     });
-                    // 关闭刷新动画
-                    if (resolve !== undefined){
-                        setTimeout(() => {
-                            resolve();
-                        }, 1000);
+
+                    if (responseData.data.length == this.pageCount){
+                        this.lastID = this.outList[this.outList.length - 1].stepId;
+                        this.setState({loadingMore: 0});
+
+                    }else {
+                        this.setState({loadingMore: 2});
+
                     }
 
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                    });
+                    this.setState({isRefreshing: false});
+
                 }
+
             },
             (e) => {
                 // 关闭刷新动画
-                if (resolve !== undefined){
-                    setTimeout(() => {
-                        resolve();
-                    }, 1000);
-                }
+                this.setState({isRefreshing: false});
                 console.log("获取失败" , e);
-                this.setState({
-                    dataFaild:true,
-                });
-                Toast.show('获取失败' );
+                Toast.show('获取失败',JSON.stringify(e));
             },
         );
+    }
 
+    _loadMoreData() {
+        console.log('加载更多哈哈');
+        let taskType = this.props.label==null?'all':this.props.label;
+        if (this.lastID === null){
+            return;
+        }
+        if (this.isLoading === true){
+            return;
+        }
+        this.setState({loadingMore: 1});
+
+        this.isLoading = true;
+        loadOutSourceList(this.pageCount,this.lastID,taskType).then(
+
+            (responseData) => {
+
+                if(responseData !== null && responseData.data !== null) {
+                    console.log("开始请求2----"+responseData.data);
+                    this.lastID = null
+                    this.outList= this.outList.concat(responseData.data);
+                    console.log("开始请求outlist----"+this.outList);
+
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                        dataFaild : false,
+                    });
+
+                    if (responseData.data.length == this.pageCount){
+                        this.lastID = this.outList[this.outList.length - 1].stepId;
+
+                        this.setState({loadingMore: 0});
+
+                    }else {
+                        this.setState({loadingMore: 2});
+
+                    }
+
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                    });
+                    this.isLoading = false;
+
+                }
+
+            },
+            (e) => {
+                // 关闭刷新动画
+                this.isLoading = false;
+                console.log("获取失败" , e);
+                Toast.show('获取失败',JSON.stringify(e));
+            },
+        );
+    }
+
+    renderFooter(){
+        if (this.state.loadingMore == 1){
+            return(
+                <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+                    <ActivityIndicator size={'small'}/>
+                    <Text style={{marginLeft: 10}}>加载中...</Text>
+
+                </View>
+            );
+            //加载中..
+        }else if (this.state.loadingMore == 0){
+            return (
+                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+
+
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+
+                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                        {'历史消息'}
+                    </Text>
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+                </View>);
+
+        }else {
+            return null;
+        }
     }
 
     _renderRow(rowData) {
@@ -196,25 +311,36 @@ export default class MyOutSideWorkItemPage extends Component{
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
                         textContent='暂无消息'
                         active={require('../img/no_message.png')}/>
+                    </TouchableOpacity>
                 </View>
             );
         }else {
             return (
 
-                <PullList
-                    onPullRelease={(resolve) => this._loadAgainList(resolve)}     // 下拉刷新操作
+                <ListView
+                    style={[{flex : 1 }]}
                     dataSource={this.state.dataSource}
-                    renderRow={(rowData) => this._renderRow(rowData)}
-                    showsHorizontalScrollIndicator={false}      // 隐藏水平指示器
-                    initialListSize={7}                         // 优化:一次渲染几条数据
+                    onEndReached={this._loadMoreData}
+                    renderFooter={this.renderFooter}
                     enableEmptySections={true}
-                    removeClippedSubviews={true}                // 优化
+                    onEndReachedThreshold={10}
+                    renderRow={this._renderRow.bind(this)}
+                    refreshControl ={
+                        <RefreshControl
+                            refreshing={this.state.isRefreshing}
+                            onRefresh={this._loadAgainList}
+                            title={'加载中...'}
+                            titleColor={'#b1b1b1'}
+                            colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                            progressBackgroundColor={'#fafafa'}
+
+                        />
+                    }
                 />
-
-
             )
         }
 
