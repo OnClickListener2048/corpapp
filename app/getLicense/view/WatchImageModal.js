@@ -18,6 +18,7 @@ import {
     InteractionManager
 } from 'react-native';
 import ImageLoad from "../../view/ImageLoad";
+import ImageViewer from "../../view/imgZoom/image-viewer.component";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -36,6 +37,11 @@ export default class WatchImageModal extends Component{
         this.props.callback();//将图片传递给父组件
     }
 
+    open=()=>{
+        this.setState({ visible: true });
+        this.props.callback();//将图片传递给父组件
+    }
+
     componentWillReceiveProps(props) {
         this.setState({ visible: props.visible,
             imageUrl: props.imageUrl,
@@ -44,7 +50,23 @@ export default class WatchImageModal extends Component{
 
 
 
+
     render(){
+            var images = [];
+            if(this.state.imageFile!=null){
+                images = [{
+                    url: this.state.imageFile
+                }]
+            }else{
+                images = [{
+                    url: this.state.imageUrl+""
+                }]
+            }
+
+
+
+        {/*<ImageLoad onPress={this.close} resizeMode={'contain'} isWatch={true} style={{ marginTop: 0, justifyContent: 'center', alignItems: 'center',height: SCREEN_HEIGHT, width: SCREEN_WIDTH }} source={{ uri:this.state.imageUrl+""}}/>*/}
+
         console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible);
         return(
             <Modal
@@ -56,22 +78,8 @@ export default class WatchImageModal extends Component{
             >
                 <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.close}//点击灰色区域消失
                 >
-                    <View style={styles.container}>
-                        {this.state.imageFile != null ?
-                            <Image source={this.state.imageFile}
-                                   resizeMode={'contain'}
-                                   style={{height: SCREEN_HEIGHT, width: SCREEN_WIDTH}}/>:
-                            <ImageLoad
-                                    onPress={this.close}
-                                    resizeMode={'contain'}
-                                    isWatch={true}
-                                    style={{ marginTop: 0, justifyContent: 'center',
-                                        alignItems: 'center',height: SCREEN_HEIGHT, width: SCREEN_WIDTH }}
-                                    source={{ uri:this.state.imageUrl+""}}
-                                />}
-
-
-                    </View>
+                    <ImageViewer imageUrls={images}
+                                 onCancel={this.close}/>
                 </TouchableOpacity>
             </Modal>
         )
