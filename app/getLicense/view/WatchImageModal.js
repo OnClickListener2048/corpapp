@@ -79,7 +79,7 @@ export default class WatchImageModal extends Component{
                 <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.close}//点击灰色区域消失
                 >
                     <ImageViewer imageUrls={images}
-                                 onCancel={this.close}/>
+                                 onClick={this.close}/>
                 </TouchableOpacity>
             </Modal>
         )

@@ -902,7 +902,7 @@ export default class GetLicensePage extends Component{
             {this.state.loaded === true &&
             <ScrollView style={styles.container}>
                 {Platform.OS === 'android' &&
-                < DateTimePicker
+                <DateTimePicker
                     isVisible={this.state.isDateTimePickerVisible}
                     onConfirm={this._handleDatePicked}
                     onCancel={this._hideDateTimePicker}

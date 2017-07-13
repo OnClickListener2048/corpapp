@@ -220,12 +220,12 @@ let ImageViewer = class ImageViewer extends React.Component {
             duration: 150,
         }).start();
     }
-    handleLongPress(image) {
-        if (this.props.saveToLocalByLongPress) {
-            this.setState({
-                isShowMenu: true
-            });
-        }
+    handleLongPress(image) {//长按点击事件（保存图片,暂时关闭）
+        // if (this.props.saveToLocalByLongPress) {
+        //     this.setState({
+        //         isShowMenu: true
+        //     });
+        // }
     }
     handleClick() {
         this.props.onClick(this.handleCancel.bind(this));
@@ -266,7 +266,18 @@ let ImageViewer = class ImageViewer extends React.Component {
                 height *= HeightPixel;
             }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
-                return (React.createElement(react_native_image_pan_zoom_1.default, { key: index, style: this.styles.modalContainer, cropWidth: this.width, cropHeight: this.height, imageWidth: width, imageHeight: height, maxOverflow: this.props.maxOverflow, horizontalOuterRangeOffset: this.handleHorizontalOuterRangeOffset.bind(this), responderRelease: this.handleResponderRelease.bind(this), onLongPress: this.handleLongPress.bind(this, image), onClick: this.handleClick.bind(this), onDoubleClick: this.handleDoubleClick.bind(this) },
+                return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
+                        style: this.styles.modalContainer,
+                        cropWidth: this.width,
+                        cropHeight: this.height,
+                        imageWidth: width,
+                        imageHeight: height,
+                        maxOverflow: this.props.maxOverflow,
+                        horizontalOuterRangeOffset: this.handleHorizontalOuterRangeOffset.bind(this),
+                        responderRelease: this.handleResponderRelease.bind(this),
+                        onLongPress: this.handleLongPress.bind(this, image),
+                        onClick: this.handleClick.bind(this),
+                        onDoubleClick: this.handleDoubleClick.bind(this) },
                     React.createElement(react_native_1.Image, { style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
             }
             else {
@@ -277,7 +288,18 @@ let ImageViewer = class ImageViewer extends React.Component {
                     case 'success':
                         return (React.createElement(react_native_1.Image, { key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
                     case 'fail':
-                        return (React.createElement(react_native_image_pan_zoom_1.default, { key: index, style: this.styles.modalContainer, cropWidth: this.width, cropHeight: this.height, imageWidth: width, imageHeight: height, maxOverflow: this.props.maxOverflow, horizontalOuterRangeOffset: this.handleHorizontalOuterRangeOffset.bind(this), responderRelease: this.handleResponderRelease.bind(this), onLongPress: this.handleLongPress.bind(this, image), onClick: this.handleClick.bind(this), onDoubleClick: this.handleDoubleClick.bind(this) },
+                        return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
+                                style: this.styles.modalContainer,
+                                cropWidth: this.width,
+                                cropHeight: this.height,
+                                imageWidth: width,
+                                imageHeight: height,
+                                maxOverflow: this.props.maxOverflow,
+                                horizontalOuterRangeOffset: this.handleHorizontalOuterRangeOffset.bind(this),
+                                responderRelease: this.handleResponderRelease.bind(this),
+                                onLongPress: this.handleLongPress.bind(this, image),
+                                onClick: this.handleClick.bind(this),
+                                onDoubleClick: this.handleDoubleClick.bind(this)},
                             React.createElement(react_native_1.TouchableOpacity, { key: index, style: this.styles.failContainer },
                                 React.createElement(react_native_1.Image, { source: this.props.failImageSource, style: this.styles.failImage }))));
                 }
