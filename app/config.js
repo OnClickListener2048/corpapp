@@ -16,10 +16,9 @@ export const RN_VERSION = '1.3.0';
 let {width, height} = Dimensions.get('window');
 export const SCREEN_WIDTH = width;
 export const SCREEN_HEIGHT = height;
-// TODO 线上API服务器接口地址
-// export let SCHEME = 'http';
+// 线上API服务器接口地址 app.i-counting.cn
 export let SCHEME = 'https';
-// export let DOMAIN_API = '192.168.100.234:8081';
+
 export let DOMAIN_API = 'x-crm.i-counting.cn';
 if(DEBUG) {// 测试环境变量, 上线时应删除
     // SCHEME = 'http';
