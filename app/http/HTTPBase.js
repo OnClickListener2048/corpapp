@@ -13,6 +13,7 @@ import {
     Platform, DeviceEventEmitter, NetInfo
 } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
+import '../util/NetInfoSingleton';
 
 var HTTPBase = {};
 
@@ -43,6 +44,12 @@ HTTPBase.getEx = async function (url, params, headers) {
  *
  * */
 HTTPBase.postEx = async function (url, params= {}, headers= null) {
+    if(!NetInfoSingleton.isConnected) {
+        return Promise.reject(
+        {'code':  '-1', 'msg':  '未检测到网络连接，请确保WIFI或移动网络正常可用。'}
+        );
+    }
+
     let responseJson = await this.post(url, params, headers);
     console.log('HTTPBase.postEx()');
     return HTTPBase._handleResponse(responseJson);

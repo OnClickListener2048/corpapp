@@ -161,7 +161,7 @@ export default class MessageCenterPage extends Component {
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + e.msg);
             },
         );
     }
@@ -226,7 +226,7 @@ export default class MessageCenterPage extends Component {
                 this.setState({isRefreshing: false});
 
                 console.log("获取失败" , e);
-                // Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' + e);
             },
         );
     }
