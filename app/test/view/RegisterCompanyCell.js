@@ -108,10 +108,7 @@ class RegisterCompanyCell extends Component{
                         {this._leftTipViewNormalBottomLine()}
 
                      </View>;
-
-
         }
-
 
     }
 
@@ -121,7 +118,6 @@ class RegisterCompanyCell extends Component{
             return <Image style={{height: 22, width: 22, marginRight: 15, resizeMode: 'stretch'}}
                           source={require('../../img/right_red.png')}/>
         }else {
-
             return <Image style={{height: 22, width: 22, marginRight: 15, resizeMode: 'stretch'}}
                           source={require('../../img/right_l.png')}/>
 

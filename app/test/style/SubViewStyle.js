@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
     },
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
-        height:130,
+        height:115,
         backgroundColor: '#FFFFFF',
+
         flexDirection: 'column'
         // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
     },
@@ -25,10 +26,9 @@ const styles = StyleSheet.create({
     companyInfoRowStyle: {
         marginLeft : 15,
         marginRight : 15,
-        marginTop : 10,
         width: SCREEN_WIDTH - 30,
         // flex: 1,
-        height: 30,
+        height: 35,
         flexDirection: 'row',
         justifyContent:'space-between'
     },
@@ -39,6 +39,7 @@ const styles = StyleSheet.create({
         marginLeft : 0,
         marginRight : 0,
         flexDirection: 'row',
+
     },
     companyInfoRowPhoneStyle: {
         maxWidth: SCREEN_WIDTH/2 - 15,
@@ -54,12 +55,13 @@ const styles = StyleSheet.create({
     textInputWrapper: {
         height: px2dp(50),
         width: SCREEN_WIDTH-40,
-        backgroundColor: 'transparent',
+        // backgroundColor: 'transparent',
         // position: 'relative',
         marginRight: px2dp(20),
         flexDirection: 'row',
         marginTop: 5,
         marginLeft : 0,
+
     },
 
     textInput: {
@@ -69,6 +71,7 @@ const styles = StyleSheet.create({
         padding: 0,
         fontSize: 15,
         color:'#323232',
+
     },
 
 });

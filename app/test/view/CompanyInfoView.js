@@ -102,13 +102,14 @@ export default class CompanyInfoView extends React.Component {
             <View
                 style={styles.companyInfoViewContainer}>
 
+                {<View style={[{height:10}]}></View>}
 
 
                 <View
                     style={styles.companyInfoRowStyle}>
 
                     <View
-                        style={[{width:SCREEN_WIDTH - 30 , height: 35,   flexDirection: 'row'}]}>
+                        style={[{width:SCREEN_WIDTH - 30 , height: 35, alignItems:'center',  flexDirection: 'row'}]}>
 
                         <Text
                             textAlign='right'
@@ -131,8 +132,8 @@ export default class CompanyInfoView extends React.Component {
                                 numberOfLines={1}
                                 style={[{
                                     fontSize: 15,
-                                    marginTop: 10,
                                     marginLeft: 0,
+                                    height: 20,
                                     color: '#323232',
                                     marginRight: 60
                                 }] }>{companyName}</Text>}
@@ -311,6 +312,8 @@ export default class CompanyInfoView extends React.Component {
                     </View>
 
                 </View>
+
+
 
             </View>
         )}
