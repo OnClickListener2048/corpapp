@@ -202,7 +202,10 @@ _loadData() {
                 <ScrollView style={styles.container}>
 
                     {this.renderCompanyInfoView()}
-
+                    {<View style={[{height:10,backgroundColor:'#FFFFFF'}]}></View>}
+                    <Image
+                        source={require('../img/yinying.png')}
+                        style={[styles.bttomLineStyle]}/>
                     {<View style={[{height:15}]}></View>}
                     {<View style={[{height:12.5,backgroundColor:'#FFFFFF'}]}></View>}
 

@@ -1,5 +1,11 @@
 # !/bin/bash
 
+# Mac Mini 打包专用
+KEYCHAIN=/Users/pilipa/Library/Keychains/login.keychain-db
+security -v list-keychains -s $KEYCHAIN
+security -v unlock-keychain -p pilipA000! $KEYCHAIN
+security set-keychain-settings -t 3600 -l $KEYCHAIN
+
 #
 # ################################################################################
 #

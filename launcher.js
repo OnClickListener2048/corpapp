@@ -7,9 +7,7 @@ import './app/util/LoginJumpSingleton';
 console.disableYellowBox = true;
 console.warn('YellowBox is disabled.');
 
-//SplashScreen.hide();
-// navToBootstrap();
- navToMainTab();
+navToMainTab();
 
 // Navigation.startSingleScreenApp({
 //     screen: {

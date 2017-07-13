@@ -87,8 +87,9 @@ export default class MyOutSideWorkItemPage extends Component{
                     console.log("开始请求outlist----"+this.outList);
 
                         this.setState({
-                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
-                        loaded:true,
+                            dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                            loaded:true,
+                            dataFaild : false,
                     });
 
 
@@ -100,7 +101,7 @@ export default class MyOutSideWorkItemPage extends Component{
                 this.setState({
                     dataFaild:true,
                 });
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
@@ -141,7 +142,7 @@ export default class MyOutSideWorkItemPage extends Component{
                 this.setState({
                     dataFaild:true,
                 });
-                Toast.show('获取失败' + JSON.stringify(e));
+                Toast.show('获取失败' );
             },
         );
 

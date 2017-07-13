@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     companyInfoRowSubViewStyle: {
         maxWidth: SCREEN_WIDTH/2 - 15,
         width: SCREEN_WIDTH/2 - 15,
-        height: 30,
+        height: 35,
         marginLeft : 0,
         marginRight : 0,
         flexDirection: 'row',
