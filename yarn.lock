@@ -2798,6 +2798,10 @@ npmlog@^4.0.2:
     gauge "~2.7.3"
     set-blocking "~2.0.0"
 
+nt-transmit-transparently@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/nt-transmit-transparently/-/nt-transmit-transparently-1.0.7.tgz#345cf3ffda06ba1bd629935bafac9e7820385076"
+
 number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
@@ -3111,6 +3115,10 @@ react-native-image-crop-picker@latest:
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/react-native-image-crop-picker/-/react-native-image-crop-picker-0.14.1.tgz#278aa72287946c0c4cdb8d183fbe1d1db7414e81"
 
+react-native-image-pan-zoom@^2.0.1:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.0.4.tgz#c8822294ff057b1d421c09f59a08588fa0fbed6b"
+
 react-native-modal-datetime-picker@latest:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-4.7.0.tgz#c2398894cf01fb58c9652ed258f93232c644de4a"
@@ -3144,7 +3152,7 @@ react-native-pull@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/react-native-pull/-/react-native-pull-2.0.2.tgz#15264a737bcf56debd4bacaa2705254d9ef1b345"
 
-react-native-root-siblings@^1.0.7, react-native-root-siblings@^1.2.1:
+react-native-root-siblings@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-1.2.1.tgz#6f8d0e711dbf9aef4e57e73aea751372b5aefcff"
   dependencies:
@@ -3515,12 +3523,6 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.5.4, rimraf@^2.6.1:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
-
-rn-alert@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/rn-alert/-/rn-alert-1.0.1.tgz#a57ccf8f002bc36e2d146b561ec0c11a927cdfb9"
-  dependencies:
-    react-native-root-siblings "^1.0.7"
 
 rndm@1.2.0:
   version "1.2.0"
