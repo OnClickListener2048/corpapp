@@ -16,6 +16,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "SplashScreen.h"
+#import <Bugly/Bugly.h>
 // **********************************************
 // *** 重要, 本行必须添加以使用 React Native Navigation ***
 // **********************************************
@@ -76,7 +77,7 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   self.window.backgroundColor = [UIColor whiteColor];
   [[RCCManager sharedInstance] initBridgeWithBundleURL:jsCodeLocation launchOptions:launchOptions];
-  
+   [Bugly startWithAppId:@"c572d6596a"];
   /*
    // 旧的 RN 启动方式 - remove this part
    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL:jsCodeLocation
