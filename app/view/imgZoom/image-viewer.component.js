@@ -11,8 +11,8 @@ const react_native_1 = require("react-native");
 const typings = require("./image-viewer.type");
 const nt_transmit_transparently_1 = require("nt-transmit-transparently");
 const react_native_image_pan_zoom_1 = require("react-native-image-pan-zoom");
-
 const image_viewer_style_1 = require("./image-viewer.style");
+import ImagePicker from "react-native-image-crop-picker"
 let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
@@ -26,6 +26,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         this.styles = image_viewer_style_1.default(0, 0);
         this.hasLayout = false;
         this.loadedIndex = new Map();
+
     }
     componentWillMount() {
         this.init(this.props);
@@ -221,11 +222,11 @@ let ImageViewer = class ImageViewer extends React.Component {
         }).start();
     }
     handleLongPress(image) {//长按点击事件（保存图片,暂时关闭）
-        // if (this.props.saveToLocalByLongPress) {
-        //     this.setState({
-        //         isShowMenu: true
-        //     });
-        // }
+        if (this.props.saveToLocalByLongPress) {
+            this.setState({
+                isShowMenu: true
+            });
+        }
     }
     handleClick() {
         this.props.onClick(this.handleCancel.bind(this));
@@ -334,6 +335,59 @@ let ImageViewer = class ImageViewer extends React.Component {
             isShowMenu: false
         });
     }
+    pickSingleWithCamera=()=> {
+        ImagePicker.openCamera({
+            cropping: false,
+            width: 500,
+            height: 500,
+            cropperCircleOverlay: false,
+            compressImageMaxWidth: 640,
+            compressImageMaxHeight: 480,
+            compressImageQuality: 0.8,
+            compressVideoPreset: 'MediumQuality',
+            mediaType:'photo',
+        }).then(image => {
+            console.log('received image===', image);
+            this.setState({
+                isShowMenu: false,
+                image: {uri: image.path, width: image.width, height: image.height},
+                imageUrls:[{
+                    url: image.path,
+                }]
+            });
+            this.props.callback(this.state.image);//将图片传递给父组件
+        }).catch(e => {
+            console.log('received image失败='+e);
+            this.setState({ isShowMenu: false, });
+        });
+    }
+    pickSingle=()=> {
+        ImagePicker.openPicker({
+            width: 300,
+            height: 300,
+            cropping: false,
+            cropperCircleOverlay: false,
+            compressImageMaxWidth: 640,
+            compressImageMaxHeight: 480,
+            compressImageQuality: 0.8,
+            compressVideoPreset: 'MediumQuality',
+            mediaType:'photo',
+        }).then(image => {
+            console.log('received image===', image);
+            this.setState({
+                isShowMenu: false,
+                image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
+                imageUrls:[{
+                    url: image.path,
+                }]
+            });
+            this.props.callback(this.state.image);//将图片传递给父组件
+        }).catch(e => {
+            console.log(e);
+            this.setState({ isShowMenu: false, });
+        });
+    }
+
     getMenu() {
         if (!this.state.isShowMenu) {
             return null;
@@ -341,9 +395,15 @@ let ImageViewer = class ImageViewer extends React.Component {
         return (React.createElement(react_native_1.View, { style: this.styles.menuContainer },
             React.createElement(react_native_1.View, { style: this.styles.menuShadow }),
             React.createElement(react_native_1.View, { style: this.styles.menuContent },
-                React.createElement(react_native_1.TouchableHighlight, { underlayColor: "#F2F2F2", onPress: this.saveToLocal.bind(this), style: this.styles.operateContainer },
-                    React.createElement(react_native_1.Text, { style: this.styles.operateText }, this.props.menuContext.saveToLocal)),
-                React.createElement(react_native_1.TouchableHighlight, { underlayColor: "#F2F2F2", onPress: this.handleLeaveMenu.bind(this), style: this.styles.operateContainer },
+                // React.createElement(react_native_1.TouchableHighlight, { underlayColor: "#F2F2F2", onPress: this.saveToLocal.bind(this), style: this.styles.operateContainer },
+                //     React.createElement(react_native_1.Text, { style: this.styles.operateText }, this.props.menuContext.saveToLocal)),
+                React.createElement(react_native_1.TouchableOpacity, { underlayColor: "#F2F2F2", onPress: this.pickSingleWithCamera.bind(this), style: this.styles.alertStyle },
+                    React.createElement(react_native_1.Text, { style: [this.styles.operateText ,{color:'#323232'}]}, this.props.menuContext.takePhoto)),
+
+                React.createElement(react_native_1.TouchableOpacity, { underlayColor: "#F2F2F2", onPress: this.pickSingle.bind(this), style: this.styles.alertStyle },
+                    React.createElement(react_native_1.Text, { style: [this.styles.operateText,{color:'#323232'}] }, this.props.menuContext.selectPhoto)),
+
+                React.createElement(react_native_1.TouchableOpacity, { underlayColor: "#F2F2F2", onPress: this.handleLeaveMenu.bind(this), style: this.styles.alertCancelStyle },
                     React.createElement(react_native_1.Text, { style: this.styles.operateText }, this.props.menuContext.cancel)))));
     }
     handleLeaveMenu() {

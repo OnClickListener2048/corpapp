@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import ImageLoad from "../../view/ImageLoad";
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
+import AlertPhotoModal from "../../view/AlertPhotoModal";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -37,6 +38,10 @@ export default class WatchImageModal extends Component{
         this.props.callback();//将图片传递给父组件
     }
 
+    alertModal=()=>{
+        console.log("==输出弹窗==");
+    }
+
     open=()=>{
         this.setState({ visible: true });
         this.props.callback();//将图片传递给父组件
@@ -48,6 +53,12 @@ export default class WatchImageModal extends Component{
             imageFile:props.imageFile,});
     }
 
+    _callbackPhoto(img){
+        this.setState({
+            imageFile:img.path,
+        });
+        this.props.callbackfile(img,false);//将图片传递给页面
+    }
 
 
 
@@ -69,6 +80,8 @@ export default class WatchImageModal extends Component{
 
         console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible);
         return(
+
+
             <Modal
                 animationType='none'//进场动画 fade
                 onRequestClose={() => this.close()}
@@ -76,10 +89,14 @@ export default class WatchImageModal extends Component{
                 transparent={true} //背景透明
 
             >
+                {/*<TouchableOpacity onPress={this.alertModal}>*/}
+                {/*<Text style={{color:'white',fontSize:15}}>{'更多'}</Text>*/}
+                {/*</TouchableOpacity>*/}
                 <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.close}//点击灰色区域消失
                 >
                     <ImageViewer imageUrls={images}
-                                 onClick={this.close}/>
+                                 onClick={this.close}
+                                 callback={this._callbackPhoto.bind(this)}/>
                 </TouchableOpacity>
             </Modal>
         )

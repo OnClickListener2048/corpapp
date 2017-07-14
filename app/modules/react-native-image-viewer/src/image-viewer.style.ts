@@ -58,6 +58,8 @@ export default (width: number, height: number) => {
         menuContent: {
             position: 'absolute',
             width: width,
+            justifyContent: 'center',
+            alignItems: 'center',
             left: 0,
             bottom: 0,
             zIndex: 11
@@ -71,7 +73,7 @@ export default (width: number, height: number) => {
             borderBottomWidth: 1
         } as ViewStyle,
         operateText: {
-            color: '#333'
+            fontSize:18, color:'white',margin:15
         },
         loadingTouchable: {
             width: width,
@@ -106,7 +108,29 @@ export default (width: number, height: number) => {
             bottom: 0,
             right: 0,
             justifyContent: 'center'
-        } as ViewStyle
+        } as ViewStyle,
+        alertStyle: {
+            height:44,
+            width:width-50,
+            backgroundColor:'#ffffffff',
+            marginBottom:15,
+            borderRadius: 22,
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf:'center'
+        },
+        alertCancelStyle: {
+            height:44,
+            width:width-50,
+            backgroundColor:'rgba(0, 0, 0, 0.25)',
+            marginBottom:10,
+            borderRadius: 22,
+            borderWidth:1,
+            borderColor:'white',
+            alignItems: 'center',
+            justifyContent: 'center',
+            alignSelf:'center'
+        }
     }
 }
 

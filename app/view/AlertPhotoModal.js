@@ -26,19 +26,17 @@ import Toast from 'react-native-root-toast';
 export default class AlertPhotoModal extends Component{
     constructor(props){
         super(props)
-        this.state = { visible: this.props.visible,
+        this.state = { imgVisibles: this.props.imgVisibles,
         image: this.props.image,
-            watchImagevi:this.props.watchImagevi,
         };
     }
 
     close=()=>{
-        this.setState({ visible: false });
+        this.setState({ imgVisibles: false });
     }
 
     componentWillReceiveProps(props) {
-        this.setState({ visible: props.visible,
-            watchImagevi:props.watchImagevi,
+        this.setState({ imgVisibles: props.imgVisibles,
         });
     }
 
@@ -56,22 +54,22 @@ export default class AlertPhotoModal extends Component{
         }).then(image => {
             console.log('received image===', image);
             this.setState({
-                visible: false,
+                imgVisibles: false,
                 image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
             });
-            this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
+            this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给父组件
         }).catch(e => {
             console.log(e);
-            this.setState({ visible: false });
+            this.setState({ imgVisibles: false });
             // Alert.alert(e.message ? e.message : e);
-            // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
+            // this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给父组件
         });
     }
 
     watchSingle=()=>{
         console.log("传值发放=");
-        this.setState({ visible: false });
-        this.props.callback(null,this.state.visible);//将图片传递给父组件
+        this.setState({ imgVisibles: false });
+        this.props.callback(null,this.state.imgVisibles);//将图片传递给父组件
     }
 
     pickSingleWithCamera=()=> {
@@ -88,33 +86,21 @@ export default class AlertPhotoModal extends Component{
         }).then(image => {
             console.log('received image===', image);
             this.setState({
-                visible: false,
+                imgVisibles: false,
                 image: {uri: image.path, width: image.width, height: image.height},
             });
-            this.props.callback(this.state.image,this.state.visible);//将图片传递给页面
+            this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给页面
         }).catch(e => {
-            this.setState({ visible: false });
+            this.setState({ imgVisibles: false });
             console.log('received image失败='+e);
             Toast.show('调取相机失败，请更改相机设置');
-            // this.props.callback(this.state.image,this.state.visible);//将图片传递给父组件
+            // this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给父组件
         });
     }
 
     renderContent=()=>{
-        console.log("AlertPhoto,watch="+this.state.watchImagevi);
-        return ( <View style={[styles.background,{width: SCREEN_WIDTH , height: SCREEN_HEIGHT * 0.38}]}>
-            {this.state.watchImagevi===true?
-            <TouchableOpacity onPress={this.watchSingle}>
-                <View style={styles.alertStyle}>
-                    <Text style={{fontSize:18, color:'#323232', margin:15}}>查看大图</Text>
-                </View>
-            </TouchableOpacity>:
-                <View style={{height:44,
-                    width:SCREEN_WIDTH-50,
-                    backgroundColor:'rgba(0, 0, 0, 0)',
-                    marginBottom:15,}}>
-                </View>
-            }
+        return ( <View style={[styles.background,{width: SCREEN_WIDTH , height: SCREEN_HEIGHT * 0.3}]}>
+
             <TouchableOpacity activeOpacity={0.5} onPress={this.pickSingleWithCamera}>
                 <View style={styles.alertStyle}>
                     <Text style={{fontSize:18, color:'#323232',margin:15}}>相机拍照</Text>
@@ -138,7 +124,7 @@ export default class AlertPhotoModal extends Component{
             <Modal
                 animationType='none'//进场动画 fade
                 onRequestClose={() => this.close()}
-                visible={this.state.visible}//是否可见
+                visible={this.state.imgVisibles}//是否可见
                 transparent={true} //背景透明
             >
                 <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.close}//点击灰色区域消失

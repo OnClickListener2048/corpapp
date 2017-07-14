@@ -59,9 +59,8 @@ export default class GetLicensePage extends Component{
         this.state = {
             renderUnderline: true,
             currentStep : 0,
-            visible: this.props.visible,//是否显示图片选择方式AlertPhotoModal
-            imgVisible:false,//是否显示大图
-            imgVisibles:this.props.imgVisibles,//是否显示查看大图项
+            visible: this.props.visible,//是否显示大图
+            imgVisibles:this.props.imgVisibles,//是否显示选择图片弹窗
             reImage: null,
             linImage:null,
             photoType:null,
@@ -545,33 +544,32 @@ export default class GetLicensePage extends Component{
     }
 
     toAlertModal(photoType){
-        this.setState({ visible: true,isDateTimePickerVisible:false,
+        this.setState({isDateTimePickerVisible:false,
             photoType:photoType});
-        console.log("photoType="+photoType);
+        console.log("photoType="+photoType+this.state.visible);
         this._watchImVisible(photoType);
     }
 
     componentWillReceiveProps(props) {
         this.setState({ visible: props.visible,
-            imgVisible:this.props.imgVisible,
-            photoType:this.props.photoType,
-            imgVisibles:this.props.imgVisibles,
+            photoType:props.photoType,
+            imgVisibles:props.imgVisibles,
         });
     }
 
     _callbackWatchPhoto(){
         this.setState({
-            imgVisible: false,
+            imgVisibles: false,
             visible:false,
         });
     }
 
-    _callbackPhoto(image,visible) {//获取图片
+    _callbackPhoto(image,imgVisibles) {//获取图片
         console.log("callback="+image);
         if(image===null){
             console.log("callback=1"+image);
             this.setState({
-                imgVisible:true,
+                imgVisibles:false,
                 visible:false,
             })
             return;
@@ -587,7 +585,7 @@ export default class GetLicensePage extends Component{
 
             this.setState({
                 reImage: image,
-                visible:visible,
+                imgVisibles:imgVisibles,
                 idCards:rePhoto,
                 // idCards:image,
             });
@@ -599,7 +597,7 @@ export default class GetLicensePage extends Component{
             };
             this.setState({
                 linImage: image,
-                visible:visible,
+                imgVisibles:imgVisibles,
                 bizLics:linPhoto,
                 // bizLics:image,
             });
@@ -608,19 +606,20 @@ export default class GetLicensePage extends Component{
     }
 
     _watchImVisible(photoType){
-        let imgVisibles = true;
+        let imgVisibles = false;
         console.log("photoTypeWatch="+photoType);
         console.log("imgVisibles="+imgVisibles);
         if(photoType==="reverse"&&this.state.reImage === null&&(this.state.detailObj.idCards === null ||this.state.detailObj.idCards.length===0)){
-            imgVisibles = false;
+            imgVisibles = true;
             console.log("imgVisibles,reverse="+imgVisibles);
         }else if(photoType==="blicense"&&this.state.linImage === null&&(this.state.detailObj.bizLics === null ||this.state.detailObj.bizLics.length===0)){
-            imgVisibles = false;
+            imgVisibles = true;
             console.log("imgVisibles,blicense="+imgVisibles);
 
         }
         this.setState({
-            imgVisibles:imgVisibles
+            imgVisibles:imgVisibles,
+            visible:!imgVisibles
         })
     }
     _dateFormat(fmt) {
@@ -726,6 +725,7 @@ export default class GetLicensePage extends Component{
         this.setState({
             editables:editables,
             visible:false,
+            imgVisibles:false,
         });
     }
 
@@ -886,19 +886,18 @@ export default class GetLicensePage extends Component{
     };
 
     render() {
-        console.log("render,imgVisible="+this.state.imgVisible);
         return(
         <View style={styles.container}>
-            {this.state.visible === true &&
+            {this.state.imgVisibles === true &&
             <AlertPhotoModal
-                watchImagevi={this.state.imgVisibles}
                 callback={this._callbackPhoto.bind(this)}/>}
-            {this.state.imgVisible === true &&
+            {this.state.visible === true &&
             <WatchImageModal
                 visible={true}
                 imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
                 imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
-                callback={this._callbackWatchPhoto.bind(this)}/>}
+                callback={this._callbackWatchPhoto.bind(this)}
+                callbackfile={this._callbackPhoto.bind(this)}/>}
             {this.state.isDateTimePickerVisible === true &&
                 <DataTimerView
                 callback={this._callbackData.bind(this)}/>

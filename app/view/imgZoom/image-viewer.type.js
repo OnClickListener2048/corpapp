@@ -24,7 +24,9 @@ class Props extends PropsGaea {
         this.index = 0;
         this.saveToLocalByLongPress = true;
         this.menuContext = {
-            saveToLocal: '保存到相册',
+            // saveToLocal: '保存到相册',
+            takePhoto:'相机拍照',
+            selectPhoto:'去相册选择',
             cancel: '取消'
         };
         this.onShowModal = () => {
@@ -67,6 +69,7 @@ class State {
         this.currentShowIndex = 0;
         this.imageSizes = [];
         this.isShowMenu = false;
+        this.image = null;
     }
 }
 exports.State = State;
