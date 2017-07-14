@@ -10,6 +10,7 @@ import {View, Text,Image,Dimensions,
 const window = Dimensions.get('window');
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
+import Toast from 'react-native-root-toast';
 
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -29,11 +30,14 @@ class ProcessBtnView extends Component{
             currentNum: 0,
             stepId:this.props.stepId,          //步骤 ID
             taskId:this.props.taskId,          //步骤 ID
-            currentName : ''
+            currentName : '',
+            isSave:this.props.isSave,
 
         }
+        this.setProcessInfo = this.setProcessInfo.bind(this);
 
         this.btnClick = this.btnClick.bind(this);
+
 
     }
 
@@ -44,7 +48,6 @@ class ProcessBtnView extends Component{
         stepId : PropTypes.number,
         taskId : PropTypes.number,
         allowEdit : PropTypes.bool,
-
     };
 
 
@@ -81,9 +84,21 @@ class ProcessBtnView extends Component{
         );
     }
 
+    setProcessInfo(isSave) {
+        console.log("获取是否现实了保存按钮"+isSave);
+        this.setState({
+            isSave:isSave,
+
+        });
+    }
+
 
     btnClick() {
+        console.log("点击="+this.props.isSave+",,"+this.state.isSave);
+        if(this.state.isSave===true){
+            Toast.show('请保存客户基本信息');
 
+        }else{
             Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : '确认任务完成', '',
                 [
                     {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel'},
@@ -93,6 +108,8 @@ class ProcessBtnView extends Component{
                     },]
                 , {cancelable: false}
             );
+        }
+
     }
 
 

@@ -191,7 +191,7 @@ export default class GetLicensePage extends Component{
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
                             // idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
                             industry:	responseData.data.industry,           //所属行业
-                        industryId:responseData.data.industryId,
+                            industryId:responseData.data.industryId,
                             legalEntity:	responseData.data.legalEntity,//法人
                             localTaxId:	responseData.data.localTaxId,//地税登记号
                             nationalTaxId:	responseData.data.nationalTaxId,//国税登记号
@@ -363,6 +363,7 @@ export default class GetLicensePage extends Component{
         return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'}
                                stepId={this.state.stepId}
                                taskId={this.state.taskId}
+                               ref="ProcessBtnView"
                                finished={this.state.detailObj.progress.finished === 'true'}
                                materialConfirm={this.state.detailObj.progress.materialConfirm === 'true'}
                                inProgress={this.state.detailObj.progress.inProgress === 'true'}
@@ -716,7 +717,11 @@ export default class GetLicensePage extends Component{
                 "unlimited":this.state.unlimited, }       //营业期限不限
             console.log("提交=="+saveObject.regFunds+"???"+saveObject);
             this._postClientData(saveObject);
-
+        }
+        //否则不可更改任务进度
+        if(this.refs.ProcessBtnView) {
+            console.log("获取是否现实了保存按钮11"+editables);
+            this.refs.ProcessBtnView.setProcessInfo(editables);
         }
         this.setState({
             editables:editables,
@@ -887,7 +892,6 @@ export default class GetLicensePage extends Component{
             {this.state.visible === true &&
             <AlertPhotoModal
                 watchImagevi={this.state.imgVisibles}
-                // watchImagevi={false}
                 callback={this._callbackPhoto.bind(this)}/>}
             {this.state.imgVisible === true &&
             <WatchImageModal
