@@ -389,6 +389,8 @@ export default class GetLicensePage extends Component{
             pickerCancelBtnColor: [0, 0 ,0, 1],
             pickerTitleText: '请选择注册地',
             pickerData: this.state.areaArr,
+            pickerBg :  [0xff, 0xff ,0xff, 1],
+           // pickerToolBarBg : [0xff, 0xff ,0xff, 1],
             // pickerData: pickerData,
             selectedValue: this.state.selectArea,
             onPickerConfirm: pickedValue => {
@@ -861,6 +863,7 @@ export default class GetLicensePage extends Component{
             pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
             pickerCancelBtnText: '取消',
             pickerCancelBtnColor: [0, 0 ,0, 1],
+            pickerBg :  [0xff, 0xff ,0xff, 1],
             pickerData: pickerData,
             selectedValue: selectedValue,
             onPickerConfirm: (pickedValue, pickedIndex) => {
