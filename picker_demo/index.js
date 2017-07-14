@@ -11,13 +11,37 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    Dimensions
+    Dimensions,
+    StyleSheet
 } from 'react-native';
 
 import Picker from 'react-native-picker';
 import area from './area.json';// 此文件其实不需要
+import Alert from "../app/modules/react-native-alert"
+
+// var styles = StyleSheet.create({
+//     alertTextStyle : {
+//         fontFamily: "Arial",//just set global fontFamily
+//     },
+// })
+// Alert.setTextStyle(styles.alertTextStyle);
 
 export default class PickerTest extends Component {
+
+    // 自定义Alert
+    _showAlert() {
+        let toast = Alert.alert('', '确定退出', [
+            {
+                text: "取消",
+                onPress: ()=>{}
+            }
+            ,
+            {
+                text: "确定",
+                onPress: ()=>{}
+            }
+        ]);
+    }
 
 
     _createDateData() {
@@ -312,6 +336,10 @@ export default class PickerTest extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={{marginTop: 10, marginLeft: 20}} onPress={this._isPickerShow.bind(this)}>
                     <Text>isPickerShow</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{marginTop: 10, marginLeft: 20}} onPress={this._showAlert.bind(this)}>
+                    <Text>自定义Alert</Text>
                 </TouchableOpacity>
 
             </View>
