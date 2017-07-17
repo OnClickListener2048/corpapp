@@ -3134,9 +3134,9 @@ react-native-modal@^2.4.0:
     prop-types "15.5.10"
     react-native-animatable "^1.2.0"
 
-react-native-navigation@latest:
+"react-native-navigation@github:pilipa-cn/react-native-navigation":
   version "1.1.95"
-  resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.95.tgz#ac786c23b5924ac8df24a2d22bb7e5ea5de5a3fa"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/08a75ee1c082af49ae4dc5ea2323fe0421f88502"
   dependencies:
     lodash "4.x.x"
 
