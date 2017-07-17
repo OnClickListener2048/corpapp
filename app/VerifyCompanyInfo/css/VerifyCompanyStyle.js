@@ -14,6 +14,24 @@ const styles = StyleSheet.create({
         backgroundColor: '#FAFAFA',
         flexDirection: 'column'
     },
+    menuTouch:{
+        position: 'absolute',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        left: 0,
+        bottom: 0,
+        zIndex: 10
+    },
+    menuShadow: {
+        position: 'absolute',
+        width: SCREEN_WIDTH,
+        height: SCREEN_HEIGHT,
+        backgroundColor: 'black',
+        left: 0,
+        bottom: 0,
+        opacity: 0.2,
+        zIndex: 10
+    },
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
         height:130,

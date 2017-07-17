@@ -3,14 +3,14 @@
  * Created by jiaxueting on 2017/6/16.
  */
 
-import React, { Component,PropTypes} from 'react';
+import React, { Component,PropTypes,} from 'react';
 import Picker from 'react-native-picker';
 
 import {
     Alert,
     Text,
     View,
-    ScrollView, InteractionManager,
+    ScrollView, InteractionManager,BackAndroid,
     Dimensions, Image, TouchableOpacity, NativeModules,
     KeyboardAvoidingView, TextInput,Platform,
     DeviceEventEmitter
@@ -71,6 +71,7 @@ export default class GetLicensePage extends Component{
             editables:false,//不可编辑
             allowEditInfo:false,//登陆人员权限，是否可编辑
             inProgressEdit:false,//开始任务才可编辑
+            isPickerOpen:false,//地址和类型选择器是否打开
 
             //保存数据类型
             legalEntity:null,//法人
@@ -158,6 +159,13 @@ export default class GetLicensePage extends Component{
     componentWillMount() {
         this._loadData();
 
+    }
+
+    //关闭弹窗
+    componentWillUnmount(){
+        if(this.state.isPickerOpen){
+            Picker.hide();
+        }
     }
 
     _loadData(resolve) {
@@ -382,6 +390,9 @@ export default class GetLicensePage extends Component{
 
 
     _showAreaPicker() {
+        this.setState({
+            isPickerOpen : true,
+        });
         Picker.init({
             pickerConfirmBtnText: '确认',
             pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
@@ -396,7 +407,9 @@ export default class GetLicensePage extends Component{
             onPickerConfirm: pickedValue => {
                 //因为若什么都不选择的时候是不会走onPickerSelect方法的 但是会走此方法把默认的值传过来 即不管选择与否都会走这个方法
                 //所以直接在这个方法里面拿到选择的地址名称(pickeValue就是['北京','朝阳区']),去遍历codeId找到选择的'市Id','区Id'
-
+                this.setState({
+                    isPickerOpen : false,
+                });
 
                 for (let  i = 0 ; i < this.state.areaArr.length ; i++){
                     let isBreak = false;
@@ -446,9 +459,13 @@ export default class GetLicensePage extends Component{
                 if(this.refs.companyAddressView) {
                     this.refs.companyAddressView.setArea(pickedValue);
                 }
+
             },
             onPickerCancel: pickedValue => {
                 // console.log('area', pickedValue);
+                this.setState({
+                    isPickerOpen : false,
+                });
             },
             onPickerSelect: (pickedValue, pickedIndex) => {
                 // this.state.areaCodeTmpIndexArr = pickedIndex;
@@ -457,6 +474,7 @@ export default class GetLicensePage extends Component{
             }
         });
         Picker.show();
+
     }
 
 
@@ -556,6 +574,7 @@ export default class GetLicensePage extends Component{
         this.setState({ visible: props.visible,
             photoType:props.photoType,
             imgVisibles:props.imgVisibles,
+            isPickerOpen:props.isPickerOpen,
         });
     }
 
@@ -855,7 +874,9 @@ export default class GetLicensePage extends Component{
     // 显示单列选择框, 参数为类型
     _showSinglePicker(pickerData, selectedValue, title:string,
                       confirmValueCallback:Function) {
-
+        this.setState({
+            isPickerOpen : true,
+        });
         // selectedValue = ['a', 2];
         Picker.init({
             pickerTitleText: title,
@@ -866,7 +887,15 @@ export default class GetLicensePage extends Component{
             pickerBg :  [0xff, 0xff ,0xff, 1],
             pickerData: pickerData,
             selectedValue: selectedValue,
+            onPickerCancel: pickedValue => {
+                this.setState({
+                    isPickerOpen : false,
+                });
+            },
             onPickerConfirm: (pickedValue, pickedIndex) => {
+                    this.setState({
+                        isPickerOpen : false,
+                    });
                 console.log('Confirm Area', pickedValue, pickedIndex);
                 if(confirmValueCallback) {
                     confirmValueCallback(pickedValue);
@@ -874,6 +903,7 @@ export default class GetLicensePage extends Component{
             },
         });
         Picker.show();
+
     }
 
     state = {
@@ -888,9 +918,36 @@ export default class GetLicensePage extends Component{
         this._hideDateTimePicker();
     };
 
+    closePicker(){
+        Picker.hide();
+        this.setState({
+            isPickerOpen : false,
+        });
+    }
+
+    androidClosePicker= () =>{
+        console.log("关闭弹窗c");
+        if(this.state.isPickerOpen){
+            console.log("关闭弹窗");
+            this.setState({
+                isPickerOpen : false,
+            });
+            return false;
+        }else{
+            console.log("关闭页面");
+            return true;
+        }
+
+    }
+
     render() {
         return(
         <View style={styles.container}>
+            <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
+                this.closePicker()
+            }}>
+                <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1},]}/>
+            </TouchableOpacity>
             {this.state.imgVisibles === true &&
             <AlertPhotoModal
                 callback={this._callbackPhoto.bind(this)}/>}
