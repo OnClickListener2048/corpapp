@@ -16,8 +16,9 @@ import px2dp from '../../util'
 import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
+import BComponent from '../../base';
 
-export default class PLPMine extends Component {
+export default class PLPMine extends BComponent {
     static navigatorStyle = {
         tabBarHidden: true, // 隐藏默认的顶部导航栏
         navBarHidden: false, // 隐藏默认的顶部导航栏

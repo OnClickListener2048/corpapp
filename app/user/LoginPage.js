@@ -35,11 +35,24 @@ import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
 import {DEBUG} from '../config';
+import BAlert from "../modules/react-native-alert";
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 隐藏默认的底部Tab栏
+    };
+
+    static navigatorButtons = {
+        leftButtons: [
+            {
+                title: '完成', // for a textual button, provide the button title (label)
+                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+                id: 'back',
+                icon: require('../img/left.png')
+            }]
     };
 
     // usage: this.focusField('smsCodeInput');
@@ -162,9 +175,9 @@ export default class LoginPage extends Component {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
                     if(msg !== undefined) {
-                        Alert.alert(msg);
+                        BAlert.alert(msg);
                     } else {
-                        Alert.alert('短信验证码获取失败' );
+                        BAlert.alert('短信验证码获取失败' );
                     }
                     try {
                         if (e.data !== undefined && e.data.verifyText !== null && e.data.verify !== null) {
@@ -234,7 +247,7 @@ export default class LoginPage extends Component {
                     }
 
                     if(msg !== undefined) {
-                        Alert.alert(msg, '',
+                        BAlert.alert(msg, '',
                             [
                                 {
                                     text: '确定',
@@ -294,7 +307,7 @@ export default class LoginPage extends Component {
                 if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';
                 }
-                Alert.alert(errMsg, '',
+                BAlert.alert('', errMsg,
                     [
                         {
                             text: '确定',

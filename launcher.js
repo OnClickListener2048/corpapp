@@ -3,6 +3,7 @@ import {navToBootstrap,navToMainTab} from './app/navigation';
 import  './app/storage/UserInfoStore';
 import './app/util/LoginJumpSingleton';
 import './app/util/NetInfoSingleton';
+import {Navigation} from 'react-native-navigation';
 
 // 测试准备, 关闭Warning框
 // console.disableYellowBox = true;

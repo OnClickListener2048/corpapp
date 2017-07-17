@@ -38,7 +38,7 @@ export default class LoginJumpSingleton {
             ({
                 screen: 'user.LoginPage',
                 backButtonTitle: '', // 返回按钮的文字 (可选)
-                backButtonHidden: true, // 是否隐藏返回按钮 (可选)
+                // backButtonHidden: true, // 是否隐藏返回按钮 (可选)
                 overrideBackPress: true, // 覆盖Android返回键
                 passProps: {
                     isReset: true

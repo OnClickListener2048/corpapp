@@ -29,7 +29,8 @@ const tabsMain = [{
         icon: require('./img/account.png'),
         selectedIcon: require('./img/account_red.png'),
         title: '我的',
-        navigatorStyle
+        navigatorStyle,
+        // navigatorButtons: {}
     }
 ];
 
