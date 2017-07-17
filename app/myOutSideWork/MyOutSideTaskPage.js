@@ -145,6 +145,7 @@ _loadData() {
                 screen: 'GetLicensePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                overrideBackPress: true, // 拦截返回键
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,

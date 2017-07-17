@@ -38,6 +38,7 @@ import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
 import ImageLoad from "../view/ImageLoad";
 import WatchImageModal from "./view/WatchImageModal";
+import BComponent from '../base';
 
 const window = Dimensions.get('window');
 
@@ -45,12 +46,11 @@ export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
 
-export default class GetLicensePage extends Component{
+export default class GetLicensePage extends BComponent {
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
-
 
 
     constructor(props) {
@@ -112,13 +112,28 @@ export default class GetLicensePage extends Component{
         this._bizRanageContent = this._bizRanageContent.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
 
-
     }
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        super.onNavigatorEvent(event);
+
         console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
             this.state.canClickBtn = true;
+        }
+
+        if(event.id==='backPress'){
+            console.log("监听返回键");
+            if(this.state.isPickerOpen){
+                console.log("关闭弹窗");
+                Picker.hide();
+                this.setState({
+                    isPickerOpen : false,
+                });
+            }else{
+                console.log("关闭页面");
+                this.props.navigator.pop();
+            }
         }
     }
 
@@ -923,21 +938,6 @@ export default class GetLicensePage extends Component{
         this.setState({
             isPickerOpen : false,
         });
-    }
-
-    androidClosePicker= () =>{
-        console.log("关闭弹窗c");
-        if(this.state.isPickerOpen){
-            console.log("关闭弹窗");
-            this.setState({
-                isPickerOpen : false,
-            });
-            return false;
-        }else{
-            console.log("关闭页面");
-            return true;
-        }
-
     }
 
     render() {
