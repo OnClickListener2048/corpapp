@@ -92,7 +92,8 @@ export default class WatchImageModal extends Component{
                 {/*<TouchableOpacity onPress={this.alertModal}>*/}
                 {/*<Text style={{color:'white',fontSize:15}}>{'更多'}</Text>*/}
                 {/*</TouchableOpacity>*/}
-                <TouchableOpacity style={{flex:1}} activeOpacity={1} onPress={this.close}//点击灰色区域消失
+                <TouchableOpacity style={{flex:1}} activeOpacity={1}
+                                  // onPress={this.close}//点击灰色区域消失
                 >
                     <ImageViewer imageUrls={images}
                                  onClick={this.close}

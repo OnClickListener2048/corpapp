@@ -44,6 +44,14 @@ exports.default = (width, height) => {
             left: 0,
             bottom: 0
         },
+        menuTo:{
+            position: 'absolute',
+            width: width,
+            height: height,
+            left: 0,
+            bottom: 0,
+            zIndex: 10
+        },
         menuShadow: {
             position: 'absolute',
             width: width,

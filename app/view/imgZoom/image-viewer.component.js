@@ -13,6 +13,7 @@ const nt_transmit_transparently_1 = require("nt-transmit-transparently");
 const react_native_image_pan_zoom_1 = require("react-native-image-pan-zoom");
 const image_viewer_style_1 = require("./image-viewer.style");
 import ImagePicker from "react-native-image-crop-picker"
+import Toast from 'react-native-root-toast';
 let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
@@ -284,7 +285,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             else {
                 switch (imageInfo.status) {
                     case 'loading':
-                        return (React.createElement(react_native_1.TouchableHighlight, { key: index, onPress: this.handleClick.bind(this), style: this.styles.loadingTouchable },
+                        return (React.createElement(react_native_1.TouchableOpacity, { key: index, onPress: this.handleClick.bind(this), style: this.styles.loadingTouchable },
                             React.createElement(react_native_1.View, { style: this.styles.loadingContainer }, this.props.loadingRender())));
                     case 'success':
                         return (React.createElement(react_native_1.Image, { key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
@@ -359,6 +360,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         }).catch(e => {
             console.log('received image失败='+e);
             this.setState({ isShowMenu: false, });
+            Toast.show('调取相机失败，请更改相机设置');
         });
     }
     pickSingle=()=> {
@@ -393,7 +395,8 @@ let ImageViewer = class ImageViewer extends React.Component {
             return null;
         }
         return (React.createElement(react_native_1.View, { style: this.styles.menuContainer },
-            React.createElement(react_native_1.View, { style: this.styles.menuShadow }),
+            React.createElement(react_native_1.TouchableOpacity,{onPress: this.handleLeaveMenu.bind(this),style:this.styles.menuTo},
+            React.createElement(react_native_1.View, { style: this.styles.menuShadow })),
             React.createElement(react_native_1.View, { style: this.styles.menuContent },
                 // React.createElement(react_native_1.TouchableHighlight, { underlayColor: "#F2F2F2", onPress: this.saveToLocal.bind(this), style: this.styles.operateContainer },
                 //     React.createElement(react_native_1.Text, { style: this.styles.operateText }, this.props.menuContext.saveToLocal)),
