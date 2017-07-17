@@ -18,8 +18,9 @@ import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
+import BComponent from '../../base';
 
-export default class Feedback extends Component {
+export default class Feedback extends BComponent {
     static navigatorStyle = {
         tabBarHidden: true, // 隐藏默认的顶部导航栏
         navBarHidden: false, // 隐藏默认的顶部导航栏

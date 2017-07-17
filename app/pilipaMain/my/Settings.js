@@ -21,8 +21,9 @@ import SActivityIndicator from '../../modules/react-native-sww-activity-indicato
 import * as apis from '../../apis/setting';
 import TimerButton from "../../view/TimerButton";
 import settingStyles from './css/SettingsPageStyle';
+import BComponent from '../../base';
 
-export default class Settings extends Component {
+export default class Settings extends BComponent {
     static navigatorStyle = {
         tabBarHidden: true, // 隐藏默认的顶部导航栏
         navBarHidden: false, // 隐藏默认的顶部导航栏
