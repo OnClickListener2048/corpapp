@@ -12,8 +12,9 @@ import NoMessage from "../test/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
+import BComponent from "../base";
 
-export default class MyOutSideWorkItemPage extends Component{
+export default class MyOutSideWorkItemPage extends BComponent{
 
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
@@ -44,6 +45,10 @@ export default class MyOutSideWorkItemPage extends Component{
         this._loadAgainList = this._loadAgainList.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
 
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        super.onNavigatorEvent(event);
     }
 
     static propTypes = {

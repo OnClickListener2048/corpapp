@@ -7,6 +7,7 @@ import React,{Component}from 'react';
 import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 import {loadOutSourceCount} from "../apis/outSource";
+import BComponent from "../base";
 const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
@@ -18,9 +19,7 @@ import TabBar from '../myOutSideWork/view/TabBar';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 
-
-
-export default class MyOutSideWorkPage extends Component{
+export default class MyOutSideWorkPage extends BComponent{
 
     constructor(props) {
         super(props);
@@ -55,6 +54,7 @@ export default class MyOutSideWorkPage extends Component{
 
     //点击右按钮
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        super.onNavigatorEvent(event);
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
                 if (this.state.canClickBtn === false){

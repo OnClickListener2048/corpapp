@@ -22,8 +22,9 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from "../test/NoMessage";
 import Toast from 'react-native-root-toast';
+import BComponent from "../base";
 
-export default class MyOutSideTaskPage extends Component{
+export default class MyOutSideTaskPage extends BComponent{
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
@@ -50,6 +51,7 @@ export default class MyOutSideTaskPage extends Component{
     }
 
 onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+    super.onNavigatorEvent(event);
     // console.log('ApplicationCenterPage event.type', event.type);
     if(event.id==='willAppear'){
         console.log('需要刷新吗' +  this.state.needRefresh);

@@ -16,9 +16,10 @@ import px2dp from '../../util/index'
 import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
+import BComponent from "../../base";
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
-export default class MultiTextInputPage extends Component {
+export default class MultiTextInputPage extends BComponent {
     static navigatorStyle = {
         tabBarHidden: true, // 隐藏默认的顶部导航栏
         navBarHidden: false, // 隐藏默认的顶部导航栏
@@ -75,6 +76,7 @@ export default class MultiTextInputPage extends Component {
 
     //点击右按钮
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+         super.onNavigatorEvent(event);
         if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
             if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
                 console.log("完成返回" + this.props.that);
