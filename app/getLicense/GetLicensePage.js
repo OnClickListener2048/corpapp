@@ -943,11 +943,13 @@ export default class GetLicensePage extends BComponent {
     render() {
         return(
         <View style={styles.container}>
+            {/*选择框遮罩*/}
             <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
                 this.closePicker()
             }}>
-                <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1},]}/>
+                <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
             </TouchableOpacity>
+
             {this.state.imgVisibles === true &&
             <AlertPhotoModal
                 callback={this._callbackPhoto.bind(this)}/>}
