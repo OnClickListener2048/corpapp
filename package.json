@@ -11,29 +11,29 @@
     "buildAndroidApk": "react-native bundle --platform android --entry-file index.android.js --reset-cache --bundle-output android/app/src/main/assets/index.android.bundle --dev false --assets-dest android/app/src/main/res/&&cd android&&gradle assembleRelease"
   },
   "dependencies": {
-    "jcore-react-native": "^1.1.3",
-    "jpush-react-native": "^1.6.6",
+    "jcore-react-native": "^1.1.3",//极光推送
+    "jpush-react-native": "^1.6.6",//极光推送
     "react": "^15.4.2",
     "react-native": "^0.42.0",
-    "react-native-animatable": "^1.1.0",
-    "react-native-blur": "^2.0.0",
-    "react-native-device-info": "^0.10.2",
-    "react-native-image-crop-picker": "latest",
-    "react-native-modal-datetime-picker": "latest",
-    "react-native-navigation": "github:pilipa-cn/react-native-navigation",
+    "react-native-animatable": "^1.1.0",//动画
+    "react-native-blur": "^2.0.0",//模糊和震动效果的组件实现
+    "react-native-device-info": "^0.10.2",//设备信息
+    "react-native-image-crop-picker": "latest",//调用系统相机，相册选择图片（图片选择器）
+    "react-native-modal-datetime-picker": "latest",//时间选择器
+    "react-native-navigation": "github:pilipa-cn/react-native-navigation",//跳转，导航框架
     "react-native-parabolic": "^1.1.1",
-    "react-native-picker": "^4.0.19",
-    "react-native-pull": "^2.0.2",
-    "react-native-root-toast": "^1.1.2",
-    "react-native-scrollable-tab-view": "^0.7.1",
-    "react-native-splash-screen": "^2.0.0",
-    "react-native-swiper": "^1.5.4",
-    "react-native-sww-activity-indicator": "^1.0.4",
-    "react-native-tab-navigator": "^0.3.3",
-    "react-native-vector-icons": "^4.1.1",
-    "realm": "^1.2.0",
-    "nt-transmit-transparently": "^1.0.7",
-    "react-native-image-pan-zoom": "^2.0.1"
+    "react-native-picker": "^4.0.19",//滚轮选择器
+    "react-native-pull": "^2.0.2",//实现下拉刷新滑动回弹效果的组件
+    "react-native-root-toast": "^1.1.2",//toast 提示兼容android，iOS
+    "react-native-scrollable-tab-view": "^0.7.1",//标签导航，
+    "react-native-splash-screen": "^2.0.0",//加载首页之前显示的loading页面
+    "react-native-swiper": "^1.5.4",//图片轮播
+    "react-native-sww-activity-indicator": "^1.0.4",//加载状态进度指示器
+    "react-native-tab-navigator": "^0.3.3",//跨平台tab导航
+    "react-native-vector-icons": "^4.1.1",//完美的按钮/logo和导航/标签栏
+    "realm": "^1.2.0",//数据持久化（本地化存储）
+    "nt-transmit-transparently": "^1.0.7",//图片可缩放依赖库
+    "react-native-image-pan-zoom": "^2.0.1"//图片可缩放
   },
   "devDependencies": {
     "babel-jest": "19.0.0",

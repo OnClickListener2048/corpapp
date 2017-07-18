@@ -50,7 +50,7 @@ export default class ApplicationCenterPage extends Component{
     }
     static renderTitleItem() {
         return(
-            <Text style={[styles.navbarTitleItemStyle,{fontSize:13,color:'#323232'}]}>应用中心</Text>
+            <Text style={[styles.navbarTitleItemStyle,{fontSize:18,color:'#323232'}]}>应用中心</Text>
         );
     }
 
