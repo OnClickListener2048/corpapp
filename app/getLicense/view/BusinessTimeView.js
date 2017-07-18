@@ -214,7 +214,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
-                                }]}>{this.props.firstDate + ""}</Text>
+                                }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate  + ""}</Text>
 
                             </TouchableOpacity>:
                             <View style={ styles.leftdownDrapViewStyle}>
@@ -223,7 +223,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
-                                }]}>{this.props.firstDate + ""}</Text>
+                                }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate + ""}</Text>
 
                             </View>
                         }

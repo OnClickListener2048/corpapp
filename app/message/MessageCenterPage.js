@@ -530,13 +530,13 @@ export default class MessageCenterPage extends Component {
 
     static renderTitleItem() {
         return (
-            <Text style={styles.navbarTitleItemStyle}>消息中心</Text>
+            <Text style={[styles.navbarTitleItemStyle,{fontSize:13,color:'#323232'}]}>消息中心</Text>
         );
     }
 
     static renderbadTitleItem() {
         return (
-            <Text style={styles.navbarTitleItemStyle}>获取失败</Text>
+            <Text style={[styles.navbarTitleItemStyle,{fontSize:13,color:'#323232'}]}>获取失败</Text>
         );
     }
 
