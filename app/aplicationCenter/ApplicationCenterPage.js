@@ -155,24 +155,43 @@ export default class ApplicationCenterPage extends Component{
                                                  badge={this.state.bdNum}
                     />
                 </TouchableOpacity>
+                <TouchableOpacity
+                    // onPress={() => {this.toMyOutSideWork()}}
+                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
+                >
                 <TopcenterImgBottomTitleView applicationTitle='CRM'
                                              applicationImg = {require('../img/crm_h.png')}
-                                             style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             style={{height: 100, width: (SCREEN_WIDTH - 45)/2,}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                                              badge={0}
                 />
+                </TouchableOpacity>
+                <TouchableOpacity
+                    // onPress={() => {this.toMyOutSideWork()}}
+                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
+                >
                 <TopcenterImgBottomTitleView applicationTitle='工作统计'
                                              applicationImg = {require('../img/statistical_h.png')}
-                                             style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             style={{height: 100, width: (SCREEN_WIDTH - 45)/2}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'flex-end'}}
                                              badge={0}
                 />
+            </TouchableOpacity>
+                <TouchableOpacity
+                    // onPress={() => {this.toMyOutSideWork()}}
+                    style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
+
+                >
                 <TopcenterImgBottomTitleView applicationTitle='工作日志'
                                              applicationImg = {require('../img/log_h.png')}
-                                             style={{ marginLeft: 15, marginTop: 15,height: 100, width: (SCREEN_WIDTH - 45)/2, alignSelf: 'flex-start',}}
+                                             style={{height: 100, width: (SCREEN_WIDTH - 45)/2,}}
                                              textStyle={{color: '#ef0c35',  alignSelf: 'center'}}
                                              badge={0}
                 />
+                </TouchableOpacity>
+
             </View>
 
         </View>
