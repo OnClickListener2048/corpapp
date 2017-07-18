@@ -32,8 +32,10 @@ export default class TopcenterImgBottomTitleView extends React.Component {
         const {applicationTitle, applicationImg,badge} = this.state
         return (
                 <View
-                    style={[{width: 70, height: 44, backgroundColor: '#FFFFFF', justifyContent: 'center'}, style]}>
-
+                    style={[{width: 70, height: 44, justifyContent: 'center'}, style]}>
+                    <Image
+                        source={require('../img/bigk.png')}
+                        style={[{resizeMode: "stretch", justifyContent: 'center'},style]}>
                     <Image
                         source={applicationImg}
                         style={[{
@@ -62,6 +64,7 @@ export default class TopcenterImgBottomTitleView extends React.Component {
                     <Text
                         textAlign='center'
                         style={[{fontSize: 12,marginTop: 10,alignSelf:'center'}] }>{applicationTitle}</Text>
+                    </Image>
                 </View>
         )
     }
