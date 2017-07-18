@@ -4,7 +4,6 @@
 import React, {Component}from 'react';
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,

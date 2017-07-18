@@ -230,13 +230,13 @@ export default class LoginPage extends Component {
                         this.refs.timerButton.reset();
                     }
                     this.setState({timerButtonClicked: false});
-                    let msg = e.msg;
-                    if(msg === undefined) {
-                        msg = e.message;
-                    }
+                    let msg = '请输入正确的验证字符或手机号';//e.msg;
+                    // if(msg === undefined) {
+                    //     msg = e.message;
+                    // }
 
                     if(msg !== undefined) {
-                        BAlert.alert(msg, '',
+                        BAlert.alert('', msg,
                             [
                                 {
                                     text: '确定',

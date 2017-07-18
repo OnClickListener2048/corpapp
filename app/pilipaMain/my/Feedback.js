@@ -4,7 +4,6 @@
 import React, {Component}from 'react';
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
@@ -19,6 +18,7 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
 import BComponent from '../../base';
+import Alert from "../../modules/react-native-alert";
 
 export default class Feedback extends BComponent {
     static navigatorStyle = {
@@ -122,15 +122,6 @@ export default class Feedback extends BComponent {
                     {position: Toast.positions.CENTER, duration: Toast.durations.SHORT, }//backgroundColor: 'green'}
                     );
                 setTimeout(() => {this.props.navigator.pop()}, 3000);
-                // Alert.alert('产品经理已经收到你的反馈，我们会尽快解决你所遇到的问题', '',
-                //     [
-                //         {
-                //             text: '确定',
-                //             onPress: () => {
-                //                 this.props.navigator.pop();
-                //             },
-                //         },]
-                //     , {cancelable: false});
             },
             (e) => {
                 SActivityIndicator.hide(loading);

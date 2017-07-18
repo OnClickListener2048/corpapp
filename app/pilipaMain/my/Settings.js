@@ -4,7 +4,6 @@
 import React, {Component}from 'react';
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
@@ -22,6 +21,7 @@ import * as apis from '../../apis/setting';
 import TimerButton from "../../view/TimerButton";
 import settingStyles from './css/SettingsPageStyle';
 import BComponent from '../../base';
+import Alert from "../../modules/react-native-alert";
 
 export default class Settings extends BComponent {
     static navigatorStyle = {
@@ -212,7 +212,7 @@ export default class Settings extends BComponent {
             apis.editPhoneBind(this.state.newMobile, this.state.smsCode).then(
                 (responseData) => {
                     SActivityIndicator.hide(loading);
-                    Alert.alert('绑定成功', '',
+                    Alert.alert('', '绑定成功',
                         [
                             {
                                 text: '确定',
@@ -254,7 +254,7 @@ export default class Settings extends BComponent {
                     SActivityIndicator.hide(loading);
                     console.log("短信验证码校验失败:", e);
                     // Toast.show('短信验证码校验失败:' + JSON.stringify(e));
-                    Alert.alert('短信验证码校验失败', '',
+                    Alert.alert('', '短信验证码校验失败',
                         [
                             {
                                 text: '确定',
