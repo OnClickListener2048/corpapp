@@ -43,18 +43,6 @@ export default class LoginPage extends Component {
         tabBarHidden: true, // 隐藏默认的底部Tab栏
     };
 
-    static navigatorButtons = {
-        leftButtons: [
-            {
-                title: '完成', // for a textual button, provide the button title (label)
-                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
-                id: 'back',
-                icon: require('../img/left.png')
-            }]
-    };
-
     // usage: this.focusField('smsCodeInput');
     focusField = (nextField) => {
         if(this.refs[nextField] !== undefined && !this.refs[nextField].isFocused()) {
@@ -68,6 +56,7 @@ export default class LoginPage extends Component {
         this.state = {
             mobile: '',     // 手机号
             mobileValid: false,   // 手机号有效
+            mobileNotEmpty: false, // 手机号已输入
             smsCode: '',         // 短信验证码
             smsCodeValid: false,          // 短信验证码有效
             acceptLic: true,// 同意许可协议
@@ -381,11 +370,13 @@ export default class LoginPage extends Component {
                         <View style={{height: 40,}}/>
                         {/*   手机号 */}
                         <View style={styles.textInputContainer}>
-                            <Image source={ this.state.mobileValid ? require('../img/account_red.png') :
+                            <Image source={ this.state.mobileNotEmpty ? require('../img/account_red.png') :
                                 require('../img/account.png')} style={styles.inputLogo}/>
+
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent' maxLength={11}
                                            keyboardType='numeric' value={this.state.mobile}
+                                           placeholderTextColor='#c8c8c8'
                                            style={styles.textInput} placeholder='手机号码' returnKeyType='next'
                                            onChangeText={
                                                (mobile) => {
@@ -397,11 +388,13 @@ export default class LoginPage extends Component {
 
                                                    mobile = mobile.replace(/[^\d]/g,'');// 过滤非数字输入
                                                    let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
-                                                   this.setState({mobile, mobileValid, smsCode: '', smsCodeValid: false, vCode: ''});
+                                                   let mobileNotEmpty =  mobile.length > 0;
+                                                   this.setState({mobile, mobileValid, mobileNotEmpty, smsCode: '', smsCodeValid: false, vCode: ''});
                                                }
                                            }/>
                             </View>
                         </View>
+
                         {/*  图片验证码 */}
                         {this.state.verifyText !== null && this.state.verifyText.length > 0 &&
 
@@ -409,6 +402,7 @@ export default class LoginPage extends Component {
                             <Image
                                 source={ require('../img/icon_123.png') }
                                 style={styles.inputLogo}/>
+
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            ref="vCodeInput"
@@ -416,6 +410,7 @@ export default class LoginPage extends Component {
                                            editable={this.state.mobileValid}
                                            secureTextEntry={false} maxLength={4} keyboardType='default'
                                            style={styles.codeInput} placeholder={this.state.verifyText}
+                                           placeholderTextColor='#c8c8c8'
                                            returnKeyType='done'
                                            onChangeText={(vCode) => {
                                                this.setState({vCode})
@@ -454,6 +449,7 @@ export default class LoginPage extends Component {
                                 source={ this.state.smsCodeValid ? require('../img/d123_red.png') :
                                     require('../img/d123.png')}
                                 style={styles.inputLogo}/>
+
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            value={this.state.smsCode}
@@ -461,6 +457,7 @@ export default class LoginPage extends Component {
                                            editable={this.state.mobileValid && this.state.vCodeServerValid && this.state.timerButtonClicked}
                                            secureTextEntry={false} maxLength={6} keyboardType='numeric'
                                            style={styles.codeInput} placeholder='短信验证码'
+                                           placeholderTextColor='#c8c8c8'
                                            returnKeyType='done'
                                            onChangeText={(smsCode) => {
                                                this.setState({smsCode})
@@ -503,7 +500,7 @@ export default class LoginPage extends Component {
 
                         {/*  协议 */}
                         <View style={[styles.textInputContainer,
-                            {marginTop: -2}]}>
+                            {marginTop: 2}]}>
                             <TouchableOpacity
                                 style={{alignSelf: 'center'}} onPress={ () => {
                                 dismissKeyboard();

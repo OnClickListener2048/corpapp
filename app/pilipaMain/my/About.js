@@ -9,6 +9,7 @@ import {
     StyleSheet,
     Text,
     View,
+    WebView,
     TouchableWithoutFeedback, TextInput,
 }from 'react-native';
 import px2dp from '../../util/index'
@@ -51,16 +52,21 @@ export default class About extends BComponent {
                     <Image source={require('../../img/logo_g.png')} style={styles.headPortraint}/>
 
                 <Text allowFontScaling={true} style= {[styles.nameTextStyle,
-                    {marginBottom: px2dp(60), alignSelf:'center'}]}>
+                    {marginBottom: px2dp(60), alignSelf:'center', fontSize: px2dp(36)}]}>
                     噼里啪v{DeviceInfo.getVersion()}
                 </Text>
                 <View style={styles.divider}/>
 
                 <View style={styles.bottomView}>
-                    <Text  allowFontScaling={true} style={[styles.nameTextStyle,
-                        {marginLeft: px2dp(30), marginTop: px2dp(40), fontSize: 14,}]}>
-                        {this.state.content}
-                    </Text>
+                    {/*<Text  allowFontScaling={true} style={[styles.nameTextStyle,*/}
+                        {/*{marginLeft: px2dp(30), marginTop: px2dp(40), fontSize: 14,}]}>*/}
+                        {/*{this.state.content}*/}
+                    {/*</Text>*/}
+                    <WebView bounces={false}
+                             scalesPageToFit={true}
+                             source={{uri:"https://www.helijia.com/mobile/build/app/other/about.html?version=2.6.3",method: 'GET'}}
+                             >
+                    </WebView>
                 </View>
 
             </View>
@@ -104,10 +110,11 @@ const styles = StyleSheet.create({
     },
 
     nameTextStyle: {
-        fontSize: 18,
+        fontSize: 14,
         color: '#323232',
         textAlign: 'left',
         marginLeft: 0,
+        lineHeight:23,
     },
 
 

@@ -1,5 +1,5 @@
 /**
- * 单列地址选择
+ * 单列选择器
  */
 import React, {Component, PropTypes} from 'react';
 import {
@@ -63,6 +63,7 @@ export default class SinglePickerView extends Component {
                             {this.props.value===''?<Text numberOfLines={1} style={[{
                                     textAlign: 'left',
                                     marginRight: 5,
+                                marginBottom: 5,
                                     justifyContent: 'flex-end',
                                     flex: 1,
                                     color: '#323232',
@@ -70,6 +71,7 @@ export default class SinglePickerView extends Component {
                             <Text numberOfLines={1} style={[{
                                 textAlign: 'left',
                                 marginRight: 5,
+                                marginBottom: 5,
                                 color: '#323232',
                                 justifyContent:'flex-end',
                             }]}>{this.props.value}</Text>}

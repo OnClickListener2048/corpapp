@@ -150,18 +150,19 @@ export default class Feedback extends BComponent {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F8F9FF',
+        backgroundColor: '#FAFAFA',
         flex: 1,
     },
 
     inputArea: {
         height: px2dp(352),
-        width: width - 30,
+        width: width,
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        marginLeft: 15,
-        marginTop: 15,
-        alignItems: 'center'
+        paddingLeft: 15,
+        paddingTop: 15,
+        alignItems: 'center',
+        backgroundColor: 'white',
     },
 
     lineView: {
@@ -207,19 +208,20 @@ const styles = StyleSheet.create({
     textInputContainer: {
         height: px2dp(88),
         // width: SCREEN_WIDTH,
-        // backgroundColor: '#FFDDFF',
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent:'center'
     },
 
     codeInput: {
         flex: 1,
-        height: px2dp(352),
+        height: px2dp(352) - 15,
         width: px2dp(148),
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(28),
         color: '#323232',
+        backgroundColor: 'white',
         alignSelf: 'center',
     },
 });
