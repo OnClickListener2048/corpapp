@@ -89,7 +89,7 @@ export default class WatchImageModal extends Component{
 
 
             <Modal
-                animationType='none'//进场动画 fade
+                animationType='fade'//进场动画 fade
                 onRequestClose={() => this.close()}
                 visible={this.state.visible}//是否可见
                 transparent={true} //背景透明
@@ -98,24 +98,16 @@ export default class WatchImageModal extends Component{
                 <View style={styles.titlelayout}>
                     <TouchableOpacity onPress={() => {
                         this.close()
-                    }}>
-                    <Text style={{fontSize:15,color:'white',marginLeft:15}}>{'返回'} </Text>
+                    }}style={{width:50,height:40,alignItems: 'center',justifyContent: 'center'}}>
+                        <Image source={require('../../img/left.png')}/>
                     </TouchableOpacity>
-                    <Text style={{fontSize:18, textAlign:'center',alignItems:'center',alignSelf:'center', justifyContent: 'center',color:'white'}}>{this.props.titleName}</Text>
+                    <Text style={{fontSize:18, textAlign:'center',alignItems:'center',alignSelf:'center',fontWeight:'bold',justifyContent: 'center',color:'#323232'}}>{this.props.titleName}</Text>
 
                     <TouchableOpacity onPress={() => {
                         this.alertModal()
-                    }}style={{width:50,height:40}}>
-                        <View style={{
-                            height: 40,
-                            width: 50,
-                            alignItems: 'center',
-                            backgroundColor: 'black',
-                            justifyContent: 'center'
-                        }}>
-                            <Text style={{fontSize: 15, textAlign: 'center', justifyContent: 'center', color: '#FFFFFF'}}>
-                                {'更多'}</Text>
-                        </View>
+                    }}style={{width:50,height:40,alignItems: 'center',justifyContent: 'center'}}>
+                        <Image source={require('../../img/more_icon.png')}/>
+
                     </TouchableOpacity>
                 </View>
 
@@ -133,7 +125,8 @@ const styles = StyleSheet.create({
     container: {
         width:SCREEN_WIDTH,
         flex: 1,
-        backgroundColor: 'black',
+        // backgroundColor: '#332f38',
+        backgroundColor: 'white',
         position: 'absolute',
         top: 0,
         bottom: 0,
@@ -144,12 +137,16 @@ const styles = StyleSheet.create({
     },
     titlelayout:{
         width:SCREEN_WIDTH,
-        backgroundColor:'black',
-        paddingTop:30,
-        height:50,
+        // backgroundColor:'#332f38',
+        backgroundColor:'white',
+        paddingTop:32,
+        paddingBottom:10,
+        height:65,
         justifyContent:'space-between',
         flexDirection:'row',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderBottomColor: '#dcdcdc',
+        borderBottomWidth: 0.5,
     },
 
 })
