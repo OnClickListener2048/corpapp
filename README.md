@@ -6,3 +6,4 @@ This is the repository for corp version of mobile apps of pilipa. It's powered b
 
 相关Wiki文档请浏览这里: [wiki/Home](https://bitbucket.org/pilipa/corpapp/wiki/Home)
 
+相关package依赖包文档请浏览这里：[wiki/package依赖包用途说明](https://bitbucket.org/pilipa/corpapp/wiki/package依赖包用途说明)

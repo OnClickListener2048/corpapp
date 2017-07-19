@@ -27,11 +27,17 @@ let ImageViewer = class ImageViewer extends React.Component {
         this.styles = image_viewer_style_1.default(0, 0);
         this.hasLayout = false;
         this.loadedIndex = new Map();
+        this.isShowMenu = this.props.isShowMenu;
 
     }
     componentWillMount() {
         this.init(this.props);
     }
+
+    componentWillReceiveProps(props) {
+        this.setState({isShowMenu: props.isShowMenu,});
+    }
+
     init(nextProps) {
         if (nextProps.imageUrls.length === 0) {
             this.fadeAnim.setValue(0);
@@ -358,9 +364,10 @@ let ImageViewer = class ImageViewer extends React.Component {
             });
             this.props.callback(this.state.image);//将图片传递给父组件
         }).catch(e => {
-            console.log('received image失败='+e);
             this.setState({ isShowMenu: false, });
             Toast.show('调取相机失败，请更改相机设置');
+            console.log('received image失败='+e);
+
         });
     }
     pickSingle=()=> {

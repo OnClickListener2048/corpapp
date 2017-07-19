@@ -30,6 +30,8 @@ export default class WatchImageModal extends Component{
         this.state = { visible: this.props.visible,
             imageUrl: this.props.imageUrl,
             imageFile:this.props.imageFile,
+            titleName:this.props.titleName,
+            isShowMenu:false,
         };
     }
 
@@ -40,6 +42,9 @@ export default class WatchImageModal extends Component{
 
     alertModal=()=>{
         console.log("==输出弹窗==");
+        this.setState({
+            isShowMenu:true,
+        })
     }
 
     open=()=>{
@@ -50,7 +55,8 @@ export default class WatchImageModal extends Component{
     componentWillReceiveProps(props) {
         this.setState({ visible: props.visible,
             imageUrl: props.imageUrl,
-            imageFile:props.imageFile,});
+            imageFile:props.imageFile,
+            isShowMenu: props.isShowMenu,});
     }
 
     _callbackPhoto(img){
@@ -89,14 +95,34 @@ export default class WatchImageModal extends Component{
                 transparent={true} //背景透明
 
             >
-                {/*<TouchableOpacity onPress={this.alertModal}>*/}
-                {/*<Text style={{color:'white',fontSize:15}}>{'更多'}</Text>*/}
-                {/*</TouchableOpacity>*/}
+                <View style={styles.titlelayout}>
+                    <TouchableOpacity onPress={() => {
+                        this.close()
+                    }}>
+                    <Text style={{fontSize:15,color:'white',marginLeft:15}}>{'返回'} </Text>
+                    </TouchableOpacity>
+                    <Text style={{fontSize:18, textAlign:'center',alignItems:'center',alignSelf:'center', justifyContent: 'center',color:'white'}}>{this.props.titleName}</Text>
+
+                    <TouchableOpacity onPress={() => {
+                        this.alertModal()
+                    }}style={{width:50,height:40}}>
+                        <View style={{
+                            height: 40,
+                            width: 50,
+                            alignItems: 'center',
+                            backgroundColor: 'black',
+                            justifyContent: 'center'
+                        }}>
+                            <Text style={{fontSize: 15, textAlign: 'center', justifyContent: 'center', color: '#FFFFFF'}}>
+                                {'更多'}</Text>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+
                 <TouchableOpacity style={{flex:1}} activeOpacity={1}
-                                  // onPress={this.close}//点击灰色区域消失
                 >
                     <ImageViewer imageUrls={images}
-                                 onClick={this.close}
+                                 isShowMenu={this.state.isShowMenu}
                                  callback={this._callbackPhoto.bind(this)}/>
                 </TouchableOpacity>
             </Modal>
@@ -114,6 +140,15 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         justifyContent: 'center',
+        alignItems: 'center'
+    },
+    titlelayout:{
+        width:SCREEN_WIDTH,
+        backgroundColor:'black',
+        paddingTop:30,
+        height:50,
+        justifyContent:'space-between',
+        flexDirection:'row',
         alignItems: 'center'
     },
 

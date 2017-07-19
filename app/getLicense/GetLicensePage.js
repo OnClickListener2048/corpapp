@@ -958,6 +958,7 @@ export default class GetLicensePage extends BComponent {
                 visible={true}
                 imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
                 imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
+                titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
                 callback={this._callbackWatchPhoto.bind(this)}
                 callbackfile={this._callbackPhoto.bind(this)}/>}
             {this.state.isDateTimePickerVisible === true &&
