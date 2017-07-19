@@ -7,6 +7,7 @@ import React, {Component}from 'react';
 const {width, height} = Dimensions.get('window');
 
 import {
+    Alert,
     Image,
     StyleSheet,
     Text,
@@ -21,7 +22,7 @@ import {navToBootstrap, navToMainTab} from '../navigation';
 import Toast from 'react-native-root-toast';
 import * as apis from '../apis';
 import DeviceInfo from 'react-native-device-info';
-import Alert from "../modules/react-native-alert";
+// import Alert from "../modules/react-native-alert";
 
 export default class PLPMine extends Component {
     static navigatorStyle = {

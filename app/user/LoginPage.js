@@ -351,16 +351,16 @@ export default class LoginPage extends Component {
                     {/*titleItem={() => this.renderTitleItem()}*/}
                     {/*/>*/}
 
-                    {/*<InternetStatusView*/}
-                        {/*textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"*/}
-                        {/*style={{*/}
-                            {/*justifyContent: 'center',*/}
-                            {/*alignSelf: 'stretch',*/}
-                            {/*backgroundColor: '#00000088',*/}
-                            {/*marginTop: px2dp(50),*/}
-                            {/*height: 25*/}
-                        {/*}}*/}
-                    {/*/>*/}
+                    <InternetStatusView
+                        textToDisplay="未检测到网络连接，请确保WIFI或移动网络正常可用。"
+                        style={{
+                            justifyContent: 'center',
+                            alignSelf: 'stretch',
+                            backgroundColor: '#00000088',
+                            marginTop: px2dp(50),
+                            height: 25
+                        }}
+                    />
 
                     <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
                     <View style={{height: px2dp(100),}}/>

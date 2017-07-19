@@ -6,8 +6,8 @@ import './app/util/NetInfoSingleton';
 import {Navigation} from 'react-native-navigation';
 
 // 测试准备, 关闭Warning框
-// console.disableYellowBox = true;
-// console.warn('YellowBox is disabled.');
+console.disableYellowBox = true;
+console.warn('YellowBox is disabled.');
 console.log("NetInfoSingleton", NetInfoSingleton.isConnected);
 
 navToMainTab();

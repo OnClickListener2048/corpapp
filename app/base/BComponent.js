@@ -23,8 +23,8 @@ export default class BComponent extends Component {
                     {
                         title: '', // for a textual button, provide the button title (label)
                         // buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-                        buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-                        buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+                        buttonFontSize: 18, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+                        // buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
                         id: 'goBack',
                         icon: require('../img/left.png'),
                     }], // see "Adding buttons to the navigator" below for format (optional)

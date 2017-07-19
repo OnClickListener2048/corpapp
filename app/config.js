@@ -34,18 +34,18 @@ export let KEY_USER_INFO = 'KEY_USER_INFO';// 用户基本信息
 
 // 顶部导航栏默认风格设置(react-native-navigation)
 export const DEFAULT_NAVIGATOR_STYLE = {
-    navBarTextColor: 'black',
-    navBarButtonColor: '#666666',// 顶部按钮颜色
-    statusBarHideWithNavBar: true,
+    navBarButtonColor: '#323232',// 顶部按钮颜色
+    navBarTextColor: '#323232',// 顶部导航栏文字颜色
+    navBarTextFontSize: 18, // 顶部导航栏文字大小
     navBarTitleTextCentered: true, // Android 有效, 默认是不居中的标题栏
+    navBarBackgroundColor: '#FAFAFA',
 };
 
 // 底部Tab栏的颜色(react-native-navigation)
 export const tabsStyle = {
     tabBarBackgroundColor: '#F5F5F5',
-        navBarButtonColor: '#c8c8c8',
         tabBarButtonColor: '#c8c8c8',
-        navBarTextColor: '#c8c8c8',
+        tabBarTextFontSize: '8',
         tabBarSelectedButtonColor: '#ff505c',
     // navigationBarColor: '#F5F5F5',
     // navBarBackgroundColor: '#F5F5F5',
@@ -55,14 +55,15 @@ export const tabsStyle = {
 
 // App 的默认样式(react-native-navigation)
 export const appStyle = {
-    tabBarBackgroundColor: '#F5F5F5',
-        navBarButtonColor: '#646464',// 顶部导航栏按钮颜色
+        navBarButtonColor: '#323232',// 顶部按钮颜色
         navBarTextColor: '#323232',// 顶部导航栏文字颜色
+        navBarTextFontSize: 18, // 顶部导航栏文字大小
+        navBarTitleTextCentered: true, // Android 有效, 默认是不居中的标题栏
+        navBarBackgroundColor: '#FAFAFA',
+        tabBarBackgroundColor: '#F5F5F5',
         tabBarButtonColor: '#c8c8c8',
         tabBarSelectedButtonColor: '#ff505c',
         navigationBarColor: '#F5F5F5',
-        navBarBackgroundColor: '#F5F5F5',
-        navBarTitleTextCentered: true, // Android 有效, 默认是不居中的标题栏
         // statusBarColor: '#000000',
         // tabFontFamily: 'BioRhyme-Bold',
 }

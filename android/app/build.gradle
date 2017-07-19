@@ -176,8 +176,6 @@ android {
         applicationId "cn.pilipa.corpapp"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
@@ -233,14 +231,16 @@ android {
             def abi = output.getFilter(OutputFile.ABI)
             println('abi = ' + abi);
 
+            def manifestParser = new DefaultManifestParser(android.sourceSets.main.manifest.srcFile);
+
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
+                        versionCodes.get(abi) * 1048576 + manifestParser.getVersionCode()// defaultConfig.versionCode
             }
 
             //修改生成的apk名字
             def oldFile = output.outputFile
-            def manifestParser = new DefaultManifestParser(android.sourceSets.main.manifest.srcFile);
+
             def versionName =manifestParser.getVersionName()
 //            def newName = "pi_v_" + defaultConfig.versionName;
             def newName = "pi_" + abi + "_v" + versionName + "_" + releaseTime() ;
