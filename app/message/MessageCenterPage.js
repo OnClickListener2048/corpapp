@@ -7,6 +7,7 @@ import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../test/NoMessage';
+// import NetInfoSingleton from  '../util/NetInfoSingleton'
 
 // import {
 //     SwRefreshScrollView, //支持下拉刷新的ScrollView
@@ -55,6 +56,7 @@ export default class MessageCenterPage extends Component {
             bagetNum : 0,
             loadingMore : 0,
             isRefreshing: false,
+            isNoNetwork : false,
         }
 
         this.isJumping = false;// 是否跳转中
@@ -91,6 +93,19 @@ export default class MessageCenterPage extends Component {
 
     // 载入初始化数据
     _loadInitData() {
+        // console.log("判断有无网" + NetInfoSingleton.isConnected);
+
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                isNoNetwork:true,
+            });
+            console.log("无网")
+            return;
+        }
+        this.setState({
+            isNoNetwork:false,
+        });
+        console.log("到这里了?")
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -148,6 +163,7 @@ export default class MessageCenterPage extends Component {
                     this.setState({
                         loaded:true,
                         faild: false,
+
                     });
                 }else {
                     // 关闭刷新动画
@@ -600,7 +616,18 @@ export default class MessageCenterPage extends Component {
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
 
-        if (this.state.loaded === false) {      // 无数据
+       if (this.state.isNoNetwork == true) {      // 数据加载失败
+            return(
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+
+                    <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                        <NoMessage
+                            textContent='网络异常'
+                            active={require('../img/load_failed.png')}/>
+                    </View>
+                </TouchableOpacity>
+            );
+        }else if (this.state.loaded === false) {      // 没什么错但是还没开始请求数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                 </View>
