@@ -114,7 +114,7 @@ export default class TimerButton extends React.Component {
                     style={[{width: 70, height: 44,  justifyContent: 'center', alignItems: 'flex-end'}, style]}>
                     <Text
                         textAlign='right'
-                        style={[{fontSize: 12}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || 'gray')}]}>{timerTitle}</Text>
+                        style={[{fontSize: 12}, textStyle, {color: ((!counting && enable && selfEnable) ? textStyle.color : disableColor || '#c8c8c8')}]}>{timerTitle}</Text>
                 </View>
             </TouchableOpacity>
         )

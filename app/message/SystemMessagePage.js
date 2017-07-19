@@ -12,9 +12,9 @@ import {
     TouchableOpacity,
     InteractionManager
 } from 'react-native';
+import BComponent from '../base';
 
-
-export default class SystemMessagePage extends Component{
+export default class SystemMessagePage extends BComponent{
     static navigatorStyle = {
         navBarHidden: false, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏

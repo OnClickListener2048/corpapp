@@ -7,7 +7,6 @@ import React, {Component}from 'react';
 const {width, height} = Dimensions.get('window');
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
@@ -21,6 +20,8 @@ import px2dp from '../util'
 import {navToBootstrap, navToMainTab} from '../navigation';
 import Toast from 'react-native-root-toast';
 import * as apis from '../apis';
+import DeviceInfo from 'react-native-device-info';
+import Alert from "../modules/react-native-alert";
 
 export default class PLPMine extends Component {
     static navigatorStyle = {
@@ -130,7 +131,7 @@ export default class PLPMine extends Component {
                         <Image source={require('../img/about@3x.png')}
                                style={styles.imgiconview}/>
                         <Text style={styles.listtextstyle}>
-                            关于噼里啪v1.0
+                            关于噼里啪v{DeviceInfo.getVersion()}
                         </Text>
                         <Image source={{uri: 'icon_cell_rightArrow'}} style={styles.arrowStyle}/>
                     </View>
@@ -151,7 +152,7 @@ export default class PLPMine extends Component {
 
     // 登出
     _doLogout() {
-        Alert.alert('确定退出', '',
+        Alert.alert('', '确定退出',
             [
                 {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {
@@ -291,7 +292,8 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'white'
     },
     imgiconview: {
         marginLeft: 15,

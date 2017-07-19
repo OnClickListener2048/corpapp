@@ -4,7 +4,6 @@
 import React, {Component}from 'react';
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
@@ -19,6 +18,7 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
 import BComponent from '../../base';
+import Alert from "../../modules/react-native-alert";
 
 export default class Feedback extends BComponent {
     static navigatorStyle = {
@@ -122,15 +122,6 @@ export default class Feedback extends BComponent {
                     {position: Toast.positions.CENTER, duration: Toast.durations.SHORT, }//backgroundColor: 'green'}
                     );
                 setTimeout(() => {this.props.navigator.pop()}, 3000);
-                // Alert.alert('产品经理已经收到你的反馈，我们会尽快解决你所遇到的问题', '',
-                //     [
-                //         {
-                //             text: '确定',
-                //             onPress: () => {
-                //                 this.props.navigator.pop();
-                //             },
-                //         },]
-                //     , {cancelable: false});
             },
             (e) => {
                 SActivityIndicator.hide(loading);
@@ -150,18 +141,19 @@ export default class Feedback extends BComponent {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#F8F9FF',
+        backgroundColor: '#FAFAFA',
         flex: 1,
     },
 
     inputArea: {
         height: px2dp(352),
-        width: width - 30,
+        width: width,
         justifyContent: 'flex-start',
         flexDirection: 'row',
-        marginLeft: 15,
-        marginTop: 15,
-        alignItems: 'center'
+        paddingLeft: 15,
+        paddingTop: 15,
+        alignItems: 'center',
+        backgroundColor: 'white',
     },
 
     lineView: {
@@ -207,19 +199,20 @@ const styles = StyleSheet.create({
     textInputContainer: {
         height: px2dp(88),
         // width: SCREEN_WIDTH,
-        // backgroundColor: '#FFDDFF',
+        backgroundColor: 'white',
         flexDirection: 'row',
         justifyContent:'center'
     },
 
     codeInput: {
         flex: 1,
-        height: px2dp(352),
+        height: px2dp(352) - 15,
         width: px2dp(148),
         marginLeft: px2dp(0),
         padding: 0,
         fontSize: px2dp(28),
         color: '#323232',
+        backgroundColor: 'white',
         alignSelf: 'center',
     },
 });

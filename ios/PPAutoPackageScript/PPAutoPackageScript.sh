@@ -1,4 +1,6 @@
 # !/bin/bash
+# 指定要打包编译的方式 : Release,Debug... 上线前一定要改为Release
+build_configuration="Release"
 
 # Mac Mini 打包专用
 KEYCHAIN=/Users/pilipa/Library/Keychains/login.keychain-db
@@ -35,7 +37,7 @@ scheme_name="corpapp"
 # 工程中Target对应的配置plist文件名称, Xcode默认的配置文件为Info.plist
 info_plist_name="Info"
 # 指定要打包编译的方式 : Release,Debug...
-build_configuration="Debug"
+#build_configuration="Release"
 
 
 # ===============================自动打包部分(无特殊情况不用修改)============================= #

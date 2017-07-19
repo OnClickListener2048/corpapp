@@ -4,11 +4,11 @@
 import React, {Component}from 'react';
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
     View,
+    WebView,
     TouchableWithoutFeedback, TextInput,
 }from 'react-native';
 import px2dp from '../../util/index'
@@ -29,7 +29,7 @@ export default class About extends BComponent {
     constructor(props) {
         super(props);
         this.state = {
-            content: '',     // update notes
+            content: '' //'噼里啪运营管理系统V1.0\n向世界宣布噼里啪运营管理系统V1.0正式上线啦！\n1.外勤任务准时送;\n2.任务进度及时反馈;\n3.工作精细化管理；\n4.这仅仅是刚刚开始.....',     // update notes
         };
 
         apis.about().then(
@@ -51,7 +51,7 @@ export default class About extends BComponent {
                     <Image source={require('../../img/logo_g.png')} style={styles.headPortraint}/>
 
                 <Text allowFontScaling={true} style= {[styles.nameTextStyle,
-                    {marginBottom: px2dp(60), alignSelf:'center'}]}>
+                    {marginBottom: px2dp(60), alignSelf:'center', fontSize: px2dp(36)}]}>
                     噼里啪v{DeviceInfo.getVersion()}
                 </Text>
                 <View style={styles.divider}/>
@@ -61,6 +61,11 @@ export default class About extends BComponent {
                         {marginLeft: px2dp(30), marginTop: px2dp(40), fontSize: 14,}]}>
                         {this.state.content}
                     </Text>
+                    {/*<WebView bounces={false}*/}
+                             {/*scalesPageToFit={true}*/}
+                             {/*source={{uri:"https://www.helijia.com/mobile/build/app/other/about.html?version=2.6.3",method: 'GET'}}*/}
+                             {/*>*/}
+                    {/*</WebView>*/}
                 </View>
 
             </View>
@@ -104,10 +109,11 @@ const styles = StyleSheet.create({
     },
 
     nameTextStyle: {
-        fontSize: 18,
+        fontSize: 14,
         color: '#323232',
         textAlign: 'left',
         marginLeft: 0,
+        lineHeight:14+22,
     },
 
 
