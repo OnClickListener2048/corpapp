@@ -18,6 +18,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
+import NoMessage from "../test/NoMessage";
 
 export default class MyOutSideWorkPage extends BComponent{
 
@@ -28,6 +29,8 @@ export default class MyOutSideWorkPage extends BComponent{
             loaded:false,
             needLoding:true,
             canClickBtn : false,
+            isNoNetwork : false,
+
         }
         // if you want to listen on navigator events, set this up
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -110,6 +113,15 @@ export default class MyOutSideWorkPage extends BComponent{
 
         //获取每个外勤状态数量
     _loadCount(needLoding){
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                isNoNetwork:true,
+            });
+            return;
+        }
+        this.setState({
+            isNoNetwork:false,
+        });
 
         let loading;
 
@@ -171,7 +183,20 @@ export default class MyOutSideWorkPage extends BComponent{
 
 
     _renderScrollView(){
-    if (this.state.loaded){
+        if (this.state.isNoNetwork === true) {      // 无网络
+            return(
+
+
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+                    <TouchableOpacity onPress={() => {this._loadCount(true)}}>
+                        <NoMessage
+                            textContent='网络异常'
+                            active={require('../img/network_error.png')}/>
+                    </TouchableOpacity>
+                </View>
+
+            );
+        }else if (this.state.loaded){
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
