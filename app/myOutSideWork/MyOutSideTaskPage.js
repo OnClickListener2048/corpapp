@@ -91,7 +91,7 @@ _loadData() {
                         loaded:true,
                     });
                     this.props.navigator.setTitle({
-                        title: this.info.taskName // the new title of the screen as appears in the nav bar
+                        title: this.info.taskName, // the new title of the screen as appears in the nav bar
                     });
                     if(this.refs.companyInfoView) {
                         this.refs.companyInfoView.setCompanyInfo(this.info.corpName,this.info.contactName,this.info.contactPhone,

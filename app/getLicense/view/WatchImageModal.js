@@ -101,7 +101,7 @@ export default class WatchImageModal extends Component{
                     }}style={{width:50,height:40,alignItems: 'center',justifyContent: 'center'}}>
                         <Image source={require('../../img/left.png')}/>
                     </TouchableOpacity>
-                    <Text style={{fontSize:18, textAlign:'center',alignItems:'center',alignSelf:'center',fontWeight:'bold',justifyContent: 'center',color:'#323232'}}>{this.props.titleName}</Text>
+                    <Text style={{fontSize:20, textAlign:'center',alignItems:'center',alignSelf:'center',justifyContent: 'center',color:'#323232'}}>{this.props.titleName}</Text>
 
                     <TouchableOpacity onPress={() => {
                         this.alertModal()
