@@ -34,6 +34,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             refresh:this.props.refresh,
             isRefreshing: false,
             loadingMore : 0,
+            isNoNetwork : false,
 
         }
         this.lastID = null;
@@ -87,6 +88,11 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadList(){
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
+
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
         this.lastID = null;
@@ -142,6 +148,17 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadAgainList(){
+
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                isNoNetwork:true,
+            });
+            return;
+        }
+        this.setState({
+            isNoNetwork:false,
+        });
+
         let taskType = this.props.label==null?'all':this.props.label;
         this.setState({isRefreshing: true});
         this.lastID = null;
@@ -189,6 +206,11 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadMoreData() {
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
+
         console.log('加载更多哈哈');
         let taskType = this.props.label==null?'all':this.props.label;
         if (this.lastID === null){
@@ -307,8 +329,20 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
 
     renderListView() {
+        if (this.state.isNoNetwork === true) {      // 无网络
+            return(
 
-        if (this.state.dataFaild === true) {      // 数据加载失败
+
+            <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                <TouchableOpacity onPress={() => {this._loadAgainList()}}>
+                    <NoMessage
+                        textContent='网络异常'
+                        active={require('../img/network_error.png')}/>
+                </TouchableOpacity>
+            </View>
+
+            );
+        }else if (this.state.dataFaild === true) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <TouchableOpacity onPress={() => {this._loadList()}}>

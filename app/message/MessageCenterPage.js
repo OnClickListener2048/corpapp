@@ -7,7 +7,6 @@ import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../test/NoMessage';
-// import NetInfoSingleton from  '../util/NetInfoSingleton'
 
 // import {
 //     SwRefreshScrollView, //支持下拉刷新的ScrollView
@@ -99,13 +98,11 @@ export default class MessageCenterPage extends Component {
             this.setState({
                 isNoNetwork:true,
             });
-            console.log("无网")
             return;
         }
         this.setState({
             isNoNetwork:false,
         });
-        console.log("到这里了?")
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -184,6 +181,11 @@ export default class MessageCenterPage extends Component {
 
     _loadData() {
 
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
+
         this.lastID = null;
 
         this.setState({isRefreshing: true});
@@ -248,7 +250,10 @@ export default class MessageCenterPage extends Component {
     }
 
     _loadMoreData() {
-        console.log('加载更多哈哈');
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
 
         if (this.lastID === null){
             return;
@@ -616,14 +621,14 @@ export default class MessageCenterPage extends Component {
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
 
-       if (this.state.isNoNetwork == true) {      // 数据加载失败
+       if (this.state.isNoNetwork == true) {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='网络异常'
-                            active={require('../img/load_failed.png')}/>
+                            active={require('../img/network_error.png')}/>
                     </View>
                 </TouchableOpacity>
             );
