@@ -29,13 +29,13 @@ export default class About extends BComponent {
     constructor(props) {
         super(props);
         this.state = {
-            content: '',     // update notes
+            content: '' //'噼里啪运营管理系统V1.0\n向世界宣布噼里啪运营管理系统V1.0正式上线啦！\n1.外勤任务准时送;\n2.任务进度及时反馈;\n3.工作精细化管理；\n4.这仅仅是刚刚开始.....',     // update notes
         };
 
         apis.about().then(
             (json) => {
                 if (json !== null && json.data !== null) {
-                    this.setState({content:  json.data.content});
+                    // this.setState({content:  json.data.content});
                 }
             },
             (e) => {
@@ -57,15 +57,15 @@ export default class About extends BComponent {
                 <View style={styles.divider}/>
 
                 <View style={styles.bottomView}>
-                    {/*<Text  allowFontScaling={true} style={[styles.nameTextStyle,*/}
-                        {/*{marginLeft: px2dp(30), marginTop: px2dp(40), fontSize: 14,}]}>*/}
-                        {/*{this.state.content}*/}
-                    {/*</Text>*/}
-                    <WebView bounces={false}
-                             scalesPageToFit={true}
-                             source={{uri:"https://www.helijia.com/mobile/build/app/other/about.html?version=2.6.3",method: 'GET'}}
-                             >
-                    </WebView>
+                    <Text  allowFontScaling={true} style={[styles.nameTextStyle,
+                        {marginLeft: px2dp(30), marginTop: px2dp(40), fontSize: 14,}]}>
+                        {this.state.content}
+                    </Text>
+                    {/*<WebView bounces={false}*/}
+                             {/*scalesPageToFit={true}*/}
+                             {/*source={{uri:"https://www.helijia.com/mobile/build/app/other/about.html?version=2.6.3",method: 'GET'}}*/}
+                             {/*>*/}
+                    {/*</WebView>*/}
                 </View>
 
             </View>
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
         color: '#323232',
         textAlign: 'left',
         marginLeft: 0,
-        lineHeight:23,
+        lineHeight:14+22,
     },
 
 
