@@ -15,7 +15,7 @@ import {
     Image,
     Modal,
     TextInput,
-    InteractionManager
+    InteractionManager,
 } from 'react-native';
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
@@ -91,9 +91,16 @@ export default class AlertPhotoModal extends Component{
             });
             this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给页面
         }).catch(e => {
-            this.setState({ imgVisibles: false });
             console.log('received image失败='+e);
-            Toast.show('调取相机失败，请更改相机设置');
+            Alert.alert(
+                '',
+                '调取相机失败，请更改相机设置',
+                [
+                    {text: '确定', onPress: () =>this.setState({ imgVisibles: false })},
+                ],
+                { cancelable: false }
+            )
+            // Toast.show('调取相机失败，请更改相机设置');
             // this.props.callback(this.state.image,this.state.imgVisibles);//将图片传递给父组件
         });
     }

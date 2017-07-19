@@ -13,7 +13,7 @@ const nt_transmit_transparently_1 = require("nt-transmit-transparently");
 const react_native_image_pan_zoom_1 = require("react-native-image-pan-zoom");
 const image_viewer_style_1 = require("./image-viewer.style");
 import ImagePicker from "react-native-image-crop-picker"
-import Toast from 'react-native-root-toast';
+const Toast = require("react-native-root-toast");
 let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
@@ -365,7 +365,20 @@ let ImageViewer = class ImageViewer extends React.Component {
             this.props.callback(this.state.image);//将图片传递给父组件
         }).catch(e => {
             this.setState({ isShowMenu: false, });
-            Toast.show('调取相机失败，请更改相机设置');
+            // if(react_native_1.Platform ==='ios'){
+                react_native_1.Alert.alert(
+                    '',
+                    '调取相机失败，请更改相机设置',
+                    [
+                        {text: '确定', onPress: () => console.log('OK Pressed')},
+                    ],
+                    { cancelable: false }
+                )
+            // }else{
+            //     react_native_1.ToastAndroid.show('调取相机失败，请更改相机设置',react_native_1.ToastAndroid.LONG);
+            // }
+
+            // Toast.show('调取相机失败，请更改相机设置');
             console.log('received image失败='+e);
 
         });
