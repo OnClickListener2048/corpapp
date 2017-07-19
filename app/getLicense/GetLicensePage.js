@@ -911,10 +911,31 @@ export default class GetLicensePage extends BComponent {
                     this.setState({
                         isPickerOpen : false,
                     });
-                console.log('Confirm Area', pickedValue, pickedIndex);
-                if(confirmValueCallback) {
-                    confirmValueCallback(pickedValue);
+                 console.log('Confirm Area', pickedValue[0], pickedIndex);
+
+                let isRefresh = false;
+
+                if (pickedValue.length > 0){
+
+                    for(let i = 0 ; i < pickerData.length ; i++) {
+                        let subInfoStr = pickerData[i];
+                        console.log('到这里' + subInfoStr + pickedValue[0] + '个数' +  pickerData.length + '相等吗?' + subInfoStr === pickedValue[0]);
+
+
+                        if (subInfoStr === pickedValue[0]) {
+                            isRefresh = true;
+                            break;
+                        }
+                    }
+
                 }
+
+                if (confirmValueCallback && isRefresh == true){
+                    confirmValueCallback(pickedValue);
+                    console.log('到这里2');
+
+                }
+
             },
         });
         Picker.show();

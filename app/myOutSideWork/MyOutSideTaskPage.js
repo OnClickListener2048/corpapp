@@ -107,7 +107,16 @@ _loadData() {
                     faild:true,
                 });
                 console.log("获取失败" , e);
-                Toast.show(this.props.toastStr + '获取失败' + JSON.stringify(e));
+
+                let msg = e.msg;
+                if(msg !== undefined) {
+                    BAlert.alert(msg);
+                    Toast.show(JSON.stringify(msg));
+
+                } else {
+                    Toast.show(JSON.stringify(e));
+                }
+
             },
         );
 
