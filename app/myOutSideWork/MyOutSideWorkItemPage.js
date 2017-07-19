@@ -44,7 +44,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
         this._loadMoreData = this._loadMoreData.bind(this);
         this._loadAgainList = this._loadAgainList.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
-
+        this.setRefresh = this.setRefresh.bind(this);
     }
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
@@ -57,6 +57,12 @@ export default class MyOutSideWorkItemPage extends BComponent{
     };
 
     componentWillMount() {
+        this._loadList();
+
+    }
+
+    //这里是收到需要刷新外勤列表的callBack 调用刷新方法 
+    setRefresh(needRefresh){
         this._loadList();
 
     }
