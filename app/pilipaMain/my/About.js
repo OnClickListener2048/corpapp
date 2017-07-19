@@ -35,7 +35,7 @@ export default class About extends BComponent {
         apis.about().then(
             (json) => {
                 if (json !== null && json.data !== null) {
-                    // this.setState({content:  json.data.content});
+                    this.setState({content:  json.data.content});
                 }
             },
             (e) => {
