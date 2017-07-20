@@ -180,6 +180,11 @@ export default class MyOutSideWorkPage extends BComponent{
 
     }
 
+    _closepull(page){
+        if(page===2){
+            console.log("==关闭下拉刷新==");
+        }
+    }
 
 
     _renderScrollView(){
@@ -201,7 +206,7 @@ export default class MyOutSideWorkPage extends BComponent{
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
             renderTabBar={() => <TabBar underlineColor={'#FF0000'}
-
+                                        callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
         >
             {/*

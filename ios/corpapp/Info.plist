@@ -42,11 +42,11 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>hehe</string>
+	<string>是否允许此app访问您的相机</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>enene</string>
+	<string>是否允许此app访问您的相册</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Entypo.ttf</string>

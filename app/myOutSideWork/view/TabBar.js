@@ -91,7 +91,7 @@ class TabBar extends Component {
     };
   }
 
-  componentDidUpdate(prevProps, prevState) {    
+  componentDidUpdate(prevProps, prevState) {
     if (prevProps.activeTab !== this.props.activeTab) {
       this._checkViewportOverflows();
     }
@@ -133,7 +133,9 @@ class TabBar extends Component {
   }
 
   renderTab = (tab, page) => {
-    const {activeTab, tabBadgeColor} = this.props;
+      console.log("==renderTab=="+page);
+      this.props.callback(page);
+      const {activeTab, tabBadgeColor} = this.props;
     const {label, badge, badgeColor,theLast} = tab;
     const isTabActive = activeTab === page;
     const activeTextColor = this.props.activeTextColor || "navy";
