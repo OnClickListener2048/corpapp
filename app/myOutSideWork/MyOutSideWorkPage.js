@@ -4,7 +4,7 @@
  */
 
 import React,{Component}from 'react';
-import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,DeviceEventEmitter,ListView,} from "react-native";
+import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,Platform,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 import {loadOutSourceCount} from "../apis/outSource";
 import BComponent from "../base";
@@ -221,7 +221,7 @@ export default class MyOutSideWorkPage extends BComponent{
             // locked={true}
             renderTabBar={() => <TabBar
                 // underlineColor={'#FF0000'}
-                underlineColor={'transparent'}
+                underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
                                         // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
         >
