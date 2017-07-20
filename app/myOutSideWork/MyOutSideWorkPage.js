@@ -190,7 +190,7 @@ export default class MyOutSideWorkPage extends BComponent{
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
                     <TouchableOpacity onPress={() => {this._loadCount(true)}}>
                         <NoMessage
-                            textContent='网络异常'
+                            textContent='网络错误,点击重新开始'
                             active={require('../img/network_error.png')}/>
                     </TouchableOpacity>
                 </View>

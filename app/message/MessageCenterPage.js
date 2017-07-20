@@ -87,6 +87,7 @@ export default class MessageCenterPage extends Component {
         // console.log('ApplicationCenterPage event.type', event.type);
         if(event.id==='willAppear'){
             this.isJumping = false;
+
         }
     }
 
@@ -183,6 +184,7 @@ export default class MessageCenterPage extends Component {
 
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
+            this.setState({isRefreshing: false});
             return;
         }
 
@@ -627,7 +629,7 @@ export default class MessageCenterPage extends Component {
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
-                            textContent='网络异常'
+                            textContent='网络错误,点击重新开始'
                             active={require('../img/network_error.png')}/>
                     </View>
                 </TouchableOpacity>

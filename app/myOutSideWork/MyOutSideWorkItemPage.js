@@ -88,10 +88,17 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadList(){
+
         if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
+            this.setState({
+                isNoNetwork:true,
+            });
             return;
         }
+        this.setState({
+            isNoNetwork:false,
+        });
+
 
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
@@ -148,16 +155,11 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadAgainList(){
-
         if(!NetInfoSingleton.isConnected) {
-            this.setState({
-                isNoNetwork:true,
-            });
+            Toast.show('暂无网络' );
+            this.setState({isRefreshing: false});
             return;
         }
-        this.setState({
-            isNoNetwork:false,
-        });
 
         let taskType = this.props.label==null?'all':this.props.label;
         this.setState({isRefreshing: true});
@@ -336,7 +338,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                 <TouchableOpacity onPress={() => {this._loadAgainList()}}>
                     <NoMessage
-                        textContent='网络异常'
+                        textContent='网络错误,点击重新开始'
                         active={require('../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
