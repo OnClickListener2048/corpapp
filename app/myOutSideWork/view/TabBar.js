@@ -1,5 +1,5 @@
 'use strict';
-
+// https://github.com/Slowyn/react-native-underline-tabbar
 import React, { Component, PropTypes } from 'react';
 import {
     StyleSheet,
