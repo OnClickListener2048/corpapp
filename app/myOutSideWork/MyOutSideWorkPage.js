@@ -220,7 +220,7 @@ export default class MyOutSideWorkPage extends BComponent{
             tabBarActiveTextColor="#FF0000"
             // locked={true}
             renderTabBar={() => <TabBar
-                underlineColor={'#FF0000'}
+                underlineColor={'transparent'}
                 // underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
                                         // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
