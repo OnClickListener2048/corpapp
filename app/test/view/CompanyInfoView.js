@@ -83,6 +83,7 @@ export default class CompanyInfoView extends React.Component {
     }
 
     componentWillReceiveProps(props) {
+
         if(this.state.isRefresh===true){
             console.log("....."+this.state.isRefresh);
             this.setState({isRefresh : false,
@@ -136,7 +137,7 @@ export default class CompanyInfoView extends React.Component {
                                     height: 20,
                                     color: '#323232',
                                     marginRight: 60
-                                }] }>{companyName}</Text>}
+                                }] }>{this.state.companyName}</Text>}
 
 
                         </View>
@@ -175,7 +176,7 @@ export default class CompanyInfoView extends React.Component {
                                     marginLeft: 2.5,
                                     marginRight: 0,
                                     color: '#323232'
-                                }] }>{ContactsName}</Text>}
+                                }] }>{this.state.ContactsName}</Text>}
 
                         </View>
                     <View
@@ -213,7 +214,7 @@ export default class CompanyInfoView extends React.Component {
                                         padding: 4,
                                         flex:1,
                                         fontSize: 15,
-                                        color:'#323232',}] }>{ContactsPhone}</Text>
+                                        color:'#323232',}] }>{this.state.ContactsPhone}</Text>
 
                         </View>}
                         {this.props.isFocusData===true||ContactsPhone.includes('*')?
