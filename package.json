@@ -18,7 +18,7 @@
     "react-native-animatable": "^1.1.0",
     "react-native-blur": "^2.0.0",
     "react-native-device-info": "^0.10.2",
-    "react-native-image-crop-picker": "latest",
+    "react-native-image-crop-picker": "github:pilipa-cn/react-native-image-crop-picker",
     "react-native-modal-datetime-picker": "latest",
     "react-native-navigation": "github:pilipa-cn/react-native-navigation",
     "react-native-parabolic": "^1.1.1",
