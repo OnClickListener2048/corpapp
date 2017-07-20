@@ -1015,7 +1015,7 @@ export default class GetLicensePage extends BComponent {
 
                 <TextInputView
                 textName={'法       人：'}
-                inputWidth={{width: 75}}
+                inputWidth={{width: 80}}
                 winWidth={{width: SCREEN_WIDTH - 110}}
                 callback={this._callbacklegal.bind(this)}
                 content={this.state.detailObj.legalEntity}
@@ -1151,7 +1151,7 @@ export default class GetLicensePage extends BComponent {
                 </View>
 
                 <View style={[styles.identityCardPhoto, {height: 150}]}>
-                        <Text style={{marginLeft: 20, fontSize: 15, marginTop: 20}}>经营执照：</Text>
+                        <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20}}>经营执照：</Text>
 
                         {this.state.editables === true ?
                         <TouchableOpacity onPress={() => {
