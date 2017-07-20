@@ -183,6 +183,19 @@ export default class MyOutSideWorkPage extends BComponent{
     _closepull(page){
         if(page===2){
             console.log("==关闭下拉刷新==");
+
+            if(this.refs.toDo) {
+                this.refs.toDo.setEndLoading();
+            }
+
+            if(this.refs.doing) {
+                this.refs.doing.setEndLoading();
+            }
+
+            if(this.refs.done) {
+                this.refs.done.setEndLoading();
+            }
+
         }
     }
 
