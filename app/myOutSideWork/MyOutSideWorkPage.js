@@ -4,7 +4,7 @@
  */
 
 import React,{Component}from 'react';
-import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,DeviceEventEmitter,ListView,} from "react-native";
+import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,Platform,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 import {loadOutSourceCount} from "../apis/outSource";
 import BComponent from "../base";
@@ -180,9 +180,9 @@ export default class MyOutSideWorkPage extends BComponent{
 
     }
 
-    _closepull(page){
-        if(page===2){
-            console.log("==关闭下拉刷新==");
+    // _closepull(page){
+        // if(page===2){
+        //     console.log("==关闭下拉刷新==");
 
             // if(this.refs.toDo) {
             //     this.refs.toDo.setEndLoading();
@@ -196,8 +196,8 @@ export default class MyOutSideWorkPage extends BComponent{
             //     this.refs.done.setEndLoading();
             // }
 
-        }
-    }
+    //     }
+    // }
 
 
     _renderScrollView(){
@@ -218,8 +218,11 @@ export default class MyOutSideWorkPage extends BComponent{
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
-            renderTabBar={() => <TabBar underlineColor={'#FF0000'}
-                                        callback={this._closepull.bind(this)}
+            // locked={true}
+            renderTabBar={() => <TabBar
+                // underlineColor={'#FF0000'}
+                underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
+                                        // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
         >
             {/*
