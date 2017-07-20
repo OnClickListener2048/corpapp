@@ -46,7 +46,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
         this._loadAgainList = this._loadAgainList.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this.setRefresh = this.setRefresh.bind(this);
-        this.setEndLoading = this.setEndLoading.bind(this);
+        // this.setEndLoading = this.setEndLoading.bind(this);
 
     }
 
@@ -70,12 +70,12 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
     }
 
-    setEndLoading(){
-        this.setState({isRefreshing: false});
-        console.log("这里这里这里");
-
-
-    }
+    // setEndLoading(){
+    //     this.setState({isRefreshing: false});
+    //     console.log("这里这里这里");
+    //
+    //
+    // }
 
     //将ID传值给父组件
     _press(statusId) {
