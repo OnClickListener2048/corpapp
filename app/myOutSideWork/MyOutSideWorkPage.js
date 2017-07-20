@@ -218,8 +218,10 @@ export default class MyOutSideWorkPage extends BComponent{
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
-            locked={true}
-            renderTabBar={() => <TabBar underlineColor={'#FF0000'}
+            // locked={true}
+            renderTabBar={() => <TabBar
+                // underlineColor={'#FF0000'}
+                underlineColor={'transparent'}
                                         // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
         >
