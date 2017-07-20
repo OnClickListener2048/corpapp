@@ -15,7 +15,27 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import '../util/NetInfoSingleton';
 
-var HTTPBase = {};
+let HTTPBase = {};
+
+let oldFetchfn = fetch; //拦截原始的fetch方法
+
+const timeout = 5000;// 5秒请求超时
+HTTPBase._fetch = function(input, opts) {//定义新的fetch方法，封装原有的fetch方法, 支持超时
+    let fetchPromise = oldFetchfn(input, opts);
+
+    if(opts.timeout === undefined) {
+        opts.timeout = timeout;
+    }
+
+    let timeoutPromise = new Promise(function(resolve, reject){
+        setTimeout(()=>{
+            console.log("HTTPBase._fetch() 请求超时!");
+            reject({'code':  '408', 'msg':  '网络请求超时'});
+        }, opts.timeout)
+    });
+
+    return Promise.race([fetchPromise, timeoutPromise]);
+};
 
 /**
  * 支持报文校验处理的GET请求.
@@ -101,7 +121,7 @@ HTTPBase.get = async function (url, params= {}, headers= null) {
     }
 
     console.log(new Date().toString() + "======> ", url, "\n");
-    let response = await  fetch(url, {
+    let response = await  this._fetch(url, {
         method:'GET',
         headers:this._commonHeaders(headers)
     });
@@ -156,7 +176,7 @@ HTTPBase.post = async function (url, params= {}, headers= null) {
 
     let start = new Date().getTime();
     console.log( "======> POST " + new Date() , " ", url, "params", formData, "\n");
-    let response = await fetch(url, {
+    let response = await this._fetch(url, {
         method:'POST',
         headers:this._commonHeaders(headers),
         body:formData,

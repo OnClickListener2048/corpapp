@@ -27,11 +27,11 @@
 
 @implementation AppDelegate
 
-static BOOL isProduction = false;  //填写isProdurion  平时测试时为false ，生产时填写true
+static BOOL isProduction = true;  //填写isProdurion  平时测试时为false ，生产时填写 true
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  /** 极光推送, 暂时没有证书, 忽略. */
+  /** 极光推送 */
   
   if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
@@ -62,14 +62,14 @@ static BOOL isProduction = false;  //填写isProdurion  平时测试时为false 
    jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
    */
   NSURL *jsCodeLocation;
+
 #ifdef DEBUG
-  //  jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
 #else
   jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
 #endif
   
-//  jsCodeLoc ation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+//  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
   
   // **********************************************
   // *** DON'T MISS: 启动App的方式发生了改变! *****

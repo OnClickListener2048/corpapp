@@ -149,7 +149,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
                 }
                 console.log("获取失败" , e);
-                Toast.show('获取失败',JSON.stringify(e));
+                Toast.show('获取失败' + e.msg);
             },
         );
     }
