@@ -180,9 +180,9 @@ export default class MyOutSideWorkPage extends BComponent{
 
     }
 
-    _closepull(page){
-        if(page===2){
-            console.log("==关闭下拉刷新==");
+    // _closepull(page){
+        // if(page===2){
+        //     console.log("==关闭下拉刷新==");
 
             // if(this.refs.toDo) {
             //     this.refs.toDo.setEndLoading();
@@ -196,8 +196,8 @@ export default class MyOutSideWorkPage extends BComponent{
             //     this.refs.done.setEndLoading();
             // }
 
-        }
-    }
+    //     }
+    // }
 
 
     _renderScrollView(){
@@ -218,8 +218,9 @@ export default class MyOutSideWorkPage extends BComponent{
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
+            locked={true}
             renderTabBar={() => <TabBar underlineColor={'#FF0000'}
-                                        callback={this._closepull.bind(this)}
+                                        // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 18}}/>}
         >
             {/*

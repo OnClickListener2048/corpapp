@@ -134,7 +134,7 @@ class TabBar extends Component {
 
   renderTab = (tab, page) => {
       console.log("==renderTab=="+page);
-      this.props.callback(page);
+      // this.props.callback(page);
       const {activeTab, tabBadgeColor} = this.props;
     const {label, badge, badgeColor,theLast} = tab;
     const isTabActive = activeTab === page;
