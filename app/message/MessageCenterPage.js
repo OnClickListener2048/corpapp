@@ -71,8 +71,7 @@ export default class MessageCenterPage extends Component {
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
-
+        this._initJPush = this._initJPush.bind(this);
     }
 
     static navigatorStyle = {
@@ -389,12 +388,17 @@ export default class MessageCenterPage extends Component {
         this.subscriptionLogin = DeviceEventEmitter.addListener('loginSuccess', (data)=>{
             console.log('我的消息 loginSuccess');
             try {
+                this._initJPush();// 确保登录时会重新绑定
                 this._loadInitData();
             } catch(e) {
                 console.log(e + "");
             }
         });
 
+        this._initJPush();
+    }
+
+    _initJPush() {
         try {
             JPushModule.getRegistrationID((registrationId) => {
                 console.log("Device register succeed, registrationId " + registrationId);
