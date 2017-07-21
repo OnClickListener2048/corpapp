@@ -54,9 +54,14 @@ export default class CompanyInfoView extends React.Component {
 
     _callPhone(phoneNumber) {
 
-        if (phoneNumber.includes('*')) {
+        if ( phoneNumber === null || phoneNumber === undefined){
+            console.log("phoneNumber是空");
             return;
-        } else {
+
+        }else if (phoneNumber.includes('*')) {
+            return;
+        }
+        else if (phoneNumber.length > 0 &&   ((phoneNumber.match(/^([0-9]{11})?$/)) !== null)){
             return Linking.openURL('tel:' + phoneNumber);
         }
 
