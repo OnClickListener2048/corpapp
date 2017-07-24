@@ -17,10 +17,7 @@ import {
     TextInput,
     InteractionManager
 } from 'react-native';
-import ImageLoad from "../../view/ImageLoad";
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
-import ImageZoom from "react-native-image-pan-zoom";
-import AlertPhotoModal from "../../view/AlertPhotoModal";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -85,48 +82,48 @@ export default class WatchImageModal extends Component{
 
         {/*<ImageLoad onPress={this.close} resizeMode={'contain'} isWatch={true} style={{ marginTop: 0, justifyContent: 'center', alignItems: 'center',height: SCREEN_HEIGHT, width: SCREEN_WIDTH }} source={{ uri:this.state.imageUrl+""}}/>*/}
 
-        console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible);
-        return(
+        console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible+images[0].url);
+                return (
 
 
-            <Modal
-                animationType='fade'//进场动画 fade
-                onRequestClose={() => this.close()}
-                visible={this.state.visible}//是否可见
-                transparent={true} //背景透明
+                    <Modal
+                        animationType='fade'//进场动画 fade
+                        onRequestClose={() => this.close()}
+                        visible={this.state.visible}//是否可见
+                        transparent={true} //背景透明
 
-            >
-                <View style={styles.titlelayout}>
-                    <TouchableOpacity onPress={() => {
-                        this.close()
-                    }}style={{width:50,height:40,alignItems: 'center',justifyContent: 'center'}}>
-                        <Image source={require('../../img/left.png')}/>
-                    </TouchableOpacity>
-                    <Text style={{fontSize:20, textAlign:'center',alignItems:'center',alignSelf:'center',justifyContent: 'center',color:'#323232'}}>{this.props.titleName}</Text>
+                    >
+                        <View style={styles.titlelayout}>
+                            <TouchableOpacity onPress={() => {
+                                this.close()
+                            }} style={{width: 50, height: 40, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={require('../../img/left.png')}/>
+                            </TouchableOpacity>
+                            <Text style={{
+                                fontSize: 20,
+                                textAlign: 'center',
+                                alignItems: 'center',
+                                alignSelf: 'center',
+                                justifyContent: 'center',
+                                color: '#323232'
+                            }}>{this.props.titleName}</Text>
 
-                    <TouchableOpacity onPress={() => {
-                        this.alertModal()
-                    }}style={{width:50,height:40,alignItems: 'center',justifyContent: 'center'}}>
-                        <Image source={require('../../img/more_icon.png')}/>
+                            <TouchableOpacity onPress={() => {
+                                this.alertModal()
+                            }} style={{width: 50, height: 40, alignItems: 'center', justifyContent: 'center'}}>
+                                <Image source={require('../../img/more_icon.png')}/>
 
-                    </TouchableOpacity>
-                </View>
+                            </TouchableOpacity>
+                        </View>
 
-                <TouchableOpacity style={{flex:1}} activeOpacity={1}
-                >
-                    <ImageViewer imageUrls={images}
-                                 isShowMenu={this.state.isShowMenu}
-                                 callback={this._callbackPhoto.bind(this)}/>
-                    {/*<Image cropWidth={SCREEN_WIDTH}*/}
-                               {/*cropHeight={SCREEN_HEIGHT}*/}
-                               {/*imageWidth={200}*/}
-                               {/*imageHeight={200}>*/}
-                        {/*<Image style={{width:200, height:200}}*/}
-                               {/*source={{uri:'https://qd.pilipa.cn/FileUploads/Order/BusinessLicense/201707/BodyPart_d94e7986-98d6-47bb-ad5b-042c64962b42.jpg'}}/>*/}
-                    {/*</Image>*/}
-                </TouchableOpacity>
-            </Modal>
-        )
+                        <TouchableOpacity style={{flex: 1}} activeOpacity={1}
+                        >
+                            <ImageViewer imageUrls={images}
+                                         isShowMenu={this.state.isShowMenu}
+                                         callback={this._callbackPhoto.bind(this)}/>
+                        </TouchableOpacity>
+                    </Modal>
+                )
     }
 }
 const styles = StyleSheet.create({
