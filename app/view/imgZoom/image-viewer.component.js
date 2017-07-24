@@ -38,8 +38,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({isShowMenu: props.isShowMenu,
-        image:props.image});
+        this.setState({isShowMenu: props.isShowMenu,});
     }
 
     init(nextProps) {
@@ -93,6 +92,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             return;
         }
         if (this.state.imageSizes[index].width > 0 && this.state.imageSizes[index].height > 0) {
+            console.log("==成功==success>>>>000");
             imageStatus.status = 'success';
             saveImageSize();
             return;
@@ -108,10 +108,12 @@ let ImageViewer = class ImageViewer extends React.Component {
             prefetchImagePromise.then(() => {
                 imageLoaded = true;
                 if (sizeLoaded) {
+                    console.log("==成功==success---");
                     imageStatus.status = 'success';
                     saveImageSize();
                 }
             }, () => {
+                console.log("==失败==fail"+image.url);
                 imageStatus.status = 'fail';
                 saveImageSize();
             });
@@ -120,6 +122,7 @@ let ImageViewer = class ImageViewer extends React.Component {
                 imageStatus.width = image.width;
                 imageStatus.height = image.height;
                 if (imageLoaded) {
+                    console.log("==成功==success==");
                     imageStatus.status = 'success';
                     saveImageSize();
                 }
@@ -130,10 +133,12 @@ let ImageViewer = class ImageViewer extends React.Component {
                     imageStatus.width = width;
                     imageStatus.height = height;
                     if (imageLoaded) {
+                        console.log("==成功==success");
                         imageStatus.status = 'success';
                         saveImageSize();
                     }
                 }, (error) => {
+                    console.log("==失败==error");
                     imageStatus.status = 'fail';
                     saveImageSize();
                 });
@@ -263,12 +268,18 @@ let ImageViewer = class ImageViewer extends React.Component {
     getContent() {
         const screenWidth = this.width;
         const screenHeight = this.height;
+        console.log("图片显示=--");
         const ImageElements = this.props.imageUrls.map((image, index) => {
+
             // let width = this.state.imageSizes[index] && this.state.imageSizes[index].width;
             // let height = this.state.imageSizes[index] && this.state.imageSizes[index].height;
             let width = SCREEN_WIDTH;
             let height = SCREEN_HEIGHT-68;
             const imageInfo = this.state.imageSizes[index];
+            console.log("图片显示="+image.url+",,"+imageInfo.status+",,"+this.props.enableImageZoom);
+            if(image.url!=null&&imageInfo.status !== 'success'){
+                imageInfo.status = 'success';
+            }
             // if (width > screenWidth) {
             //     const widthPixel = screenWidth / width;
             //     width *= widthPixel;
@@ -280,6 +291,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             //     height *= HeightPixel;
             // }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
+                console.log("图片显示=成功="+image.url);
                 return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
                         style: this.styles.modalContainer,
                         cropWidth: this.width,
