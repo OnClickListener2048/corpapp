@@ -42,12 +42,12 @@ export default class AlertPhotoModal extends Component{
 
     pickSingle=()=> {
         ImagePicker.openPicker({
-            width: 300,
-            height: 300,
+            width: 720,
+            height: 1280,
             cropping: false,
             cropperCircleOverlay: false,
-            compressImageMaxWidth: 640,
-            compressImageMaxHeight: 480,
+            compressImageMaxWidth: 720,
+            compressImageMaxHeight: 1280,
             compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',
@@ -75,11 +75,11 @@ export default class AlertPhotoModal extends Component{
     pickSingleWithCamera=()=> {
         ImagePicker.openCamera({
             cropping: false,
-            width: 500,
-            height: 500,
+            width: 720,
+            height: 1280,
             cropperCircleOverlay: false,
-            compressImageMaxWidth: 640,
-            compressImageMaxHeight: 480,
+            compressImageMaxWidth: 720,
+            compressImageMaxHeight: 1280,
             compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',

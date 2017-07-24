@@ -6,12 +6,13 @@ exports.default = (width, height) => {
             backgroundColor: '#000',
             justifyContent: 'center',
             alignItems: 'center',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            alignSelf:'center',
         },
         watchOrigin: {
             position: 'absolute',
             width: width,
-            bottom: 20,
+            // bottom: 20,
             justifyContent: 'center',
             alignItems: 'center'
         },
@@ -29,7 +30,10 @@ exports.default = (width, height) => {
             color: 'white',
             backgroundColor: 'transparent'
         },
-        imageStyle: {},
+        imageStyle: {
+            flex: 1,
+            resizeMode:'contain',
+        },
         container: {
             backgroundColor: 'black'
         },
@@ -145,7 +149,7 @@ exports.simpleStyle = {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 38,
+        // top: 38,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: 'transparent'

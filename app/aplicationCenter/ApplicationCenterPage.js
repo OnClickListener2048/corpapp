@@ -5,7 +5,6 @@ import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity,
     DeviceEventEmitter,
     InteractionManager,Platform} from 'react-native';
-
 import {loadOutSourceCount} from "../apis/outSource";
 import {
     Text,

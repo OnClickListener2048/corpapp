@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import ImageLoad from "../../view/ImageLoad";
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
+import ImageZoom from "react-native-image-pan-zoom";
 import AlertPhotoModal from "../../view/AlertPhotoModal";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
@@ -116,6 +117,13 @@ export default class WatchImageModal extends Component{
                     <ImageViewer imageUrls={images}
                                  isShowMenu={this.state.isShowMenu}
                                  callback={this._callbackPhoto.bind(this)}/>
+                    {/*<Image cropWidth={SCREEN_WIDTH}*/}
+                               {/*cropHeight={SCREEN_HEIGHT}*/}
+                               {/*imageWidth={200}*/}
+                               {/*imageHeight={200}>*/}
+                        {/*<Image style={{width:200, height:200}}*/}
+                               {/*source={{uri:'https://qd.pilipa.cn/FileUploads/Order/BusinessLicense/201707/BodyPart_d94e7986-98d6-47bb-ad5b-042c64962b42.jpg'}}/>*/}
+                    {/*</Image>*/}
                 </TouchableOpacity>
             </Modal>
         )

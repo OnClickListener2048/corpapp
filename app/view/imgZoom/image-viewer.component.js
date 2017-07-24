@@ -14,6 +14,9 @@ const react_native_image_pan_zoom_1 = require("react-native-image-pan-zoom");
 const image_viewer_style_1 = require("./image-viewer.style");
 import ImagePicker from "react-native-image-crop-picker"
 const Toast = require("react-native-root-toast");
+const window = react_native_1.Dimensions.get('window');
+export const SCREEN_HEIGHT = window.height;
+export const SCREEN_WIDTH = window.width;
 let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
@@ -260,19 +263,21 @@ let ImageViewer = class ImageViewer extends React.Component {
         const screenWidth = this.width;
         const screenHeight = this.height;
         const ImageElements = this.props.imageUrls.map((image, index) => {
-            let width = this.state.imageSizes[index] && this.state.imageSizes[index].width;
-            let height = this.state.imageSizes[index] && this.state.imageSizes[index].height;
+            // let width = this.state.imageSizes[index] && this.state.imageSizes[index].width;
+            // let height = this.state.imageSizes[index] && this.state.imageSizes[index].height;
+            let width = SCREEN_WIDTH;
+            let height = SCREEN_HEIGHT-68;
             const imageInfo = this.state.imageSizes[index];
-            if (width > screenWidth) {
-                const widthPixel = screenWidth / width;
-                width *= widthPixel;
-                height *= widthPixel;
-            }
-            if (height > screenHeight) {
-                const HeightPixel = screenHeight / height;
-                width *= HeightPixel;
-                height *= HeightPixel;
-            }
+            // if (width > screenWidth) {
+            //     const widthPixel = screenWidth / width;
+            //     width *= widthPixel;
+            //     height *= widthPixel;
+            // }
+            // if (height > screenHeight) {
+            //     const HeightPixel = screenHeight / height;
+            //     width *= HeightPixel;
+            //     height *= HeightPixel;
+            // }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
                 return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
                         style: this.styles.modalContainer,
@@ -328,7 +333,8 @@ let ImageViewer = class ImageViewer extends React.Component {
                 React.createElement(react_native_1.View, { style: this.styles.watchOrigin },
                     React.createElement(react_native_1.TouchableOpacity, { style: this.styles.watchOriginTouchable },
                         React.createElement(react_native_1.Text, { style: this.styles.watchOriginText }, "\u67E5\u770B\u539F\u56FE(2M)"))),
-            this.props.renderFooter(this.state.currentShowIndex)));
+            this.props.renderFooter(this.state.currentShowIndex)
+        ));
     }
     saveToLocal() {
         if (!this.props.onSave) {
@@ -345,11 +351,11 @@ let ImageViewer = class ImageViewer extends React.Component {
     pickSingleWithCamera=()=> {
         ImagePicker.openCamera({
             cropping: false,
-            width: 500,
-            height: 500,
+            width: 720,
+            height: 1280,
             cropperCircleOverlay: false,
-            compressImageMaxWidth: 640,
-            compressImageMaxHeight: 480,
+            compressImageMaxWidth: 720,
+            compressImageMaxHeight: 1280,
             compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',
@@ -385,12 +391,12 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
     pickSingle=()=> {
         ImagePicker.openPicker({
-            width: 300,
-            height: 300,
+            width: 720,
+            height: 1280,
             cropping: false,
             cropperCircleOverlay: false,
-            compressImageMaxWidth: 640,
-            compressImageMaxHeight: 480,
+            compressImageMaxWidth: 720,
+            compressImageMaxHeight: 1280,
             compressImageQuality: 0.8,
             compressVideoPreset: 'MediumQuality',
             mediaType:'photo',
