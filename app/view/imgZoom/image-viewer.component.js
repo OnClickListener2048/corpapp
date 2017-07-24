@@ -38,7 +38,8 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({isShowMenu: props.isShowMenu,});
+        this.setState({isShowMenu: props.isShowMenu,
+        image:props.image});
     }
 
     init(nextProps) {
