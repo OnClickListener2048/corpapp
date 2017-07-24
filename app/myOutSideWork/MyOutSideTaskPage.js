@@ -111,10 +111,10 @@ _loadData() {
                 let msg = e.msg;
                 if(msg !== undefined) {
                     BAlert.alert(msg);
-                    Toast.show(JSON.stringify(msg));
+                    Toast.show(msg);
 
                 } else {
-                    Toast.show(JSON.stringify(e));
+                    Toast.show("获取失败");
                 }
 
             },

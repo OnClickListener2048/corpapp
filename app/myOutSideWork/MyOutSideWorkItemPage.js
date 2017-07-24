@@ -211,7 +211,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 // 关闭刷新动画
                 this.setState({isRefreshing: false});
                 console.log("获取失败" , e);
-                Toast.show('获取失败',JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
@@ -272,7 +272,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 // 关闭刷新动画
                 this.isLoading = false;
                 console.log("获取失败" , e);
-                Toast.show('获取失败',JSON.stringify(e));
+                Toast.show('获取失败');
             },
         );
     }
