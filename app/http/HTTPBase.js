@@ -66,7 +66,7 @@ HTTPBase.getEx = async function (url, params, headers) {
 HTTPBase.postEx = async function (url, params= {}, headers= null) {
     if(!NetInfoSingleton.isConnected) {
         return Promise.reject(
-        {'code':  '4009', 'msg':  '网络错误（错误代码：4009）'}
+        {'code':  '4009', 'msg':  ' 网络错误'}//（错误代码：4009）
         );
     }
 
