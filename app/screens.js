@@ -21,11 +21,13 @@ import Settings from "./pilipaMain/my/Settings";
 import NoMessage from "./test/NoMessage";
 import DataTimerView from "./view/DataTimerView";
 import AreaPicker from "../picker_demo";
+import ImageZoomTest from "../picker_demo/ImageZoomTest";
 import MultiTextInputPage from "./getLicense/view/MultiTextInputPage";
 
 export default function () {
     let reg = Navigation.registerComponent;
     reg('AreaPicker', () => AreaPicker);
+    reg('demo/ImageZoom', () => ImageZoomTest);
     reg('Main', () => Main);
     reg('user.LoginPage', () => LoginPage);
     reg('main.LaunchPage', () => LaunchPage);

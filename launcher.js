@@ -14,8 +14,8 @@ navToMainTab();
 
 // Navigation.startSingleScreenApp({
 //     screen: {
-//         screen: 'AreaPicker',
-//         title: '选择器',
+//         screen: 'demo/ImageZoom',
+//         title: '图片缩放',
 //     },
 //     portraitOnlyMode: true,
 // });
