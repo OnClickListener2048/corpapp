@@ -30,7 +30,7 @@ HTTPBase._fetch = function(input, opts) {//定义新的fetch方法，封装原�
     let timeoutPromise = new Promise(function(resolve, reject){
         setTimeout(()=>{
             console.log("HTTPBase._fetch() 请求超时!");
-            reject({'code':  '408', 'msg':  '网络请求超时'});
+            reject({'code':  '408', 'msg':  '暂无网络'});
         }, opts.timeout)
     });
 
