@@ -967,7 +967,7 @@ export default class GetLicensePage extends BComponent {
 
     render() {
         return(
-            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData}>
+            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData()}>
 
                 <View style={styles.container}>
 
