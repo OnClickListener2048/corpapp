@@ -5,6 +5,7 @@
  */
 
 import React, {Component} from 'react';
+import NoMessage from '../test/NoMessage';
 
 /**
  * 用法:
@@ -34,6 +35,11 @@ export default class BComponent extends Component {
 
             this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         }
+
+        this._noNetWorkPageClick = this._noNetWorkPageClick.bind(this);
+        this._renderNetWorkView = this._renderNetWorkView.bind(this);
+
+
     }
 
     // 子类请继承此方法, 不要忘了调用super.onNavigatorEvent(event);
@@ -45,6 +51,27 @@ export default class BComponent extends Component {
             if (id === 'goBack') {
                 this.props.navigator.pop();
             }
+        }
+    }
+
+    _noNetWorkPageClick(){
+
+    }
+
+    _renderNetWorkView() {
+        console.log("父类" + NetInfoSingleton.isConnected);
+
+        if (!NetInfoSingleton.isConnected) {      // 无网络
+            return(
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._noNetWorkPageClick()}}>
+
+                    <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                        <NoMessage
+                            textContent='网络错误,点击重新开始'
+                            active={require('../img/network_error.png')}/>
+                    </View>
+                </TouchableOpacity>
+            );
         }
     }
 }
