@@ -23,6 +23,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from "../test/NoMessage";
 import Toast from 'react-native-root-toast';
 import BComponent from "../base";
+import NoNetView from "../base/NoNetView";
 
 export default class MyOutSideTaskPage extends BComponent{
     static navigatorStyle = {
@@ -235,9 +236,12 @@ _loadData() {
 
     render() {
         return(
+            <NoNetView  onClick={() => this._loadData()}>
+
             <View style={styles.container}>
                 {this.renderScrollView()}
             </View>
+            </NoNetView>
         );
     }
 
