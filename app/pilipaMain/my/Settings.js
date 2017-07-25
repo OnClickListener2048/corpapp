@@ -24,6 +24,7 @@ import settingStyles from './css/SettingsPageStyle';
 import BComponent from '../../base';
 import Alert from "../../modules/react-native-alert";
 import NoNetView from "../../base/NoNetView";
+import NoNetEmptyView from "../../base/NoNetEmptyView";
 
 export default class Settings extends BComponent {
     static navigatorStyle = {
@@ -66,9 +67,8 @@ export default class Settings extends BComponent {
 
     render() {
         return (
-            <NoNetView errorText="网断了..." onClick={() => Toast.show("点击重新加载...")}>
                 <View style={styles.container}>
-
+                    <NoNetEmptyView onClick={() => Toast.show("网络恢复重新加载...")} />
                     <View style={styles.topContainer}>
                         {/*   旧手机号*/}
                         {!this.state.bindNewMobile &&
@@ -185,8 +185,6 @@ export default class Settings extends BComponent {
                     </View>
 
                 </View>
-
-            </NoNetView>
         );
     }
 
