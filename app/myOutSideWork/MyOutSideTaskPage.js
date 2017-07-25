@@ -23,6 +23,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from "../test/NoMessage";
 import Toast from 'react-native-root-toast';
 import BComponent from "../base";
+import NoNetView from "../base/NoNetView";
 
 export default class MyOutSideTaskPage extends BComponent{
     static navigatorStyle = {
@@ -88,6 +89,7 @@ _loadData() {
 
                     this.stepsArr = this.stepsArr.concat(responseData.data.steps);
                     this.setState({
+                        faild : false,
                         loaded:true,
                     });
                     this.props.navigator.setTitle({
@@ -104,6 +106,7 @@ _loadData() {
                 SActivityIndicator.hide(this.loading);
 
                 this.setState({
+                    loaded : true,
                     faild:true,
                 });
                 console.log("获取失败" , e);
@@ -188,7 +191,6 @@ _loadData() {
     }
 
     renderScrollView() {
-        console.log( '点击renderScrollView');
 
         if (this.state.loaded === false) {      // 无数据
             return(
@@ -235,9 +237,12 @@ _loadData() {
 
     render() {
         return(
+            <NoNetView  onClick={() => this._loadData()}>
+
             <View style={styles.container}>
                 {this.renderScrollView()}
             </View>
+            </NoNetView>
         );
     }
 
