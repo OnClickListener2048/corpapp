@@ -27,7 +27,7 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
 /**
  * 用法:
  * import NoNetView from '../../base/NoNetView';
- * <NoNetView onClick= {点击处理事件}>
+ * <NoNetView onClick= {点击处理事件} errorText='可设置的提示文案'>
  *     <... 原始的view代码>
  *  </NoNetView>
  */
@@ -35,6 +35,7 @@ export default class NoNetView extends Component {
     static propTypes = {
         style: PropTypes.object, // 样式, 可选
         onClick: PropTypes.func,// 点击事件
+        errorText: PropTypes.string,// 失败文案, 可选
     };
 
     constructor(props) {
@@ -58,14 +59,17 @@ export default class NoNetView extends Component {
 
     render() {
         console.log("NoNetView" + this.state.isConnected);
-        const {onClick, style} = this.props;
+        let {onClick, style, errorText} = this.props;
+        if(errorText === undefined) {
+            errorText = '网络错误,点击重新开始';
+        }
         if (!this.state.isConnected) {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}}
-                                  onPress={() => { if(onClick !== null){ onClick(); } }}>
+                                  onPress={() => { if(onClick !== undefined){ onClick(); } }}>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
-                            textContent='网络错误,点击重新开始'
+                            textContent={errorText}
                             active={require('../img/network_error.png')}/>
                     </View>
                 </TouchableOpacity>
