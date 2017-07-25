@@ -30,7 +30,7 @@ HTTPBase._fetch = function(input, opts) {//定义新的fetch方法，封装原�
     let timeoutPromise = new Promise(function(resolve, reject){
         setTimeout(()=>{
             console.log("HTTPBase._fetch() 请求超时!");
-            reject({'code':  '408', 'msg':  '网络请求超时'});
+            reject({'code':  '408', 'msg':  '暂无网络'});
         }, opts.timeout)
     });
 
@@ -66,7 +66,7 @@ HTTPBase.getEx = async function (url, params, headers) {
 HTTPBase.postEx = async function (url, params= {}, headers= null) {
     if(!NetInfoSingleton.isConnected) {
         return Promise.reject(
-        {'code':  '4009', 'msg':  '网络错误（错误代码：4009）'}
+        {'code':  '4009', 'msg':  ' 网络错误'}//（错误代码：4009）
         );
     }
 

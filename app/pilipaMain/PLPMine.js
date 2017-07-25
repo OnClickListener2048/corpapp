@@ -99,7 +99,7 @@ export default class PLPMine extends Component {
                     this._goSettings()
                 }}>
                     <View style={styles.settingview}>
-                        <Image source={require('../img/set@3x.png')}
+                        <Image source={require('../img/set.png')}
                                style={styles.imgiconview}/>
                         <Text style={styles.listtextstyle}>
                             设置
@@ -114,7 +114,7 @@ export default class PLPMine extends Component {
                     this._goFeedback()
                 }}>
                     <View style={styles.settingview}>
-                        <Image source={require('../img/problem@3x.png')}
+                        <Image source={require('../img/problem.png')}
                                style={styles.imgiconview}/>
                         <Text style={styles.listtextstyle}>
                             问题反馈
@@ -129,7 +129,7 @@ export default class PLPMine extends Component {
                     this._goAbout()
                 }}>
                     <View style={styles.settingview}>
-                        <Image source={require('../img/about@3x.png')}
+                        <Image source={require('../img/about.png')}
                                style={styles.imgiconview}/>
                         <Text style={styles.listtextstyle}>
                             关于噼里啪v{DeviceInfo.getVersion()}
