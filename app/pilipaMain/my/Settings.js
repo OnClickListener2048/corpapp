@@ -4,6 +4,7 @@
 import React, {Component} from 'react';
 
 import {
+    Alert,
     Image,
     StyleSheet,
     Text,
@@ -22,9 +23,8 @@ import * as apis from '../../apis/setting';
 import TimerButton from "../../view/TimerButton";
 import settingStyles from './css/SettingsPageStyle';
 import BComponent from '../../base';
-import Alert from "../../modules/react-native-alert";
-import NoNetView from "../../base/NoNetView";
-import NoNetEmptyView from "../../base/NoNetEmptyView";
+// import Alert from "../../modules/react-native-alert";
+import errorText from '../../util/ErrorMsg';
 
 export default class Settings extends BComponent {
     static navigatorStyle = {
@@ -68,7 +68,6 @@ export default class Settings extends BComponent {
     render() {
         return (
                 <View style={styles.container}>
-                    <NoNetEmptyView onClick={() => Toast.show("网络恢复重新加载...")} />
                     <View style={styles.topContainer}>
                         {/*   旧手机号*/}
                         {!this.state.bindNewMobile &&
@@ -201,7 +200,7 @@ export default class Settings extends BComponent {
                     // Toast.show('测试环境短信验证码 ' + responseData.msg,
                     //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
                 }, (e) => {
-                    Toast.show('短信验证码获取失败');
+                    Toast.show(errorText( e ));
                 }
             );
         }

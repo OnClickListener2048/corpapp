@@ -21,6 +21,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import NoMessage from "../test/NoMessage";
 import NetInfoSingleton from "../util/NetInfoSingleton";
+import errorText from '../util/ErrorMsg';
 
 export default class MyOutSideWorkPage extends BComponent{
 
@@ -59,8 +60,8 @@ export default class MyOutSideWorkPage extends BComponent{
     //点击右按钮
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         super.onNavigatorEvent(event);
-        if (event.type == 'NavBarButtonPress') { // this is the event type for button presses
-            if (event.id == 'edit') { // this is the same id field from the static navigatorButtons definition
+        if (event.type === 'NavBarButtonPress') { // this is the event type for button presses
+            if (event.id === 'edit') { // this is the same id field from the static navigatorButtons definition
                 if (this.state.canClickBtn === false){
                     return;
                 }
@@ -166,7 +167,7 @@ export default class MyOutSideWorkPage extends BComponent{
                 if (needLoding){
                     SActivityIndicator.hide(loading);
                 }                console.log("获取失败" , e);
-                Toast.show('获取失败' + e.msg);
+                Toast.show(errorText(e));
             },
         );
 

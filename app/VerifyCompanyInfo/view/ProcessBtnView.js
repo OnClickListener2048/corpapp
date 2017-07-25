@@ -11,14 +11,12 @@ const window = Dimensions.get('window');
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
 import Toast from 'react-native-root-toast';
+import errorText from '../../util/ErrorMsg';
 
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
-
 class ProcessBtnView extends Component{
-
-
     constructor(props) {
         super(props)
         this.state = {
@@ -77,9 +75,8 @@ class ProcessBtnView extends Component{
             },
             (e) => {
                 console.log("获取失败" , e);
-                Toast.show('获取失败' );// + JSON.stringify(e)
+                Toast.show(errorText( e ));
                 SActivityIndicator.hide(loading);
-
             },
         );
     }

@@ -35,7 +35,7 @@ import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
 import {DEBUG} from '../config';
-import BAlert from "../modules/react-native-alert";
+// import BAlert from "../modules/react-native-alert";
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
@@ -164,9 +164,9 @@ export default class LoginPage extends Component {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
                     if(msg !== undefined) {
-                        BAlert.alert(msg);
+                        Alert.alert(msg);
                     } else {
-                        BAlert.alert('短信验证码获取失败' );
+                        Alert.alert('短信验证码获取失败' );
                     }
                     try {
                         if (e.data !== undefined && e.data.verifyText !== null && e.data.verify !== null) {
@@ -236,7 +236,7 @@ export default class LoginPage extends Component {
                     // }
 
                     if(msg !== undefined) {
-                        BAlert.alert('', msg,
+                        Alert.alert('', msg,
                             [
                                 {
                                     text: '确定',
@@ -296,7 +296,7 @@ export default class LoginPage extends Component {
                 if (errMsg === undefined) {
                     errMsg = '请输入正确的验证码或手机号码';
                 }
-                BAlert.alert('', errMsg,
+                Alert.alert('', errMsg,
                     [
                         {
                             text: '确定',

@@ -2,7 +2,8 @@
  * Created by jinglan on 2017/6/9.
  */
 import React, {Component} from 'react';
-// import React, {} from 'index';
+
+import errorText from '../util/ErrorMsg';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
@@ -46,6 +47,7 @@ export const SCREEN_WIDTH = window.width;
 
 import BComponent from '../base';
 
+/** 消息中心 */
 export default class MessageCenterPage extends BComponent {
 
     constructor(props) {
@@ -177,7 +179,7 @@ export default class MessageCenterPage extends BComponent {
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + e.msg);
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -248,7 +250,7 @@ export default class MessageCenterPage extends BComponent {
                 this.setState({isRefreshing: false});
 
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + e);
+                Toast.show(errorText( e ));
             },
         );
     }

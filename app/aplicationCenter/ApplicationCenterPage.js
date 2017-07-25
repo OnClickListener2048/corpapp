@@ -21,6 +21,9 @@ import Toast from 'react-native-root-toast';
 import ScrollViewTop from "./scrollViewTop";
 
 export const SCREEN_WIDTH = window.width;
+import errorText from '../util/ErrorMsg';
+
+/** 应用 */
 export default class ApplicationCenterPage extends Component{
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
@@ -119,8 +122,8 @@ export default class ApplicationCenterPage extends Component{
             },
             (e) => {
                     // SActivityIndicator.hide(loading);
-                          console.log("获取失败" , e);
-                Toast.show('获取失败' + e.msg);
+                console.log("获取失败" , JSON.stringify(e));
+                Toast.show(errorText( e ));
             },
         );
 

@@ -14,6 +14,7 @@ import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
 import BComponent from "../base";
 import NoNetView from "../base/NoNetView";
+import errorText from '../util/ErrorMsg';
 
 export default class MyOutSideWorkItemPage extends BComponent{
 
@@ -147,7 +148,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
                 }
                 console.log("获取失败" , e);
-                Toast.show('获取失败' + e.msg);
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -200,7 +201,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 // 关闭刷新动画
                 this.setState({isRefreshing: false});
                 console.log("获取失败" , e);
-                Toast.show('获取失败');
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -261,7 +262,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 // 关闭刷新动画
                 this.isLoading = false;
                 console.log("获取失败" , e);
-                Toast.show('获取失败');
+                Toast.show(errorText( e ));
             },
         );
     }

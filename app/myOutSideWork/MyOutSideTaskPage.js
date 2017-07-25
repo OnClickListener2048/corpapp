@@ -110,21 +110,9 @@ _loadData() {
                     faild:true,
                 });
                 console.log("获取失败" , e);
-
-                let msg = e.msg;
-                if(msg !== undefined) {
-                    BAlert.alert(msg);
-                    Toast.show(msg);
-
-                } else {
-                    Toast.show("获取失败");
-                }
-
+                Toast.show(errorText( e ));
             },
         );
-
-
-
     }
 
     componentWillMount() {
@@ -140,11 +128,6 @@ _loadData() {
         } catch (e) {
         }
     }
-
-
-//
-//
-
 
 //跳转客户审核具体信息
     toLicense(stepId){
@@ -180,7 +163,6 @@ _loadData() {
     }
 
     renderCompanyInfoView() {
-
         return  <CompanyInfoView ref="companyInfoView"
                                  companyName= {this.info.corpName}
                                  ContactsName={this.info.contactName}
@@ -191,7 +173,6 @@ _loadData() {
     }
 
     renderScrollView() {
-
         if (this.state.loaded === false) {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
@@ -210,9 +191,7 @@ _loadData() {
             );
         }else{
             console.log( '点击else');
-
             return(
-
                 <ScrollView style={styles.container}>
 
                     {this.renderCompanyInfoView()}
@@ -233,8 +212,6 @@ _loadData() {
         }
     }
 
-
-
     render() {
         return(
             <NoNetView  onClick={() => this._loadData()}>
@@ -245,6 +222,4 @@ _loadData() {
             </NoNetView>
         );
     }
-
-
 }

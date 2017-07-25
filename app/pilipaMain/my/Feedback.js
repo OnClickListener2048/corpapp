@@ -4,6 +4,7 @@
 import React, {Component}from 'react';
 
 import {
+    Alert,
     Image,
     StyleSheet,
     Text,
@@ -18,7 +19,8 @@ const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
 import BComponent from '../../base';
-import Alert from "../../modules/react-native-alert";
+import errorText from "../../util/ErrorMsg";
+// import Alert from "../../modules/react-native-alert";
 
 export default class Feedback extends BComponent {
     static navigatorStyle = {
@@ -126,7 +128,7 @@ export default class Feedback extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("反馈提交失败:" , e);
-                Alert.alert('反馈提交失败', '服务器出错了',
+                Alert.alert('反馈提交失败', errorText(e),
                     [
                         {
                             text: '确定',
