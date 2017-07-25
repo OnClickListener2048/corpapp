@@ -187,6 +187,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
                         dataFaild : false,
+                        isNoNetwork:false,
                     });
 
                     if (responseData.data.length == this.pageCount){
@@ -201,6 +202,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
+                        isNoNetwork:false,
                     });
                     this.setState({isRefreshing: false});
 
@@ -369,7 +371,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
-                        textContent='暂无消息'
+                        textContent='暂无数据'
                         active={require('../img/no_message.png')}/>
                     </TouchableOpacity>
                 </View>
