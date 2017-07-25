@@ -39,6 +39,7 @@ import Toast from 'react-native-root-toast';
 import ImageLoad from "../view/ImageLoad";
 import WatchImageModal from "./view/WatchImageModal";
 import BComponent from '../base';
+import NoNetView from "../base/NoNetView";
 
 const window = Dimensions.get('window');
 
@@ -183,7 +184,7 @@ export default class GetLicensePage extends BComponent {
         }
     }
 
-    _loadData(resolve) {
+    _loadData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
@@ -251,7 +252,7 @@ export default class GetLicensePage extends BComponent {
         );
     }
 
-    _loadAreaData(resolve) {
+    _loadAreaData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
 
@@ -966,167 +967,182 @@ export default class GetLicensePage extends BComponent {
 
     render() {
         return(
-        <View style={styles.container}>
-            {/*选择框遮罩*/}
-            <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
-                this.closePicker()
-            }}>
-                <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
-            </TouchableOpacity>
+            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData}>
 
-            {this.state.imgVisibles === true &&
-            <AlertPhotoModal
-                callback={this._callbackPhoto.bind(this)}/>}
-            {this.state.visible === true &&
-            <WatchImageModal
-                visible={true}
-                imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
-                imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
-                titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
-                callback={this._callbackWatchPhoto.bind(this)}
-                callbackfile={this._callbackPhoto.bind(this)}/>}
-            {this.state.isDateTimePickerVisible === true &&
-                <DataTimerView
-                callback={this._callbackData.bind(this)}/>
-            }
-            {this.state.loaded === true &&
-            <ScrollView style={styles.container}>
-                {Platform.OS === 'android' &&
-                <DateTimePicker
-                    isVisible={this.state.isDateTimePickerVisible}
-                    onConfirm={this._handleDatePicked}
-                    onCancel={this._hideDateTimePicker}
-                    />
+                <View style={styles.container}>
+
+                {/*选择框遮罩*/}
+                <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
+                    this.closePicker()
+                }}>
+                    <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
+                </TouchableOpacity>
+
+                {this.state.imgVisibles === true &&
+                <AlertPhotoModal
+                    callback={this._callbackPhoto.bind(this)}/>}
+                {this.state.visible === true &&
+                <WatchImageModal
+                    visible={true}
+                    imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
+                    imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
+                    titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
+                    callback={this._callbackWatchPhoto.bind(this)}
+                    callbackfile={this._callbackPhoto.bind(this)}/>}
+                {this.state.isDateTimePickerVisible === true &&
+                    <DataTimerView
+                    callback={this._callbackData.bind(this)}/>
                 }
-                {this.renderVerifyProcessTipView()}
-                {this.renderVerifyBtnView()}
-
-
-                {<View style={[{height: 15}]}></View>}
-                {this.renderCompanyTipView()}
-                {this.renderLineView()}
-
-                {<View >
-                    {this.renderTest()}
-
-                </View>}
-
-                {/*{<View >*/}
-                {/*{this.customerMessage()}*/}
-
-                {/*</View>}*/}
-
-                <TextInputView
-                textName={'法       人：'}
-                inputWidth={{width: 80}}
-                winWidth={{width: SCREEN_WIDTH - 110}}
-                callback={this._callbacklegal.bind(this)}
-                content={this.state.detailObj.legalEntity}
-                textEditable={this.state.editables}/>
-                <View style={styles.identityCardPhoto}>
-                <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>身 份 证：</Text>
-                    {this.state.editables === true ?
-                        <TouchableOpacity onPress={() => {
-                            this.toAlertModal("reverse")
-                        }}>
-                            {this.state.reImage != null ?
-                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
-                                    <ImageLoad
-                                        style={{ marginTop: 15, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                        placeholderSource={require('../img/reverse.png')}/> :
-                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
-
-                        </TouchableOpacity> :
-                        <View>
-                            {this.state.reImage != null ?
-                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
-                                    <ImageLoad
-                                        style={{ marginTop: 15, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                        placeholderSource={require('../img/reverse.png')}
-                                    />:
-                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
-
-                        </View>
+                {this.state.loaded === true &&
+                <ScrollView style={styles.container}>
+                    {Platform.OS === 'android' &&
+                    <DateTimePicker
+                        isVisible={this.state.isDateTimePickerVisible}
+                        onConfirm={this._handleDatePicked}
+                        onCancel={this._hideDateTimePicker}
+                        />
                     }
+                    {this.renderVerifyProcessTipView()}
+                    {this.renderVerifyBtnView()}
 
-                {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
-                {/*justifyContent:'flex-end'}}/>*/}
-                </View>
-                <View
-                style={{paddingTop: 5, backgroundColor: 'white'}}>
-                <TextInputView
-                textName={'注  册  号：'}
-                inputWidth={{width: 80}}
-                winWidth={{width: SCREEN_WIDTH - 115}}
-                callback={this._callbackreg.bind(this)}
-                content={this.state.detailObj.regId}
-                textEditable={this.state.editables}/>
-                </View>
-                <View
-                style={{paddingTop: 15, backgroundColor: 'white'}}>
-                <TextInputView
-                textName={'国税登记号：'}
-                inputWidth={{width: 93}}
-                winWidth={{width: SCREEN_WIDTH - 130}}
-                callback={this._callbacknation.bind(this)}
-                content={this.state.detailObj.nationalTaxId}
-                textEditable={this.state.editables}/>
-                </View>
-                <View
-                style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
-                <TextInputView
-                textName={'地税登记号：'}
-                inputWidth={{width: 93}}
-                winWidth={{width: SCREEN_WIDTH - 130}}
-                callback={this._callbackdetail.bind(this)}
-                content={this.state.detailObj.localTaxId}
-                textEditable={this.state.editables}/>
-                </View>
 
-                <SinglePickerView hint={'所属行业：'} value={this.state.industry}
-                                  onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
+                    {<View style={[{height: 15}]}></View>}
+                    {this.renderCompanyTipView()}
+                    {this.renderLineView()}
 
-                <SinglePickerView hint={'企业类型：'} value={this.state.corpType}
-                                  onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
+                    {<View >
+                        {this.renderTest()}
 
-                {this.renderBusinessTimeView()}
+                    </View>}
 
-                <View style={{paddingTop: 0, backgroundColor: 'white'}}>
-                <TextInputView
-                textName={'注册资金：'}
-                inputWidth={{width: 80}}
-                winWidth={{width: SCREEN_WIDTH - 115}}
-                callback={this._callbackregFunds.bind(this)}
-                content={this.state.detailObj.regFunds}
-                textEditable={this.state.editables}/>
-                </View>
-                {this.renderCompanyAddressView()}
-                {/*公司地址输入框*/}
-                <View style={{height:30,width:SCREEN_WIDTH,paddingTop:5,backgroundColor:'white'}}>
-                    <View style={[styles.textInputWrapper,]}>
-                        <TextInput underlineColorAndroid='transparent'
-                                   value={this.state.corpAddress}
-                                   editable={this.state.editables}
-                                   style={styles.textInput} placeholder='' returnKeyType='next'
-                                   onChangeText={
-                                       (legalPerson) => {
-                                           this.setState({corpAddress:legalPerson});
-                                       }
-                                   }/>
+                    {/*{<View >*/}
+                    {/*{this.customerMessage()}*/}
+
+                    {/*</View>}*/}
+
+                    <TextInputView
+                    textName={'法       人：'}
+                    inputWidth={{width: 80}}
+                    winWidth={{width: SCREEN_WIDTH - 110}}
+                    callback={this._callbacklegal.bind(this)}
+                    content={this.state.detailObj.legalEntity}
+                    textEditable={this.state.editables}/>
+                    <View style={styles.identityCardPhoto}>
+                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>身 份 证：</Text>
+                        {this.state.editables === true ?
+                            <TouchableOpacity onPress={() => {
+                                this.toAlertModal("reverse")
+                            }}>
+                                {this.state.reImage != null ?
+                                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
+                                        <ImageLoad
+                                            style={{ marginTop: 15, height: 75, width: 110 }}
+                                            loadingStyle={{ size: 'large', color: 'blue' }}
+                                            source={{ uri:this.state.detailObj.idCards[0]+"" }}
+                                            placeholderSource={require('../img/reverse.png')}/> :
+                                        <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+
+                            </TouchableOpacity> :
+                            <View>
+                                {this.state.reImage != null ?
+                                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                    this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
+                                        <ImageLoad
+                                            style={{ marginTop: 15, height: 75, width: 110 }}
+                                            loadingStyle={{ size: 'large', color: 'blue' }}
+                                            source={{ uri:this.state.detailObj.idCards[0]+"" }}
+                                            placeholderSource={require('../img/reverse.png')}
+                                        />:
+                                        <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+
+                            </View>
+                        }
+
+                    {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
+                    {/*justifyContent:'flex-end'}}/>*/}
                     </View>
-                </View>
-                <View style={{paddingTop: 10,backgroundColor:'white'}}>
-                    {this.state.editables === true ?
-                        <TouchableOpacity onPress={() => {
-                            this.toMultiTextInput()
-                        }}>
+                    <View
+                    style={{paddingTop: 5, backgroundColor: 'white'}}>
+                    <TextInputView
+                    textName={'注  册  号：'}
+                    inputWidth={{width: 80}}
+                    winWidth={{width: SCREEN_WIDTH - 115}}
+                    callback={this._callbackreg.bind(this)}
+                    content={this.state.detailObj.regId}
+                    textEditable={this.state.editables}/>
+                    </View>
+                    <View
+                    style={{paddingTop: 15, backgroundColor: 'white'}}>
+                    <TextInputView
+                    textName={'国税登记号：'}
+                    inputWidth={{width: 93}}
+                    winWidth={{width: SCREEN_WIDTH - 130}}
+                    callback={this._callbacknation.bind(this)}
+                    content={this.state.detailObj.nationalTaxId}
+                    textEditable={this.state.editables}/>
+                    </View>
+                    <View
+                    style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
+                    <TextInputView
+                    textName={'地税登记号：'}
+                    inputWidth={{width: 93}}
+                    winWidth={{width: SCREEN_WIDTH - 130}}
+                    callback={this._callbackdetail.bind(this)}
+                    content={this.state.detailObj.localTaxId}
+                    textEditable={this.state.editables}/>
+                    </View>
 
+                    <SinglePickerView hint={'所属行业：'} value={this.state.industry}
+                                      onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
+
+                    <SinglePickerView hint={'企业类型：'} value={this.state.corpType}
+                                      onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
+
+                    {this.renderBusinessTimeView()}
+
+                    <View style={{paddingTop: 0, backgroundColor: 'white'}}>
+                    <TextInputView
+                    textName={'注册资金：'}
+                    inputWidth={{width: 80}}
+                    winWidth={{width: SCREEN_WIDTH - 115}}
+                    callback={this._callbackregFunds.bind(this)}
+                    content={this.state.detailObj.regFunds}
+                    textEditable={this.state.editables}/>
+                    </View>
+                    {this.renderCompanyAddressView()}
+                    {/*公司地址输入框*/}
+                    <View style={{height:30,width:SCREEN_WIDTH,paddingTop:5,backgroundColor:'white'}}>
+                        <View style={[styles.textInputWrapper,]}>
+                            <TextInput underlineColorAndroid='transparent'
+                                       value={this.state.corpAddress}
+                                       editable={this.state.editables}
+                                       style={styles.textInput} placeholder='' returnKeyType='next'
+                                       onChangeText={
+                                           (legalPerson) => {
+                                               this.setState({corpAddress:legalPerson});
+                                           }
+                                       }/>
+                        </View>
+                    </View>
+                    <View style={{paddingTop: 10,backgroundColor:'white'}}>
+                        {this.state.editables === true ?
+                            <TouchableOpacity onPress={() => {
+                                this.toMultiTextInput()
+                            }}>
+
+                                <View
+                                    style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
+                                    <MultiTextInputView
+                                        ref="MultiTextInputView"
+                                        textName={'经营范围：'}
+                                        inputWidth={{width: 80}}
+                                        winWidth={{width: SCREEN_WIDTH - 115}}
+                                        callback={this._callbackbiz.bind(this)}
+                                        content={this.state.bizRange}
+                                        textEditable={this.state.editables}/>
+                                </View>
+                            </TouchableOpacity> :
                             <View
                                 style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
                                 <MultiTextInputView
@@ -1137,61 +1153,50 @@ export default class GetLicensePage extends BComponent {
                                     callback={this._callbackbiz.bind(this)}
                                     content={this.state.bizRange}
                                     textEditable={this.state.editables}/>
+                            </View> }
+
+                    </View>
+
+                    <View style={[styles.identityCardPhoto, {height: 150}]}>
+                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20}}>经营执照：</Text>
+
+                            {this.state.editables === true ?
+                            <TouchableOpacity onPress={() => {
+                                this.toAlertModal("blicense")
+                            }}>
+                                {this.state.linImage !== null ?
+                                    <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
+                                        <ImageLoad
+                                            style={{ marginTop: 20, height: 75, width: 110 }}
+                                            loadingStyle={{ size: 'large', color: 'blue' }}
+                                            source={{ uri:this.state.detailObj.bizLics[0]+"" }}
+                                            placeholderSource={require('../img/blicense.png')}/>  :
+                                        <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
+                                }
+
+                            </TouchableOpacity> :
+                            <View>
+                                {this.state.linImage !== null ?
+                                    <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
+                                    this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
+                                        <ImageLoad
+                                            style={{ marginTop: 20, height: 75, width: 110 }}
+                                            loadingStyle={{ size: 'large', color: 'blue' }}
+                                            source={{ uri:this.state.detailObj.bizLics[0]+"" }}
+                                            // source={{ uri:"https://qd.pilipa.cnhttp://pilipa.oss-cn-beijing.aliyuncs.com/FileUploads/Order/BusinessLicense/201701/BodyPart_80417919-391c-4575-a65b-3c22153a5ae7.jpg" }}
+                                            placeholderSource={require('../img/blicense.png')}/>  :
+                                        <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
+                                }
+
                             </View>
-                        </TouchableOpacity> :
-                        <View
-                            style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
-                            <MultiTextInputView
-                                ref="MultiTextInputView"
-                                textName={'经营范围：'}
-                                inputWidth={{width: 80}}
-                                winWidth={{width: SCREEN_WIDTH - 115}}
-                                callback={this._callbackbiz.bind(this)}
-                                content={this.state.bizRange}
-                                textEditable={this.state.editables}/>
-                        </View> }
+                        }
 
-                </View>
-
-                <View style={[styles.identityCardPhoto, {height: 150}]}>
-                        <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20}}>经营执照：</Text>
-
-                        {this.state.editables === true ?
-                        <TouchableOpacity onPress={() => {
-                            this.toAlertModal("blicense")
-                        }}>
-                            {this.state.linImage !== null ?
-                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
-                                    <ImageLoad
-                                        style={{ marginTop: 20, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                        placeholderSource={require('../img/blicense.png')}/>  :
-                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
-                            }
-
-                        </TouchableOpacity> :
-                        <View>
-                            {this.state.linImage !== null ?
-                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
-                                this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
-                                    <ImageLoad
-                                        style={{ marginTop: 20, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
-                                        source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                        // source={{ uri:"https://qd.pilipa.cnhttp://pilipa.oss-cn-beijing.aliyuncs.com/FileUploads/Order/BusinessLicense/201701/BodyPart_80417919-391c-4575-a65b-3c22153a5ae7.jpg" }}
-                                        placeholderSource={require('../img/blicense.png')}/>  :
-                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
-                            }
-
-                        </View>
-                    }
-
-                </View>
-                </ScrollView>
-            }
-        </View>
+                    </View>
+                    </ScrollView>
+                }
+            </View>
+            </NoNetView>
         );
     }
 

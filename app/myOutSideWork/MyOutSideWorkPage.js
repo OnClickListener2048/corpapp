@@ -8,6 +8,7 @@ import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,Platf
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
 import {loadOutSourceCount} from "../apis/outSource";
 import BComponent from "../base";
+import NoNetEmptyView from "../base/NoNetEmptyView";
 const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
@@ -19,6 +20,7 @@ import TabBar from '../myOutSideWork/view/TabBar';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import NoMessage from "../test/NoMessage";
+import NetInfoSingleton from "../util/NetInfoSingleton";
 
 export default class MyOutSideWorkPage extends BComponent{
 
@@ -29,7 +31,6 @@ export default class MyOutSideWorkPage extends BComponent{
             loaded:false,
             needLoding:true,
             canClickBtn : false,
-            isNoNetwork : false,
 
         }
         // if you want to listen on navigator events, set this up
@@ -113,15 +114,6 @@ export default class MyOutSideWorkPage extends BComponent{
 
         //获取每个外勤状态数量
     _loadCount(needLoding){
-        if(!NetInfoSingleton.isConnected) {
-            this.setState({
-                isNoNetwork:true,
-            });
-            return;
-        }
-        this.setState({
-            isNoNetwork:false,
-        });
 
         let loading;
 
@@ -201,20 +193,23 @@ export default class MyOutSideWorkPage extends BComponent{
 
 
     _renderScrollView(){
-        if (this.state.isNoNetwork === true) {      // 无网络
-            return(
-
-
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
-                    <TouchableOpacity onPress={() => {this._loadCount(true)}}>
-                        <NoMessage
-                            textContent='网络错误,点击重新开始'
-                            active={require('../img/network_error.png')}/>
-                    </TouchableOpacity>
-                </View>
-
-            );
-        }else if (this.state.loaded){
+        // if (NetInfoSingleton.isConnected === false) {      // 无网络
+        //     return(
+        //
+        //
+        //         <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+        //             <TouchableOpacity onPress={() => {this._loadCount(true)}}>
+        //                 <NoMessage
+        //                     textContent='网络错误,点击重新开始'
+        //                     active={require('../img/network_error.png')}/>
+        //             </TouchableOpacity>
+        //         </View>
+        //
+        //     );
+        // }
+        //else
+        console.log("外勤入口 this.state.loaded=", this.state.loaded);
+            if (this.state.loaded){
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
@@ -249,7 +244,14 @@ export default class MyOutSideWorkPage extends BComponent{
 
     }else {
 
-        return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+         return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+                <TouchableOpacity onPress={() => {this._loadCount(true)}}>
+                    <NoMessage
+                        textContent='网络错误,点击重新开始'
+                        active={require('../img/network_error.png')}/>
+                </TouchableOpacity>
+            </View>
+        // return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
     }
 
     }
@@ -258,6 +260,7 @@ export default class MyOutSideWorkPage extends BComponent{
     render(){
         return(
             <View style={{flex:1}}>
+                <NoNetEmptyView onClick={() => {this._loadCount(true)}} />
                 {this.navigatorStyle}
                 {this._renderScrollView()}
             </View>

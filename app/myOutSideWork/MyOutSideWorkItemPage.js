@@ -13,6 +13,7 @@ import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
 import BComponent from "../base";
+import NoNetView from "../base/NoNetView";
 
 export default class MyOutSideWorkItemPage extends BComponent{
 
@@ -34,7 +35,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
             refresh:this.props.refresh,
             isRefreshing: false,
             loadingMore : 0,
-            isNoNetwork : false,
 
         }
         this.lastID = null;
@@ -97,17 +97,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadList(){
-
-        if(!NetInfoSingleton.isConnected) {
-            this.setState({
-                isNoNetwork:true,
-            });
-            return;
-        }
-        this.setState({
-            isNoNetwork:false,
-        });
-
 
         let loading = SActivityIndicator.show(true, "加载中...");
         let taskType = this.props.label==null?'all':this.props.label;
@@ -187,7 +176,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
                         dataFaild : false,
-                        isNoNetwork:false,
                     });
 
                     if (responseData.data.length == this.pageCount){
@@ -202,7 +190,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.outList),
                         loaded:true,
-                        isNoNetwork:false,
                     });
                     this.setState({isRefreshing: false});
 
@@ -342,20 +329,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
 
     renderListView() {
-        if (this.state.isNoNetwork === true) {      // 无网络
-            return(
-
-
-            <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                <TouchableOpacity onPress={() => {this._loadAgainList()}}>
-                    <NoMessage
-                        textContent='网络错误,点击重新开始'
-                        active={require('../img/network_error.png')}/>
-                </TouchableOpacity>
-            </View>
-
-            );
-        }else if (this.state.dataFaild === true) {      // 数据加载失败
+        if (this.state.dataFaild === true) {      // 数据加载失败
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <TouchableOpacity onPress={() => {this._loadList()}}>
@@ -415,11 +389,13 @@ export default class MyOutSideWorkItemPage extends BComponent{
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-127;
         }
         return (
+            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadList()}>
             <View style={[styles.container,{height:allListHeight}]}>
 
                 {this.renderListView()}
 
             </View>
+            </NoNetView>
         );
     }
 
