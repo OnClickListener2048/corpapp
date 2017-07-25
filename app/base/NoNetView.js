@@ -1,5 +1,5 @@
 /**
- *  无网状态显示组件.
+ *  无网状态显示组件, 支持点击时及网络恢复正常时执行回调.
  * Created by beansoft on 2017/7/25.
  */
 
@@ -55,6 +55,12 @@ export default class NoNetView extends Component {
 
     _updateConnectionStatus(isConnected) {
         this.setState({isConnected: isConnected});
+
+        // 网络恢复时自动重连
+        if(isConnected) {
+            let {onClick} = this.props;
+            if(onClick !== undefined){ onClick(); }
+        }
     }
 
     render() {
