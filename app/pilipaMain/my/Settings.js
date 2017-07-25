@@ -65,7 +65,7 @@ export default class Settings extends BComponent {
     render() {
         return (
             <View style={styles.container}>
-
+                {super._testRender()}
                 <View style={styles.topContainer}>
                     {/*   旧手机号*/}
                     {!this.state.bindNewMobile &&

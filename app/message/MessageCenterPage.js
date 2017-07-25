@@ -43,7 +43,10 @@ import Platform from "react-native";
 const window = Dimensions.get('window');
 const moreText = "加载完毕";
 export const SCREEN_WIDTH = window.width;
-export default class MessageCenterPage extends Component {
+
+import BComponent from '../base';
+
+export default class MessageCenterPage extends BComponent {
 
     constructor(props) {
         super(props)
@@ -716,7 +719,7 @@ export default class MessageCenterPage extends Component {
                 <CommunalNavBar
                     titleItem={() => MessageCenterPage.renderTitleItem()}
                 />
-
+                {this._renderNetWorkView()}
                 {this.renderListView()}
 
             </View>
