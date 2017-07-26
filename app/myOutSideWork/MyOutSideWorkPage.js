@@ -31,7 +31,7 @@ export default class MyOutSideWorkPage extends BComponent{
             outSourceCountObj : {},
             loaded:null,
             needLoding:true,
-            canClickBtn : false,
+            canClickBtn : true,
 
         }
         // if you want to listen on navigator events, set this up
@@ -66,7 +66,10 @@ export default class MyOutSideWorkPage extends BComponent{
                     return;
                 }
 
-                this.state.canClickBtn = false;
+                this.setState({canClickBtn:false})//防重复点击
+                this.timer = setTimeout(async()=>{
+                    await this.setState({canClickBtn:true})//1.5秒后可点击
+                },1000)
 
                     this.props.navigator.push({
                         screen: 'MyOutSideWorkItemPage',
@@ -79,9 +82,6 @@ export default class MyOutSideWorkPage extends BComponent{
 
 
         console.log('ApplicationCenterPage event.type', event.type);
-        if(event.id==='willAppear'){
-            this.state.canClickBtn = true;
-        }
 
     }
 
@@ -95,7 +95,11 @@ export default class MyOutSideWorkPage extends BComponent{
             return;
         }
 
-        this.state.canClickBtn = false;
+        this.setState({canClickBtn:false})//防重复点击
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({canClickBtn:true})//1.5秒后可点击
+        },1000)
 
                 this.props.navigator.push({
                     screen: 'MyOutSideTaskPage',

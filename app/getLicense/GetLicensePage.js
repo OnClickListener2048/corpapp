@@ -119,10 +119,6 @@ export default class GetLicensePage extends BComponent {
         super.onNavigatorEvent(event);
 
         console.log('ApplicationCenterPage event.type', event.type);
-        if(event.id==='willAppear'){
-            this.state.canClickBtn = true;
-        }
-
         if(event.id==='backPress'){
             console.log("监听返回键");
             if(this.state.isPickerOpen){
@@ -1207,6 +1203,10 @@ export default class GetLicensePage extends BComponent {
         }
 
         this.state.canClickBtn = false;
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({canClickBtn:true})//1.5秒后可点击
+        },1000)
 
         this.props.navigator.push({
             screen: 'MultiTextInputPage',

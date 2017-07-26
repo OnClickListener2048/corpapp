@@ -181,7 +181,7 @@ export default class CompanyInfoView extends React.Component {
                                     marginLeft: 2.5,
                                     marginRight: 0,
                                     color: '#323232'
-                                }] }>{this.state.ContactsName}</Text>}
+                                }]}>{this.state.ContactsName}</Text>}
 
                         </View>
                     <View
@@ -219,7 +219,7 @@ export default class CompanyInfoView extends React.Component {
                                         padding: 4,
                                         flex:1,
                                         fontSize: 15,
-                                        color:'#323232',}] }>{this.state.ContactsPhone}</Text>
+                                        color:'#323232',}]}>{this.state.ContactsPhone}</Text>
 
                         </View>}
                         {this.props.isFocusData===true||ContactsPhone.includes('*')?

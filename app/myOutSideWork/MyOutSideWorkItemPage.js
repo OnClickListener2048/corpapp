@@ -36,6 +36,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             refresh:this.props.refresh,
             isRefreshing: false,
             loadingMore : 0,
+            canClickBtn : true,
 
         }
         this.lastID = null;
@@ -82,6 +83,14 @@ export default class MyOutSideWorkItemPage extends BComponent{
     _press(statusId) {
         console.log("====>>>"+statusId);
         if (this.props.label == null) {
+            if (this.state.canClickBtn === false){
+                return;
+            }
+
+            this.setState({canClickBtn:false})//防重复点击
+            this.timer = setTimeout(async()=>{
+                await this.setState({canClickBtn:true})//1.5秒后可点击
+            },1000)
             InteractionManager.runAfterInteractions(() => {
                 this.props.navigator.push({
                     screen: 'MyOutSideTaskPage',
