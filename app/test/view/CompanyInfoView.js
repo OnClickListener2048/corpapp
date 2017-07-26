@@ -112,7 +112,7 @@ export default class CompanyInfoView extends React.Component {
 
 
                 <View
-                    style={styles.companyInfoRowStyle}>
+                    style={styles.companyNameRowStyle}>
 
                     <View
                         style={[{width:SCREEN_WIDTH - 30 , height: 35, alignItems:'center',  flexDirection: 'row'}]}>
@@ -161,7 +161,7 @@ export default class CompanyInfoView extends React.Component {
                             style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人：'}</Text>
                         {this.props.isFocusData?
                             <View textAlign='left'
-                                  style={[styles.textInputWrapper, {marginTop: 3}]}>
+                                  style={[styles.contactNmaeInputWrapper, {marginTop: 3}]}>
                                 <TextInput
                                     underlineColorAndroid='transparent' value={this.state.ContactsName}
                                     style={styles.textInput} placeholder='' returnKeyType='next'

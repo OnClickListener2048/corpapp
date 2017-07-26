@@ -16,52 +16,73 @@ const styles = StyleSheet.create({
     },
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
-        height:115,
+        height:SCREEN_WIDTH > 350 ? 115 : 185,
         backgroundColor: '#FFFFFF',
 
         flexDirection: 'column'
         // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
     },
 
+    companyNameRowStyle: {
+        marginLeft : 15,
+        marginRight : 15,
+        width: SCREEN_WIDTH - 30,
+        height: 35,
+        flexDirection:  'row',
+        justifyContent:'space-between',
+
+    },
+
     companyInfoRowStyle: {
         marginLeft : 15,
         marginRight : 15,
         width: SCREEN_WIDTH - 30,
-        // flex: 1,
-        height: 35,
-        flexDirection: 'row',
-        justifyContent:'space-between'
+        height: SCREEN_WIDTH > 350 ? 35 : 70,
+        flexDirection: SCREEN_WIDTH > 350 ? 'row' : 'column',
+        justifyContent:'space-between',
+
     },
     companyInfoRowSubViewStyle: {
-        maxWidth: SCREEN_WIDTH/2 - 15,
-        width: SCREEN_WIDTH/2 - 15,
-        height: 30,
+        maxWidth: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH - 30,
+        width: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH - 30,
+        height: 35,
         marginLeft : 0,
         marginRight : 0,
         flexDirection: 'row',
+
 
     },
     companyInfoRowPhoneStyle: {
-        maxWidth: SCREEN_WIDTH/2 - 15,
-        width: SCREEN_WIDTH/2 - 15,
-        height: 30,
+        maxWidth: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH/2 - 5,
+        width: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH/2 - 5,
+        height: 35,
         marginLeft : 0,
         marginRight : 0,
         flexDirection: 'row',
-        justifyContent:'flex-end',
-        alignItems:'center'
+        // justifyContent:'flex-end',
+        alignItems:'center',
     },
 
     textInputWrapper: {
-        height: px2dp(50),
-        width: SCREEN_WIDTH-40,
+        height: 30,
+        width: SCREEN_WIDTH-40 - 60,
         // backgroundColor: 'transparent',
         // position: 'relative',
         marginRight: px2dp(20),
         flexDirection: 'row',
         marginTop: 5,
         marginLeft : 0,
+    },
 
+    contactNmaeInputWrapper: {
+        height: 30,
+        width: SCREEN_WIDTH > 350 ?  SCREEN_WIDTH / 2 - 88 : SCREEN_WIDTH-40 - 60,
+        // backgroundColor: 'transparent',
+        // position: 'relative',
+        marginRight: px2dp(20),
+        flexDirection: 'row',
+        marginTop: 5,
+        marginLeft : 0,
     },
 
     textInput: {
