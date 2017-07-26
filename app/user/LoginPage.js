@@ -10,6 +10,7 @@ import {
     StyleSheet,
     Text,
     Image,
+    Keyboard,
     View,
     TextInput,
     DeviceEventEmitter, TouchableOpacity,
@@ -36,6 +37,7 @@ import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
 import {DEBUG} from '../config';
 // import BAlert from "../modules/react-native-alert";
+import {SCREEN_WIDTH} from '../config';
 
 export default class LoginPage extends Component {
     static navigatorStyle = {
@@ -68,6 +70,7 @@ export default class LoginPage extends Component {
             vCodeServerValid: true,          // 图片验证码服务端有效
             // timerButtonEnable: false, // 倒计时按钮是否可用
             timerButtonClicked: false,//  倒计时按钮是否已点击
+            headPad: 238,// 顶部的默认空白
         };
 
         this._doLogin = this._doLogin.bind(this);
@@ -75,6 +78,8 @@ export default class LoginPage extends Component {
         this._verifyVCode = this._verifyVCode.bind(this);
         this._doChangeVCode = this._doChangeVCode.bind(this);
         this.readUserInfo = this.readUserInfo.bind(this);
+        this._keyboardDidShow = this._keyboardDidShow.bind(this);
+        this._keyboardDidHide = this._keyboardDidHide.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -126,6 +131,10 @@ export default class LoginPage extends Component {
         if (isReset) {
             loginJumpSingleton.reset();
         }
+
+        this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
+        this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
+
     }
 
     // 屏蔽返回按键
@@ -147,6 +156,24 @@ export default class LoginPage extends Component {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', false);
         loginJumpSingleton.isJumpingLogin = false;
+        this.keyboardDidShowListener.remove();
+        this.keyboardDidHideListener.remove();
+    }
+
+    // 小屏键盘显示适配
+    _keyboardDidShow () {
+        console.log('Keyboard Shown');
+        if(SCREEN_WIDTH <= 350) {
+            this.setState({headPad: 0});
+        }
+    }
+
+    // 小屏键盘显示适配
+    _keyboardDidHide () {
+        console.log('Keyboard Hidden');
+        if(SCREEN_WIDTH <= 350) {
+            this.setState({headPad: 238});
+        }
     }
 
     // 请求短信验证码
@@ -362,7 +389,9 @@ export default class LoginPage extends Component {
                         }}
                     />
 
-                    <Image source={require('../img/logo_white.png')} style={styles.bzLogo}/>
+                    <Image source={require('../img/logo_white.png')}  style={[styles.bzLogo,
+                        {marginTop: px2dp(this.state.headPad)}]} />
+
                     <View style={{height: px2dp(100),}}/>
                     <KeyboardAvoidingView behavior='padding' style={[styles.containerKeyboard,
                         {backgroundColor: 'white'}]}
