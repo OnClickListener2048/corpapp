@@ -139,7 +139,7 @@ export default class CompanyInfoView extends React.Component {
                                 style={[{
                                     fontSize: 15,
                                     marginLeft: 0,
-                                    height: 16,
+                                    height: 20,
                                     color: '#323232',
                                     marginRight: 60
                                 }] }>{this.state.companyName}</Text>}
