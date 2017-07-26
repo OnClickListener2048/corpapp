@@ -64,11 +64,10 @@ export default class MessageCenterPage extends BComponent {
             isJumping : false,
             isLoading : false,
             lastID : null,
-
+            pageCount : 15,
         }
 
-         this.messageArr = [];
-        this.pageCount = 15;
+        this.messageArr = [];
         this._loadInitData = this._loadInitData.bind(this);
 
         this._loadData = this._loadData.bind(this);
@@ -116,7 +115,7 @@ export default class MessageCenterPage extends BComponent {
             lastID: null
         });
 
-        apis.loadMessageData(this.pageCount,'').then(
+        apis.loadMessageData(this.state.pageCount,'').then(
             (responseData) => {
 
                 SActivityIndicator.hide(loading);
@@ -151,7 +150,7 @@ export default class MessageCenterPage extends BComponent {
                         loaded:true,
                     });
 
-                    if (responseData.data.length == this.pageCount){
+                    if (responseData.data.length == this.state.pageCount){
                         this.setState({
                             lastID: this.messageArr[this.messageArr.length - 1].msgId,
                         });
@@ -204,7 +203,7 @@ export default class MessageCenterPage extends BComponent {
             lastID : null,
                      });
 
-        apis.loadMessageData(this.pageCount,'').then(
+        apis.loadMessageData(this.state.pageCount,'').then(
 
         (responseData) => {
             let cnt = responseData.unReadNum;
@@ -227,7 +226,7 @@ export default class MessageCenterPage extends BComponent {
                 this.messageArr = this.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
 
-                if (responseData.data.length == this.pageCount){
+                if (responseData.data.length == this.state.pageCount){
                     this.setState({loadingMore: 0,
                         lastID : this.messageArr[this.messageArr.length - 1].msgId
                     });
@@ -284,7 +283,7 @@ export default class MessageCenterPage extends BComponent {
         });
 
 
-        apis.loadMessageData(this.pageCount,this.state.lastID).then(
+        apis.loadMessageData(this.state.pageCount,this.state.lastID).then(
 
             (responseData) => {
                 let cnt = responseData.unReadNum;
@@ -310,7 +309,7 @@ export default class MessageCenterPage extends BComponent {
 
                 this.messageArr = this.messageArr.concat(responseData.data);
 
-                if (responseData.data.length == this.pageCount){
+                if (responseData.data.length == this.state.pageCount){
 
                     this.setState({loadingMore: 0,
                         lastID : this.messageArr[this.messageArr.length - 1].msgId});
@@ -570,7 +569,7 @@ export default class MessageCenterPage extends BComponent {
         this.setState({isJumping:true})//防重复点击
         this.timer = setTimeout(async()=>{
             await this.setState({isJumping:false})//1.5秒后可点击
-        },1500)
+        },1000)
         this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)

@@ -39,7 +39,7 @@ export default class MyOutSideTaskPage extends BComponent{
             faild:false,                   // 是否初始化 ListView
             currentStepId : '',
             toastStr : this.props.toastStr,
-            canClickBtn : false,
+            canClickBtn : true,
             needRefresh : false,  //在willViewAppear里面需不需要重新请求数据
         };
         this._loadData = this._loadData.bind(this);
@@ -56,7 +56,6 @@ onNavigatorEvent(event) { // this is the onPress handler for the two buttons tog
     // console.log('ApplicationCenterPage event.type', event.type);
     if(event.id==='willAppear'){
         console.log('需要刷新吗' +  this.state.needRefresh);
-        this.state.canClickBtn = true;
         if (this.state.needRefresh == true){
             this._loadData();
             this.state.needRefresh = false;
@@ -135,7 +134,11 @@ _loadData() {
             return;
         }
 
-        this.state.canClickBtn = false;
+        this.setState({canClickBtn:false})//防重复点击
+        this.timer = setTimeout(async()=>{
+            await this.setState({canClickBtn:true})//1.5秒后可点击
+        },1000)
+
 
         this.state.currentStepId = stepId;
             this.props.navigator.push({
