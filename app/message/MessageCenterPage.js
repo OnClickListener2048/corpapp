@@ -64,11 +64,10 @@ export default class MessageCenterPage extends BComponent {
             isJumping : false,
             isLoading : false,
             lastID : null,
-            messageArr : [],
 
         }
 
-
+         this.messageArr = [];
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
 
@@ -113,7 +112,9 @@ export default class MessageCenterPage extends BComponent {
         });
 
         let loading = SActivityIndicator.show(true, "加载中...");
-        this.state.lastID = null;
+        this.setState({
+            lastID: null
+        });
 
         apis.loadMessageData(this.pageCount,'').then(
             (responseData) => {
@@ -136,22 +137,25 @@ export default class MessageCenterPage extends BComponent {
                 }
 
                 if(responseData !== null && responseData.data !== null) {
-                    this.state.messageArr = [];
-                    this.state.messageArr = this.state.messageArr.concat(responseData.data);
+                    this.messageArr = [];
+                    this.messageArr = this.messageArr.concat(responseData.data);
                     // console.log(this.messageArr)
-                    for (let  i = 0 ; i < this.state.messageArr.length ; i++){
-                        let  secData = this.state.messageArr[i];
+                    for (let  i = 0 ; i < this.messageArr.length ; i++){
+                        let  secData = this.messageArr[i];
                         secData.rowIndex = i;
                     }
 
                     this.setState({
-                        dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
+                        dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                         faild: false,
                         loaded:true,
                     });
 
                     if (responseData.data.length == this.pageCount){
-                        this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
+                        this.setState({
+                            lastID: this.messageArr[this.messageArr.length - 1].msgId,
+                        });
+
                         // console.log(this.lastID +'你大爷');
                     }else {
                         this.setState({loadingMore: 2});
@@ -163,7 +167,7 @@ export default class MessageCenterPage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
 
-                if ( this.state.messageArr.length > 0){
+                if ( this.messageArr.length > 0){
                     // 关闭刷新动画
                     this.setState({
                         loaded:true,
@@ -195,9 +199,10 @@ export default class MessageCenterPage extends BComponent {
             return;
         }
 
-        this.state.lastID = null;
 
-        this.setState({isRefreshing: true});
+        this.setState({isRefreshing: true,
+            lastID : null,
+                     });
 
         apis.loadMessageData(this.pageCount,'').then(
 
@@ -218,13 +223,14 @@ export default class MessageCenterPage extends BComponent {
                 }
             }
             if(responseData !== null && responseData.data !== null) {
-                this.state.messageArr = [];
-                this.state.messageArr = this.state.messageArr.concat(responseData.data);
+                this.messageArr = [];
+                this.messageArr = this.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
 
                 if (responseData.data.length == this.pageCount){
-                    this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
-                    this.setState({loadingMore: 0});
+                    this.setState({loadingMore: 0,
+                        lastID : this.messageArr[this.messageArr.length - 1].msgId
+                    });
 
                     // console.log(this.lastID +'你大爷');
                 }else {
@@ -232,14 +238,14 @@ export default class MessageCenterPage extends BComponent {
 
                 }
 
-                for (let  i = 0 ; i < this.state.messageArr.length ; i++){
-                    let  secData = this.state.messageArr[i];
+                for (let  i = 0 ; i < this.messageArr.length ; i++){
+                    let  secData = this.messageArr[i];
                     secData.rowIndex = i;
 
                 }
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
                 this.setState({isRefreshing: false});
@@ -271,9 +277,12 @@ export default class MessageCenterPage extends BComponent {
         if (this.state.isLoading === true){
             return;
         }
-        this.setState({loadingMore: 1});
+        this.setState({
 
-        this.state.isLoading = true;
+            loadingMore: 1,
+            isLoading : true,
+        });
+
 
         apis.loadMessageData(this.pageCount,this.state.lastID).then(
 
@@ -294,14 +303,17 @@ export default class MessageCenterPage extends BComponent {
                     }
                 }
 
-                this.state.lastID = null
+                this.setState({
+                    lastID : null
+                });
 
 
-                this.state.messageArr = this.state.messageArr.concat(responseData.data);
+                this.messageArr = this.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
-                    this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
-                    this.setState({loadingMore: 0});
+
+                    this.setState({loadingMore: 0,
+                        lastID : this.messageArr[this.messageArr.length - 1].msgId});
 
                     // console.log(this.lastID +'你大爷');
                 }else {
@@ -317,19 +329,20 @@ export default class MessageCenterPage extends BComponent {
                 }
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
+                    isLoading : false
                 });
 
-                this.isLoading = false;
 
 
             },
             (e) => {
                 // 关闭刷新动画
                 console.log("获取失败" , e);
-                this.isLoading = false;
-
+                this.setState({
+                    isLoading : false
+                });
                 // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
@@ -345,10 +358,10 @@ export default class MessageCenterPage extends BComponent {
 
                 rowData.read = 'true';
 
-                let  a =  this.state.messageArr[rowData.rowIndex];
+                let  a =  this.messageArr[rowData.rowIndex];
                 // console.log("点击成功了" + a.read);
                 let data = [];
-                this.state.messageArr.forEach(row => {
+                this.messageArr.forEach(row => {
                     data.push(Object.assign({}, row));
                 } );
 
@@ -369,7 +382,7 @@ export default class MessageCenterPage extends BComponent {
                 this.messageArr = data;
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
 
@@ -672,7 +685,7 @@ export default class MessageCenterPage extends BComponent {
                      </View>
             </TouchableOpacity>
             );
-        }else if (this.state.messageArr.length == 0){
+        }else if (this.messageArr.length == 0){
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
