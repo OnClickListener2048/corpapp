@@ -1017,14 +1017,14 @@ export default class GetLicensePage extends BComponent {
                     {/*</View>}*/}
 
                     <TextInputView
-                    textName={'法       人：'}
+                    textName={'法        人：'}
                     inputWidth={{width: 80}}
                     winWidth={{width: SCREEN_WIDTH - 110}}
                     callback={this._callbacklegal.bind(this)}
                     content={this.state.detailObj.legalEntity}
                     textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
-                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232'}}>身 份 证：</Text>
+                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232'}}>身  份  证：</Text>
                         {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {
                                 this.toAlertModal("reverse")

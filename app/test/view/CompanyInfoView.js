@@ -158,7 +158,7 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='center'
-                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联 系 人：'}</Text>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联  系  人：'}</Text>
                         {this.props.isFocusData?
                             <View textAlign='left'
                                   style={[styles.contactNmaeInputWrapper, {marginTop: 3}]}>
