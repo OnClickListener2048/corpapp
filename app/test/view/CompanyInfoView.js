@@ -119,7 +119,7 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='right'
-                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'公司名称：'}</Text>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232',width: 83}] }>{'公司名称'}</Text>
                         {this.props.isFocusData?
                             <View textAlign='left'
                                   style={styles.textInputWrapper}>
@@ -139,7 +139,7 @@ export default class CompanyInfoView extends React.Component {
                                 style={[{
                                     fontSize: 15,
                                     marginLeft: 0,
-                                    height: 20,
+                                    height: 16,
                                     color: '#323232',
                                     marginRight: 60
                                 }] }>{this.state.companyName}</Text>}
@@ -158,7 +158,7 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='center'
-                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'联  系  人：'}</Text>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232',width: 83}] }>{'联系人'}</Text>
                         {this.props.isFocusData?
                             <View textAlign='left'
                                   style={[styles.contactNmaeInputWrapper, {marginTop: 3}]}>
@@ -178,8 +178,9 @@ export default class CompanyInfoView extends React.Component {
                                 style={[{
                                     fontSize: 15,
                                     alignSelf: 'center',
-                                    marginLeft: 2.5,
+                                    marginLeft: 0,
                                     marginRight: 0,
+                                    height: 18,
                                     color: '#323232'
                                 }]}>{this.state.ContactsName}</Text>}
 
@@ -189,13 +190,12 @@ export default class CompanyInfoView extends React.Component {
                         {this.props.isFocusData?
                         <View
                             style={[{
-                                  alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                            <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
+                                  alignItems:'center',flex: 1,flexDirection:'row',height:30}]}>
+                            <Text style={{fontSize: 15,color:'#323232',width: 83}}>电话</Text>
                             <TextInput
                                 underlineColorAndroid='transparent' value={this.state.ContactsPhone}
                                 style={{width: 110,
                                     marginRight: 0,
-                                    padding: 4,
                                     flex:1,
                                     fontSize: 15,
                                     color:'#323232',}} placeholder='' returnKeyType='next'
@@ -208,15 +208,14 @@ export default class CompanyInfoView extends React.Component {
                         </View>:
                             <View
                                 style={[{
-                                    alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                                <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
+                                    alignItems:'center',flex:1,flexDirection:'row',height:30}]}>
+                                <Text style={{fontSize: 15,color:'#323232',width: 83}}>电话</Text>
                                 <Text
-                                    textAlign='right'
+                                    textAlign='left'
                                     numberOfLines={1}
 
                                     style={[{width: 110,
                                         marginRight: 0,
-                                        padding: 4,
                                         flex:1,
                                         fontSize: 15,
                                         color:'#323232',}]}>{this.state.ContactsPhone}</Text>
@@ -264,11 +263,11 @@ export default class CompanyInfoView extends React.Component {
 
                         <Text
                             textAlign='right'
-                            style={[{fontSize: 15,alignSelf:'center',color:'#323232'}] }>{'销售人员'}</Text>
+                            style={[{fontSize: 15,alignSelf:'center',color:'#323232',width: 83}] }>{'销售人员'}</Text>
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 15, marginLeft : 0,alignSelf:'center',color:'#323232'}] }>：{SalesName}</Text>
+                            style={[{fontSize: 15, marginLeft : 0,alignSelf:'center',color:'#323232'}] }>{SalesName}</Text>
                     </View>
                     <View
                         style={styles.companyInfoRowPhoneStyle}>
@@ -276,15 +275,14 @@ export default class CompanyInfoView extends React.Component {
 
                         <View
                             style={[{
-                                alignItems:'center',width:155,flexDirection:'row',height:30}]}>
-                            <Text style={{fontSize: 15,color:'#323232'}}>电话：</Text>
+                                alignItems:'center',flex:1,flexDirection:'row',height:30}]}>
+                            <Text style={{fontSize: 15,color:'#323232',width: 83}}>电话</Text>
                             <Text
-                                textAlign='right'
+                                textAlign='left'
                                 numberOfLines={1}
 
                                 style={[{width: 110,
                                     marginRight: 0,
-                                    padding: 4,
                                     flex:1,
                                     fontSize: 15,
                                     color:'#323232',}] }>{SalesPhone}</Text>
