@@ -70,7 +70,7 @@ export default class MessageCenterCell extends Component {
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 17,marginTop: 15, marginLeft : 20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}] }>{statusName}</Text>
+                            style={[{fontSize: 15,marginTop: 15, marginLeft : 20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}] }>{statusName}</Text>
                         <Text
                             textAlign='left'
                             numberOfLines={1}

@@ -94,25 +94,25 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textInputWrapper: {
-        height: px2dp(50),
-        width: SCREEN_WIDTH-105,
-        backgroundColor: 'white',
-        // position: 'relative',
+        minHeight: px2dp(30),
+        maxHeight:100,
+        width: SCREEN_WIDTH-115,
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,
+        backgroundColor: 'transparent',
+        // position: 'relative',
         marginRight: px2dp(20),
         flexDirection: 'row',
-        marginLeft:90,
-        marginRight:15,
+        marginLeft:100,
     },
 
     textInput: {
         flex: 1,
-        width: SCREEN_WIDTH-100,
+        width: px2dp(438),
         marginLeft: px2dp(0),
         padding: 0,
-        fontSize: 15,
         color:'#323232',
+        fontSize: px2dp(30),
     },
 
 

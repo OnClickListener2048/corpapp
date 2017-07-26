@@ -32,9 +32,9 @@ const styles = StyleSheet.create({
 
     // phone input box
     textInputWrapper: {
-        minHeight: px2dp(40),
-        maxHeight:150,
-        width: SCREEN_WIDTH-110,
+        minHeight: px2dp(30),
+        maxHeight:100,
+        width: SCREEN_WIDTH-115,
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,
         backgroundColor: 'transparent',

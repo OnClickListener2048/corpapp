@@ -19,7 +19,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
-        height:42,
+        height:50,
         flexDirection: 'row',
         paddingTop:10,
         paddingBottom:2,
@@ -27,11 +27,10 @@ const styles = StyleSheet.create({
     },
     leftTipStyle: {
         marginLeft: 15,
-        marginRight: 4,
         paddingTop:5,
         fontSize:15,
         color:"#323232",
-
+        width:85,
     },
     rightViewStyle: {
         marginRight: 15,
@@ -43,7 +42,7 @@ const styles = StyleSheet.create({
 
     rightRowViewStyle: {
         flexDirection: 'row',
-        height: 25,
+        height: 30,
         backgroundColor:'white',
         // justifyContent:'center',
         alignItems:'center',
@@ -66,7 +65,7 @@ const styles = StyleSheet.create({
         flex : 1,
         marginLeft : 4.5,
         marginRight : 0,
-        height : 23,
+        height : 30,
         borderRadius: 2.5,
         borderWidth: 1,
         borderColor : '#e6e6e6',
@@ -80,7 +79,7 @@ const styles = StyleSheet.create({
         marginRight : 0,
         // width : 105.5,
         flex : 1,
-        height : 23,
+        height : 30,
         borderWidth: 1,
         borderRadius: 2.5,
         borderColor : '#e6e6e6',
@@ -142,7 +141,7 @@ export default class  CompanyAddressView extends Component{
         return (
             <View
                 style = {styles.container}>
-                <Text style = {styles.leftTipStyle}>{'公司地址：'}</Text>
+                <Text style = {styles.leftTipStyle}>{'公司地址'}</Text>
 
                 <View style={styles.rightViewStyle}>
                     {this.props.isFouces?
@@ -150,7 +149,7 @@ export default class  CompanyAddressView extends Component{
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.city}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5,fontSize:15, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.city}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>
@@ -161,7 +160,7 @@ export default class  CompanyAddressView extends Component{
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
                             <Image source={require('../../img/down.png')}/>
-                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.district}</Text>
+                            <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, fontSize:15,justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.district}</Text>
 
                         {/*</View>*/}
                         </TouchableOpacity>

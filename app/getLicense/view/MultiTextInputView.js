@@ -18,8 +18,6 @@ export default class MultiTextInputView extends Component {
         super(props);
         this.state = { content: this.props.content,
         textName:this.props.textName,
-            inputWidth:this.props.inputWidth,
-            winWidth:this.props.winWidth,
             textEditable:this.props.textEditable};
         this.setBiz = this.setBiz.bind(this);
 
@@ -28,8 +26,6 @@ export default class MultiTextInputView extends Component {
     static propTypes = {
         //style: PropTypes.object,
         textName: PropTypes.string,
-        inputWidth:PropTypes.object,
-        winWidth:PropTypes.object,
         content:PropTypes.string,
         textEditable:PropTypes.bool,
     };
@@ -48,8 +44,7 @@ export default class MultiTextInputView extends Component {
             <View style={stylesMulti.container}>
                 <View style={stylesMulti.registerNumStyle}>
                     <Text style={[{
-                        marginLeft : 15,fontSize:15,color:'#323232'},
-                        this.props.inputWidth,]}>{this.props.textName}</Text>
+                        marginLeft : 15,fontSize:15,color:'#323232',width:85}]}>{this.props.textName}</Text>
                 <View style={stylesMulti.inputArea}>
                         <Text  multiline={true}
                                    numberOfLines={3}
@@ -80,7 +75,7 @@ const stylesMulti = StyleSheet.create({
 
     inputArea: {
         flex:1,
-        width: width - 110,
+        width: width - 115,
         height:px2dp(110),
         justifyContent: 'center',
         marginLeft: 0,

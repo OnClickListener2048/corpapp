@@ -1017,14 +1017,12 @@ export default class GetLicensePage extends BComponent {
                     {/*</View>}*/}
 
                     <TextInputView
-                    textName={'法      人：'}
-                    inputWidth={{width: 80}}
-                    winWidth={{width: SCREEN_WIDTH - 110}}
+                    textName={'法人'}
                     callback={this._callbacklegal.bind(this)}
                     content={this.state.detailObj.legalEntity}
                     textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
-                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232'}}>身  份  证：</Text>
+                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
                         {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {
                                 this.toAlertModal("reverse")
@@ -1061,9 +1059,7 @@ export default class GetLicensePage extends BComponent {
                     <View
                     style={{paddingTop: 5, backgroundColor: 'white'}}>
                     <TextInputView
-                    textName={'注  册  号：'}
-                    inputWidth={{width: 80}}
-                    winWidth={{width: SCREEN_WIDTH - 115}}
+                    textName={'注册号'}
                     callback={this._callbackreg.bind(this)}
                     content={this.state.detailObj.regId}
                     textEditable={this.state.editables}/>
@@ -1071,9 +1067,7 @@ export default class GetLicensePage extends BComponent {
                     <View
                     style={{paddingTop: 15, backgroundColor: 'white'}}>
                     <TextInputView
-                    textName={'国税登记号：'}
-                    inputWidth={{width: 93}}
-                    winWidth={{width: SCREEN_WIDTH - 130}}
+                    textName={'国税登记号'}
                     callback={this._callbacknation.bind(this)}
                     content={this.state.detailObj.nationalTaxId}
                     textEditable={this.state.editables}/>
@@ -1081,27 +1075,23 @@ export default class GetLicensePage extends BComponent {
                     <View
                     style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
                     <TextInputView
-                    textName={'地税登记号：'}
-                    inputWidth={{width: 93}}
-                    winWidth={{width: SCREEN_WIDTH - 130}}
+                    textName={'地税登记号'}
                     callback={this._callbackdetail.bind(this)}
                     content={this.state.detailObj.localTaxId}
                     textEditable={this.state.editables}/>
                     </View>
 
-                    <SinglePickerView hint={'所属行业：'} value={this.state.industry}
+                    <SinglePickerView hint={'所属行业'} value={this.state.industry}
                                       onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
 
-                    <SinglePickerView hint={'企业类型：'} value={this.state.corpType}
+                    <SinglePickerView hint={'企业类型'} value={this.state.corpType}
                                       onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
 
                     {this.renderBusinessTimeView()}
 
                     <View style={{paddingTop: 0, backgroundColor: 'white'}}>
                     <TextInputView
-                    textName={'注册资金：'}
-                    inputWidth={{width: 80}}
-                    winWidth={{width: SCREEN_WIDTH - 115}}
+                    textName={'注册资金'}
                     callback={this._callbackregFunds.bind(this)}
                     content={this.state.detailObj.regFunds}
                     textEditable={this.state.editables}/>
@@ -1131,9 +1121,7 @@ export default class GetLicensePage extends BComponent {
                                     style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
                                     <MultiTextInputView
                                         ref="MultiTextInputView"
-                                        textName={'经营范围：'}
-                                        inputWidth={{width: 80}}
-                                        winWidth={{width: SCREEN_WIDTH - 115}}
+                                        textName={'经营范围'}
                                         callback={this._callbackbiz.bind(this)}
                                         content={this.state.bizRange}
                                         textEditable={this.state.editables}/>
@@ -1143,9 +1131,7 @@ export default class GetLicensePage extends BComponent {
                                 style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
                                 <MultiTextInputView
                                     ref="MultiTextInputView"
-                                    textName={'经营范围：'}
-                                    inputWidth={{width: 80}}
-                                    winWidth={{width: SCREEN_WIDTH - 115}}
+                                    textName={'经营范围'}
                                     callback={this._callbackbiz.bind(this)}
                                     content={this.state.bizRange}
                                     textEditable={this.state.editables}/>
@@ -1154,7 +1140,7 @@ export default class GetLicensePage extends BComponent {
                     </View>
 
                     <View style={[styles.identityCardPhoto, {height: 150}]}>
-                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,color:'#323232'}}>经营执照：</Text>
+                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,width:85,color:'#323232'}}>经营执照</Text>
 
                             {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {

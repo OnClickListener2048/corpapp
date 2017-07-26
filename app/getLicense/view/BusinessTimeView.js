@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         paddingTop:5,
         fontSize:15,
-        color:'#323232'
+        color:'#323232',
+        width:70,
     },
     rightViewStyle: {
         marginRight: 15,
@@ -65,7 +66,7 @@ const styles = StyleSheet.create({
         flex : 1,
         marginLeft : 4.5,
         marginRight : 0,
-        height : 23,
+        height : 30,
         borderRadius: 2.5,
         borderWidth: 1,
         borderColor : '#e6e6e6',
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
         marginRight : 0,
         // width : 105.5,
         flex : 1,
-        height : 23,
+        height : 30,
         borderWidth: 1,
         borderRadius: 2.5,
         borderColor : '#e6e6e6',
@@ -189,7 +190,7 @@ export default class BusinessTimeView extends Component{
         return (
             <View
                 style = {styles.container}>
-                <Text style = {styles.leftTipStyle}>{'营业期限：'}</Text>
+                <Text style = {styles.leftTipStyle}>{'营业期限'}</Text>
 
                 <View style={styles.rightViewStyle}>
 
@@ -228,7 +229,7 @@ export default class BusinessTimeView extends Component{
 
                             </View>
                         }
-                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 3, marginRight:5,width:10}]}></View>
+                        <View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 0, marginRight:3,width:8}]}></View>
                         {this.state.allTimePressBtnSelected ==='false' &&this.props.isFocus === true?
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")

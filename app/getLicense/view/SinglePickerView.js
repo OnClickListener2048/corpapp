@@ -66,6 +66,7 @@ export default class SinglePickerView extends Component {
                                 marginBottom: 5,
                                     justifyContent: 'flex-end',
                                     flex: 1,
+                                fontSize:15,
                                     color: '#323232',
                                 }]}>{'请选择'}</Text>:
                             <Text numberOfLines={1} style={[{
@@ -73,13 +74,14 @@ export default class SinglePickerView extends Component {
                                 marginRight: 5,
                                 marginBottom: 5,
                                 color: '#323232',
+                                fontSize:15,
                                 justifyContent:'flex-end',
                             }]}>{this.props.value}</Text>}
                         </View>
                         }
 
                         {enable &&
-                        <TouchableOpacity style={{paddingBottom:17,paddingTop:1,flex:1,backgroundColor:'white',alignItems: 'flex-start',justifyContent:'flex-start'}} onPress={() => {
+                        <TouchableOpacity style={{paddingBottom:10,paddingTop:1,flex:1,backgroundColor:'white',alignItems: 'flex-start',justifyContent:'flex-start'}} onPress={() => {
                             this._Press()
                         }}>
                             <View style={styles.leftdownDrapViewStyle}>
@@ -96,6 +98,7 @@ export default class SinglePickerView extends Component {
                                 marginRight: 5,
                                 justifyContent: 'center',
                                 flex: 1,
+                                    fontSize:15,
                                 color: '#323232',
                             }]}>{this.props.value}</Text>}
                             </View>
@@ -131,7 +134,7 @@ const styles = StyleSheet.create({
 
     leftTipStyle: {
         marginLeft: 15,
-        marginRight: 4,
+        width:85,
         paddingTop: 5,
         color:'#323232',
         fontSize:15,
@@ -157,11 +160,11 @@ const styles = StyleSheet.create({
     leftdownDrapViewStyle: {
         flexDirection: 'row-reverse',
         alignItems: 'center',
-        // width : SCREEN_WIDTH-105,
+        width : SCREEN_WIDTH-115,
         flex: 1,
         marginLeft: 4.5,
         marginRight: 0,
-        // height: 23,
+        height: 30,
         borderRadius: 2.5,
         borderWidth: 1,
         borderColor: '#e6e6e6',

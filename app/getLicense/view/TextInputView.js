@@ -13,8 +13,6 @@ export default class CompanyInfoView extends Component {
         super(props);
         this.state = { content: this.props.content,
         textName:this.props.textName,
-            inputWidth:this.props.inputWidth,
-            winWidth:this.props.winWidth,
             textEditable:this.props.textEditable};
 
     }
@@ -22,8 +20,6 @@ export default class CompanyInfoView extends Component {
     static propTypes = {
         //style: PropTypes.object,
         textName: PropTypes.string,
-        inputWidth:PropTypes.object,
-        winWidth:PropTypes.object,
         content:PropTypes.string,
         textEditable:PropTypes.bool,
     };
@@ -37,10 +33,9 @@ export default class CompanyInfoView extends Component {
             <View style={styles.container}>
                 <View style={styles.registerNumStyle}>
                     <Text style={[{
-                        marginLeft : 15,fontSize:15,color:'#323232'},
-                        this.props.inputWidth,]}>{this.props.textName}</Text>
+                        marginLeft : 15,fontSize:15,color:'#323232',width:85,marginTop:6}]}>{this.props.textName}</Text>
                 <View style={styles.textInputContainer}>
-                    <View style={[styles.textInputWrapper,this.props.winWidth,]}>
+                    <View style={[styles.textInputWrapper]}>
                         <TextInput underlineColorAndroid='transparent'
                                    value={this.state.content}
                                    editable={this.props.textEditable}

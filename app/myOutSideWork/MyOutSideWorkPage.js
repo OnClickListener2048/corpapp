@@ -226,7 +226,7 @@ export default class MyOutSideWorkPage extends BComponent{
                 underlineColor={'transparent'}
                 // underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
                                         // callback={this._closepull.bind(this)}
-                                        tabBarTextStyle={{fontSize: 18}}/>}
+                                        tabBarTextStyle={{fontSize: 15}}/>}
         >
             {/*
              We have to use tabLabel to pass tab options to TabBar component,
