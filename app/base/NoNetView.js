@@ -57,10 +57,10 @@ export default class NoNetView extends Component {
         this.setState({isConnected: isConnected});
 
         // 网络恢复时自动重连
-        if(isConnected) {
-            let {onClick} = this.props;
-            if(onClick !== undefined){ onClick(); }
-        }
+        // if(isConnected) {
+        //     let {onClick} = this.props;
+        //     if(onClick !== undefined){ onClick(); }
+        // }
     }
 
     render() {

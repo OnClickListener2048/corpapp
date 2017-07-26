@@ -15,7 +15,6 @@
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import "SplashScreen.h"
 #import <Bugly/Bugly.h>
 // **********************************************
 // *** 重要, 本行必须添加以使用 React Native Navigation ***
@@ -91,7 +90,6 @@ static BOOL isProduction = true;  //填写isProdurion  平时测试时为false �
    [self.window makeKeyAndVisible];
    */
   
-  // [SplashScreen show]; //show splash screen
   return YES;
 }
 
