@@ -406,6 +406,7 @@ export default class LoginPage extends Component {
                             <View style={styles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent'
                                            ref="vCodeInput"
+                                           autoCorrect={false}
                                            value={this.state.vCode}
                                            editable={this.state.mobileValid}
                                            secureTextEntry={false} maxLength={4} keyboardType='default'
