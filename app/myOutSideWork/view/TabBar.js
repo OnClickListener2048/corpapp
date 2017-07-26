@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
 
   badgeBubble: {
     position: 'absolute',
-    marginTop: 6,
-    marginLeft: 85,
+    marginTop: 10,
+    marginLeft: 80,
     width: 15,
       height:15,
     borderRadius: 8,
