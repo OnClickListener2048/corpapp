@@ -29,7 +29,7 @@ export default class MyOutSideWorkPage extends BComponent{
         super(props);
         this.state = {
             outSourceCountObj : {},
-            loaded:false,
+            loaded:null,
             needLoding:true,
             canClickBtn : false,
 
@@ -167,6 +167,9 @@ export default class MyOutSideWorkPage extends BComponent{
                 if (needLoding){
                     SActivityIndicator.hide(loading);
                 }                console.log("获取失败" , e);
+                this.setState({
+                    loaded:false,
+                });
                 Toast.show(errorText(e));
             },
         );
@@ -210,7 +213,7 @@ export default class MyOutSideWorkPage extends BComponent{
         // }
         //else
         console.log("外勤入口 this.state.loaded=", this.state.loaded);
-            if (this.state.loaded){
+            if (this.state.loaded===true){
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
@@ -243,6 +246,9 @@ export default class MyOutSideWorkPage extends BComponent{
 
         </ScrollableTabView>
 
+    }else if(this.state.loaded===null){
+                return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+
     }else {
 
          return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
@@ -252,7 +258,6 @@ export default class MyOutSideWorkPage extends BComponent{
                         active={require('../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
-        // return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
     }
 
     }
