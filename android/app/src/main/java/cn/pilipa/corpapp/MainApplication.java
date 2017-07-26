@@ -13,7 +13,6 @@ import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import cn.jpush.reactnativejpush.JPushPackage;
 import io.realm.react.RealmReactPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.cboy.rn.splashscreen.SplashScreenReactPackage;
 import com.cmcewen.blurview.BlurViewPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -57,7 +56,6 @@ public class MainApplication extends NavigationApplication {
                     new RNDeviceInfo(),
                     new RealmReactPackage(),
                     new VectorIconsPackage(),
-                    new SplashScreenReactPackage(),
                     new BlurViewPackage(),
                       new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
               );
