@@ -61,12 +61,13 @@ export default class MessageCenterPage extends BComponent {
             loadingMore : 0,
             isRefreshing: false,
             isNoNetwork : false,
+            isJumping : false,
+            isLoading : false,
+            lastID : null,
+            messageArr : [],
+
         }
 
-        this.isJumping = false;// 是否跳转中
-        this.messageArr = [];
-        this.lastID = null;
-        this.isLoading = false;
 
         this.pageCount = 15;
         this._loadInitData = this._loadInitData.bind(this);
@@ -89,10 +90,12 @@ export default class MessageCenterPage extends BComponent {
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
-        if(event.id==='willAppear'){
-            this.isJumping = false;
+        // if(event.id==='willAppear'){
+        //     this.isJumping = false;
+        //
+        // }
+        console.log('看看到这里没有00', this.state.isJumping);
 
-        }
     }
 
     // 载入初始化数据
@@ -110,7 +113,7 @@ export default class MessageCenterPage extends BComponent {
         });
 
         let loading = SActivityIndicator.show(true, "加载中...");
-        this.lastID = null;
+        this.state.lastID = null;
 
         apis.loadMessageData(this.pageCount,'').then(
             (responseData) => {
@@ -133,22 +136,22 @@ export default class MessageCenterPage extends BComponent {
                 }
 
                 if(responseData !== null && responseData.data !== null) {
-                    this.messageArr = [];
-                    this.messageArr = this.messageArr.concat(responseData.data);
+                    this.state.messageArr = [];
+                    this.state.messageArr = this.state.messageArr.concat(responseData.data);
                     // console.log(this.messageArr)
-                    for (let  i = 0 ; i < this.messageArr.length ; i++){
-                        let  secData = this.messageArr[i];
+                    for (let  i = 0 ; i < this.state.messageArr.length ; i++){
+                        let  secData = this.state.messageArr[i];
                         secData.rowIndex = i;
                     }
 
                     this.setState({
-                        dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                        dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
                         faild: false,
                         loaded:true,
                     });
 
                     if (responseData.data.length == this.pageCount){
-                        this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                        this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
                         // console.log(this.lastID +'你大爷');
                     }else {
                         this.setState({loadingMore: 2});
@@ -160,7 +163,7 @@ export default class MessageCenterPage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
 
-                if ( this.messageArr.length > 0){
+                if ( this.state.messageArr.length > 0){
                     // 关闭刷新动画
                     this.setState({
                         loaded:true,
@@ -192,7 +195,7 @@ export default class MessageCenterPage extends BComponent {
             return;
         }
 
-        this.lastID = null;
+        this.state.lastID = null;
 
         this.setState({isRefreshing: true});
 
@@ -215,12 +218,12 @@ export default class MessageCenterPage extends BComponent {
                 }
             }
             if(responseData !== null && responseData.data !== null) {
-                this.messageArr = [];
-                this.messageArr = this.messageArr.concat(responseData.data);
+                this.state.messageArr = [];
+                this.state.messageArr = this.state.messageArr.concat(responseData.data);
                 // console.log(this.messageArr)
 
                 if (responseData.data.length == this.pageCount){
-                    this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
                     this.setState({loadingMore: 0});
 
                     // console.log(this.lastID +'你大爷');
@@ -229,14 +232,14 @@ export default class MessageCenterPage extends BComponent {
 
                 }
 
-                for (let  i = 0 ; i < this.messageArr.length ; i++){
-                    let  secData = this.messageArr[i];
+                for (let  i = 0 ; i < this.state.messageArr.length ; i++){
+                    let  secData = this.state.messageArr[i];
                     secData.rowIndex = i;
 
                 }
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
                     loaded:true,
                 });
                 this.setState({isRefreshing: false});
@@ -261,18 +264,18 @@ export default class MessageCenterPage extends BComponent {
             return;
         }
 
-        if (this.lastID === null){
+        if (this.state.lastID === null){
             return;
         }
 
-        if (this.isLoading === true){
+        if (this.state.isLoading === true){
             return;
         }
         this.setState({loadingMore: 1});
 
-        this.isLoading = true;
+        this.state.isLoading = true;
 
-        apis.loadMessageData(this.pageCount,this.lastID).then(
+        apis.loadMessageData(this.pageCount,this.state.lastID).then(
 
             (responseData) => {
                 let cnt = responseData.unReadNum;
@@ -291,13 +294,13 @@ export default class MessageCenterPage extends BComponent {
                     }
                 }
 
-                this.lastID = null
+                this.state.lastID = null
 
 
-                this.messageArr = this.messageArr.concat(responseData.data);
+                this.state.messageArr = this.state.messageArr.concat(responseData.data);
 
                 if (responseData.data.length == this.pageCount){
-                    this.lastID = this.messageArr[this.messageArr.length - 1].msgId;
+                    this.state.lastID = this.state.messageArr[this.state.messageArr.length - 1].msgId;
                     this.setState({loadingMore: 0});
 
                     // console.log(this.lastID +'你大爷');
@@ -306,7 +309,7 @@ export default class MessageCenterPage extends BComponent {
 
                 }
 
-                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.lastID + '结束');
+                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.state.lastID + '结束');
 
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
                     let  secData = this.messageArr[i];
@@ -314,7 +317,7 @@ export default class MessageCenterPage extends BComponent {
                 }
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
                     loaded:true,
                 });
 
@@ -342,10 +345,10 @@ export default class MessageCenterPage extends BComponent {
 
                 rowData.read = 'true';
 
-                let  a =  this.messageArr[rowData.rowIndex];
+                let  a =  this.state.messageArr[rowData.rowIndex];
                 // console.log("点击成功了" + a.read);
                 let data = [];
-                this.messageArr.forEach(row => {
+                this.state.messageArr.forEach(row => {
                     data.push(Object.assign({}, row));
                 } );
 
@@ -366,7 +369,7 @@ export default class MessageCenterPage extends BComponent {
                 this.messageArr = data;
 
                 this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                    dataSource: this.state.dataSource.cloneWithRows(this.state.messageArr),
                     loaded:true,
                 });
 
@@ -474,11 +477,19 @@ export default class MessageCenterPage extends BComponent {
     // 跳转到外勤通知页
     toMyOutSideWork(msgId,rowData) {
         // console.log(this.props.navigator.subarray().length);
-        if (this.isJumping === true){
+        if (this.state.isJumping === true){
             return;
         }
 
-        this.isJumping = true;
+
+        this.setState({isJumping:true})//防重复点击
+
+        console.log('看看到这里没有' + this.state.isJumping);
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({isJumping:false})//1.5秒后可点击
+        },1000)
+
 
         let jumpUri = JSON.parse(rowData.content).jumpUri;
         // console.log('jumpUrijumpUri ===' + jumpUri);
@@ -540,11 +551,13 @@ export default class MessageCenterPage extends BComponent {
 
 
     toSystemMessagePage(contentJson,msgId,rowData) {
-        if (this.isJumping === true){
+        if (this.state.isJumping === true){
             return;
         }
-        this.isJumping = true;
-
+        this.setState({isJumping:true})//防重复点击
+        this.timer = setTimeout(async()=>{
+            await this.setState({isJumping:false})//1.5秒后可点击
+        },1500)
         this.props.navigator.push({
                 screen: 'SystemMessagePage',
                 backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -659,7 +672,7 @@ export default class MessageCenterPage extends BComponent {
                      </View>
             </TouchableOpacity>
             );
-        }else if (this.messageArr.length == 0){
+        }else if (this.state.messageArr.length == 0){
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
