@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     },
     companyInfoViewContainer: {
         width: SCREEN_WIDTH,
-        height:SCREEN_WIDTH > 350 ? 115 : 185,
+        height: 185,
         backgroundColor: '#FFFFFF',
 
         flexDirection: 'column'
@@ -37,14 +37,14 @@ const styles = StyleSheet.create({
         marginLeft : 15,
         marginRight : 15,
         width: SCREEN_WIDTH - 30,
-        height: SCREEN_WIDTH > 350 ? 35 : 70,
-        flexDirection: SCREEN_WIDTH > 350 ? 'row' : 'column',
+        height:  70,
+        flexDirection: 'column',
         justifyContent:'space-between',
 
     },
     companyInfoRowSubViewStyle: {
-        maxWidth: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH - 30,
-        width: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH - 30,
+        maxWidth:  SCREEN_WIDTH - 30,
+        width: SCREEN_WIDTH - 30,
         height: 35,
         marginLeft : 0,
         marginRight : 0,
@@ -53,33 +53,33 @@ const styles = StyleSheet.create({
 
     },
     companyInfoRowPhoneStyle: {
-        maxWidth: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH/2 - 5,
-        width: SCREEN_WIDTH > 350 ? SCREEN_WIDTH/2 - 15 : SCREEN_WIDTH/2 - 5,
+        maxWidth:  SCREEN_WIDTH - 30,
+        width:  SCREEN_WIDTH - 30,
         height: 35,
         marginLeft : 0,
         marginRight : 0,
         flexDirection: 'row',
-        justifyContent:SCREEN_WIDTH > 350 ? 'flex-end' : 'flex-start',
+        justifyContent: 'flex-start',
         alignItems:'center',
     },
 
     textInputWrapper: {
-        height: 30,
-        width: SCREEN_WIDTH-40 - 60,
+        height: 35,
+        width: SCREEN_WIDTH-83 - 30,
         // backgroundColor: 'transparent',
         // position: 'relative',
-        marginRight: px2dp(20),
+        // marginRight: px2dp(20),
         flexDirection: 'row',
-        marginTop: 5,
         marginLeft : 0,
+        marginRight : 0,
     },
 
     contactNmaeInputWrapper: {
         height: 30,
-        width: SCREEN_WIDTH > 350 ?  SCREEN_WIDTH / 2 - 88 : SCREEN_WIDTH-40 - 60,
+        width:  SCREEN_WIDTH-83 - 30,
         // backgroundColor: 'transparent',
         // position: 'relative',
-        marginRight: px2dp(20),
+        // marginRight: px2dp(20),
         flexDirection: 'row',
         marginTop: 5,
         marginLeft : 0,
