@@ -1017,7 +1017,7 @@ export default class GetLicensePage extends BComponent {
                     {/*</View>}*/}
 
                     <TextInputView
-                    textName={'法        人：'}
+                    textName={'法      人：'}
                     inputWidth={{width: 80}}
                     winWidth={{width: SCREEN_WIDTH - 110}}
                     callback={this._callbacklegal.bind(this)}
