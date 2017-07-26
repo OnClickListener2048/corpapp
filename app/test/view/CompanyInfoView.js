@@ -190,13 +190,15 @@ export default class CompanyInfoView extends React.Component {
                         {this.props.isFocusData?
                         <View
                             style={[{
-                                  alignItems:'center',flex: 1,flexDirection:'row',height:30}]}>
+                                  alignItems:'center',flex: 1,flexDirection:'row',height:35}]}>
                             <Text style={{fontSize: 15,color:'#323232',width: 83}}>电话</Text>
                             <TextInput
                                 underlineColorAndroid='transparent' value={this.state.ContactsPhone}
-                                style={{width: 110,
+                                style={{
                                     marginRight: 0,
                                     flex:1,
+                                    padding: 0,
+
                                     fontSize: 15,
                                     color:'#323232',}} placeholder='' returnKeyType='next'
                                 onChangeText={
