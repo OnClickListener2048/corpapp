@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     leftTipStyle: {
         marginLeft: 15,
         paddingTop:5,
-
+        fontSize:15,
+        color:'#323232'
     },
     rightViewStyle: {
         marginRight: 15,

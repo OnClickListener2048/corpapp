@@ -1024,7 +1024,7 @@ export default class GetLicensePage extends BComponent {
                     content={this.state.detailObj.legalEntity}
                     textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
-                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10}}>身 份 证：</Text>
+                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232'}}>身 份 证：</Text>
                         {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {
                                 this.toAlertModal("reverse")
@@ -1154,7 +1154,7 @@ export default class GetLicensePage extends BComponent {
                     </View>
 
                     <View style={[styles.identityCardPhoto, {height: 150}]}>
-                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20}}>经营执照：</Text>
+                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,color:'#323232'}}>经营执照：</Text>
 
                             {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {

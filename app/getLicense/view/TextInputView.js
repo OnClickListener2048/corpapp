@@ -37,7 +37,7 @@ export default class CompanyInfoView extends Component {
             <View style={styles.container}>
                 <View style={styles.registerNumStyle}>
                     <Text style={[{
-                        marginLeft : 15,fontSize:15},
+                        marginLeft : 15,fontSize:15,color:'#323232'},
                         this.props.inputWidth,]}>{this.props.textName}</Text>
                 <View style={styles.textInputContainer}>
                     <View style={[styles.textInputWrapper,this.props.winWidth,]}>

@@ -48,7 +48,7 @@ export default class MultiTextInputView extends Component {
             <View style={stylesMulti.container}>
                 <View style={stylesMulti.registerNumStyle}>
                     <Text style={[{
-                        marginLeft : 15,fontSize:15},
+                        marginLeft : 15,fontSize:15,color:'#323232'},
                         this.props.inputWidth,]}>{this.props.textName}</Text>
                 <View style={stylesMulti.inputArea}>
                         <Text  multiline={true}

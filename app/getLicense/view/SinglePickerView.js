@@ -133,6 +133,8 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         marginRight: 4,
         paddingTop: 5,
+        color:'#323232',
+        fontSize:15,
 
     },
     rightViewStyle: {
