@@ -19,7 +19,7 @@ const SCREEN_WIDTH = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
     container: {
-        height:38 * 2,
+        height:45 * 2,
         flexDirection: 'row',
         paddingTop:10,
         paddingBottom:2,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
     rightRowViewStyle: {
         flexDirection: 'row',
-        height: 25,
+        height: 35,
         backgroundColor:'white',
         // justifyContent:'center',
         alignItems:'center',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     selectBtnStyle: {
 
         width : 35,
-        height : 35,
+        height : 45,
         backgroundColor:'white',
 
         justifyContent: 'center',
@@ -216,6 +216,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
+                                    fontSize:15
                                 }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate  + ""}</Text>
 
                             </TouchableOpacity>:
@@ -225,6 +226,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
+                                    fontSize:15
                                 }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate + ""}</Text>
 
                             </View>
@@ -240,6 +242,7 @@ export default class BusinessTimeView extends Component{
                                 justifyContent: 'center',
                                 flex: 1,
                                 color: '#323232',
+                                fontSize:15
                             }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
                         </TouchableOpacity>:
                             <View style={ styles.rightdownDrapViewStyle}>
@@ -248,6 +251,7 @@ export default class BusinessTimeView extends Component{
                                     justifyContent: 'center',
                                     flex: 1,
                                     color: '#323232',
+                                    fontSize:15
                                 }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
                             </View>
                         }
@@ -269,7 +273,7 @@ export default class BusinessTimeView extends Component{
                             </View>
                         }
 
-                        <Text style={[{ marginLeft : 4.5,color:'#e6e6e6',minHeight: 15,maxHeight:20}]}>{'无期限'}</Text>
+                        <Text style={[{ marginLeft : 4.5,color:'#e6e6e6',minHeight: 14.5,maxHeight:20,fontSize:15}]}>{'无期限'}</Text>
                     </View>
                 </View>
 

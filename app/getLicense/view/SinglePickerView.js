@@ -81,7 +81,7 @@ export default class SinglePickerView extends Component {
                         }
 
                         {enable &&
-                        <TouchableOpacity style={{paddingBottom:10,paddingTop:1,flex:1,backgroundColor:'white',alignItems: 'flex-start',justifyContent:'flex-start'}} onPress={() => {
+                        <TouchableOpacity style={{paddingBottom:13,paddingTop:1,flex:1,backgroundColor:'white',alignItems: 'flex-start',justifyContent:'flex-start'}} onPress={() => {
                             this._Press()
                         }}>
                             <View style={styles.leftdownDrapViewStyle}>
