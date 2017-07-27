@@ -40,6 +40,7 @@ import ImageLoad from "../view/ImageLoad";
 import WatchImageModal from "./view/WatchImageModal";
 import BComponent from '../base';
 import NoNetView from "../base/NoNetView";
+import NoMessage from "../test/NoMessage";
 
 const window = Dimensions.get('window');
 
@@ -73,6 +74,7 @@ export default class GetLicensePage extends BComponent {
             allowEditInfo:false,//登陆人员权限，是否可编辑
             inProgressEdit:false,//开始任务才可编辑
             isPickerOpen:false,//地址和类型选择器是否打开
+            faild:false,                   // 是否初始化 ListView
 
             //保存数据类型
             legalEntity:null,//法人
@@ -197,6 +199,7 @@ export default class GetLicensePage extends BComponent {
                         allowEditInfo:responseData.data.allowEditInfo,
                         inProgressEdit :(responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
+                        faild : false,
                             // bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
                             city	: responseData.data.corpAddressArea.cityId,        //市
@@ -240,7 +243,8 @@ export default class GetLicensePage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 this.setState({
-                    loaded:false,
+                    loaded:true,
+                    faild : true,
                 });
                 console.log("获取失败" , e);
                 Toast.show('获取失败' );
@@ -961,42 +965,33 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
-    render() {
-        return(
-            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData()}>
+    renderScroolInfoView(){
+        if (this.state.loaded === false) {      // 无数据
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
 
-                <View style={styles.container}>
-
-                {/*选择框遮罩*/}
-                <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
-                    this.closePicker()
-                }}>
-                    <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
-                </TouchableOpacity>
-
-                {this.state.imgVisibles === true &&
-                <AlertPhotoModal
-                    callback={this._callbackPhoto.bind(this)}/>}
-                {this.state.visible === true &&
-                <WatchImageModal
-                    visible={true}
-                    imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
-                    imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
-                    titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
-                    callback={this._callbackWatchPhoto.bind(this)}
-                    callbackfile={this._callbackPhoto.bind(this)}/>}
-                {this.state.isDateTimePickerVisible === true &&
-                    <DataTimerView
-                    callback={this._callbackData.bind(this)}/>
-                }
-                {this.state.loaded === true &&
+                </View>
+            );
+        }else if(this.state.faild === true){
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <TouchableOpacity onPress={() => { this._loadData() }}>
+                        <NoMessage
+                            textContent='加载失败，点击重试'
+                            active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
+                </View>
+            );
+        }else{
+            console.log( '点击else');
+            return(
                 <ScrollView style={styles.container}>
                     {Platform.OS === 'android' &&
                     <DateTimePicker
                         isVisible={this.state.isDateTimePickerVisible}
                         onConfirm={this._handleDatePicked}
                         onCancel={this._hideDateTimePicker}
-                        />
+                    />
                     }
                     {this.renderVerifyProcessTipView()}
                     {this.renderVerifyBtnView()}
@@ -1017,12 +1012,12 @@ export default class GetLicensePage extends BComponent {
                     {/*</View>}*/}
 
                     <TextInputView
-                    textName={'法人'}
-                    callback={this._callbacklegal.bind(this)}
-                    content={this.state.detailObj.legalEntity}
-                    textEditable={this.state.editables}/>
+                        textName={'法人'}
+                        callback={this._callbacklegal.bind(this)}
+                        content={this.state.detailObj.legalEntity}
+                        textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
-                    <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
+                        <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
                         {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {
                                 this.toAlertModal("reverse")
@@ -1053,32 +1048,32 @@ export default class GetLicensePage extends BComponent {
                             </View>
                         }
 
-                    {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
-                    {/*justifyContent:'flex-end'}}/>*/}
+                        {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
+                        {/*justifyContent:'flex-end'}}/>*/}
                     </View>
                     <View
-                    style={{paddingTop: 5, backgroundColor: 'white'}}>
-                    <TextInputView
-                    textName={'注册号'}
-                    callback={this._callbackreg.bind(this)}
-                    content={this.state.detailObj.regId}
-                    textEditable={this.state.editables}/>
+                        style={{paddingTop: 5, backgroundColor: 'white'}}>
+                        <TextInputView
+                            textName={'注册号'}
+                            callback={this._callbackreg.bind(this)}
+                            content={this.state.detailObj.regId}
+                            textEditable={this.state.editables}/>
                     </View>
                     <View
-                    style={{paddingTop: 15, backgroundColor: 'white'}}>
-                    <TextInputView
-                    textName={'国税登记号'}
-                    callback={this._callbacknation.bind(this)}
-                    content={this.state.detailObj.nationalTaxId}
-                    textEditable={this.state.editables}/>
+                        style={{paddingTop: 15, backgroundColor: 'white'}}>
+                        <TextInputView
+                            textName={'国税登记号'}
+                            callback={this._callbacknation.bind(this)}
+                            content={this.state.detailObj.nationalTaxId}
+                            textEditable={this.state.editables}/>
                     </View>
                     <View
-                    style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
-                    <TextInputView
-                    textName={'地税登记号'}
-                    callback={this._callbackdetail.bind(this)}
-                    content={this.state.detailObj.localTaxId}
-                    textEditable={this.state.editables}/>
+                        style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
+                        <TextInputView
+                            textName={'地税登记号'}
+                            callback={this._callbackdetail.bind(this)}
+                            content={this.state.detailObj.localTaxId}
+                            textEditable={this.state.editables}/>
                     </View>
 
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
@@ -1090,11 +1085,11 @@ export default class GetLicensePage extends BComponent {
                     {this.renderBusinessTimeView()}
 
                     <View style={{paddingTop: 0, backgroundColor: 'white'}}>
-                    <TextInputView
-                    textName={'注册资金'}
-                    callback={this._callbackregFunds.bind(this)}
-                    content={this.state.detailObj.regFunds}
-                    textEditable={this.state.editables}/>
+                        <TextInputView
+                            textName={'注册资金'}
+                            callback={this._callbackregFunds.bind(this)}
+                            content={this.state.detailObj.regFunds}
+                            textEditable={this.state.editables}/>
                     </View>
                     {this.renderCompanyAddressView()}
                     {/*公司地址输入框*/}
@@ -1140,9 +1135,9 @@ export default class GetLicensePage extends BComponent {
                     </View>
 
                     <View style={[styles.identityCardPhoto, {height: 150}]}>
-                            <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,width:85,color:'#323232'}}>经营执照</Text>
+                        <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,width:85,color:'#323232'}}>经营执照</Text>
 
-                            {this.state.editables === true ?
+                        {this.state.editables === true ?
                             <TouchableOpacity onPress={() => {
                                 this.toAlertModal("blicense")
                             }}>
@@ -1175,11 +1170,43 @@ export default class GetLicensePage extends BComponent {
                         }
 
                     </View>
-                    </ScrollView>
+                </ScrollView>
+            );
+        }
+    }
+
+    render() {
+
+        return(
+            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData()}>
+
+                <View style={styles.container}>
+
+                {/*选择框遮罩*/}
+                <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
+                    this.closePicker()
+                }}>
+                    <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
+                </TouchableOpacity>
+                {this.state.imgVisibles === true &&
+                <AlertPhotoModal
+                    callback={this._callbackPhoto.bind(this)}/>}
+                {this.state.visible === true &&
+                <WatchImageModal
+                    visible={true}
+                    imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
+                    imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
+                    titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
+                    callback={this._callbackWatchPhoto.bind(this)}
+                    callbackfile={this._callbackPhoto.bind(this)}/>}
+                {this.state.isDateTimePickerVisible === true &&
+                    <DataTimerView
+                    callback={this._callbackData.bind(this)}/>
                 }
+                    {this.renderScroolInfoView()}
             </View>
             </NoNetView>
-        );
+        )
     }
 
     toMultiTextInput(){
