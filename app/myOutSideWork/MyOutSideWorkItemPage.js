@@ -163,11 +163,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadAgainList(){
-        if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
-            this.setState({isRefreshing: false});
-            return;
-        }
 
         let taskType = this.props.label==null?'all':this.props.label;
         this.setState({isRefreshing: true});
@@ -216,10 +211,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadMoreData() {
-        if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
-            return;
-        }
 
         console.log('加载更多哈哈');
         let taskType = this.props.label==null?'all':this.props.label;
