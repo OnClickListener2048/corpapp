@@ -208,8 +208,8 @@ export default class MyOutSideWorkPage extends BComponent{
             tabBarActiveTextColor="#FF0000"
             // locked={true}
             renderTabBar={() => <TabBar
-                underlineColor={'transparent'}
-                // underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
+                // underlineColor={'transparent'}
+                underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
                                         // callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 15}}/>}
         >
@@ -219,7 +219,7 @@ export default class MyOutSideWorkPage extends BComponent{
              */}
             <MyOutSideWorkItemPage
                 ref="toDo"
-                tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 1}}
+                tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 0}}
                 label="todo" callback={this._callback.bind(this)}
                 refresh={this.state.needLoding}
             />

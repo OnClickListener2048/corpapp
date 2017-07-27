@@ -44,9 +44,6 @@ const styles = StyleSheet.create({
   },
 
   badgeBubble: {
-    position: 'absolute',
-    marginTop: 7,
-    marginLeft: 83,
     width: 15,
       height:15,
     borderRadius: 8,
@@ -136,7 +133,7 @@ class TabBar extends Component {
       console.log("==renderTab=="+page);
       // this.props.callback(page);
       const {activeTab, tabBadgeColor} = this.props;
-    const {label, badge, badgeColor,theLast} = tab;
+    const {label,  badge,badgeColor,theLast} = tab;
     const isTabActive = activeTab === page;
     const activeTextColor = this.props.activeTextColor || "navy";
     const inactiveTextColor = this.props.inactiveTextColor || "black";
@@ -146,29 +143,39 @@ class TabBar extends Component {
                           onPress={() => this.props.goToPage(page)}
                           onLayout={(event) => this.onTabLayout(event, page)}>
           <View style={[styles.tab, this.props.tabStyles.tab]}>
-            <View style={{borderRightWidth:theLast,
-                borderBottomWidth: 0,
-                borderTopWidth: 0,
-                borderLeftWidth: 0,
-                borderRightColor: '#d2d2d2',
-                paddingRight:32,
-                paddingLeft:33}}>
-              <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
-            </View>
-            </View>
-            {badge != null && badge > 0 && badge<100&&
-            <View style={[styles.badgeBubble,
-                this.props.tabStyles.badgeBubble,
-                {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
-              <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>{badge || 0}</Text>
-            </View>}
+            <View style={{
+                justifyContent:'space-between',
+                flexDirection:'row',
+                alignItems:'center',
+                width:naviButtonWidth-2,
+                height:46,
+            }}>
+              <View style={{width:theLast,height:20,backgroundColor:'#d2d2d2'}}/>
+              <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, alignSelf:'center',fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
+              <View style={{width:theLast,height:20,backgroundColor:'#d2d2d2'}}/>
+              <View style={{position: 'absolute',
+                  marginLeft:naviButtonWidth-35,
+                  paddingTop:8,
+                  width: 15,
+                  height:46,}}>
+                {badge != null && badge > 0 && badge<100&&
+                <View style={[styles.badgeBubble,
+                    this.props.tabStyles.badgeBubble,
+                    {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
+                  <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>{badge || 0}</Text>
+                </View>}
 
-            {badge != null && badge > 99&&
-            <View style={[styles.badgeBubble,
-                this.props.tabStyles.badgeBubble,
-                {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
-              <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>99+</Text>
-            </View>}
+                {badge != null && badge > 99&&
+                <View style={[styles.badgeBubble,
+                    this.props.tabStyles.badgeBubble,
+                    {backgroundColor: badgeColor || activeTextColor},{width:10+5*(badge+"").length}]}>
+                  <Text style={[styles.badgeText, this.props.tabStyles.badgeText]}>99+</Text>
+                </View>}
+              </View>
+            </View>
+
+            </View>
+
 
         </TouchableOpacity>
 
