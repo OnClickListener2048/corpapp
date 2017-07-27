@@ -41,6 +41,7 @@ import WatchImageModal from "./view/WatchImageModal";
 import BComponent from '../base';
 import NoNetView from "../base/NoNetView";
 import NoMessage from "../test/NoMessage";
+import NoNetEmptyView from "../base/NoNetEmptyView";
 
 const window = Dimensions.get('window');
 
@@ -69,7 +70,7 @@ export default class GetLicensePage extends BComponent {
             dateType:null,
             isDateTimePickerVisible:this.props.isDateTimePickerVisible,
             detailObj:{},
-            loaded:false,
+            loaded:null,
             editables:false,//不可编辑
             allowEditInfo:false,//登陆人员权限，是否可编辑
             inProgressEdit:false,//开始任务才可编辑
@@ -309,12 +310,13 @@ export default class GetLicensePage extends BComponent {
                 SActivityIndicator.hide(loading);
                 console.log("提交成功cc" , responseData);
                 Toast.show('提交成功');
+                this.setState({
+                    loaded:true,
+                });
                 if(responseData !== null && responseData.data !== null) {
 
                     console.log("提交成功" , responseData.data);
-                    this.setState({
 
-                    });
 
                 }
             },
@@ -966,25 +968,11 @@ export default class GetLicensePage extends BComponent {
     }
 
     renderScroolInfoView(){
-        if (this.state.loaded === false) {      // 无数据
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
 
-                </View>
-            );
-        }else if(this.state.faild === true){
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <TouchableOpacity onPress={() => { this._loadData() }}>
-                        <NoMessage
-                            textContent='加载失败，点击重试'
-                            active={require('../img/load_failed.png')}/>
-                    </TouchableOpacity>
-                </View>
-            );
-        }else{
+    if(this.state.loaded===true){
             console.log( '点击else');
             return(
+
                 <ScrollView style={styles.container}>
                     {Platform.OS === 'android' &&
                     <DateTimePicker
@@ -1172,40 +1160,61 @@ export default class GetLicensePage extends BComponent {
                     </View>
                 </ScrollView>
             );
+        }else if(this.state.faild === true){
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <TouchableOpacity onPress={() => { this._loadData() }}>
+                        <NoMessage
+                            textContent='加载失败，点击重试'
+                            active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
+                </View>
+            );
+        }else{
+            return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+                <TouchableOpacity onPress={() => {this._loadData()}}>
+                    <NoMessage
+                        textContent='网络错误,点击重新开始'
+                        active={require('../img/network_error.png')}/>
+                </TouchableOpacity>
+            </View>
         }
     }
 
     render() {
 
         return(
-            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadData()}>
-
                 <View style={styles.container}>
+                    <NoNetEmptyView onClick={() => {this._loadData()}} />
 
-                {/*选择框遮罩*/}
-                <TouchableOpacity style={[styles.menuTouch,{zIndex: this.state.isPickerOpen?10:-1}]} onPress={() => {
-                    this.closePicker()
-                }}>
-                    <View style={[styles.menuShadow,{zIndex: this.state.isPickerOpen?10:-1,backgroundColor:this.state.isPickerOpen?'black':'white'},]}/>
-                </TouchableOpacity>
-                {this.state.imgVisibles === true &&
-                <AlertPhotoModal
-                    callback={this._callbackPhoto.bind(this)}/>}
-                {this.state.visible === true &&
-                <WatchImageModal
-                    visible={true}
-                    imageUrl={this.state.photoType=="reverse"?this.state.detailObj.idCards:this.state.detailObj.bizLics}
-                    imageFile={this.state.photoType=="reverse"?(this.state.idCards===null?null:this.state.idCards.uri):(this.state.bizLics===null?null:this.state.bizLics.uri)}
-                    titleName={this.state.photoType=="reverse"?'身份证':'经营执照'}
-                    callback={this._callbackWatchPhoto.bind(this)}
-                    callbackfile={this._callbackPhoto.bind(this)}/>}
-                {this.state.isDateTimePickerVisible === true &&
+                    {/*选择框遮罩*/}
+                    <TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 10 : -1}]}
+                                      onPress={() => {
+                                          this.closePicker()
+                                      }}>
+                        <View style={[styles.menuShadow, {
+                            zIndex: this.state.isPickerOpen ? 10 : -1,
+                            backgroundColor: this.state.isPickerOpen ? 'black' : 'white'
+                        },]}/>
+                    </TouchableOpacity>
+                    {this.state.imgVisibles === true &&
+                    <AlertPhotoModal
+                        callback={this._callbackPhoto.bind(this)}/>}
+                    {this.state.visible === true &&
+                    <WatchImageModal
+                        visible={true}
+                        imageUrl={this.state.photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics}
+                        imageFile={this.state.photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri)}
+                        titleName={this.state.photoType == "reverse" ? '身份证' : '经营执照'}
+                        callback={this._callbackWatchPhoto.bind(this)}
+                        callbackfile={this._callbackPhoto.bind(this)}/>}
+                    {this.state.isDateTimePickerVisible === true &&
                     <DataTimerView
-                    callback={this._callbackData.bind(this)}/>
-                }
+                        callback={this._callbackData.bind(this)}/>
+                    }
+
                     {this.renderScroolInfoView()}
-            </View>
-            </NoNetView>
+                </View>
         )
     }
 

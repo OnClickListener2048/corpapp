@@ -201,23 +201,8 @@ export default class MyOutSideWorkPage extends BComponent{
 
 
     _renderScrollView(){
-        // if (NetInfoSingleton.isConnected === false) {      // 无网络
-        //     return(
-        //
-        //
-        //         <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
-        //             <TouchableOpacity onPress={() => {this._loadCount(true)}}>
-        //                 <NoMessage
-        //                     textContent='网络错误,点击重新开始'
-        //                     active={require('../img/network_error.png')}/>
-        //             </TouchableOpacity>
-        //         </View>
-        //
-        //     );
-        // }
-        //else
         console.log("外勤入口 this.state.loaded=", this.state.loaded);
-            if (this.state.loaded===true){
+        if (this.state.loaded===true){
         return   <ScrollableTabView
             tabBarUnderlineColor="#FF0000"
             tabBarActiveTextColor="#FF0000"
