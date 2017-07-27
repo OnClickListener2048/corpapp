@@ -76,7 +76,6 @@ export default class GetLicensePage extends BComponent {
             allowEditInfo:false,//登陆人员权限，是否可编辑
             inProgressEdit:false,//开始任务才可编辑
             isPickerOpen:false,//地址和类型选择器是否打开
-            faild:false,                   // 是否初始化 ListView
 
             //保存数据类型
             legalEntity:null,//法人
@@ -201,7 +200,6 @@ export default class GetLicensePage extends BComponent {
                         allowEditInfo:responseData.data.allowEditInfo,
                         inProgressEdit :(responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
-                        faild : false,
                             // bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
                             city	: responseData.data.corpAddressArea.cityId,        //市
@@ -245,8 +243,7 @@ export default class GetLicensePage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 this.setState({
-                    loaded:true,
-                    faild : true,
+                    loaded:false,
                 });
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
@@ -1161,17 +1158,10 @@ export default class GetLicensePage extends BComponent {
                     </View>
                 </ScrollView>
             );
-        }else if(this.state.faild === true){
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <TouchableOpacity onPress={() => { this._loadData() }}>
-                        <NoMessage
-                            textContent='加载失败，点击重试'
-                            active={require('../img/load_failed.png')}/>
-                    </TouchableOpacity>
-                </View>
-            );
-        }else{
+        }else if(this.state.loaded===null){
+        return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+
+    }else{
             return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
                 <TouchableOpacity onPress={() => {this._loadData()}}>
                     <NoMessage
