@@ -5,6 +5,7 @@
 
 import React, { Component,PropTypes,} from 'react';
 import Picker from 'react-native-picker';
+import errorText from '../util/ErrorMsg';
 
 import {
     Alert,
@@ -248,7 +249,7 @@ export default class GetLicensePage extends BComponent {
                     faild : true,
                 });
                 console.log("获取失败" , e);
-                Toast.show('获取失败' );
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -297,7 +298,7 @@ export default class GetLicensePage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' );
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -324,7 +325,7 @@ export default class GetLicensePage extends BComponent {
                 SActivityIndicator.hide(loading);
                 console.log("提交失败" , e);
 
-                Toast.show('提交失败' );
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -845,7 +846,7 @@ export default class GetLicensePage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' );
+                Toast.show(errorText( e ));
             },
         );
     }
@@ -887,7 +888,7 @@ export default class GetLicensePage extends BComponent {
             (e) => {
                 SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
-                Toast.show('获取失败' );
+                Toast.show(errorText( e ));
             },
         );
     }
