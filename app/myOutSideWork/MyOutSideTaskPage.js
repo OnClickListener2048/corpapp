@@ -217,7 +217,7 @@ _loadData() {
 
     render() {
         return(
-            <NoNetView  onClick={() => this._loadData()}>
+            <NoNetView  onClick={() => this._loadData()} enable={!(this.state.loaded && !this.state.faild)}>
 
             <View style={styles.container}>
                 {this.renderScrollView()}
