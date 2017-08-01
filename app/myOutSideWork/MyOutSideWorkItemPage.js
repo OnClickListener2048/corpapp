@@ -15,6 +15,7 @@ import {loadOutSourceList} from "../apis/outSource";
 import BComponent from "../base";
 import NoNetView from "../base/NoNetView";
 import errorText from '../util/ErrorMsg';
+import NoNetEmptyView from "../base/NoNetEmptyView";
 
 export default class MyOutSideWorkItemPage extends BComponent{
 
@@ -31,7 +32,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             label: this.props.label,
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
-            loaded:false,
+            loaded:null,
             dataFaild:false,
             refresh:this.props.refresh,
             isRefreshing: false,
@@ -62,6 +63,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
     };
 
     componentWillMount() {
+        console.log("=====loadlist=====");
         this._loadList();
 
     }
@@ -107,10 +109,17 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadList(){
-
-        let loading = SActivityIndicator.show(true, "加载中...");
+        console.log("=====loadlist=====加载中");
         let taskType = this.props.label==null?'all':this.props.label;
         this.lastID = null;
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                loaded:false,
+                dataFaild : false,
+            });
+            return;
+        }
+        let loading = SActivityIndicator.show(true, "加载中...");
         loadOutSourceList(this.pageCount,'',taskType).then(
 
             (responseData) => {
@@ -145,13 +154,13 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 if ( this.outList.length > 0){
                     // 关闭刷新动画
                     this.setState({
-                        loaded:true,
+                        loaded:false,
                         dataFaild: false,
                     });
                 }else {
                     // 关闭刷新动画
                     this.setState({
-                        loaded:true,
+                        loaded:false,
                         dataFaild: true,
                     });
 
@@ -205,13 +214,20 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 // 关闭刷新动画
                 this.setState({isRefreshing: false});
                 console.log("获取失败" , e);
+                this.setState({
+                    loaded:false,
+
+                });
                 Toast.show(errorText( e ));
             },
         );
     }
 
     _loadMoreData() {
-
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
         console.log('加载更多哈哈');
         let taskType = this.props.label==null?'all':this.props.label;
         if (this.lastID === null){
@@ -261,6 +277,10 @@ export default class MyOutSideWorkItemPage extends BComponent{
             (e) => {
                 // 关闭刷新动画
                 this.isLoading = false;
+                // this.setState({
+                //     loaded:false,
+                //
+                // });
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
             },
@@ -330,28 +350,19 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
 
     renderListView() {
-        if (this.state.dataFaild === true) {      // 数据加载失败
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onPress={() => {this._loadList()}}>
-                    <NoMessage
-                        textContent='加载失败，点击重试'
-                        active={require('../img/load_failed.png')}/>
-                    </TouchableOpacity>
-                </View>
-            );
-        }else if (this.outList.length == 0){
+        console.log("外勤列表入口 this.state.loaded=", this.state.loaded);
+        if (this.state.loaded===true&&this.outList.length === 0){
 
-            return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                    <TouchableOpacity onPress={() => {this._loadList()}}>
+        return(
+            <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
                         textContent='暂无数据'
                         active={require('../img/no_message.png')}/>
-                    </TouchableOpacity>
-                </View>
-            );
-        }else {
+                </TouchableOpacity>
+            </View>
+        );
+    }else if(this.state.loaded===true){
             return (
 
                 <ListView
@@ -375,6 +386,28 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     }
                 />
             )
+        }else if(this.state.loaded===null){
+            return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+
+        }else if (this.state.dataFaild === true) {      // 数据加载失败
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    <TouchableOpacity onPress={() => {this._loadList()}}>
+                        <NoMessage
+                            textContent='加载失败，点击重试'
+                            active={require('../img/load_failed.png')}/>
+                    </TouchableOpacity>
+                </View>
+            );
+        }else {
+
+            return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+                <TouchableOpacity onPress={() => {this._loadList()}}>
+                    <NoMessage
+                        textContent='网络错误,点击重新开始'
+                        active={require('../img/network_error.png')}/>
+                </TouchableOpacity>
+            </View>
         }
 
 
@@ -390,13 +423,11 @@ export default class MyOutSideWorkItemPage extends BComponent{
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-127;
         }
         return (
-            <NoNetView errorText="网络错误,点击重新开始" onClick={() => this._loadList()}>
             <View style={[styles.container,{height:allListHeight}]}>
-
+                <NoNetEmptyView onClick={() => {this._loadList()}} />
                 {this.renderListView()}
 
             </View>
-            </NoNetView>
         );
     }
 
