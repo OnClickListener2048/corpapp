@@ -34,7 +34,7 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
  */
 export default class NoNetView extends Component {
     static defaultProps = {
-        enable: true,
+        enable: false,
         errorText: '网络错误,点击重新开始'
     };  // 默认属性
 
@@ -61,7 +61,7 @@ export default class NoNetView extends Component {
     }
 
     _updateConnectionStatus(isConnected) {
-        this.setState({isConnected: isConnected});
+        // this.setState({isConnected: isConnected});
 
         // 网络恢复时自动重连
         // if(isConnected) {
