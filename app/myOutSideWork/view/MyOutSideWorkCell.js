@@ -27,8 +27,6 @@ export default class MessageCenterCell extends Component {
         companyName: PropTypes.string,
         statusContent: PropTypes.string,
         statusCourse: PropTypes.string,
-
-
     };
 
     // _statusCourse(){
@@ -44,19 +42,19 @@ export default class MessageCenterCell extends Component {
     // }
 
     _statusCourseColor(){
-        if(this.state.statusCourse=='待处理'||this.state.statusCourse=='待分配'){
+        if(this.props.statusCourse=='待处理'||this.props.statusCourse=='待分配'){
             return 'orange'
-        }else if(this.state.statusCourse=='进行中'){
+        }else if(this.props.statusCourse=='进行中'){
             return 'green'
-        }else if(this.state.statusCourse=='已完成'){
+        }else if(this.props.statusCourse=='已完成'){
             return 'red'
-        }else if(this.state.statusCourse=='已取消'){
+        }else if(this.props.statusCourse=='已取消'){
             return '#e6e6e6'
         }
     }
 
     render() {
-        const {statusIcon,statusName,companyName,statusContent,statusCourse} = this.state
+        const {statusIcon,statusName,companyName,statusContent,statusCourse} = this.props
         return (
             <View
                 style={styles.rowStyle}>
@@ -70,19 +68,19 @@ export default class MessageCenterCell extends Component {
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 15,marginTop: 15, marginLeft : 20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}] }>{statusName}</Text>
+                            style={[{fontSize: 15,marginTop: 15, marginLeft : 20 , color : this.props.statusCourse=='已取消'?'#e6e6e6':'#323232'}] }>{statusName}</Text>
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : this.state.statusCourse=='已取消'?'#e6e6e6':'#969696'}] }>{companyName}</Text>
+                            style={[{fontSize: 14,marginTop: 10, marginLeft :20 , color : this.props.statusCourse=='已取消'?'#e6e6e6':'#969696'}] }>{companyName}</Text>
                     </View>
                     <Text
                         textAlign='center'
-                        style={[styles.timeTitleStyle,{marginRight:20,color:this.state.statusCourse=='已取消'?'#e6e6e6':'#323232'}]}>{statusContent}</Text>
+                        style={[styles.timeTitleStyle,{marginRight:20,color:this.props.statusCourse=='已取消'?'#e6e6e6':'#323232'}]}>{statusContent}</Text>
 
                     <Text
                         textAlign='right'
-                        style={[styles.timeTitleStyle,{color:this.state.statusCourse=='已取消'?'#e6e6e6':'#a2a1a6'}]}>{statusCourse}</Text>
+                        style={[styles.timeTitleStyle,{color:this.props.statusCourse=='已取消'?'#e6e6e6':'#a2a1a6'}]}>{statusCourse}</Text>
                     </Image>
                 </View>
                 <View style={[styles.badgeBubble,
