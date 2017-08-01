@@ -3119,9 +3119,9 @@ react-native-image-pan-zoom@^2.0.1:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/react-native-image-pan-zoom/-/react-native-image-pan-zoom-2.0.4.tgz#c8822294ff057b1d421c09f59a08588fa0fbed6b"
 
-react-native-modal-datetime-picker@latest:
-  version "4.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-4.7.0.tgz#c2398894cf01fb58c9652ed258f93232c644de4a"
+"react-native-modal-datetime-picker@github:pilipa-cn/react-native-modal-datetime-picker#v4.8.0-pilipa":
+  version "4.8.0-pilipa"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-modal-datetime-picker/tar.gz/658cdf8a4d25a7b8d3bf4ef79f9ea3ad72ae1e8d"
   dependencies:
     moment "^2.18.1"
     prop-types "15.5.10"
@@ -3134,9 +3134,9 @@ react-native-modal@^2.4.0:
     prop-types "15.5.10"
     react-native-animatable "^1.2.0"
 
-"react-native-navigation@github:pilipa-cn/react-native-navigation":
+"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.134":
   version "1.1.95"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/08a75ee1c082af49ae4dc5ea2323fe0421f88502"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/ca125b6ff0814bce32c0c6226d874057dc7f0947"
   dependencies:
     lodash "4.x.x"
 
@@ -3164,16 +3164,12 @@ react-native-root-toast@^1.1.2:
   dependencies:
     react-native-root-siblings "^1.2.1"
 
-react-native-scrollable-tab-view@^0.7.1:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.7.4.tgz#623a047cbfab35a27b8689095af524e9aac74b62"
+react-native-scrollable-tab-view@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.6.0.tgz#36050cf72dae0dc00b6b8d7f9a570955d99a213b"
   dependencies:
     react-static-container "^1.0.1"
     react-timer-mixin "^0.13.3"
-
-react-native-splash-screen@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-splash-screen/-/react-native-splash-screen-2.1.0.tgz#4e0a5e4e8c32974fe7a3cdb4d9a226d06d9daf4f"
 
 react-native-swiper@^1.5.4:
   version "1.5.4"
