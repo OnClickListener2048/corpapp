@@ -61,7 +61,7 @@ export default class NoNetView extends Component {
     }
 
     _updateConnectionStatus(isConnected) {
-        this.setState({isConnected: isConnected});
+        // this.setState({isConnected: isConnected});
 
         // 网络恢复时自动重连
         // if(isConnected) {
