@@ -580,6 +580,9 @@ export default class GetLicensePage extends BComponent {
     }
 
     toAlertModal(photoType){
+        if(this.state.editables === false){
+            return;
+        }
         this.setState({isDateTimePickerVisible:false,
             photoType:photoType});
         console.log("photoType="+photoType+this.state.visible);
@@ -1004,35 +1007,21 @@ export default class GetLicensePage extends BComponent {
                         textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
-                        {this.state.editables === true ?
-                            <TouchableOpacity onPress={() => {
-                                this.toAlertModal("reverse")
-                            }}>
-                                {this.state.reImage != null ?
-                                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                    this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
-                                        <ImageLoad
-                                            style={{ marginTop: 15, height: 75, width: 110 }}
-                                            loadingStyle={{ size: 'large', color: 'blue' }}
-                                            source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                            placeholderSource={require('../img/reverse.png')}/> :
-                                        <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+                        <TouchableOpacity onPress={() => {
+                            this.toAlertModal("reverse")
+                        }}
+                        activeOpacity={this.state.editables === true ?0.5:1}>
+                            {this.state.reImage != null ?
+                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
+                                    <ImageLoad
+                                        style={{ marginTop: 15, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
+                                        placeholderSource={require('../img/reverse.png')}/> :
+                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
 
-                            </TouchableOpacity> :
-                            <View>
-                                {this.state.reImage != null ?
-                                    <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                    this.state.detailObj.idCards != null&&this.state.detailObj.idCards.length!=0 ?
-                                        <ImageLoad
-                                            style={{ marginTop: 15, height: 75, width: 110 }}
-                                            loadingStyle={{ size: 'large', color: 'blue' }}
-                                            source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                            placeholderSource={require('../img/reverse.png')}
-                                        />:
-                                        <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
-
-                            </View>
-                        }
+                        </TouchableOpacity>
 
                         {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                         {/*justifyContent:'flex-end'}}/>*/}
@@ -1123,37 +1112,22 @@ export default class GetLicensePage extends BComponent {
                     <View style={[styles.identityCardPhoto, {height: 150}]}>
                         <Text style={{marginLeft: 15, fontSize: 15, marginTop: 20,width:85,color:'#323232'}}>经营执照</Text>
 
-                        {this.state.editables === true ?
-                            <TouchableOpacity onPress={() => {
-                                this.toAlertModal("blicense")
-                            }}>
-                                {this.state.linImage !== null ?
-                                    <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
-                                    this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
-                                        <ImageLoad
-                                            style={{ marginTop: 20, height: 75, width: 110 }}
-                                            loadingStyle={{ size: 'large', color: 'blue' }}
-                                            source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                            placeholderSource={require('../img/blicense.png')}/>  :
-                                        <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
-                                }
+                        <TouchableOpacity onPress={() => {
+                            this.toAlertModal("blicense")
+                        }}
+                        activeOpacity={this.state.editables === true ?0.5:1}>
+                            {this.state.linImage !== null ?
+                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
+                                this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
+                                    <ImageLoad
+                                        style={{ marginTop: 20, height: 75, width: 110 }}
+                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        source={{ uri:this.state.detailObj.bizLics[0]+"" }}
+                                        placeholderSource={require('../img/blicense.png')}/>  :
+                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
+                            }
 
-                            </TouchableOpacity> :
-                            <View>
-                                {this.state.linImage !== null ?
-                                    <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
-                                    this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!=0?
-                                        <ImageLoad
-                                            style={{ marginTop: 20, height: 75, width: 110 }}
-                                            loadingStyle={{ size: 'large', color: 'blue' }}
-                                            source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                            // source={{ uri:"https://qd.pilipa.cnhttp://pilipa.oss-cn-beijing.aliyuncs.com/FileUploads/Order/BusinessLicense/201701/BodyPart_80417919-391c-4575-a65b-3c22153a5ae7.jpg" }}
-                                            placeholderSource={require('../img/blicense.png')}/>  :
-                                        <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
-                                }
-
-                            </View>
-                        }
+                        </TouchableOpacity>
 
                     </View>
                 </ScrollView>

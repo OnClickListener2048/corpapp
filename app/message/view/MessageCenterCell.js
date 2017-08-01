@@ -3,7 +3,7 @@
  */
 
 import React, {PropTypes} from 'react';
-import {View, Text,Image} from 'react-native';
+import {View, Text,Platform,Image} from 'react-native';
 import styles from '../css/MessageCenterStyle'
 
 export default class MessageCenterCell extends React.Component {
@@ -39,7 +39,7 @@ export default class MessageCenterCell extends React.Component {
                         <Text
                             textAlign='left'
                             numberOfLines={1}
-                            style={[{fontSize: 15,marginTop: 15, marginLeft : 0 , color : '#323232'}] }>{messageTitle}</Text>
+                            style={[{fontSize: 15,marginTop: Platform.OS==='ios'?15:12, marginLeft : 0 ,color : '#323232'}] }>{messageTitle}</Text>
 
                         <Text
                             textAlign='left'

@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
         // // justifyContent : 'space-between',
         // // borderBottomColor: 'blue',
         // borderBottomWidth: 1,
-        // backgroundColor: '#FFFFFF',
+        // backgroundColor: 'orange',
         // flexDirection: 'row',
         //
         // borderColor: '#FAFAFA',
@@ -56,6 +56,7 @@ const styles = StyleSheet.create({
          marginRight: 22.5,
         flex: 1,
         backgroundColor: '#FFFFFF',
+        // backgroundColor: 'red',
 
         height : 65,
         // maxWidth: SCREEN_WIDTH - 120,
@@ -71,6 +72,7 @@ const styles = StyleSheet.create({
         marginRight : 15,
         color : '#969696',
         backgroundColor: '#FFFFFF',
+        // backgroundColor: 'yellow',
 
         // marginRight: 22.5,
         // width : 200,
