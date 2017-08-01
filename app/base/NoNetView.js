@@ -34,7 +34,7 @@ import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
  */
 export default class NoNetView extends Component {
     static defaultProps = {
-        enable: true,
+        enable: false,
         errorText: '网络错误,点击重新开始'
     };  // 默认属性
 

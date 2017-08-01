@@ -36,7 +36,7 @@ export default class MyOutSideTaskPage extends BComponent{
         this.state = {
             loaded:false,                   // 是否初始化 ListView
             taskId:this.props.taskId,
-            faild:false,                   // 是否初始化 ListView
+            loadFaild:false,                   // 是否初始化 ListView
             currentStepId : '',
             toastStr : this.props.toastStr,
             canClickBtn : true,
@@ -74,6 +74,10 @@ _setNeedRefrsh(){
 
 
 _loadData() {
+    console.log("测试无网走没走" );
+
+
+
 
         this.loading  = SActivityIndicator.show(true, "加载中...");
 
@@ -88,7 +92,7 @@ _loadData() {
 
                     this.stepsArr = this.stepsArr.concat(responseData.data.steps);
                     this.setState({
-                        faild : false,
+                        loadFaild : false,
                         loaded:true,
                     });
                     this.props.navigator.setTitle({
@@ -106,7 +110,7 @@ _loadData() {
 
                 this.setState({
                     loaded : true,
-                    faild:true,
+                    loadFaild:true,
                 });
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
@@ -182,7 +186,7 @@ _loadData() {
 
                 </View>
             );
-        }else if(this.state.faild === true){
+        }else if(this.state.loadFaild === true){
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                     <TouchableOpacity onPress={() => { this._loadData() }}>
@@ -217,7 +221,7 @@ _loadData() {
 
     render() {
         return(
-            <NoNetView  onClick={() => this._loadData()} enable={!(this.state.loaded && !this.state.faild)}>
+            <NoNetView  onClick={() => this._loadData()} enable={!(this.state.loaded === true && this.state.loadFaild === false)}>
 
             <View style={styles.container}>
                 {this.renderScrollView()}
