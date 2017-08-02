@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.multidex.MultiDex;
 
 import com.facebook.react.ReactApplication;
+import cn.pilipa.alert.PLPAlertPackage;
 import com.beefe.picker.PickerViewPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.reactnativenavigation.NavigationApplication;
@@ -50,6 +51,7 @@ public class MainApplication extends NavigationApplication {
     public List<ReactPackage> createAdditionalReactPackages() {
               return Arrays.<ReactPackage>asList(
                   //new MainReactPackage(),
+            new PLPAlertPackage(),
             new PickerViewPackage(),
             new PickerPackage(),
                     //new NavigationReactPackage(),

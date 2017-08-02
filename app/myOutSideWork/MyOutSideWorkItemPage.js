@@ -172,7 +172,10 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     _loadAgainList(){
-
+        if(!NetInfoSingleton.isConnected) {
+            Toast.show('暂无网络' );
+            return;
+        }
         let taskType = this.props.label==null?'all':this.props.label;
         this.setState({isRefreshing: true});
         this.lastID = null;

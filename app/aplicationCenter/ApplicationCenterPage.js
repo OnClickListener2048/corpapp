@@ -22,6 +22,8 @@ import ScrollViewTop from "./scrollViewTop";
 
 export const SCREEN_WIDTH = window.width;
 import errorText from '../util/ErrorMsg';
+import Alert from "react-native-alert";
+
 
 /** 应用 */
 export default class ApplicationCenterPage extends Component{
@@ -72,6 +74,21 @@ export default class ApplicationCenterPage extends Component{
                 title:'我的外勤',
 
             });
+    }
+
+    toDialog(){
+        console.log("弹窗");
+        Alert.alert('', '确定退出', [
+            {
+                text: "取消",
+                onPress: ()=>{}
+            }
+            ,
+            {
+                text: "确定",
+                onPress: ()=>{}
+            }
+        ]);
     }
 
     componentDidMount() {
@@ -158,7 +175,7 @@ export default class ApplicationCenterPage extends Component{
                     />
                 </TouchableOpacity>
                 <TouchableOpacity
-                    // onPress={() => {this.toMyOutSideWork()}}
+                    onPress={() => {this.toDialog()}}
                     style={{ marginLeft: 15,marginTop: 15, height: 100, width: (SCREEN_WIDTH - 45)/2,}}
 
                 >
