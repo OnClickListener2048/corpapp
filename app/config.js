@@ -63,7 +63,8 @@ export const appStyle = {
         tabBarBackgroundColor: '#F5F5F5',
         tabBarButtonColor: '#c8c8c8',
         tabBarSelectedButtonColor: '#ff505c',
-        navigationBarColor: '#F5F5F5',
+        navigationBarColor: '#000000',// 安卓虚拟按键导航背景色
+    // change the background color of the bottom native navigation bar.
         // statusBarColor: '#000000',
         // tabFontFamily: 'BioRhyme-Bold',
 }
