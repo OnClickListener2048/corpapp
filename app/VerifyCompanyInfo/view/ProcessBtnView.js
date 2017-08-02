@@ -16,6 +16,14 @@ import errorText from '../../util/ErrorMsg';
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
+
+import AlertCeshi from  'react-native-alert'
+
+
+
+
+
+
 class ProcessBtnView extends Component{
     constructor(props) {
         super(props)
@@ -96,12 +104,16 @@ class ProcessBtnView extends Component{
             Toast.show('请保存客户基本信息');
 
         }else{
-            Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : '确认任务完成', '',
+
+
+
+            AlertCeshi.alert(this.state.currentNum === 0 ?  '确认材料齐全' : '确认任务完成', '',
                 [
-                    {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel'},
+                    {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel',color:'#FEA764'},
                     {
                         text: '确定',
-                        onPress: () => this.submitData(),
+                        onPress: () => this.submitData(), color:'#FEA764'
+
                     },]
                 , {cancelable: false}
             );
