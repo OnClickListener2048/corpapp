@@ -163,7 +163,7 @@ export default class LoginPage extends Component {
     // 小屏键盘显示适配
     _keyboardDidShow () {
         console.log('Keyboard Shown SCREEN_WIDTH=', SCREEN_WIDTH);
-        if(SCREEN_WIDTH < 360) {// 屏幕小于5寸
+        if(SCREEN_WIDTH <= 360) {// 屏幕小于5寸
             this.setState({headPad: 0});
         }
     }
