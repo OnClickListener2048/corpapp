@@ -46,7 +46,7 @@ export default class SystemMessagePage extends BComponent{
         // '</html>' ;//this.props;
         const {contentJson} = this.props;
 
-        let isHtml = contentJson.includes("<html>");// 判断是否包含HTML标签, 包含就显示网页, 否则显示旧的文本内容
+        let isHtml = contentJson.includes("html");// 判断是否包含HTML标签, 包含就显示网页, 否则显示旧的文本内容
 
         console.log('contentJson=' + contentJson);
 

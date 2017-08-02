@@ -7,6 +7,7 @@ import {Dimensions, TouchableOpacity,
     InteractionManager,Platform} from 'react-native';
 import {loadOutSourceCount} from "../apis/outSource";
 import {
+    Alert,
     Text,
     Image,
     View,
@@ -22,7 +23,7 @@ import ScrollViewTop from "./scrollViewTop";
 
 export const SCREEN_WIDTH = window.width;
 import errorText from '../util/ErrorMsg';
-import Alert from "react-native-alert";
+// import Alert from "react-native-alert";
 
 
 /** 应用 */

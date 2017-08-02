@@ -23,7 +23,8 @@ export let DOMAIN_API = 'app.i-counting.cn';
 if(DEBUG) {// 测试环境变量, 上线时应删除
     SCHEME = 'https';
     // DOMAIN_API = '192.168.100.234:8081';
-    DOMAIN_API = 'app.i-counting.cn';//DOMAIN_API = 'x-crm.i-counting.cn';
+    DOMAIN_API = 'app.i-counting.cn';
+    // DOMAIN_API = 'x-crm.i-counting.cn';
 }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
@@ -64,6 +65,7 @@ export const appStyle = {
         tabBarButtonColor: '#c8c8c8',
         tabBarSelectedButtonColor: '#ff505c',
         navigationBarColor: '#000000',// 安卓虚拟按键导航背景色
+        // topBarElevationShadowEnabled: false, // default: true. Disables TopBar elevation shadow on Lolipop and above
     // change the background color of the bottom native navigation bar.
         // statusBarColor: '#000000',
         // tabFontFamily: 'BioRhyme-Bold',
