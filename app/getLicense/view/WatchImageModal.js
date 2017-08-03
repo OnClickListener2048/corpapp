@@ -84,14 +84,11 @@ export default class WatchImageModal extends Component{
 
         console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+this.state.visible+images[0].url);
                 return (
-
-
                     <Modal
                         animationType='none'//进场动画 fade
                         onRequestClose={() => this.close()}
                         visible={this.state.visible}//是否可见
-                        transparent={false} //背景透明
-
+                        transparent={true} //背景透明
                     >
                         <View style={styles.titlelayout}>
                             <TouchableOpacity onPress={() => {
@@ -116,8 +113,7 @@ export default class WatchImageModal extends Component{
                             </TouchableOpacity>
                         </View>
 
-                        <TouchableOpacity style={{flex: 1}} activeOpacity={1}
-                        >
+                        <TouchableOpacity style={{flex: 1}} activeOpacity={1}>
                             <ImageViewer imageUrls={images}
                                          isShowMenu={this.state.isShowMenu}
                                          callback={this._callbackPhoto.bind(this)}/>

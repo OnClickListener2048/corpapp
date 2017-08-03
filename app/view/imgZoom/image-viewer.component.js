@@ -38,7 +38,8 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({isShowMenu: props.isShowMenu,});
+        this.setState({isShowMenu: props.isShowMenu,
+            imageUrls:props.imageUrls,});
     }
 
     init(nextProps) {
@@ -362,6 +363,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     pickSingleWithCamera=()=> {
+        this.setState({ isShowMenu: false, });
         ImagePicker.openCamera({
             cropping: false,
             width: 720,
@@ -375,7 +377,6 @@ let ImageViewer = class ImageViewer extends React.Component {
         }).then(image => {
             console.log('received image===', image);
             this.setState({
-                isShowMenu: false,
                 image: {uri: image.path, width: image.width, height: image.height},
                 imageUrls:[{
                     url: image.path,
@@ -403,6 +404,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     pickSingle=()=> {
+        this.setState({ isShowMenu: false, });
         ImagePicker.openPicker({
             width: 720,
             height: 1280,
@@ -416,7 +418,6 @@ let ImageViewer = class ImageViewer extends React.Component {
         }).then(image => {
             console.log('received image===', image);
             this.setState({
-                isShowMenu: false,
                 image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
                 imageUrls:[{
                     url: image.path,
@@ -459,6 +460,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             this.getContent(),
             this.getMenu()));
         return (React.createElement(react_native_1.View, Object.assign({ onLayout: this.handleLayout.bind(this), style: [{ flex: 1, overflow: 'hidden' }, this.props.style] }, this.props.others), childs));
+
     }
 };
 ImageViewer.defaultProps = new typings.Props();
