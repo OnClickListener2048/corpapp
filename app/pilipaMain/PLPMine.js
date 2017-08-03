@@ -7,7 +7,6 @@ import React, {Component}from 'react';
 const {width, height} = Dimensions.get('window');
 
 import {
-    Alert,
     Image,
     StyleSheet,
     Text,
@@ -22,7 +21,7 @@ import {navToBootstrap, navToMainTab} from '../navigation';
 import Toast from 'react-native-root-toast';
 import * as apis from '../apis';
 import DeviceInfo from 'react-native-device-info';
-// import Alert from "../modules/react-native-alert";
+import Alert from "react-native-alert";
 
 export default class PLPMine extends Component {
     static navigatorStyle = {
@@ -153,7 +152,7 @@ export default class PLPMine extends Component {
 
     // 登出
     _doLogout() {
-        Alert.alert('', '确定退出',
+        Alert.alert('确定退出', '',
             [
                 {text: '取消', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
                 {

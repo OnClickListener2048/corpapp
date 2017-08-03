@@ -5,7 +5,6 @@
 
 import React, {Component} from 'react';
 import {
-    Alert,
     AppRegistry,
     StyleSheet,
     Text,
@@ -36,7 +35,7 @@ import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
 import {DEBUG} from '../config';
-// import BAlert from "../modules/react-native-alert";
+import Alert from "react-native-alert";
 import {SCREEN_WIDTH} from '../config';
 
 export default class LoginPage extends Component {
