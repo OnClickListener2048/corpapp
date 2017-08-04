@@ -58,10 +58,18 @@ export default class WatchImageModal extends Component{
     }
 
     _callbackPhoto(img){
-        this.setState({
-            imageFile:img.path,
-        });
-        this.props.callbackfile(img,false);//将图片传递给页面
+        if(img===null){
+            this.setState({
+                imageFile:null,
+                imageUrl:null,
+            });
+        }else{
+            this.setState({
+                imageFile:img.path,
+            });
+            this.props.callbackfile(img,false);//将图片传递给页面
+        }
+
     }
 
 

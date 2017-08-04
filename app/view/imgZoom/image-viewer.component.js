@@ -38,8 +38,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({isShowMenu: props.isShowMenu,
-            imageUrls:props.imageUrls,});
+        this.setState({isShowMenu: props.isShowMenu,});
     }
 
     init(nextProps) {
@@ -364,6 +363,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
     pickSingleWithCamera=()=> {
         this.setState({ isShowMenu: false, });
+        this.props.callback(null);//将图片传递给父组件
         ImagePicker.openCamera({
             cropping: false,
             width: 720,
@@ -405,6 +405,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
     pickSingle=()=> {
         this.setState({ isShowMenu: false, });
+        this.props.callback(null);//将图片传递给父组件
         ImagePicker.openPicker({
             width: 720,
             height: 1280,
