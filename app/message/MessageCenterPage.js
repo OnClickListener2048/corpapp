@@ -407,6 +407,10 @@ export default class MessageCenterPage extends BComponent {
 
         this.subscriptionLogin = DeviceEventEmitter.addListener('loginSuccess', (data)=>{
             console.log('我的消息 loginSuccess');
+            this.props.navigator.switchToTab({
+                tabIndex: 0 // (optional) if missing, this screen's tab will become selected
+            });
+
             try {
                 this._initJPush();// 确保登录时会重新绑定
                 this._loadInitData();

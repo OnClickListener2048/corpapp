@@ -7,6 +7,7 @@ import './Preferences';
 
 let UserInfoStore = {};
 let KEY_JPUSH_ID = "KEY_JPUSH_ID";
+let LAST_USER_PHONE = "LAST_USER_PHONE";// 上次登陆后的用户手机号
 
 UserInfoStore.getUserInfo = async function (): Object {
     let value = await Preferences.get(KEY_USER_INFO);
@@ -35,6 +36,18 @@ UserInfoStore.setUserToken = async function (value: string) {
 
 UserInfoStore.removeUserToken = async function () {
     return Preferences.remove(KEY_USER_TOKEN);
+}
+
+UserInfoStore.getLastUserPhone = async function (): Object {
+    return await Preferences.get(LAST_USER_PHONE);
+};
+
+UserInfoStore.setLastUserPhone = async function (value: string) {
+    return Preferences.set(LAST_USER_PHONE, value);
+};
+
+UserInfoStore.removeLastUserPhone = async function () {
+    return Preferences.remove(LAST_USER_PHONE);
 }
 
 UserInfoStore.getJPushID = async function () {
