@@ -3099,6 +3099,10 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
+"react-native-alert@github:pilipa-cn/react-native-alert#1.0.0":
+  version "1.0.0"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-alert/tar.gz/d2bd40fb43608233bfd3168ba739750d57f5d591"
+
 react-native-animatable@^1.1.0, react-native-animatable@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.2.2.tgz#a873550e6f7cb95f90baf46b9eb15b1ab56425cb"
@@ -3111,9 +3115,9 @@ react-native-device-info@^0.10.2:
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/react-native-device-info/-/react-native-device-info-0.10.2.tgz#350cd68ed43839022ddea0a3a423439f16fa4fba"
 
-"react-native-image-crop-picker@github:pilipa-cn/react-native-image-crop-picker":
-  version "0.14.1"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-image-crop-picker/tar.gz/9ccf277d269b22303c2544db38a16dcf29b71b10"
+"react-native-image-crop-picker@github:pilipa-cn/react-native-image-crop-picker#v0.14.2":
+  version "0.14.2"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-image-crop-picker/tar.gz/30d06896507b1a9ffee06a728d4b82c5b5311c4d"
 
 react-native-image-pan-zoom@^2.0.1:
   version "2.0.4"
@@ -3134,9 +3138,9 @@ react-native-modal@^2.4.0:
     prop-types "15.5.10"
     react-native-animatable "^1.2.0"
 
-"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.134":
-  version "1.1.95"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/ca125b6ff0814bce32c0c6226d874057dc7f0947"
+"react-native-navigation@github:pilipa-cn/react-native-navigation":
+  version "1.1.134"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/4993f09c16cbfeb1ec93876be3061c8227baf891"
   dependencies:
     lodash "4.x.x"
 
