@@ -23,6 +23,7 @@ import DataTimerView from "./view/DataTimerView";
 import AreaPicker from "../picker_demo";
 import ImageZoomTest from "../picker_demo/ImageZoomTest";
 import MultiTextInputPage from "./getLicense/view/MultiTextInputPage";
+import WatchImageModalPage from "./getLicense/view/WatchImageModalPage";
 
 export default function () {
     let reg = Navigation.registerComponent;
@@ -46,4 +47,6 @@ export default function () {
     reg('pilipaMain.my.Feedback', () => Feedback);
     reg('pilipaMain.my.About', () => About);
     reg('pilipaMain.my.Settings', () => Settings);
+    reg('WatchImageModalPage', () => WatchImageModalPage);
+
 }

@@ -63,7 +63,6 @@ export default class GetLicensePage extends BComponent {
         this.state = {
             renderUnderline: true,
             currentStep : 0,
-            visible: this.props.visible,//是否显示大图
             imgVisibles:this.props.imgVisibles,//是否显示选择图片弹窗
             reImage: null,
             linImage:null,
@@ -352,28 +351,22 @@ export default class GetLicensePage extends BComponent {
 
     //输入框回调 公司名
     _callbackComp(content) {
-        console.log("输入框树枝公司名称="+content+this.state.visible);
         this.setState({
             corpName:content,//公司名称
-            visible:false,
         });
     }
 
     //输入框回调 联系人
     _callbackCon(content) {
-        console.log("输入框树枝联系人="+content+this.state.visible);
         this.setState({
             contactName:content,
-            visible:false,
         });
     }
 
     //输入框回调 联系电话
     _callbackPho(content) {
-        console.log("输入框树枝电话="+content+this.state.visible);
         this.setState({
             contactPhone:content,
-            visible:false,
         });
     }
 
@@ -517,7 +510,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝fa="+content);
         this.setState({
             legalEntity:content,//法人
-            visible:false,
         });
     }
     //输入框回调 注册号
@@ -525,7 +517,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝zhu="+content);
         this.setState({
             regId:content,//注册号
-            visible:false,
         });
     }
     //输入框回调 国税登记号
@@ -533,7 +524,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝guo ="+content);
         this.setState({
             nationalTaxId:content,//国税登记号
-            visible:false,
         });
     }
     //输入框回调 地税登记号
@@ -541,7 +531,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝di="+content);
         this.setState({
             localTaxId:content,//地税登记号
-            visible:false,
         });
     }
     //输入框回调 注册资金
@@ -549,7 +538,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝jin="+content);
         this.setState({
             regFunds:content,//注册资金
-            visible:false,
         });
     }
     //输入框回调 经营范围
@@ -557,7 +545,6 @@ export default class GetLicensePage extends BComponent {
         console.log("输入框树枝jing="+content);
         this.setState({
             bizRange:content,//经营范围
-            visible:false,
         });
     }
 
@@ -597,20 +584,15 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
-    _callbackWatchPhoto(){
-        this.setState({
-            imgVisibles: false,
-            visible:false,
-        });
-    }
-
     _callbackPhoto(image,imgVisibles) {//获取图片
         console.log("callback="+image);
+        this.setState({
+            imgVisibles: false,
+        });
         if(image===null){
             console.log("callback=1"+image);
             this.setState({
                 imgVisibles:false,
-                visible:false,
             })
             return;
         }
@@ -656,10 +638,34 @@ export default class GetLicensePage extends BComponent {
             imgVisibles = true;
             console.log("imgVisibles,blicense="+imgVisibles);
 
+        }else{
+            if (this.state.canClickBtn === false){
+                return;
+            }
+
+            this.state.canClickBtn = false;
+
+            this.timer = setTimeout(async()=>{
+                await this.setState({canClickBtn:true})//1.5秒后可点击
+            },1000)
+            const imageUrl= photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics;
+            const imageFile= photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri);
+            console.log("客户信息图片=="+imageUrl+"&*"+imageFile);
+
+            this.props.navigator.push({
+                screen: 'WatchImageModalPage',
+                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                title:photoType == "reverse" ? '身份证' : '经营执照',
+                passProps: {
+                    imageUrl: imageUrl,
+                    imageFile:imageFile,
+                    callback: this._callbackPhoto.bind(this),
+                }
+            });
         }
         this.setState({
-            imgVisibles:imgVisibles,
-            visible:!imgVisibles
+            imgVisibles:imgVisibles
         })
     }
     _dateFormat(fmt) {
@@ -767,7 +773,6 @@ export default class GetLicensePage extends BComponent {
         }
         this.setState({
             editables:editables,
-            visible:false,
             imgVisibles:false,
         });
     }
@@ -1165,14 +1170,6 @@ export default class GetLicensePage extends BComponent {
                     {this.state.imgVisibles === true &&
                     <AlertPhotoModal
                         callback={this._callbackPhoto.bind(this)}/>}
-                    {this.state.visible === true &&
-                    <WatchImageModal
-                        visible={true}
-                        imageUrl={this.state.photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics}
-                        imageFile={this.state.photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri)}
-                        titleName={this.state.photoType == "reverse" ? '身份证' : '经营执照'}
-                        callback={this._callbackWatchPhoto.bind(this)}
-                        callbackfile={this._callbackPhoto.bind(this)}/>}
                     {this.state.isDateTimePickerVisible === true &&
                     <DataTimerView
                         callback={this._callbackData.bind(this)}/>

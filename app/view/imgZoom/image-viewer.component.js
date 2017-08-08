@@ -38,7 +38,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     }
 
     componentWillReceiveProps(props) {
-        this.setState({isShowMenu: props.isShowMenu,});
+        this.setState({isShowMenu: props.isShowMenu});
     }
 
     init(nextProps) {
@@ -60,9 +60,13 @@ let ImageViewer = class ImageViewer extends React.Component {
         }, () => {
             this.loadImage(nextProps.index);
             this.jumpToCurrentImage();
+            // react_native_1.Animated.spring(this.fadeAnim, {
+            //     friction: 0,
+            //     tension: 0,
+            // }).start();
             react_native_1.Animated.timing(this.fadeAnim, {
                 toValue: 1,
-                duration: 200
+                duration: 500,
             }).start();
         });
     }
@@ -362,8 +366,8 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     pickSingleWithCamera=()=> {
-        this.setState({ isShowMenu: false, });
-        this.props.callback(null);//将图片传递给父组件
+        this.setState({ isShowMenu: false});
+        // this.props.callback(null);//将图片传递给父组件
         ImagePicker.openCamera({
             cropping: false,
             width: 720,
@@ -376,13 +380,8 @@ let ImageViewer = class ImageViewer extends React.Component {
             mediaType:'photo',
         }).then(image => {
             console.log('received image===', image);
-            this.setState({
-                image: {uri: image.path, width: image.width, height: image.height},
-                imageUrls:[{
-                    url: image.path,
-                }]
-            });
-            this.props.callback(this.state.image);//将图片传递给父组件
+            const images= {uri: image.path, width: image.width, height: image.height, mime: image.mime};
+            this.props.callback(images);//将图片传递给父组件
         }).catch(e => {
             this.setState({ isShowMenu: false, });
             // if(react_native_1.Platform ==='ios'){
@@ -404,8 +403,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     pickSingle=()=> {
-        this.setState({ isShowMenu: false, });
-        this.props.callback(null);//将图片传递给父组件
+        this.setState({ isShowMenu: false});
         ImagePicker.openPicker({
             width: 720,
             height: 1280,
@@ -418,13 +416,8 @@ let ImageViewer = class ImageViewer extends React.Component {
             mediaType:'photo',
         }).then(image => {
             console.log('received image===', image);
-            this.setState({
-                image: {uri: image.path, width: image.width, height: image.height, mime: image.mime},
-                imageUrls:[{
-                    url: image.path,
-                }]
-            });
-            this.props.callback(this.state.image);//将图片传递给父组件
+            const images= {uri: image.path, width: image.width, height: image.height, mime: image.mime};
+            this.props.callback(images);//将图片传递给父组件
         }).catch(e => {
             console.log(e);
             this.setState({ isShowMenu: false, });

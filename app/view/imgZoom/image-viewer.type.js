@@ -70,6 +70,7 @@ class State {
         this.imageSizes = [];
         this.isShowMenu = false;
         this.image = null;
+        this.imageUrls = [];
     }
 }
 exports.State = State;
