@@ -1,21 +1,12 @@
 /**
  * 图片预览
- * Created by jiaxueting on 2017/7/6.
+ * Created by jiaxueting on 2017/8/8.
  */
 
 import React, { Component ,PropTypes} from 'react';
 import {
-    Text,
     View,
-    Alert,
-    TouchableOpacity,
-    Platform,
     Dimensions,
-    Image,
-    Modal,
-    TextInput,
-    ToastAndroid,
-    InteractionManager
 } from 'react-native';
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
 import BComponent from "../../base/BComponent";
@@ -58,9 +49,6 @@ export default class WatchImageModal extends BComponent{
             if (event.id === 'more') { // this is the same id field from the static navigatorButtons definition
                 this.alertModal();
             }
-        }
-        if(event.id==='willDisappear'){
-            // this.props.callback(this.state.img,false);//将图片传递给页面
         }
     }
 
@@ -123,8 +111,7 @@ export default class WatchImageModal extends BComponent{
 
                 return (
                     <View style={{flex: 1,
-                        backgroundColor: 'transparent',
-                        flexDirection: 'column'}} >
+                        backgroundColor: 'transparent'}} >
 
                             <ImageViewer imageUrls={images}
                                          isShowMenu={this.state.isShowMenu}

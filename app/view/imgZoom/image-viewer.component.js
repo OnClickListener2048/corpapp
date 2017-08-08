@@ -21,7 +21,7 @@ let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
         this.state = new typings.State();
-        this.fadeAnim = new react_native_1.Animated.Value(0);
+        this.fadeAnim = new react_native_1.Animated.Value(1);
         this.standardPositionX = 0;
         this.positionXNumber = 0;
         this.positionX = new react_native_1.Animated.Value(0);

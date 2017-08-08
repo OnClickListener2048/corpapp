@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = (width, height) => {
     return {
         modalContainer: {
-            backgroundColor: '#000',
+            backgroundColor: 'black',
             justifyContent: 'center',
             alignItems: 'center',
             overflow: 'hidden',
