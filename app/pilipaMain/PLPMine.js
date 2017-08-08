@@ -195,7 +195,7 @@ export default class PLPMine extends Component {
                 // });
             },
             (e) => {
-                DeviceEventEmitter.emit('goLoginPage', true);
+                loginJumpSingleton.goToLogin(this.props.navigator);
                 // navToBootstrap({isReset: true})
                 //Toast.show("退出失败:" + e.msg) TOKEN 无效无法退出会成死循环逻辑
             }

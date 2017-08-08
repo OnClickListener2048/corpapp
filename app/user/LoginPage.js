@@ -79,6 +79,7 @@ export default class LoginPage extends Component {
         this.readUserInfo = this.readUserInfo.bind(this);
         this._keyboardDidShow = this._keyboardDidShow.bind(this);
         this._keyboardDidHide = this._keyboardDidHide.bind(this);
+        this._setupDebug = this._setupDebug.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -93,28 +94,41 @@ export default class LoginPage extends Component {
 
     //debug only
     _setupDebug() {
-        this.setState({
-            mobile: '18513417295',     // 手机号
-            mobileValid: true,   // 手机号有效
-            smsCode: '888888',         // 短信验证码
-            smsCodeValid: true,        // 短信验证码有效
-            acceptLic: true,
-            vCode: 'E69M',         // 图片验证码
-            vCodeInputValid: false,          // 图片验证码有效
-        });
+        UserInfoStore.getLastUserPhone().then(
+            (mobile) => {
+                if (mobile !== null) {
+                    this.setState({
+                        mobile: mobile,     // 手机号
+                        mobileValid: true,   // 手机号有效
+                        // smsCode: '888888',         // 短信验证码
+                        // smsCodeValid: true,        // 短信验证码有效
+                        // acceptLic: true,
+                        // vCode: 'E69M',         // 图片验证码
+                        // vCodeInputValid: false,          // 图片验证码有效
+                    });
+                }
+            },
+            (e) => {
+                console.log("读取信息错误:", e);
+            },
+        );
+
+
     }
 
     // 返回
     pop() {
-        // if (this.props.navigator) {
-        //     this.props.navigator.pop();
-        // }
         // 发送通知
         DeviceEventEmitter.emit('loginSuccess', true);
 
         Navigation.dismissModal({
             animationType: 'slide-down' // 'none' / 'slide-down' , dismiss animation for the modal (optional, default 'slide-down')
         });
+
+        if (this.props.navigator) {
+            console.log("popToRoot");
+            this.props.navigator.popToRoot();
+        }
     }
 
     // 准备加载组件
@@ -122,7 +136,7 @@ export default class LoginPage extends Component {
         // 发送通知
         DeviceEventEmitter.emit('isHiddenTabBar', true);
         if(DEBUG) {
-            // this._setupDebug();
+            this._setupDebug();
         }
 
         let {isReset = false } = this.props;// 重置, 清理所有登录信息
@@ -133,7 +147,7 @@ export default class LoginPage extends Component {
 
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-
+        console.log("this.props.navigator=", this.props.navigator);
     }
 
     // 屏蔽返回按键
@@ -190,7 +204,9 @@ export default class LoginPage extends Component {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
                     if(msg !== undefined) {
-                        Alert.alert(msg);
+                        if(!msg.includes("图形验证码")) {
+                            Alert.alert(msg);
+                        }
                     } else {
                         Alert.alert('短信验证码获取失败' );
                     }
@@ -345,6 +361,7 @@ export default class LoginPage extends Component {
                 console.log("用户信息读取成功返回:" , JSON.stringify(responseData));
                 // Toast.show('用户信息读取成功返回' +  JSON.stringify(responseData));
                 if(responseData !== null && responseData.data !== null) {
+                    UserInfoStore.setLastUserPhone(responseData.data.phone);
 
                     UserInfoStore.setUserInfo(responseData.data).then(// 保存成功后再跳转
                         (user) => {
@@ -356,6 +373,7 @@ export default class LoginPage extends Component {
                             this.pop();
                         },
                     );
+
                 } else {
                     console.log("OK ===> LoginPage:" );
                 }
