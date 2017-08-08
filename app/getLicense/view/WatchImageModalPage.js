@@ -60,7 +60,7 @@ export default class WatchImageModal extends BComponent{
             }
         }
         if(event.id==='willDisappear'){
-            this.props.callback(this.state.img,false);//将图片传递给页面
+            // this.props.callback(this.state.img,false);//将图片传递给页面
         }
     }
 
@@ -102,6 +102,7 @@ export default class WatchImageModal extends BComponent{
             });
         }
 
+        this.props.callback(img,false);//将图片传递给页面
 
     }
 
@@ -125,11 +126,9 @@ export default class WatchImageModal extends BComponent{
                         backgroundColor: 'transparent',
                         flexDirection: 'column'}} >
 
-                        <View style={{flex: 1}}>
                             <ImageViewer imageUrls={images}
                                          isShowMenu={this.state.isShowMenu}
                                          callback={this._callbackPhoto.bind(this)}/>
-                        </View>
                     </View>
                 )
     }
