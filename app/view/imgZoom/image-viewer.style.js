@@ -6,7 +6,6 @@ exports.default = (width, height) => {
             backgroundColor: 'black',
             justifyContent: 'center',
             alignItems: 'center',
-            overflow: 'hidden',
             alignSelf:'center',
         },
         watchOrigin: {

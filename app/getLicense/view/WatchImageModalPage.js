@@ -7,6 +7,7 @@ import React, { Component ,PropTypes} from 'react';
 import {
     View,
     Dimensions,
+    Image
 } from 'react-native';
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
 import BComponent from "../../base/BComponent";
@@ -84,7 +85,7 @@ export default class WatchImageModal extends BComponent{
         }else{
             this.setState({
                 imageFile:img.uri,
-                imageUrl:null,
+                // imageUrl:null,
                 img:img,
                 isShowMenu:false,
             });

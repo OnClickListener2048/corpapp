@@ -180,24 +180,24 @@ export default class MyOutSideWorkPage extends BComponent{
 
     }
 
-    // _closepull(page){
-        // if(page===2){
-        //     console.log("==关闭下拉刷新==");
+    _closepull(page){
+        if(page===2){
+            console.log("==关闭下拉刷新==");
 
-            // if(this.refs.toDo) {
-            //     this.refs.toDo.setEndLoading();
-            // }
-            //
-            // if(this.refs.doing) {
-            //     this.refs.doing.setEndLoading();
-            // }
-            //
-            // if(this.refs.done) {
-            //     this.refs.done.setEndLoading();
-            // }
+            if(this.refs.toDo) {
+                this.refs.toDo.setEndLoading();
+            }
 
-    //     }
-    // }
+            if(this.refs.doing) {
+                this.refs.doing.setEndLoading();
+            }
+
+            if(this.refs.done) {
+                this.refs.done.setEndLoading();
+            }
+
+        }
+    }
 
 
     _renderScrollView(){
@@ -210,7 +210,7 @@ export default class MyOutSideWorkPage extends BComponent{
             renderTabBar={() => <TabBar
                 // underlineColor={'transparent'}
                 underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
-                                        // callback={this._closepull.bind(this)}
+                                        callback={this._closepull.bind(this)}
                                         tabBarTextStyle={{fontSize: 15}}/>}
         >
             {/*

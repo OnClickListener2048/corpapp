@@ -647,7 +647,7 @@ export default class GetLicensePage extends BComponent {
 
             this.timer = setTimeout(async()=>{
                 await this.setState({canClickBtn:true})//1.5秒后可点击
-            },1000)
+            },2000)
             const imageUrl= photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics;
             const imageFile= photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri);
             console.log("客户信息图片=="+imageUrl+"&*"+imageFile);
@@ -1017,7 +1017,7 @@ export default class GetLicensePage extends BComponent {
                         }}
                         activeOpacity={this.state.editables === true ?0.5:1}>
                             {this.state.reImage != null ?
-                                <Image source={this.state.reImage} style={{marginTop: 15, height: 75, width: 110}}/> :
+                                <Image source={this.state.reImage} fadeDuration={0} style={{marginTop: 15, height: 75, width: 110}}/> :
                                 this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
                                     <ImageLoad
                                         style={{ marginTop: 15, height: 75, width: 110 }}
@@ -1122,7 +1122,9 @@ export default class GetLicensePage extends BComponent {
                         }}
                         activeOpacity={this.state.editables === true ?0.5:1}>
                             {this.state.linImage !== null ?
-                                <Image source={this.state.linImage} style={{marginTop: 20, height: 75, width: 110}}/> :
+                                <Image source={this.state.linImage}
+                                       fadeDuration={0}
+                                       style={{marginTop: 20, height: 75, width: 110}}/> :
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}

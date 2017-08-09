@@ -45,11 +45,13 @@ class ImageLoad extends React.Component {
                 onError={this.onError.bind(this)}
                 style={[this.props.style, { alignItems: 'center' }]}
                 source={this.props.source}
+                fadeDuration={0}
                 resizeMode={this.props.resizeMode}
             >
                 {
                     this.state.isLoaded && !this.state.isError ? null :
                         <Image
+                            fadeDuration={0}
                             style={[this.props.isWatch===false?this.props.placeholderStyle ? this.props.placeholderStyle : styles.imagePlaceholderStyles:styles.imagePlaceholderStyle]}
                             source={this.props.placeholderSource ? this.props.placeholderSource : require('../img/empty-image.png')}
                             resizeMode={'contain'}

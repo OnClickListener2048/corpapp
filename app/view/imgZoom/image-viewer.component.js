@@ -21,13 +21,13 @@ let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
         this.state = new typings.State();
-        this.fadeAnim = new react_native_1.Animated.Value(1);
+        this.fadeAnim = new react_native_1.Animated.Value(0);
         this.standardPositionX = 0;
         this.positionXNumber = 0;
         this.positionX = new react_native_1.Animated.Value(0);
         this.width = 0;
         this.height = 0;
-        this.styles = image_viewer_style_1.default(0, 0);
+        this.styles = image_viewer_style_1.default(0,0);
         this.hasLayout = false;
         this.loadedIndex = new Map();
         this.isShowMenu = this.props.isShowMenu;
@@ -60,13 +60,9 @@ let ImageViewer = class ImageViewer extends React.Component {
         }, () => {
             this.loadImage(nextProps.index);
             this.jumpToCurrentImage();
-            // react_native_1.Animated.spring(this.fadeAnim, {
-            //     friction: 0,
-            //     tension: 0,
-            // }).start();
             react_native_1.Animated.timing(this.fadeAnim, {
                 toValue: 1,
-                duration: 500,
+                duration: 0,
             }).start();
         });
     }
@@ -96,7 +92,6 @@ let ImageViewer = class ImageViewer extends React.Component {
             return;
         }
         if (this.state.imageSizes[index].width > 0 && this.state.imageSizes[index].height > 0) {
-            console.log("==成功==success>>>>000");
             imageStatus.status = 'success';
             saveImageSize();
             return;
@@ -178,6 +173,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         }
     }
     handleResponderRelease(vx) {
+
         if (vx > 0.7) {
             this.goBack.call(this);
             if (this.state.currentShowIndex > 0) {
@@ -201,6 +197,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         }
     }
     goBack() {
+
         if (this.state.currentShowIndex === 0) {
             this.resetPosition.call(this);
             return;
@@ -218,6 +215,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     goNext() {
+
         if (this.state.currentShowIndex === this.props.imageUrls.length - 1) {
             this.resetPosition.call(this);
             return;
@@ -235,6 +233,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         });
     }
     resetPosition() {
+
         this.positionXNumber = this.standardPositionX;
         react_native_1.Animated.timing(this.positionX, {
             toValue: this.standardPositionX,
@@ -255,13 +254,16 @@ let ImageViewer = class ImageViewer extends React.Component {
         this.props.onDoubleClick(this.handleCancel.bind(this));
     }
     handleCancel() {
+
         this.hasLayout = false;
         this.props.onCancel();
     }
     handleLayout(event) {
+
         if (this.hasLayout) {
             return;
         }
+
         this.hasLayout = true;
         this.width = event.nativeEvent.layout.width;
         this.height = event.nativeEvent.layout.height;
@@ -270,8 +272,6 @@ let ImageViewer = class ImageViewer extends React.Component {
         this.jumpToCurrentImage();
     }
     getContent() {
-        const screenWidth = this.width;
-        const screenHeight = this.height;
         console.log("图片显示=--");
         const ImageElements = this.props.imageUrls.map((image, index) => {
 
@@ -296,7 +296,8 @@ let ImageViewer = class ImageViewer extends React.Component {
             // }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
                 console.log("图片显示=成功="+image.url);
-                return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
+                return (React.createElement(react_native_image_pan_zoom_1.default, {
+                    // key: index,
                         style: this.styles.modalContainer,
                         cropWidth: this.width,
                         cropHeight: this.height,
@@ -307,8 +308,9 @@ let ImageViewer = class ImageViewer extends React.Component {
                         responderRelease: this.handleResponderRelease.bind(this),
                         onLongPress: this.handleLongPress.bind(this, image),
                         onClick: this.handleClick.bind(this),
-                        onDoubleClick: this.handleDoubleClick.bind(this) },
-                    React.createElement(react_native_1.Image, { style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
+                        onDoubleClick: this.handleDoubleClick.bind(this)
+                    },
+                    React.createElement(react_native_1.Image, {fadeDuration:false,style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
             }
             else {
                 switch (imageInfo.status) {
@@ -316,7 +318,7 @@ let ImageViewer = class ImageViewer extends React.Component {
                         return (React.createElement(react_native_1.TouchableOpacity, { key: index, onPress: this.handleClick.bind(this), style: this.styles.loadingTouchable },
                             React.createElement(react_native_1.View, { style: this.styles.loadingContainer }, this.props.loadingRender())));
                     case 'success':
-                        return (React.createElement(react_native_1.Image, { key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
+                        return (React.createElement(react_native_1.Image, {fadeDuration:false, key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
                     case 'fail':
                         return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
                                 style: this.styles.modalContainer,
@@ -331,10 +333,11 @@ let ImageViewer = class ImageViewer extends React.Component {
                                 onClick: this.handleClick.bind(this),
                                 onDoubleClick: this.handleDoubleClick.bind(this)},
                             React.createElement(react_native_1.TouchableOpacity, { key: index, style: this.styles.failContainer },
-                                React.createElement(react_native_1.Image, { source: this.props.failImageSource, style: this.styles.failImage }))));
+                                React.createElement(react_native_1.Image, {fadeDuration:false, source: this.props.failImageSource, style: this.styles.failImage }))));
                 }
             }
         });
+
         return (React.createElement(react_native_1.Animated.View, { style: [this.styles.container, { opacity: this.fadeAnim }] },
             this.props.renderHeader(this.state.currentShowIndex),
             React.createElement(react_native_1.View, { style: this.styles.arrowLeftContainer },
@@ -345,11 +348,11 @@ let ImageViewer = class ImageViewer extends React.Component {
                     React.createElement(react_native_1.View, null, this.props.renderArrowRight()))),
             React.createElement(react_native_1.Animated.View, { style: [this.styles.moveBox, { transform: [{ translateX: this.positionX }] }, { width: this.width * this.props.imageUrls.length }] }, ImageElements),
             this.props.imageUrls.length > 1 &&
-                this.props.renderIndicator(this.state.currentShowIndex + 1, this.props.imageUrls.length),
+            this.props.renderIndicator(this.state.currentShowIndex + 1, this.props.imageUrls.length),
             this.props.imageUrls[this.state.currentShowIndex].originSizeKb && this.props.imageUrls[this.state.currentShowIndex].originUrl &&
-                React.createElement(react_native_1.View, { style: this.styles.watchOrigin },
-                    React.createElement(react_native_1.TouchableOpacity, { style: this.styles.watchOriginTouchable },
-                        React.createElement(react_native_1.Text, { style: this.styles.watchOriginText }, "\u67E5\u770B\u539F\u56FE(2M)"))),
+            React.createElement(react_native_1.View, { style: this.styles.watchOrigin },
+                React.createElement(react_native_1.TouchableOpacity, { style: this.styles.watchOriginTouchable },
+                    React.createElement(react_native_1.Text, { style: this.styles.watchOriginText }, "\u67E5\u770B\u539F\u56FE(2M)"))),
             this.props.renderFooter(this.state.currentShowIndex)
         ));
     }
@@ -453,7 +456,7 @@ let ImageViewer = class ImageViewer extends React.Component {
         childs = (React.createElement(react_native_1.View, null,
             this.getContent(),
             this.getMenu()));
-        return (React.createElement(react_native_1.View, Object.assign({ onLayout: this.handleLayout.bind(this), style: [{ flex: 1, overflow: 'hidden' }, this.props.style] }, this.props.others), childs));
+        return (React.createElement(react_native_1.View, Object.assign({ onLayout: this.handleLayout.bind(this), style: [{ flex: 1 }] }, this.props.others), childs));
 
     }
 };
