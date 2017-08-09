@@ -310,7 +310,7 @@ let ImageViewer = class ImageViewer extends React.Component {
                         onClick: this.handleClick.bind(this),
                         onDoubleClick: this.handleDoubleClick.bind(this)
                     },
-                    React.createElement(react_native_1.Image, {fadeDuration:false,style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
+                    React.createElement(react_native_1.Image, {fadeDuration:0,style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
             }
             else {
                 switch (imageInfo.status) {
@@ -318,7 +318,7 @@ let ImageViewer = class ImageViewer extends React.Component {
                         return (React.createElement(react_native_1.TouchableOpacity, { key: index, onPress: this.handleClick.bind(this), style: this.styles.loadingTouchable },
                             React.createElement(react_native_1.View, { style: this.styles.loadingContainer }, this.props.loadingRender())));
                     case 'success':
-                        return (React.createElement(react_native_1.Image, {fadeDuration:false, key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
+                        return (React.createElement(react_native_1.Image, {fadeDuration:0, key: index, style: [this.styles.imageStyle, { width: width, height: height }], source:  { uri: image.url } }));
                     case 'fail':
                         return (React.createElement(react_native_image_pan_zoom_1.default, { key: index,
                                 style: this.styles.modalContainer,
@@ -333,7 +333,7 @@ let ImageViewer = class ImageViewer extends React.Component {
                                 onClick: this.handleClick.bind(this),
                                 onDoubleClick: this.handleDoubleClick.bind(this)},
                             React.createElement(react_native_1.TouchableOpacity, { key: index, style: this.styles.failContainer },
-                                React.createElement(react_native_1.Image, {fadeDuration:false, source: this.props.failImageSource, style: this.styles.failImage }))));
+                                React.createElement(react_native_1.Image, {fadeDuration:0, source: this.props.failImageSource, style: this.styles.failImage }))));
                 }
             }
         });
