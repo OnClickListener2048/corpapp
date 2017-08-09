@@ -65,7 +65,7 @@ export const appStyle = {
         tabBarButtonColor: '#c8c8c8',
         tabBarSelectedButtonColor: '#ff505c',
         navigationBarColor: '#000000',// 安卓虚拟按键导航背景色
-        // topBarElevationShadowEnabled: false, // default: true. Disables TopBar elevation shadow on Lolipop and above
+        topBarElevationShadowEnabled: false, // default: true. Disables TopBar elevation shadow on Lolipop and above 启用顶部分割线下方阴影
     // change the background color of the bottom native navigation bar.
         // statusBarColor: '#000000',
         // tabFontFamily: 'BioRhyme-Bold',
