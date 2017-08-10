@@ -20,9 +20,9 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
-import CompanyInfoView from '../test/view/CompanyInfoView'
+import CompanyInfoView from '../commonView/view/CompanyInfoView'
 import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
-import CompanyAddress from "../test/view/CompanyAddress";
+import CompanyAddress from "../commonView/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
@@ -41,7 +41,7 @@ import ImageLoad from "../view/ImageLoad";
 import WatchImageModal from "./view/WatchImageModal";
 import BComponent from '../base';
 import NoNetView from "../base/NoNetView";
-import NoMessage from "../test/NoMessage";
+import NoMessage from "../commonView/NoMessage";
 import NoNetEmptyView from "../base/NoNetEmptyView";
 
 const window = Dimensions.get('window');

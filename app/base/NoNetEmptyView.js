@@ -20,7 +20,7 @@ import {
     ToastAndroid,
     NetInfo
 } from 'react-native';
-import NoMessage from '../test/NoMessage';
+import NoMessage from '../commonView/NoMessage';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
 import NoNetView from "./NoNetView";

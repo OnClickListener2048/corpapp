@@ -7,7 +7,7 @@ import errorText from '../util/ErrorMsg';
 import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import NoMessage from '../test/NoMessage';
+import NoMessage from '../commonView/NoMessage';
 
 // import {
 //     SwRefreshScrollView, //支持下拉刷新的ScrollView

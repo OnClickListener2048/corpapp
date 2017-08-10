@@ -8,7 +8,7 @@ import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image,
 } from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
-import NoMessage from "../test/NoMessage";
+import NoMessage from "../commonView/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";

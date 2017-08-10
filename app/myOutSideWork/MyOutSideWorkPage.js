@@ -19,7 +19,7 @@ import ScrollableTabView from 'react-native-scrollable-tab-view';
 import TabBar from '../myOutSideWork/view/TabBar';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
-import NoMessage from "../test/NoMessage";
+import NoMessage from "../commonView/NoMessage";
 import NetInfoSingleton from "../util/NetInfoSingleton";
 import errorText from '../util/ErrorMsg';
 

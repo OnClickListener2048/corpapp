@@ -18,7 +18,7 @@ import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 import Feedback from "./pilipaMain/my/Feedback";
 import About from "./pilipaMain/my/About";
 import Settings from "./pilipaMain/my/Settings";
-import NoMessage from "./test/NoMessage";
+import NoMessage from "./commonView/NoMessage";
 import DataTimerView from "./view/DataTimerView";
 import AreaPicker from "../picker_demo";
 import ImageZoomTest from "../picker_demo/ImageZoomTest";

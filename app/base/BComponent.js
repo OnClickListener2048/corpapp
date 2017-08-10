@@ -20,7 +20,7 @@ import {
     BackAndroid,
     ToastAndroid,
 } from 'react-native';
-import NoMessage from '../test/NoMessage';
+import NoMessage from '../commonView/NoMessage';
 import Toast from 'react-native-root-toast';
 import {SCREEN_WIDTH, SCREEN_HEIGHT} from '../config';
 
@@ -77,7 +77,7 @@ export default class BComponent extends Component {
     _testRender() {
         console.log('_testRender()');
 
-        return (<TouchableOpacity onPress={() => { Toast.show("test click")}}>
+        return (<TouchableOpacity onPress={() => { Toast.show("commonView click")}}>
 
             <View style={{flex : 1 , backgroundColor:'#00FF00',
                 position: 'absolute', width: SCREEN_WIDTH, height: SCREEN_HEIGHT }}>

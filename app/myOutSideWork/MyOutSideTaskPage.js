@@ -15,12 +15,12 @@ import {
 } from 'react-native';
 
 import styles from './css/MyOutSideTaskStyle'
-import CompanyInfoView from '../test/view/CompanyInfoView'
+import CompanyInfoView from '../commonView/view/CompanyInfoView'
 import CommunalNavBar from '../main/GDCommunalNavBar';
-import RegisterCompanyCell from '../test/view/RegisterCompanyCell'
+import RegisterCompanyCell from '../commonView/view/RegisterCompanyCell'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import NoMessage from "../test/NoMessage";
+import NoMessage from "../commonView/NoMessage";
 import Toast from 'react-native-root-toast';
 import BComponent from "../base";
 import NoNetView from "../base/NoNetView";
