@@ -74,11 +74,9 @@ class TabBar extends Component {
     tabStyles: PropTypes.object
   };
 
-
   static defaultProps = {
     tabStyles: {}
   };
-
   constructor(props) {
     super(props);
     this.tabState = {};
@@ -87,7 +85,6 @@ class TabBar extends Component {
       tabScrollValue: 0
     };
   }
-
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.activeTab !== this.props.activeTab) {
       this._checkViewportOverflows();
