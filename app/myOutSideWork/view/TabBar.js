@@ -81,52 +81,7 @@ class TabBar extends Component {
 
   constructor(props) {
     super(props);
-    this.tabState = {};
-    this.state = {
-      renderUnderline: false,
-      tabScrollValue: 0
-    };
-  }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.activeTab !== this.props.activeTab) {
-      this._checkViewportOverflows();
-    }
-  }
-
-  _checkViewportOverflows() {
-    const getScreenMargin = (props) => {
-      return StyleSheet.flatten([styles.tab, props.tabStyles.tab]).marginLeft;
-    };
-
-    const screenMargin = getScreenMargin(this.props);
-    const currentTabLayout = this.tabState[this.props.activeTab];
-    const rightOverflow = currentTabLayout.x + currentTabLayout.width - SCREEN_WIDTH;
-    const hasRightViewportOverflow = rightOverflow > this.state.tabScrollValue;
-    const hasLeftViewportOverflow = (currentTabLayout.x < this.state.tabScrollValue);
-
-    if (hasRightViewportOverflow) {      
-      const isLastTab = this.props.tabs.length === this.props.activeTab + 1;
-      const n = isLastTab ? 1 : 2;
-      const x = rightOverflow + screenMargin * n;
-      const y = 0;
-      return this.scrollTabs.scrollTo({x , y});
-    }
-
-    if (hasLeftViewportOverflow) {
-      const isFirstTab = this.props.activeTab === 0;
-      const x = isFirstTab? 0 : currentTabLayout.x - screenMargin * 2;
-      const y = 0;
-      return this.scrollTabs.scrollTo({x, y});
-    }
-  }
-
-  onTabLayout(event, page) {
-    var {x, y, width, height} = event.nativeEvent.layout;
-    this.tabState[page] = {x, y, width, height};
-    if (this.props.tabs.length === Object.keys(this.tabState).length) {
-      this.setState({renderUnderline: true});
-    }
   }
 
   renderTab = (tab, page) => {
@@ -140,7 +95,7 @@ class TabBar extends Component {
     return (
         <TouchableOpacity key={page}
                           onPress={() => this.props.goToPage(page)}
-                          onLayout={(event) => this.onTabLayout(event, page)}>
+                          >
           <View style={[styles.tab, this.props.tabStyles.tab]}>
             <View style={{
                 justifyContent:'space-between',
@@ -174,57 +129,34 @@ class TabBar extends Component {
             </View>
 
             </View>
-
-
         </TouchableOpacity>
 
     );
   }
 
   renderUnderline() {
-    var inputRange = Object.keys(this.tabState);
-    var outputRangeLeft = [];
-    var outputRangeWidth = [];
-
-    for (var k in this.tabState) {
-      if (this.tabState.hasOwnProperty(k)) {
-        outputRangeLeft.push(this.tabState[k].x);
-        outputRangeWidth.push(this.tabState[k].width);
-      }
-    }
-
-    var left = this.props.scrollValue.interpolate({
-      inputRange: inputRange, outputRange: outputRangeLeft
-    });
-
-    var width = this.props.scrollValue.interpolate({
-      inputRange: inputRange, outputRange: outputRangeWidth
-    });
+      const containerWidth = this.props.containerWidth;
+      const numberOfTabs = this.props.tabs.length;
 
     var tabUnderlineStyle = {
       position: 'absolute',
       backgroundColor: this.props.underlineColor || "navy",
-      height: 1,
+      height: 2,
       bottom: 0,
+        width: containerWidth / numberOfTabs,
     };
-
-    return <Animated.View style={[tabUnderlineStyle, {left}, {width}]}/>
+      const left = this.props.scrollValue.interpolate({
+          inputRange: [0, 1, ], outputRange: [0,  containerWidth / numberOfTabs, ],
+      });
+    return <Animated.View style={[tabUnderlineStyle, {left}]}/>
   }
 
   render() {
     return (
-        <Animated.View style={[styles.tabs, {backgroundColor : this.props.backgroundColor}, this.props.style, this.props.tabBarStyle]}>
-          <ScrollView horizontal={true}
-                      contentContainerStyle={[styles.scrollContainer, this.props.scrollContainerStyle]}
-                      showsHorizontalScrollIndicator={false}
-                      ref={(node) => this.scrollTabs = node}
-                      bounces={false}
-                      scrollEventThrottle={16}
-                      onScroll={(e) => this.setState({tabScrollValue: e.nativeEvent.contentOffset.x})}>
+        <View style={[styles.tabs, {backgroundColor : this.props.backgroundColor}, this.props.style, this.props.tabBarStyle]}>
             {this.props.tabs.map(this.renderTab)}
-            {this.state.renderUnderline && this.renderUnderline()}
-          </ScrollView>
-        </Animated.View>
+            {this.renderUnderline()}
+        </View>
     );
   }
 }
