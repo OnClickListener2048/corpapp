@@ -206,6 +206,8 @@ export default class MessageCenterPage extends BComponent {
         apis.loadMessageData(this.state.pageCount,'').then(
 
         (responseData) => {
+            this.setState({isRefreshing: false});
+
             let cnt = responseData.unReadNum;
             if(cnt !== null && cnt >= 0) {
                 this.props.navigator.setTabBadge({
@@ -247,7 +249,6 @@ export default class MessageCenterPage extends BComponent {
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
                     loaded:true,
                 });
-                this.setState({isRefreshing: false});
 
 
 
