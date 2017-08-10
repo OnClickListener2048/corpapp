@@ -138,7 +138,11 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     });
 
                     if (responseData.data.length === this.pageCount){
-                        this.lastID = this.outList[this.outList.length - 1].stepId;
+                        if(taskType==='todo'||taskType==='inProgress')
+                            this.lastID = this.outList[this.outList.length - 1].taskId;
+                        else
+                            this.lastID = this.outList[this.outList.length - 1].stepId;
+
 
                     }else {
                         this.setState({loadingMore: 2});
@@ -196,7 +200,10 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     });
 
                     if (responseData.data.length == this.pageCount){
-                        this.lastID = this.outList[this.outList.length - 1].stepId;
+                        if(taskType==='todo'||taskType==='inProgress')
+                            this.lastID = this.outList[this.outList.length - 1].taskId;
+                        else
+                            this.lastID = this.outList[this.outList.length - 1].stepId;
                         this.setState({loadingMore: 0});
 
                     }else {
@@ -259,7 +266,10 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     });
 
                     if (responseData.data.length == this.pageCount){
-                        this.lastID = this.outList[this.outList.length - 1].stepId;
+                        if(taskType==='todo'||taskType==='inProgress')
+                            this.lastID = this.outList[this.outList.length - 1].taskId;
+                        else
+                            this.lastID = this.outList[this.outList.length - 1].stepId;
 
                         this.setState({loadingMore: 0});
 
