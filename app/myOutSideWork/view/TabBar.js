@@ -36,11 +36,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 0.7,
     borderTopWidth: 0,
     borderLeftWidth: 0,
     borderRightWidth: 0,
-    borderBottomColor: '#d2d2d2'
+    borderBottomColor: '#e6e6e6'
   },
 
   badgeBubble: {
@@ -149,9 +149,9 @@ class TabBar extends Component {
                 width:naviButtonWidth-2,
                 height:46,
             }}>
-              <View style={{width:theLast,height:20,backgroundColor:'#d2d2d2'}}/>
+              <View style={{width:theLast,height:20,backgroundColor:'#e6e6e6'}}/>
               <Text style={[{color: isTabActive ? activeTextColor : inactiveTextColor, alignSelf:'center',fontWeight: isTabActive ? '400' : '400'}, textStyle]}>{label}</Text>
-              <View style={{width:theLast,height:20,backgroundColor:'#d2d2d2'}}/>
+              <View style={{width:theLast,height:20,backgroundColor:'#e6e6e6'}}/>
               <View style={{position: 'absolute',
                   marginLeft:naviButtonWidth-35,
                   paddingTop:8,
@@ -204,7 +204,7 @@ class TabBar extends Component {
     var tabUnderlineStyle = {
       position: 'absolute',
       backgroundColor: this.props.underlineColor || "navy",
-      height: 2,
+      height: 1,
       bottom: 0,
     };
 

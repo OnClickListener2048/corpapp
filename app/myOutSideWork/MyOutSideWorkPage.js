@@ -224,7 +224,7 @@ export default class MyOutSideWorkPage extends BComponent{
                 refresh={this.state.needLoding}
             />
             <MyOutSideWorkItemPage  ref="doing"
-                tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 1}}
+                tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 0.7}}
                 label="inProgress"
                 refresh={this.state.needLoding}
                 callback={this._callback.bind(this)}/>
