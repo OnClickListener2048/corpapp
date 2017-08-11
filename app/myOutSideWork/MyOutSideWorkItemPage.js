@@ -66,10 +66,14 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
     componentDidMount() {
         console.log("=====loadlist=====");
-        InteractionManager.runAfterInteractions(() => {
-            this._loadList();
-        });
 
+        if(this.props.label === null){
+            this._loadList();
+        }else{
+            InteractionManager.runAfterInteractions(() => {
+                this._loadList();
+            });
+        }
     }
 
     //这里是收到需要刷新外勤列表的callBack 调用刷新方法
@@ -88,7 +92,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
     //将ID传值给父组件
     _press(statusId) {
         console.log("====>>>"+statusId);
-        if (this.props.label == null) {
+        if (this.props.label === null) {
             if (this.state.canClickBtn === false){
                 return;
             }
@@ -114,7 +118,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
     _loadList(){
         console.log("=====loadlist=====加载中");
-        let taskType = this.props.label==null?'all':this.props.label;
+        let taskType = this.props.label===null?'all':this.props.label;
         this.lastID = null;
         if(!NetInfoSingleton.isConnected) {
             this.setState({
@@ -184,7 +188,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             Toast.show('暂无网络' );
             return;
         }
-        let taskType = this.props.label==null?'all':this.props.label;
+        let taskType = this.props.label===null?'all':this.props.label;
         this.setState({isRefreshing: true});
         this.lastID = null;
         loadOutSourceList(this.pageCount,'',taskType).then(
@@ -243,7 +247,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             return;
         }
         console.log('加载更多哈哈');
-        let taskType = this.props.label==null?'all':this.props.label;
+        let taskType = this.props.label===null?'all':this.props.label;
         if (this.lastID === null){
             return;
         }
@@ -371,7 +375,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
         if (this.state.loaded===true&&this.outList.length === 0){
 
             return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label === null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <TouchableOpacity onPress={() => {this._loadList()}}>
                         <NoMessage
                             textContent='暂无数据'
@@ -380,49 +384,77 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 </View>
             );
         }else if(this.state.loaded===true){
-            return (
+            console.log("tab页=="+this.props.allList);
+            if(this.props.allList === null){//tab页
+                return (
 
-                <ListView
-                    style={[{flex : 1 }]}
-                    dataSource={this.state.dataSource}
-                    onEndReached={this._loadMoreData}
-                    renderFooter={this.renderFooter}
-                    enableEmptySections={true}
-                    onEndReachedThreshold={10}
-                    renderRow={this._renderRow.bind(this)}
-                    onTouchStart={(e) => {
-                        this.pageX = e.nativeEvent.pageX;
-                        this.pageY = e.nativeEvent.pageY;
-                    }}
-                    onTouchMove={(e) => {
-                        if(Math.abs(this.pageY - e.nativeEvent.pageY) > Math.abs(this.pageX - e.nativeEvent.pageX)){
-                            // 下拉
-                            this.props.lockSlide();
-                        } else {
-                            // 左右滑动
-                            this.props.openSlide();
+                    <ListView
+                        style={[{flex : 1 }]}
+                        dataSource={this.state.dataSource}
+                        onEndReached={this._loadMoreData}
+                        renderFooter={this.renderFooter}
+                        enableEmptySections={true}
+                        onEndReachedThreshold={10}
+                        renderRow={this._renderRow.bind(this)}
+                        onTouchStart={(e) => {
+                            this.pageX = e.nativeEvent.pageX;
+                            this.pageY = e.nativeEvent.pageY;
+                        }}
+                        onTouchMove={(e) => {
+                            if(Math.abs(this.pageY - e.nativeEvent.pageY) > Math.abs(this.pageX - e.nativeEvent.pageX)){
+                                // 下拉
+                                this.props.lockSlide();
+                            } else {
+                                // 左右滑动
+                                this.props.openSlide();
 
+                            }
+                        }}
+                        refreshControl ={
+                            <RefreshControl
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={this._loadAgainList}
+                                title={'加载中...'}
+                                titleColor={'#b1b1b1'}
+                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                                progressBackgroundColor={'#fafafa'}
+
+                            />
                         }
-                    }}
-                    refreshControl ={
-                        <RefreshControl
-                            refreshing={this.state.isRefreshing}
-                            onRefresh={this._loadAgainList}
-                            title={'加载中...'}
-                            titleColor={'#b1b1b1'}
-                            colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
-                            progressBackgroundColor={'#fafafa'}
+                    />
+                )
+            }else{//全部页面
+                return (
 
-                        />
-                    }
-                />
-            )
+                    <ListView
+                        style={[{flex : 1 }]}
+                        dataSource={this.state.dataSource}
+                        onEndReached={this._loadMoreData}
+                        renderFooter={this.renderFooter}
+                        enableEmptySections={true}
+                        onEndReachedThreshold={10}
+                        renderRow={this._renderRow.bind(this)}
+                        refreshControl ={
+                            <RefreshControl
+                                refreshing={this.state.isRefreshing}
+                                onRefresh={this._loadAgainList}
+                                title={'加载中...'}
+                                titleColor={'#b1b1b1'}
+                                colors={['#ff0000', '#00ff00', '#0000ff', '#3ad564']}
+                                progressBackgroundColor={'#fafafa'}
+
+                            />
+                        }
+                    />
+                )
+            }
+
         }else if(this.state.loaded===null){
             return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
 
         }else if (this.state.dataFaild === true) {      // 数据加载失败
             return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label === null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
                     <TouchableOpacity onPress={() => {this._loadList()}}>
                         <NoMessage
                             textContent='加载失败，点击重试'
@@ -445,7 +477,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     render() {
-        if(this.props.label==null){
+        if(this.props.allList!==null){
 
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-65 : SCREEN_HEIGHT-83;
         }else{
