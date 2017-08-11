@@ -79,50 +79,7 @@ class TabBar extends Component {
   };
   constructor(props) {
     super(props);
-<<<<<<< HEAD
-    this.tabState = {};
-    this.state = {
-      renderUnderline: false,
-      tabScrollValue: 0
-    };
   }
-  componentDidUpdate(prevProps, prevState) {
-    if (prevProps.activeTab !== this.props.activeTab) {
-      this._checkViewportOverflows();
-    }
-  }
-
-  _checkViewportOverflows() {
-    const getScreenMargin = (props) => {
-      return StyleSheet.flatten([styles.tab, props.tabStyles.tab]).marginLeft;
-    };
-
-    const screenMargin = getScreenMargin(this.props);
-    const currentTabLayout = this.tabState[this.props.activeTab];
-    const rightOverflow = currentTabLayout.x + currentTabLayout.width - SCREEN_WIDTH;
-    const hasRightViewportOverflow = rightOverflow > this.state.tabScrollValue;
-    const hasLeftViewportOverflow = (currentTabLayout.x < this.state.tabScrollValue);
-
-    if (hasRightViewportOverflow) {      
-      const isLastTab = this.props.tabs.length === this.props.activeTab + 1;
-      const n = isLastTab ? 1 : 2;
-      const x = rightOverflow + screenMargin * n;
-      const y = 0;
-      return this.scrollTabs.scrollTo({x , y});
-    }
-
-    if (hasLeftViewportOverflow) {
-      const isFirstTab = this.props.activeTab === 0;
-      const x = isFirstTab? 0 : currentTabLayout.x - screenMargin * 2;
-      const y = 0;
-      return this.scrollTabs.scrollTo({x, y});
-    }
-  }
-=======
->>>>>>> b0c64f9cdf8beff3d18a23668a0f6e236261c151
-
-  }
-
   renderTab = (tab, page) => {
       // this.props.callback(page);
       const {activeTab, tabBadgeColor} = this.props;
