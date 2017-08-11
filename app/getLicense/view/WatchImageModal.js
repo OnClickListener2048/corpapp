@@ -100,7 +100,7 @@ export default class WatchImageModal extends Component{
 
                 return (
                     <Modal
-                        animationType='slide'//进场动画 fade
+                        animationType='none'//进场动画 fade
                         onRequestClose={() => this.close()}
                         visible={this.state.visible}//是否可见
                         transparent={true} //背景透明

@@ -7,6 +7,7 @@ import React, { Component ,PropTypes} from 'react';
 import {
     View,
     Dimensions,
+    Platform,
     Image
 } from 'react-native';
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
@@ -93,9 +94,9 @@ export default class WatchImageModalPage extends BComponent{
         console.log("WatchImageModal=>imageUrl="+this.state.imageUrl+this.state.imageFile+images[0].url);
 
                 return (
-                    <View style={{flex: 1,
+                    <View style={{flex: 1,flexDirection:'column',position: 'absolute',
                         backgroundColor: 'black'}} >
-                        <View style={{backgroundColor:'black',flex:1,flexDirection:'column'}}>
+                        <View style={{backgroundColor:'black',height:Platform.OS==='ios'?SCREEN_HEIGHT-62:SCREEN_HEIGHT-68,width:SCREEN_WIDTH}}>
                             <ImageViewer imageUrls={images}
                                          isShowMenu={this.state.isShowMenu}
                                          callback={this._callbackPhoto.bind(this)}/>
