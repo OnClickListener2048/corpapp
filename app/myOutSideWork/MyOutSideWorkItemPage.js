@@ -8,7 +8,7 @@ import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image,
 } from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
 import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
-import NoMessage from "../commonView/NoMessage";
+import NoMessage from "../test/NoMessage";
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import Toast from 'react-native-root-toast';
 import {loadOutSourceList} from "../apis/outSource";
@@ -50,6 +50,8 @@ export default class MyOutSideWorkItemPage extends BComponent{
         this.renderFooter = this.renderFooter.bind(this);
         this.setRefresh = this.setRefresh.bind(this);
         // this.setEndLoading = this.setEndLoading.bind(this);
+        this.pageX = '';
+        this.pageY = ''
 
     }
 
@@ -62,13 +64,15 @@ export default class MyOutSideWorkItemPage extends BComponent{
         refresh:PropTypes.bool,
     };
 
-    componentWillMount() {
+    componentDidMount() {
         console.log("=====loadlist=====");
-        this._loadList();
+        InteractionManager.runAfterInteractions(() => {
+            this._loadList();
+        });
 
     }
 
-    //这里是收到需要刷新外勤列表的callBack 调用刷新方法 
+    //这里是收到需要刷新外勤列表的callBack 调用刷新方法
     setRefresh(needRefresh){
         this._loadList();
 
@@ -104,7 +108,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 });
             });
         } else {
-        this.props.callback(statusId);
+            this.props.callback(statusId);
         }
     }
 
@@ -131,10 +135,10 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     this.outList= this.outList.concat(responseData.data);
                     console.log("开始请求outlist----"+this.outList);
 
-                        this.setState({
-                            dataSource: this.state.dataSource.cloneWithRows(this.outList),
-                            loaded:true,
-                            dataFaild : false,
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.outList),
+                        loaded:true,
+                        dataFaild : false,
                     });
 
                     if (responseData.data.length === this.pageCount){
@@ -334,13 +338,13 @@ export default class MyOutSideWorkItemPage extends BComponent{
         let statusicon = rowData.taskName.substring(0,1);
         if(rowData.taskStatus==='已取消'){
             return (
-                    <MyOutSideWorkCell
-                        statusIcon = {statusicon}
-                        statusName = {rowData.taskName}
-                        companyName = {rowData.corpName}
-                        statusContent = {rowData. stepName}
-                        statusCourse = {rowData.taskStatus}
-                    />
+                <MyOutSideWorkCell
+                    statusIcon = {statusicon}
+                    statusName = {rowData.taskName}
+                    companyName = {rowData.corpName}
+                    statusContent = {rowData. stepName}
+                    statusCourse = {rowData.taskStatus}
+                />
             );
         }else {
             return (
@@ -366,16 +370,16 @@ export default class MyOutSideWorkItemPage extends BComponent{
         console.log("外勤列表入口 this.state.loaded=", this.state.loaded);
         if (this.state.loaded===true&&this.outList.length === 0){
 
-        return(
-            <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
-                <TouchableOpacity onPress={() => {this._loadList()}}>
-                    <NoMessage
-                        textContent='暂无数据'
-                        active={require('../img/no_message.png')}/>
-                </TouchableOpacity>
-            </View>
-        );
-    }else if(this.state.loaded===true){
+            return(
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,height: this.props.label == null ? SCREEN_HEIGHT - 65 : SCREEN_HEIGHT - 112}]}>
+                    <TouchableOpacity onPress={() => {this._loadList()}}>
+                        <NoMessage
+                            textContent='暂无数据'
+                            active={require('../img/no_message.png')}/>
+                    </TouchableOpacity>
+                </View>
+            );
+        }else if(this.state.loaded===true){
             return (
 
                 <ListView
@@ -386,6 +390,20 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     enableEmptySections={true}
                     onEndReachedThreshold={10}
                     renderRow={this._renderRow.bind(this)}
+                    onTouchStart={(e) => {
+                        this.pageX = e.nativeEvent.pageX;
+                        this.pageY = e.nativeEvent.pageY;
+                    }}
+                    onTouchMove={(e) => {
+                        if(Math.abs(this.pageY - e.nativeEvent.pageY) > Math.abs(this.pageX - e.nativeEvent.pageX)){
+                            // 下拉
+                            this.props.lockSlide();
+                        } else {
+                            // 左右滑动
+                            this.props.openSlide();
+
+                        }
+                    }}
                     refreshControl ={
                         <RefreshControl
                             refreshing={this.state.isRefreshing}
@@ -426,8 +444,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
 
     }
 
-
-
     render() {
         if(this.props.label==null){
 
@@ -435,6 +451,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
         }else{
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-112 : SCREEN_HEIGHT-127;
         }
+        console.log('render')
         return (
             <View style={[styles.container,{height:allListHeight}]}>
                 <NoNetEmptyView onClick={() => {this._loadList()}} />
