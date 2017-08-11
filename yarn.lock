@@ -3146,9 +3146,9 @@ react-native-modal@^2.4.0:
     prop-types "15.5.10"
     react-native-animatable "^1.2.0"
 
-"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.134_1":
-  version "1.1.134"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/4f53bcf3fdc16e7970a4355c03ccdc3d225a0f47"
+"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.135":
+  version "1.1.134_1"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/ff91ead24b19722e673090de77d17bb76b30fec0"
   dependencies:
     lodash "4.x.x"
 
@@ -3176,11 +3176,10 @@ react-native-root-toast@^1.1.2:
   dependencies:
     react-native-root-siblings "^1.2.1"
 
-react-native-scrollable-tab-view@0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-scrollable-tab-view/-/react-native-scrollable-tab-view-0.6.0.tgz#36050cf72dae0dc00b6b8d7f9a570955d99a213b"
+"react-native-scrollable-tab-view@github:pilipa-cn/react-native-scrollable-tab-view#v0.7.4-pilipa-2":
+  version v0.7.4-pilipa-2
+  resolved "https://codeload.github.com/pilipa-cn/react-native-scrollable-tab-view/tar.gz/80783d721693dd733333599884fe52c16c2f41b5"
   dependencies:
-    react-static-container "^1.0.1"
     react-timer-mixin "^0.13.3"
 
 react-native-swiper@^1.5.4:
@@ -3293,10 +3292,6 @@ react-proxy@^1.1.7:
   dependencies:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
-
-react-static-container@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/react-static-container/-/react-static-container-1.0.1.tgz#694c0dd68a896b879519afb548399cc1989c9ab0"
 
 react-test-renderer@15.4.2:
   version "15.4.2"
