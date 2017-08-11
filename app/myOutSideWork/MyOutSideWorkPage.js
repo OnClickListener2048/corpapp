@@ -32,6 +32,7 @@ export default class MyOutSideWorkPage extends BComponent{
             loaded:null,
             needLoding:true,
             canClickBtn : true,
+            scrollEnabled: false
 
         }
         // if you want to listen on navigator events, set this up
@@ -71,12 +72,12 @@ export default class MyOutSideWorkPage extends BComponent{
                     await this.setState({canClickBtn:true})//1.5秒后可点击
                 },1000)
 
-                    this.props.navigator.push({
-                        screen: 'MyOutSideWorkItemPage',
-                        backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                        backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                        title:'我的外勤',
-                    });
+                this.props.navigator.push({
+                    screen: 'MyOutSideWorkItemPage',
+                    backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                    backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+                    title:'我的外勤',
+                });
             }
         }
 
@@ -101,15 +102,15 @@ export default class MyOutSideWorkPage extends BComponent{
             await this.setState({canClickBtn:true})//1.5秒后可点击
         },1000)
 
-                this.props.navigator.push({
-                    screen: 'MyOutSideTaskPage',
-                    backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                    backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                    passProps: {
-                        taskId:statusId,
-                        callback : this._loadCount
-                    }
-                });
+        this.props.navigator.push({
+            screen: 'MyOutSideTaskPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            passProps: {
+                taskId:statusId,
+                callback : this._loadCount
+            }
+        });
     }
 
     componentWillMount() {
@@ -117,7 +118,7 @@ export default class MyOutSideWorkPage extends BComponent{
         console.log('componentWillMount');
     }
 
-        //获取每个外勤状态数量
+    //获取每个外勤状态数量
     _loadCount(needLoding){
 
         let loading;
@@ -198,56 +199,75 @@ export default class MyOutSideWorkPage extends BComponent{
 
         }
     }
+    _lockSlide(){
+        if (Platform.OS === 'android') {
+            this.refs.scrollTabView.setNativeProps(false);
+        }
+    }
 
+    _openSlide(){
+        if (Platform.OS === 'android'){
+            this.refs.scrollTabView.setNativeProps(true);
+        }
+    }
 
     _renderScrollView(){
         console.log("外勤入口 this.state.loaded=", this.state.loaded);
         if (this.state.loaded===true){
-        return   <ScrollableTabView
-            tabBarUnderlineColor="#FF0000"
-            tabBarActiveTextColor="#FF0000"
-            // locked={true}
-            renderTabBar={() => <TabBar
-                // underlineColor={'#FF0000'}
-                underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
-                                        callback={this._closepull.bind(this)}
-                                        tabBarTextStyle={{fontSize: 15}}/>}
-        >
-            {/*
+            return   <ScrollableTabView
+                ref = "scrollTabView"
+                tabBarUnderlineColor="#FF0000"
+                tabBarActiveTextColor="#FF0000"
+                locked={this.state.scrollEnabled}
+                renderTabBar={() => <TabBar
+                    underlineColor={'#FF0000'}
+                    //underlineColor={Platform.OS==='ios'?'#FF0000':'transparent'}
+                    callback={this._closepull.bind(this)}
+                    tabBarTextStyle={{fontSize: 15}}/>}
+            >
+                {/*
              We have to use tabLabel to pass tab options to TabBar component,
              because ScrollableTabView passing only this prop to tabs.
              */}
-            <MyOutSideWorkItemPage
-                ref="toDo"
-                tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 0}}
-                label="todo" callback={this._callback.bind(this)}
-                refresh={this.state.needLoding}
-            />
-            <MyOutSideWorkItemPage  ref="doing"
-                tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 0.7}}
-                label="inProgress"
-                refresh={this.state.needLoding}
-                callback={this._callback.bind(this)}/>
-            <MyOutSideWorkItemPage  ref="done" tabLabel={{label: "已完成", badge: 0, theLast: 0}}
-                                   label="end"
-                                   refresh={this.state.needLoding}
-                                   callback={this._callback.bind(this)}/>
+                <MyOutSideWorkItemPage
+                    ref="toDo"
+                    tabLabel={{label: '待处理', badge: this.state.outSourceCountObj.todoNum, theLast: 0}}
+                    label="todo" callback={this._callback.bind(this)}
+                    refresh={this.state.needLoding}
+                    lockSlide = {this._lockSlide.bind(this)}
+                    openSlide = {this._openSlide.bind(this)}
+                />
+                <MyOutSideWorkItemPage  ref="doing"
+                                        tabLabel={{label: "进行中", badge: this.state.outSourceCountObj.inProgressNum, theLast: 1}}
+                                        label="inProgress"
+                                        refresh={this.state.needLoding}
+                                        callback={this._callback.bind(this)}
+                                        lockSlide = {this._lockSlide.bind(this)}
+                                        openSlide = {this._openSlide.bind(this)}
+                />
+                <MyOutSideWorkItemPage  ref="done" tabLabel={{label: "已完成", badge: 0, theLast: 0}}
+                                        label="end"
+                                        refresh={this.state.needLoding}
+                                        callback={this._callback.bind(this)}
+                                        lockSlide = {this._lockSlide.bind(this)}
+                                        openSlide = {this._openSlide.bind(this)}
+                />
 
-        </ScrollableTabView>
+            </ScrollableTabView>
 
-    }else if(this.state.loaded===null){
-                return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
+        }else if(this.state.loaded===null){
+            return <View style={{backgroundColor : '#FFFFFF' , flex:1}}></View>
 
-    }else {
+        }else {
 
-         return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
+            return   <View style={[{flex : 1 , backgroundColor:'#FFFFFF' ,flex : 1}]}>
                 <TouchableOpacity onPress={() => {this._loadCount(true)}}>
                     <NoMessage
                         textContent='网络错误,点击重新开始'
                         active={require('../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
-    }
+        }
 
     }
 
@@ -260,6 +280,6 @@ export default class MyOutSideWorkPage extends BComponent{
                 {this._renderScrollView()}
             </View>
         );
-}
+    }
 
 }

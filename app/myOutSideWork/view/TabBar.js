@@ -74,16 +74,12 @@ class TabBar extends Component {
     tabStyles: PropTypes.object
   };
 
-
   static defaultProps = {
     tabStyles: {}
   };
-
   constructor(props) {
     super(props);
-
   }
-
   renderTab = (tab, page) => {
       // this.props.callback(page);
       const {activeTab, tabBadgeColor} = this.props;
