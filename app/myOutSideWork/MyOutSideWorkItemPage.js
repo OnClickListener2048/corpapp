@@ -385,7 +385,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
             );
         }else if(this.state.loaded===true){
             console.log("tab页=="+this.props.allList);
-            if(this.props.allList === null){//tab页
+            if(this.props.allList === 'all'){//tab页
                 return (
 
                     <ListView
@@ -396,20 +396,6 @@ export default class MyOutSideWorkItemPage extends BComponent{
                         enableEmptySections={true}
                         onEndReachedThreshold={10}
                         renderRow={this._renderRow.bind(this)}
-                        onTouchStart={(e) => {
-                            this.pageX = e.nativeEvent.pageX;
-                            this.pageY = e.nativeEvent.pageY;
-                        }}
-                        onTouchMove={(e) => {
-                            if(Math.abs(this.pageY - e.nativeEvent.pageY) > Math.abs(this.pageX - e.nativeEvent.pageX)){
-                                // 下拉
-                                this.props.lockSlide();
-                            } else {
-                                // 左右滑动
-                                this.props.openSlide();
-
-                            }
-                        }}
                         refreshControl ={
                             <RefreshControl
                                 refreshing={this.state.isRefreshing}
@@ -434,6 +420,20 @@ export default class MyOutSideWorkItemPage extends BComponent{
                         enableEmptySections={true}
                         onEndReachedThreshold={10}
                         renderRow={this._renderRow.bind(this)}
+                        onTouchStart={(e) => {
+                            this.pageX = e.nativeEvent.pageX;
+                            this.pageY = e.nativeEvent.pageY;
+                        }}
+                        onTouchMove={(e) => {
+                            if(Math.abs(this.pageY - e.nativeEvent.pageY) > Math.abs(this.pageX - e.nativeEvent.pageX)){
+                                // 下拉
+                                this.props.lockSlide();
+                            } else {
+                                // 左右滑动
+                                this.props.openSlide();
+
+                            }
+                        }}
                         refreshControl ={
                             <RefreshControl
                                 refreshing={this.state.isRefreshing}
