@@ -477,7 +477,8 @@ export default class MyOutSideWorkItemPage extends BComponent{
     }
 
     render() {
-        if(this.props.allList!==null){
+        console.log("alllist全部页面="+this.props.allList);
+        if(this.props.allList==='all'){
 
             var allListHeight = Platform.OS === 'ios' ? SCREEN_HEIGHT-65 : SCREEN_HEIGHT-83;
         }else{
