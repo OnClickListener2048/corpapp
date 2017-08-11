@@ -53,7 +53,7 @@ exports.default = (width, height) => {
             height: height,
             left: 0,
             bottom: 0,
-            zIndex: 1
+            zIndex: 10
         },
         menuShadow: {
             position: 'absolute',
@@ -63,7 +63,7 @@ exports.default = (width, height) => {
             left: 0,
             bottom: 0,
             opacity: 0.2,
-            zIndex: 1
+            zIndex: 10
         },
         menuContent: {
             position: 'absolute',
@@ -72,7 +72,7 @@ exports.default = (width, height) => {
             alignItems: 'center',
             left: 0,
             bottom: 0,
-            zIndex: 2
+            zIndex: 11
         },
         operateContainer: {
             justifyContent: 'center',

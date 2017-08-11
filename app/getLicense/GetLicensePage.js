@@ -647,17 +647,17 @@ export default class GetLicensePage extends BComponent {
 
             this.timer = setTimeout(async()=>{
                 await this.setState({canClickBtn:true})//1.5秒后可点击
-            },2000)
+            },500)
             const imageUrl= photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics;
             const imageFile= photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri);
             console.log("客户信息图片=="+imageUrl+"&*"+imageFile);
 
             this.props.navigator.push({
                 screen: 'WatchImageModalPage',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
+                // backButtonTitle: '返回', // 返回按钮的文字 (可选)
                 backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                title:photoType == "reverse" ? '身份证' : '经营执照',
                 passProps: {
+                    title:photoType == "reverse" ? '身份证' : '经营执照',
                     imageUrl: imageUrl,
                     imageFile:imageFile,
                     callback: this._callbackPhoto.bind(this),

@@ -10,13 +10,17 @@ import {
     Image
 } from 'react-native';
 import ImageViewer from "../../view/imgZoom/image-viewer.component";
-import BComponent from "../../base/BComponent";
+import BComponent from "../../base";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
 
-export default class WatchImageModal extends BComponent{
+export default class WatchImageModalPage extends BComponent{
+    static navigatorStyle = {
+        navBarHidden: false, // 隐藏默认的顶部导航栏
+        tabBarHidden: true, // 默认隐藏底部标签栏
+    };
     constructor(props){
         super(props)
         this.state = {
@@ -30,35 +34,6 @@ export default class WatchImageModal extends BComponent{
 
     }
 
-    static navigatorButtons = {
-        rightButtons: [
-            {
-                title: '', // for a textual button, provide the button title (label)
-                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
-                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
-                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
-                id: 'more',
-                icon: require('../../img/more_icon.png'),
-
-            }]
-
-    }
-
-    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
-        super.onNavigatorEvent(event);
-        if (event.type === 'NavBarButtonPress') { // this is the event type for button presses
-            if (event.id === 'more') { // this is the same id field from the static navigatorButtons definition
-                this.alertModal();
-            }
-        }
-    }
-
-    static navigatorStyle = {
-        navBarHidden: false, // 隐藏默认的顶部导航栏
-        tabBarHidden: true, // 默认隐藏底部标签栏
-    };
-
-
     alertModal=()=>{
         console.log("==输出弹窗==");
         this.setState({
@@ -66,7 +41,15 @@ export default class WatchImageModal extends BComponent{
         })
     }
 
+    componentWillMount() {
+        this.props.navigator.setTitle({
+            title: this.props.title // the new title of the screen as appears in the nav bar
+        });
+
+    }
+
     componentWillReceiveProps(props) {
+
         this.setState({
             imageUrl: props.imageUrl,
             imageFile:props.imageFile,
@@ -79,7 +62,6 @@ export default class WatchImageModal extends BComponent{
         if(img===null){
             this.setState({
                 imageFile:null,
-                imageUrl:null,
                 isShowMenu:false,
             });
         }else{
@@ -112,12 +94,37 @@ export default class WatchImageModal extends BComponent{
 
                 return (
                     <View style={{flex: 1,
-                        backgroundColor: 'transparent'}} >
-
+                        backgroundColor: 'black'}} >
+                        <View style={{backgroundColor:'black',flex:1,flexDirection:'column'}}>
                             <ImageViewer imageUrls={images}
                                          isShowMenu={this.state.isShowMenu}
                                          callback={this._callbackPhoto.bind(this)}/>
+                        </View>
                     </View>
                 )
     }
+
+    static navigatorButtons = {
+        rightButtons: [
+            {
+                title: '', // for a textual button, provide the button title (label)
+                buttonColor: 'black', // Optional, iOS only. Set color for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
+                buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
+                id: 'more',
+                icon: require('../../img/more_icon.png'),
+
+            }]
+
+    }
+
+    onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        super.onNavigatorEvent(event);
+        if (event.type === 'NavBarButtonPress') { // this is the event type for button presses
+            if (event.id === 'more') { // this is the same id field from the static navigatorButtons definition
+                this.alertModal();
+            }
+        }
+    }
+
 }
