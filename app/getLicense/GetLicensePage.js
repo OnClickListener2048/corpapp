@@ -401,6 +401,7 @@ export default class GetLicensePage extends BComponent {
     _showAreaPicker() {
         this.setState({
             isPickerOpen : true,
+            imgVisibles:false,
         });
         Picker.init({
             pickerConfirmBtnText: '确认',
@@ -550,7 +551,9 @@ export default class GetLicensePage extends BComponent {
 
     _toMyDataTimer(isDateTimePickerVisible){
         console.log("传值=====>>"+isDateTimePickerVisible);
-
+        this.setState({
+            imgVisibles:false,
+        })
         if(isDateTimePickerVisible!=null) {
             this.setState({isDateTimePickerVisible: true, visible: false,
                 dateType:isDateTimePickerVisible,});
@@ -560,6 +563,9 @@ export default class GetLicensePage extends BComponent {
     }
 
     _unlimit(allTimePressBtnSelected){
+        this.setState({
+            imgVisibles:false,
+        })
         this.setState({
             unlimited:allTimePressBtnSelected,
         });
@@ -903,6 +909,7 @@ export default class GetLicensePage extends BComponent {
                       confirmValueCallback:Function) {
         this.setState({
             isPickerOpen : true,
+            imgVisibles:false,
         });
         // selectedValue = ['a', 2];
         Picker.init({
