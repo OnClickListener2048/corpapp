@@ -85,9 +85,10 @@ export default class Settings extends BComponent {
 
                         {/*   手机号 */}
                         {this.state.bindNewMobile &&
-                        <View style={styles.textInputContainer}>
-                            <Image source={this.state.newMobileValid ? require('../../img/account_red.png') :
-                                require('../../img/account.png')} style={settingStyles.inputLogo}/>
+                        <View style={[styles.textInputContainer,
+                            {marginTop: px2dp(120)}]}>
+                            <Image source={this.state.newMobileValid ? require('../../img/phone_sh.png') :
+                                require('../../img/phone_s.png')} style={settingStyles.inputLogo}/>
                             <View style={settingStyles.textInputWrapper}>
                                 <TextInput underlineColorAndroid='transparent' maxLength={11}
                                            keyboardType='numeric' value={this.state.newMobile}
