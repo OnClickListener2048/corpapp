@@ -235,7 +235,7 @@ export default class CompanyInfoView extends React.Component {
                                 }
 
                             />:
-                            <TouchableOpacity onPress={() => {this._callPhone(ContactsPhone)}}>
+                            <TouchableOpacity onPress={() => {this._callPhone(this.state.ContactsPhone)}}>
                                 <Image
                                     source={ContactsPhone.includes('*') ?  require('../../img/phone.png') : require('../../img/phone_h.png')}
                                     style={[{
