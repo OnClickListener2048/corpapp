@@ -1,5 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+import {
+   Platform,
+
+} from 'react-native';
 exports.default = (width, height) => {
     return {
         modalContainer: {
@@ -133,7 +137,7 @@ exports.default = (width, height) => {
             height:44,
             width:width-50,
             backgroundColor:'rgba(0, 0, 0, 0.25)',
-            marginBottom:10,
+            marginBottom:Platform.OS==='ios'?10:25,
             borderRadius: 22,
             borderWidth:1,
             borderColor:'white',

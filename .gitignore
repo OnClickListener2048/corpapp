@@ -53,3 +53,8 @@ fastlane/Preview.html
 fastlane/screenshots
 ios/bundle/
 #ios/bundle/**
+/coverage/
+/corpapp-IPA/
+/__tests__/coverage/
+/android/app/src/main/assets/index.android.bundle.meta
+/android/app/src/main/assets/index.android.bundle

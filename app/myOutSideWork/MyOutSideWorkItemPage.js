@@ -92,7 +92,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
     //将ID传值给父组件
     _press(statusId) {
         console.log("====>>>"+statusId);
-        if (this.props.label === null) {
+        if (this.props.allList==='all') {
             if (this.state.canClickBtn === false){
                 return;
             }
