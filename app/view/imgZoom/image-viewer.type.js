@@ -22,6 +22,7 @@ class Props extends PropsGaea {
         this.maxOverflow = 300;
         this.failImageSource = '';
         this.index = 0;
+        this.isError=false;
         this.saveToLocalByLongPress = true;
         this.menuContext = {
             // saveToLocal: '保存到相册',

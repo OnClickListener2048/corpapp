@@ -656,6 +656,7 @@ export default class GetLicensePage extends BComponent {
             },500)
             const imageUrl= photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics;
             const imageFile= photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri);
+            const failImage=photoType == "reverse" ?require('../img/blicense.png'):require('../img/reverse.png');
             console.log("客户信息图片=="+imageUrl+"&*"+imageFile);
                 this.props.navigator.push({
                     screen: 'WatchImageModalPage',
@@ -665,6 +666,7 @@ export default class GetLicensePage extends BComponent {
                         title:photoType == "reverse" ? '身份证' : '经营执照',
                         imageUrl: imageUrl,
                         imageFile:imageFile,
+                        failImageSource:failImage,
                         callback: this._callbackPhoto.bind(this),
                     }
                 });

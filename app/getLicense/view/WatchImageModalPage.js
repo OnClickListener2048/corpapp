@@ -87,6 +87,8 @@ export default class WatchImageModalPage extends BComponent{
             }else{
                 images = [{
                     url: this.state.imageUrl+""
+                    // url:'https://11111111.png'
+
                 }]
             }
 
@@ -96,8 +98,9 @@ export default class WatchImageModalPage extends BComponent{
                 return (
                     <View style={{flex: 1,flexDirection:'column',position: 'absolute',
                         backgroundColor: 'black'}} >
-                        <View style={{backgroundColor:'black',height:Platform.OS==='ios'?SCREEN_HEIGHT-62:SCREEN_HEIGHT-68,width:SCREEN_WIDTH}}>
+                        <View style={[{backgroundColor:'black',height:Platform.OS==='ios'?SCREEN_HEIGHT-62:SCREEN_HEIGHT-76,width:SCREEN_WIDTH}]}>
                             <ImageViewer imageUrls={images}
+                                         failImageSource={this.props.failImageSource}
                                          isShowMenu={this.state.isShowMenu}
                                          callback={this._callbackPhoto.bind(this)}/>
                         </View>
