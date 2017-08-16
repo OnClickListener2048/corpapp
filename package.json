@@ -36,13 +36,16 @@
     "realm": "^1.2.0"
   },
   "devDependencies": {
-    "babel-jest": "19.0.0",
+    "babel-jest": "*",
+    "babel-plugin-transform-runtime": "*",
+    "babel-preset-env": "*",
     "babel-preset-react-native": "1.9.1",
     "coveralls": "^2.13.0",
     "cz-conventional-changelog": "^2.0.0",
     "enzyme": "^2.8.0",
+    "fetch-mock": "^5.12.2",
     "istanbul": "^0.4.5",
-    "jest": "19.0.2",
+    "jest": "*",
     "react": "~15.4.1",
     "react-addons-test-utils": "^15.5.1",
     "react-dom": "^15.4.2",
@@ -50,6 +53,10 @@
     "react-test-renderer": "^15.4.2"
   },
   "jest": {
+    "automock": false,
+    "setupFiles": [
+      "./setupJest.js"
+    ],
     "preset": "react-native",
     "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
     "verbose": true,

@@ -148,7 +148,6 @@ export default class LoginPage extends Component {
 
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-        console.log("this.props.navigator=", this.props.navigator);
     }
 
     // 屏蔽返回按键
