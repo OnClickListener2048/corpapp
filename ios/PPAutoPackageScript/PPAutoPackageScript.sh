@@ -103,6 +103,9 @@ else
 mkdir -pv $export_path
 fi
 
+rm -rf ../node_modules/react-native/React/Views/RCTRefreshControl.m
+cp  ../app/modules/RCTRefreshControl.m  ../node_modules/react-native/React/Views/
+
 # 判断编译的项目类型是workspace还是project
 if $is_workspace ; then
 # 编译前清理工程
