@@ -42,13 +42,16 @@ public class MainActivity extends SplashActivity {
     protected void onPause() {
         super.onPause();
         JPushInterface.onPause(this);
-        MobclickAgent.onResume(this);
+        MobclickAgent.onPause(this);
+
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         JPushInterface.onResume(this);
-        MobclickAgent.onPause(this);
+        MobclickAgent.onResume(this);
     }
+
+
 }

@@ -19,7 +19,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import android.util.Log;
-
 /**
  * @Copyright © 2016 Umeng Inc. All rights reserved.
  * @Description: process files
@@ -63,6 +62,7 @@ public class UmengNativeModule extends ReactContextBaseJavaModule {
     @ReactMethod
     @SuppressWarnings("unused")
     public void onEvent(String eventId) {
+        Log.i("MobclickAgent-----",eventId);
         MobclickAgent.onEvent(mContext, eventId);
     }
 

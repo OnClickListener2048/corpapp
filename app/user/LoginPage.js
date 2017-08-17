@@ -18,7 +18,10 @@ import {
     Platform,
     BackAndroid,
     ToastAndroid,
+    NativeModules
 } from 'react-native';
+
+
 // import ProgressiveInput from 'react-native-progressive-input';
 import ProgressiveInput from '../view/ClearFocusEdit';
 // 引入外部文件
@@ -314,7 +317,12 @@ export default class LoginPage extends Component {
             return;
         }
         let loading = SActivityIndicator.show(true, "登录中");
-
+        if (Platform.OS === 'ios') {
+            NativeModules.UMNative.onEvent('login')
+        }else {
+            NativeModules.UmengNativeModule.onEvent("login");
+            // UMNative.onEvent("login");
+        }
         apis.login(this.state.mobile, this.state.smsCode).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
