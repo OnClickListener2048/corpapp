@@ -72,6 +72,8 @@ export default class LoginPage extends Component {
             headPad: 238,// 顶部的默认空白
         };
 
+        // this.state.mobile = props.mobile;
+
         this._doLogin = this._doLogin.bind(this);
         this._requestSMSCode = this._requestSMSCode.bind(this);
         this._verifyVCode = this._verifyVCode.bind(this);
@@ -203,13 +205,13 @@ export default class LoginPage extends Component {
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
-                    if(msg !== undefined) {
-                        if(!msg.includes("图形验证码")) {
-                            Alert.alert(msg);
-                        }
-                    } else {
-                        Alert.alert('短信验证码获取失败' );
-                    }
+                    // if(msg !== undefined) {
+                    //     if(!msg.includes("图形验证码")) {
+                    //         Alert.alert(msg);
+                    //     }
+                    // } else {
+                    //     Alert.alert('短信验证码获取失败' );
+                    // }
                     try {
                         if (e.data !== undefined && e.data.verifyText !== null && e.data.verify !== null) {
                             let {verifyText, verify} = e.data;
@@ -234,7 +236,7 @@ export default class LoginPage extends Component {
                             this.setState({timerButtonClicked: false});
                         }
                     } catch(e) {
-                        console.log(e);
+                        console.log("验证码异常*******", e);
                         // 重置允许获取验证码
                         if (this.refs.timerButton.state.counting) {
                             this.refs.timerButton.reset();
