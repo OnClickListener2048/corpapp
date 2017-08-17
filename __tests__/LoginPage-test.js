@@ -140,16 +140,33 @@ it('mobile handle correctly', () => {
 });
 
 fetchMock.restore();// 重置数据
-fetchMock.postOnce('*', {"success":false,"code":500,"msg":"需要图形码","data": {
-    verify : "需要图形码44", verifyText : "a.jpg"
-}, "jest-post": true});
-it('sms code handle correctly', () => {
+fetchMock.postOnce('*', {
+    "success": false, "code": 500, "msg": "需要图形码", "data": {
+        verify: "a.jpg", verifyText: "需要图形码44"
+    }, "jest-post": true
+});
+it('sms code handle correctly',  () => {
 
     jest.mock('react-native-alert');
     let instance = wrapper.instance();
-    instance.updateMobile('13810397064');
-    instance.refs.timerButton = { state: {}, reset: () => {} };
+    instance.updateMobile('13810397068');
+    expect(instance.state.mobile).toEqual('13810397068');
+    expect(instance.state.mobileValid).toEqual(true);
+
+    instance.refs = {timerButton: { state: {counting: false}}};
     instance._requestSMSCode();
-    expect(instance.state.verifyText).toEqual('需要图形码44');
+
+    // 使用真正的定时器, 否则异步执行会立即返回, 导致状态判断出错
+    jest.useRealTimers();
+
+    setTimeout(function() {
+        // run your expectation
+        expect(instance.state.verifyText).toEqual('需要图形码44');
+        console.log("instance.state", instance.state);
+        console.log("instance.refs", instance.refs);
+        done();
+    }, 1000);
+
+
     // 用到ref的地方都要跳过 TypeError: Cannot read property 'timerButton' of undefined
 });

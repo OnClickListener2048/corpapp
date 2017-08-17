@@ -229,6 +229,7 @@ export default class LoginPage extends Component {
                                 this.setState({verifyText});
                             }
 
+                            console.log("**** refs", this.refs);
                             // 重置允许获取验证码
                             if (this.refs.timerButton.state.counting) {
                                 this.refs.timerButton.reset();
