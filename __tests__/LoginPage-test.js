@@ -57,7 +57,7 @@ jest.mock('NetInfo', () => {
 });
 
 jest.mock('react-native-device-info');
-
+jest.mock('react-native-alert');
 
 // jest.mock('../app/apis', () => {
 //     return {
@@ -146,8 +146,6 @@ fetchMock.postOnce('*', {
     }, "jest-post": true
 });
 it('sms code handle correctly',  () => {
-
-    jest.mock('react-native-alert');
     let instance = wrapper.instance();
     instance.updateMobile('13810397068');
     expect(instance.state.mobile).toEqual('13810397068');

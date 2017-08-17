@@ -205,13 +205,13 @@ export default class LoginPage extends Component {
                 }, (e) => {
                     console.log("短信验证码获取失败" + JSON.stringify(e));
                     let msg = e.msg;
-                    // if(msg !== undefined) {
-                    //     if(!msg.includes("图形验证码")) {
-                    //         Alert.alert(msg);
-                    //     }
-                    // } else {
-                    //     Alert.alert('短信验证码获取失败' );
-                    // }
+                    if(msg !== undefined) {
+                        if(!msg.includes("图形验证码")) {
+                            Alert.alert(msg);
+                        }
+                    } else {
+                        Alert.alert('短信验证码获取失败' );
+                    }
                     try {
                         if (e.data !== undefined && e.data.verifyText !== null && e.data.verify !== null) {
                             let {verifyText, verify} = e.data;
