@@ -72,6 +72,8 @@ export default class LoginPage extends Component {
             headPad: 238,// 顶部的默认空白
         };
 
+        // this.state.mobile = props.mobile;
+
         this._doLogin = this._doLogin.bind(this);
         this._requestSMSCode = this._requestSMSCode.bind(this);
         this._verifyVCode = this._verifyVCode.bind(this);
@@ -80,6 +82,7 @@ export default class LoginPage extends Component {
         this._keyboardDidShow = this._keyboardDidShow.bind(this);
         this._keyboardDidHide = this._keyboardDidHide.bind(this);
         this._setupDebug = this._setupDebug.bind(this);
+        this.updateMobile = this.updateMobile.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
@@ -147,7 +150,6 @@ export default class LoginPage extends Component {
 
         this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
         this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
-        console.log("this.props.navigator=", this.props.navigator);
     }
 
     // 屏蔽返回按键
@@ -227,6 +229,7 @@ export default class LoginPage extends Component {
                                 this.setState({verifyText});
                             }
 
+                            console.log("**** refs", this.refs);
                             // 重置允许获取验证码
                             if (this.refs.timerButton.state.counting) {
                                 this.refs.timerButton.reset();
@@ -234,7 +237,7 @@ export default class LoginPage extends Component {
                             this.setState({timerButtonClicked: false});
                         }
                     } catch(e) {
-                        console.log(e);
+                        console.log("验证码异常*******", e);
                         // 重置允许获取验证码
                         if (this.refs.timerButton.state.counting) {
                             this.refs.timerButton.reset();
@@ -385,6 +388,19 @@ export default class LoginPage extends Component {
         );
     }
 
+    updateMobile(mobile) {
+// 如果手机号改了, 马上就重置获取验证码?
+        if (this.refs.timerButton && this.refs.timerButton.state.counting) {
+            this.refs.timerButton.reset();
+        }
+        this.setState({timerButtonClicked: false});
+
+        mobile = mobile.replace(/[^\d]/g, '');// 过滤非数字输入
+        let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
+        let mobileNotEmpty = mobile.length > 0;
+        this.setState({mobile, mobileValid, mobileNotEmpty, smsCode: '', smsCodeValid: false, vCode: ''});
+    }
+
     render() {
         return (
             <TouchableWithoutFeedback onPress={dismissKeyboard}>
@@ -426,16 +442,7 @@ export default class LoginPage extends Component {
                                            style={styles.textInput} placeholder='手机号码' returnKeyType='next'
                                            onChangeText={
                                                (mobile) => {
-                                                   // 如果手机号改了, 马上就重置获取验证码?
-                                                   if (this.refs.timerButton.state.counting) {
-                                                       this.refs.timerButton.reset();
-                                                   }
-                                                   this.setState({timerButtonClicked: false});
-
-                                                   mobile = mobile.replace(/[^\d]/g,'');// 过滤非数字输入
-                                                   let mobileValid = mobile.length > 0 && (mobile.match(/^([0-9]{11})?$/)) !== null;
-                                                   let mobileNotEmpty =  mobile.length > 0;
-                                                   this.setState({mobile, mobileValid, mobileNotEmpty, smsCode: '', smsCodeValid: false, vCode: ''});
+                                                   this.updateMobile(mobile);
                                                }
                                            }/>
                             </View>

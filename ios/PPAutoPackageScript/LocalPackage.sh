@@ -1,5 +1,7 @@
 # !/bin/bash
 # 指定要打包编译的方式 : Release,Debug... 上线前一定要改为Release
+
+
 build_configuration="Release"
 # 本地打包专用
 
@@ -95,6 +97,11 @@ echo $export_path
 else
 mkdir -pv $export_path
 fi
+
+
+rm -rf ../node_modules/react-native/React/Views/RCTRefreshControl.m
+cp  ../app/modules/RCTRefreshControl.m  ../node_modules/react-native/React/Views/
+
 
 # 判断编译的项目类型是workspace还是project
 if $is_workspace ; then
