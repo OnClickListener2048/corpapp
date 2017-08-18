@@ -4,25 +4,27 @@ import {NetInfo} from 'react-native';
 import {login} from '../account';
 import fetchMock from 'fetch-mock';
 // import 'isomorphic-fetch';// 第三方fetch的真实联网实现, 解决 Failed: fetch is not a function
-// 空的mock实现
+
+// 空的mock实现 会抛空引用异常
 // jest.mock('NetInfo', () => {
 //     return {}
 // });
 
-jest.mock('NetInfo', () => {
-    return {
-        isConnected: {
-            fetch: () => {
-                return new Promise((accept, resolve) => {
-                    accept(true);
-                })
-            },
-            addEventListener: jest.fn()
-        }
-    }
-});
-console.log(NetInfo);
-jest.mock('react-native-device-info');
+// 下面的代码都已经加到了setJest.js中了
+// jest.mock('NetInfo', () => {
+//     return {
+//         isConnected: {
+//             fetch: () => {
+//                 return new Promise((accept, resolve) => {
+//                     accept(true);
+//                 })
+//             },
+//             addEventListener: jest.fn()
+//         }
+//     }
+// });
+// console.log(NetInfo);
+// jest.mock('react-native-device-info');
 
 /**
  *
