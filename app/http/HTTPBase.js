@@ -21,6 +21,10 @@ let oldFetchfn = fetch; //拦截原始的fetch方法
 
 const timeout = 5000;// 5秒请求超时
 HTTPBase._fetch = function(input, opts) {//定义新的fetch方法，封装原有的fetch方法, 支持超时
+    if(__DEV__) {
+        return fetch(input, opts);// fix jest
+    }
+
     let fetchPromise = oldFetchfn(input, opts);
 
     if(opts.timeout === undefined) {
@@ -271,8 +275,8 @@ HTTPBase._makeErrorMsg =  function (response) {
     return {'code':  status, 'msg':  statusText}
 }
 
-HTTPBase._commonHeaders =  function (headers) : Headers {
-    let finalHeaders = new Headers();
+HTTPBase._commonHeaders =  function (headers) : Object {
+    let finalHeaders = new Object();
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
     if(headers) {
         // 获取 headers 内所有的 key
