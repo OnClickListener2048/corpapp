@@ -2,7 +2,7 @@
  * Created by jiaxueting on 2017/6/14.
  */
 import {StyleSheet, Dimensions} from 'react-native';
-import px2dp from '../../util'
+import px2dp from '../../../util/index'
 const window = Dimensions.get('window');
 
 export const SCREEN_HEIGHT = window.height;

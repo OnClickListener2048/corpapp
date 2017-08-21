@@ -11,7 +11,7 @@ import {
     TouchableWithoutFeedback,
     Text
 } from 'react-native';
-import Test3, {CascadePicker} from '../../modules/react-native-picker-xg/pickerLogic/picker';
+import Test3, {CascadePicker} from '../../../modules/react-native-picker-xg/pickerLogic/picker';
 import styles from './style';
 import {wheel2} from './data';
 

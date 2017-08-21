@@ -5,7 +5,7 @@ import GetLicensePage from '../GetLicensePage';
 import 'react-native';
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import * as apis from '../../apis';
+import * as apis from '../../../apis/index';
 import {shallow} from 'enzyme';
 
 fetchMock.get('https://app.i-counting.cn/app/v0/outsource/task/step',

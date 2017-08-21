@@ -148,7 +148,7 @@ export default class  CompanyAddressView extends Component{
                     <View style={ styles.rightRowViewStyle}>
                         <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
-                            <Image source={require('../../img/down.png')}/>
+                            <Image source={require('../../../img/down.png')}/>
                             <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5,fontSize:15, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.city}</Text>
 
                         {/*</View>*/}
@@ -159,7 +159,7 @@ export default class  CompanyAddressView extends Component{
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {this._rightTimePress()}}>
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
-                            <Image source={require('../../img/down.png')}/>
+                            <Image source={require('../../../img/down.png')}/>
                             <Text  numberOfLines={1} style={[{textAlign:'center',marginLeft: 5, fontSize:15,justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.district}</Text>
 
                         {/*</View>*/}

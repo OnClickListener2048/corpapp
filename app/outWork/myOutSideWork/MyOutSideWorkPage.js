@@ -6,9 +6,9 @@
 import React,{Component}from 'react';
 import {Text, View, Dimensions, TouchableOpacity,InteractionManager, Image,Platform,DeviceEventEmitter,ListView,} from "react-native";
 import MyOutSideWorkItemPage from "./MyOutSideWorkItemPage";
-import {loadOutSourceCount} from "../apis/outSource";
-import BComponent from "../base";
-import NoNetEmptyView from "../base/NoNetEmptyView";
+import {loadOutSourceCount} from "../../apis/outSource";
+import BComponent from "../../base/index";
+import NoNetEmptyView from "../../base/NoNetEmptyView";
 const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
@@ -16,12 +16,12 @@ let naviButtonWidth = width / 3;    //计算导航条每个宽度
 let naviButtonHeight = width * 0.75;   // 导航条每个高度
 const dismissKeyboard = require('dismissKeyboard');
 import ScrollableTabView from 'react-native-scrollable-tab-view';
-import TabBar from '../myOutSideWork/view/TabBar';
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import TabBar from './view/TabBar';
+import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
 import Toast from 'react-native-root-toast';
-import NoMessage from "../commonView/NoMessage";
-import NetInfoSingleton from "../util/NetInfoSingleton";
-import errorText from '../util/ErrorMsg';
+import NoMessage from "../../commonView/NoMessage";
+import NetInfoSingleton from "../../util/NetInfoSingleton";
+import errorText from '../../util/ErrorMsg';
 
 export default class MyOutSideWorkPage extends BComponent{
 
@@ -267,7 +267,7 @@ export default class MyOutSideWorkPage extends BComponent{
                 <TouchableOpacity onPress={() => {this._loadCount(true)}}>
                     <NoMessage
                         textContent='网络错误,点击重新开始'
-                        active={require('../img/network_error.png')}/>
+                        active={require('../../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
         }

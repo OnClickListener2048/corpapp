@@ -4,7 +4,7 @@
 import 'react-native';
 import React from 'react';
 import fetchMock from 'fetch-mock';
-import * as apis from '../../apis';
+import * as apis from '../../../apis/index';
 import MyOutSideTaskPage from '../MyOutSideTaskPage';
 import {shallow} from 'enzyme';
 

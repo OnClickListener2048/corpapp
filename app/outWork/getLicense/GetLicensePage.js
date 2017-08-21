@@ -5,7 +5,7 @@
 
 import React, { Component,PropTypes,} from 'react';
 import Picker from 'react-native-picker';
-import errorText from '../util/ErrorMsg';
+import errorText from '../../util/ErrorMsg';
 
 import {
     Alert,
@@ -19,30 +19,30 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
-import CompanyInfoView from '../commonView/view/CompanyInfoView'
-import VerifyProcessTipView from '../VerifyCompanyInfo/view/VerifyProcessTipView'
-import CompanyAddress from "../commonView/view/CompanyAddress";
+import styles from '../../VerifyCompanyInfo/css/VerifyCompanyStyle'
+import CompanyInfoView from '../../commonView/view/CompanyInfoView'
+import VerifyProcessTipView from '../../VerifyCompanyInfo/view/VerifyProcessTipView'
+import CompanyAddress from "../../commonView/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
-import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
+import ProcessBtnView from "../../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
 import CompanyAddressView from "./view/CompanyAddressView";
 import PickerWidget from "./view/PickerWidget";
 
-import * as apis from '../apis';
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import DataTimerView from "../view/DataTimerView";
-import AlertPhotoModal from "../view/AlertPhotoModal";
-import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
+import * as apis from '../../apis/index';
+import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
+import DataTimerView from "../../view/DataTimerView";
+import AlertPhotoModal from "../../view/AlertPhotoModal";
+import DottedLine from "../../VerifyCompanyInfo/view/DottedLine";
 import MultiTextInputView from "./view/MultiTextInputView";
 import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
-import ImageLoad from "../view/ImageLoad";
+import ImageLoad from "../../view/ImageLoad";
 import WatchImageModal from "./view/WatchImageModal";
-import BComponent from '../base';
-import NoNetView from "../base/NoNetView";
-import NoMessage from "../commonView/NoMessage";
-import NoNetEmptyView from "../base/NoNetEmptyView";
+import BComponent from '../../base/index';
+import NoNetView from "../../base/NoNetView";
+import NoMessage from "../../commonView/NoMessage";
+import NoNetEmptyView from "../../base/NoNetEmptyView";
 
 const window = Dimensions.get('window');
 
@@ -656,7 +656,7 @@ export default class GetLicensePage extends BComponent {
             },500)
             const imageUrl= photoType == "reverse" ? this.state.detailObj.idCards : this.state.detailObj.bizLics;
             const imageFile= photoType == "reverse" ? (this.state.idCards === null ? null : this.state.idCards.uri) : (this.state.bizLics === null ? null : this.state.bizLics.uri);
-            const failImage=photoType == "reverse" ?require('../img/blicense.png'):require('../img/reverse.png');
+            const failImage=photoType == "reverse" ?require('../../img/blicense.png'):require('../../img/reverse.png');
             console.log("客户信息图片=="+imageUrl+"&*"+imageFile);
                 this.props.navigator.push({
                     screen: 'WatchImageModalPage',
@@ -798,7 +798,7 @@ export default class GetLicensePage extends BComponent {
                     this._edit(true)
                 }}
                 style={{width:50,height:40,marginRight: 15,justifyContent:'center',alignItems:'flex-end'}}>
-                <Image source={require("../img/editor.png")}/>
+                <Image source={require("../../img/editor.png")}/>
                 </TouchableOpacity> }
             {this.state.editables === true&&this.state.inProgressEdit===true&&
                 <TouchableOpacity onPress={() => {
@@ -1031,12 +1031,12 @@ export default class GetLicensePage extends BComponent {
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
                                         source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                        placeholderSource={require('../img/reverse.png')}/> :
-                                    <Image source={require('../img/reverse.png')} style={{marginTop: 15}}/>}
+                                        placeholderSource={require('../../img/reverse.png')}/> :
+                                    <Image source={require('../../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity>
 
-                        {/*<Image source={require('../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
+                        {/*<Image source={require('../../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
                         {/*justifyContent:'flex-end'}}/>*/}
                     </View>
                     <View
@@ -1138,8 +1138,8 @@ export default class GetLicensePage extends BComponent {
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'large', color: 'blue' }}
                                         source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                        placeholderSource={require('../img/blicense.png')}/>  :
-                                    <Image source={require('../img/blicense.png')} style={{marginTop: 20}}/>
+                                        placeholderSource={require('../../img/blicense.png')}/>  :
+                                    <Image source={require('../../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
                         </TouchableOpacity>
@@ -1155,7 +1155,7 @@ export default class GetLicensePage extends BComponent {
                 <TouchableOpacity onPress={() => {this._loadData()}}>
                     <NoMessage
                         textContent='网络错误,点击重新开始'
-                        active={require('../img/network_error.png')}/>
+                        active={require('../../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
         }
