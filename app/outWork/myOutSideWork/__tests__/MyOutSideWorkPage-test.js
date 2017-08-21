@@ -44,7 +44,6 @@ fetchMock.restore();// 重置数据
 fetchMock.post('*', {"success":true,"code":200,"msg":null,"data":{"inProgressNum":3,"todoNum":0,"totalNum":3},"jest-post": true},);
 
 
-//mock接口请求不管用
 it('测试接口请求后outSourceCountObj状态值设置', (done) => {
     instance._loadCount(true);
 
