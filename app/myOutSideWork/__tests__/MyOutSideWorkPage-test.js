@@ -1,5 +1,5 @@
 /**
- * by liufei 2017-8-18
+ * by liufei on 2017-8-18
  */
 
 import 'react-native';
