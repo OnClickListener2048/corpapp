@@ -7,15 +7,15 @@ import {ListView, View, StyleSheet, TouchableOpacity, InteractionManager, Image,
     RefreshControl,ActivityIndicator
 } from "react-native";
 import MyOutSideWorkCell from "./view/MyOutSideWorkCell";
-import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../config';
-import NoMessage from "../commonView/NoMessage";
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
+import {SCREEN_WIDTH,SCREEN_HEIGHT} from '../../config';
+import NoMessage from "../../commonView/NoMessage";
+import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
 import Toast from 'react-native-root-toast';
-import {loadOutSourceList} from "../apis/outSource";
-import BComponent from "../base";
-import NoNetView from "../base/NoNetView";
-import errorText from '../util/ErrorMsg';
-import NoNetEmptyView from "../base/NoNetEmptyView";
+import {loadOutSourceList} from "../../apis/outSource";
+import BComponent from "../../base/index";
+import NoNetView from "../../base/NoNetView";
+import errorText from '../../util/ErrorMsg';
+import NoNetEmptyView from "../../base/NoNetEmptyView";
 
 export default class MyOutSideWorkItemPage extends BComponent{
 
@@ -380,7 +380,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     <TouchableOpacity onPress={() => {this._loadList()}}>
                         <NoMessage
                             textContent='暂无数据'
-                            active={require('../img/no_message.png')}/>
+                            active={require('../../img/no_message.png')}/>
                     </TouchableOpacity>
                 </View>
             );
@@ -459,7 +459,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                     <TouchableOpacity onPress={() => {this._loadList()}}>
                         <NoMessage
                             textContent='加载失败，点击重试'
-                            active={require('../img/load_failed.png')}/>
+                            active={require('../../img/load_failed.png')}/>
                     </TouchableOpacity>
                 </View>
             );
@@ -469,7 +469,7 @@ export default class MyOutSideWorkItemPage extends BComponent{
                 <TouchableOpacity onPress={() => {this._loadList()}}>
                     <NoMessage
                         textContent='网络错误,点击重新开始'
-                        active={require('../img/network_error.png')}/>
+                        active={require('../../img/network_error.png')}/>
                 </TouchableOpacity>
             </View>
         }

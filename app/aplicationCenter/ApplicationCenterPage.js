@@ -16,7 +16,7 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import TopcenterImgBottomTitleView from '../view/TopcenterImgBottomTitleView';
 import styles from './css/ApplictionCenterPageStyle'
 const window = Dimensions.get('window');
-import MyOutSideWorkPage from "../myOutSideWork/MyOutSideWorkPage";
+import MyOutSideWorkPage from "../outWork/myOutSideWork/MyOutSideWorkPage";
 import Toast from 'react-native-root-toast';
 import ScrollViewTop from "./scrollViewTop";
 

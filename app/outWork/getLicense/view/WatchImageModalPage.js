@@ -10,8 +10,8 @@ import {
     Platform,
     Image
 } from 'react-native';
-import ImageViewer from "../../view/imgZoom/image-viewer.component";
-import BComponent from "../../base";
+import ImageViewer from "../../../view/imgZoom/image-viewer.component";
+import BComponent from "../../../base/index";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -116,7 +116,7 @@ export default class WatchImageModalPage extends BComponent{
                 buttonFontSize: 14, // Set font size for the button (can also be used in setButtons function to set different button style programatically)
                 buttonFontWeight: '600', // Set font weight for the button (can also be used in setButtons function to set different button style programatically)
                 id: 'more',
-                icon: require('../../img/more_icon.png'),
+                icon: require('../../../img/more_icon.png'),
 
             }]
 

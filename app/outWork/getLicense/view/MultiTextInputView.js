@@ -5,8 +5,8 @@
 import React, {Component,PropTypes} from 'react';
 import {Text, TextInput, View, Platform, Image,StyleSheet,Dimensions} from "react-native";
 import styles from "../css/GetLicenseStyle";
-import px2dp from '../../util'
-import {SCREEN_WIDTH as width} from '../../config';
+import px2dp from '../../../util/index'
+import {SCREEN_WIDTH as width} from '../../../config';
 const window = Dimensions.get('window');
 
 export const SCREEN_HEIGHT = window.height;
