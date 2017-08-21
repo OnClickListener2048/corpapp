@@ -131,7 +131,7 @@ it('mobile handle correctly', () => {
     expect(instance.state.mobile).toEqual('1234');
     expect(instance.state.mobileValid).toEqual(false);
 
-    console.log(instance);
+    // console.log(instance);
 
     //   const tree = renderer.create(
     //       <LoginPage navigator={navigator} />
@@ -145,7 +145,7 @@ fetchMock.postOnce('*', {
         verify: "a.jpg", verifyText: "需要图形码44"
     }, "jest-post": true
 });
-it('sms code handle correctly',  () => {
+it('sms code handle correctly',  (done) => {
     let instance = wrapper.instance();
     instance.updateMobile('13810397068');
     expect(instance.state.mobile).toEqual('13810397068');

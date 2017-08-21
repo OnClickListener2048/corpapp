@@ -15,15 +15,15 @@ import {
 } from 'react-native';
 
 import styles from './css/MyOutSideTaskStyle'
-import CompanyInfoView from '../commonView/view/CompanyInfoView'
-import CommunalNavBar from '../main/GDCommunalNavBar';
-import RegisterCompanyCell from '../commonView/view/RegisterCompanyCell'
-import * as apis from '../apis';
-import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
-import NoMessage from "../commonView/NoMessage";
+import CompanyInfoView from '../../commonView/view/CompanyInfoView'
+import CommunalNavBar from '../../main/GDCommunalNavBar';
+import RegisterCompanyCell from '../../commonView/view/RegisterCompanyCell'
+import * as apis from '../../apis/index';
+import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
+import NoMessage from "../../commonView/NoMessage";
 import Toast from 'react-native-root-toast';
-import BComponent from "../base";
-import NoNetView from "../base/NoNetView";
+import BComponent from "../../base/index";
+import NoNetView from "../../base/NoNetView";
 
 export default class MyOutSideTaskPage extends BComponent{
     static navigatorStyle = {
@@ -192,7 +192,7 @@ _loadData() {
                     <TouchableOpacity onPress={() => { this._loadData() }}>
                     <NoMessage
                     textContent='加载失败，点击重试'
-                    active={require('../img/load_failed.png')}/>
+                    active={require('../../img/load_failed.png')}/>
                     </TouchableOpacity>
                 </View>
             );
@@ -204,7 +204,7 @@ _loadData() {
                     {this.renderCompanyInfoView()}
                     {<View style={[{height:10,backgroundColor:'#FFFFFF'}]}></View>}
                     <Image
-                        source={require('../img/yinying.png')}
+                        source={require('../../img/yinying.png')}
                         style={[styles.bttomLineStyle]}/>
                     {<View style={[{height:15}]}></View>}
                     {<View style={[{height:12.5,backgroundColor:'#FFFFFF'}]}></View>}
@@ -212,7 +212,7 @@ _loadData() {
                     {this.stepsArr.map((item,i)=>this.renderExpenseItem(item,i))}
                     {<View style={[{height:12.5,backgroundColor:'#FFFFFF'}]}></View>}
                     <Image
-                        source={require('../img/yinying.png')}
+                        source={require('../../img/yinying.png')}
                         style={[styles.bttomLineStyle]}/>
                 </ScrollView>
             );

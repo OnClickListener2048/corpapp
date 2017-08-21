@@ -85,7 +85,7 @@ export default class SinglePickerView extends Component {
                             this._Press()
                         }}>
                             <View style={styles.leftdownDrapViewStyle}>
-                            <Image source={require('../../img/down.png')}/>
+                            <Image source={require('../../../img/down.png')}/>
                             {this.props.value===''?<Text numberOfLines={1} style={[{
                                 textAlign: 'center',
                                 marginRight: 5,
