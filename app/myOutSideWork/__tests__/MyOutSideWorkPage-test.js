@@ -6,15 +6,20 @@ import 'react-native';
 import React from 'react';
 import MyOutSideWorkPage from '../MyOutSideWorkPage'
 import {shallow} from 'enzyme';
+import fetchMock from 'fetch-mock';
 
-// const navigator = Object.create(null);
-//
-// navigator.setOnNavigatorEvent = jest.fn();
-//
+
+const navigator = Object.create(null);
+
+navigator.setOnNavigatorEvent = jest.fn();
+navigator.setButtons = jest.fn();
+navigator.push = jest.fn();
+
 const wrapper = shallow(
     <MyOutSideWorkPage navigator={navigator}/>
 
 );
+let instance = wrapper.instance();
 
 // 修正 Invariant Violation: Native module cannot be null.
 jest.mock('NetInfo', () => {
@@ -31,28 +36,24 @@ jest.mock('NetInfo', () => {
 });
 
 it('componentWillMount执行了', () => {
-    // console.log("wrapper======>", wrapper);
-    let instance = wrapper.instance();
-    instance.componentWillMount();
-
-
-
-
-
-    // console.log("instance.refs.timerButton======>", instance.refs.timerButton);
-    // // instance.refs.timerButton = {state : {counting: false}};
-    // instance.updateMobile('13810397064');
-    // expect(instance.state.mobile).toEqual('13810397064');
-    // expect(instance.state.mobileValid).toEqual(true);
-    //
-    // instance.updateMobile('汉字1234');
-    // expect(instance.state.mobile).toEqual('1234');
-    // expect(instance.state.mobileValid).toEqual(false);
-    //
-    // console.log(instance);
-
-    //   const tree = renderer.create(
-    //       <LoginPage navigator={navigator} />
-    //   ).toJSON();
-    //   expect(tree).toMatchSnapshot();
+    expect(instance.state.needLoding).toEqual(true);
 });
+
+
+fetchMock.restore();// 重置数据
+fetchMock.post('*', {"success":true,"code":200,"msg":null,"data":{"inProgressNum":3,"todoNum":0,"totalNum":3},"jest-post": true},);
+
+
+//mock接口请求不管用
+it('测试接口请求后outSourceCountObj状态值设置', (done) => {
+    instance._loadCount(true);
+
+    jest.useRealTimers();//使用真正的定时器用于同步接口请求
+
+    setTimeout(function() {
+        expect(instance.state.outSourceCountObj).toEqual({"inProgressNum":3,"todoNum":0,"totalNum":3});
+        done();
+    }, 1000);
+
+});
+
