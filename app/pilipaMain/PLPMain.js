@@ -3,21 +3,12 @@
  * Created by edianzu on 2017/6/6.
  */
 
-import React,{Component}from 'react';
-import {
-    StyleSheet,
-    Text,
-    View,
-    Navigator,
-    Image,
-    Platform,
-    DeviceEventEmitter,
-} from 'react-native';
+import React, {Component} from 'react';
+import {DeviceEventEmitter, Image, Navigator, Platform, StyleSheet,} from 'react-native';
 
 import Message from '../message/MessageCenterPage';
 import Applit from '../aplicationCenter/ApplicationCenterPage';
 import Mine from '../pilipaMain/PLPMine';
-
 // 引用第三方框架
 import TabNavigator from 'react-native-tab-navigator';
 

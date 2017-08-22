@@ -35,18 +35,18 @@ const tabsMain = [{
 ];
 
 // 转到初始化页面 main.LaunchPage
-export function navToBootstrap({isReset = false} = {}) {
-  Navigation.startSingleScreenApp({
-    screen: {
-      screen: 'main.LaunchPage',
-        navigatorStyle
-    },
-    passProps: {
-      isReset,
-    },
-    portraitOnlyMode: true,
-  });
-}
+// export function navToBootstrap({isReset = false} = {}) {
+//   Navigation.startSingleScreenApp({
+//     screen: {
+//       screen: 'main.LaunchPage',
+//         navigatorStyle
+//     },
+//     passProps: {
+//       isReset,
+//     },
+//     portraitOnlyMode: true,
+//   });
+// }
 
 // 转到登录页面
 export function navToLogin({isReset = false} = {}) {

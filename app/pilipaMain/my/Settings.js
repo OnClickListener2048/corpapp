@@ -1,23 +1,21 @@
 /**
  修改手机号
  */
-import React, {Component} from 'react';
+import React from 'react';
 
 import {
     Alert,
+    DeviceEventEmitter,
     Image,
     StyleSheet,
     Text,
+    TextInput,
+    TouchableWithoutFeedback,
     View,
-    DeviceEventEmitter,
-    TouchableWithoutFeedback, TextInput,
 } from 'react-native';
 import px2dp from '../../util/index'
-import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
-import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height} from '../../config';
-
-const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
+import {SCREEN_WIDTH as width} from '../../config';
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis/setting';
 import TimerButton from "../../view/TimerButton";
@@ -25,6 +23,8 @@ import settingStyles from './css/SettingsPageStyle';
 import BComponent from '../../base';
 // import Alert from "../../modules/react-native-alert";
 import errorText from '../../util/ErrorMsg';
+
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
 export default class Settings extends BComponent {
     static navigatorStyle = {
