@@ -14,7 +14,7 @@ test("takes a long time", function(done) {
 test('real timer ', (done) => {
     setTimeout(function() {
         // run your expectation
-        expect(0).toEqual(10);
+        expect(0).not.toBe(10);
         done();
     }, 1000);
 });
