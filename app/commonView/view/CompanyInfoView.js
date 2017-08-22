@@ -80,18 +80,16 @@ export default class CompanyInfoView extends React.Component {
     }
 
     setRefresh(refresh,companyName,ContactsName,ContactsPhone) {
-        console.log("contactsphone="+ContactsPhone);
-        this.setState({isRefresh : refresh,
+            this.setState({isRefresh : refresh,
             companyName:companyName,
-        ContactsName:ContactsName,
-        ContactsPhone:ContactsPhone});
+            ContactsName:ContactsName,
+            ContactsPhone:ContactsPhone});
     }
 
     componentWillReceiveProps(props) {
 
         if(this.state.isRefresh===true){
-            console.log("....."+this.state.isRefresh);
-            this.setState({isRefresh : false,
+                this.setState({isRefresh : false,
                 companyName:props.companyName,
                 ContactsName:props.ContactsName,
                 ContactsPhone:props.ContactsPhone,});
