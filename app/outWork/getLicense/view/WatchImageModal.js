@@ -18,7 +18,7 @@ import {
     ToastAndroid,
     InteractionManager
 } from 'react-native';
-import ImageViewer from "../../view/imgZoom/image-viewer.component";
+import ImageViewer from "../../../view/imgZoom/image-viewer.component";
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
@@ -109,7 +109,7 @@ export default class WatchImageModal extends Component{
                             <TouchableOpacity onPress={() => {
                                 this.callbackMenus()
                             }} style={{width: 50, height: 40, alignItems: 'center', justifyContent: 'center'}}>
-                                <Image source={require('../../img/left.png')}/>
+                                <Image source={require('../../../img/left.png')}/>
                             </TouchableOpacity>
                             <Text style={{
                                 fontSize: 20,
@@ -123,7 +123,7 @@ export default class WatchImageModal extends Component{
                             <TouchableOpacity onPress={() => {
                                 this.alertModal()
                             }} style={{width: 50, height: 40, alignItems: 'center', justifyContent: 'center'}}>
-                                <Image source={require('../../img/more_icon.png')}/>
+                                <Image source={require('../../../img/more_icon.png')}/>
 
                             </TouchableOpacity>
                         </View>

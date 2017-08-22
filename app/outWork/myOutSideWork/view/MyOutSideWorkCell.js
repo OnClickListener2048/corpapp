@@ -61,7 +61,7 @@ export default class MessageCenterCell extends Component {
                 <View
                     style={styles.realRowStyle}>
                     <Image
-                        source={require('../../img/bigk.png')}
+                        source={require('../../../img/bigk.png')}
                         style={[styles.messageBottomStyle]}>
                     <View
                         style={styles.titleViewStyle}>

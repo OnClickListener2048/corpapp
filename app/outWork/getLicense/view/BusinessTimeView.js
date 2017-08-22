@@ -210,7 +210,7 @@ export default class BusinessTimeView extends Component{
                                 this._hideAlert("firstTime")
                             }}>
 
-                                <Image source={require('../../img/down.png')}/>
+                                <Image source={require('../../../img/down.png')}/>
                                 <Text numberOfLines={1} style={[{
                                     textAlign: 'center',
                                     justifyContent: 'center',
@@ -236,7 +236,7 @@ export default class BusinessTimeView extends Component{
                         <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {
                             this._hideAlert("lastTime")
                         }}>
-                            <Image source={require('../../img/down.png')}/>
+                            <Image source={require('../../../img/down.png')}/>
                             <Text numberOfLines={1} style={[{
                                 textAlign: 'center',
                                 justifyContent: 'center',

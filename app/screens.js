@@ -10,10 +10,10 @@ import SystemMessagePage from './message/SystemMessagePage';
 
 import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
-import MyOutSideWorkPage from "./myOutSideWork/MyOutSideWorkPage";
-import MyOutSideTaskPage from "./myOutSideWork/MyOutSideTaskPage";
-import GetLicensePage from  './getLicense/GetLicensePage';
-import MyOutSideWorkItemPage from "./myOutSideWork/MyOutSideWorkItemPage";
+import MyOutSideWorkPage from "./outWork/myOutSideWork/MyOutSideWorkPage";
+import MyOutSideTaskPage from "./outWork/myOutSideWork/MyOutSideTaskPage";
+import GetLicensePage from  './outWork/getLicense/GetLicensePage';
+import MyOutSideWorkItemPage from "./outWork/myOutSideWork/MyOutSideWorkItemPage";
 import PersonalInfo from "./pilipaMain/my/PersonalInfo";
 import Feedback from "./pilipaMain/my/Feedback";
 import About from "./pilipaMain/my/About";
@@ -22,8 +22,8 @@ import NoMessage from "./commonView/NoMessage";
 import DataTimerView from "./view/DataTimerView";
 import AreaPicker from "../picker_demo";
 import ImageZoomTest from "../picker_demo/ImageZoomTest";
-import MultiTextInputPage from "./getLicense/view/MultiTextInputPage";
-import WatchImageModalPage from "./getLicense/view/WatchImageModalPage";
+import MultiTextInputPage from "./outWork/getLicense/view/MultiTextInputPage";
+import WatchImageModalPage from "./outWork/getLicense/view/WatchImageModalPage";
 
 export default function () {
     let reg = Navigation.registerComponent;
