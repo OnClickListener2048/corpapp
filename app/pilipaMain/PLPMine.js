@@ -2,26 +2,15 @@
  * Created by edianzu on 2017/6/6.
  */
 
-import React, {Component}from 'react';
-// 获取屏幕尺寸
-const {width, height} = Dimensions.get('window');
-
-import {
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    Dimensions,
-    TouchableWithoutFeedback,
-    DeviceEventEmitter
-}from 'react-native';
+import React, {Component} from 'react';
+import {DeviceEventEmitter, Dimensions, Image, StyleSheet, Text, TouchableWithoutFeedback, View} from 'react-native';
 
 import px2dp from '../util'
-import {navToBootstrap, navToMainTab} from '../navigation';
-import Toast from 'react-native-root-toast';
 import * as apis from '../apis';
 import DeviceInfo from 'react-native-device-info';
 import Alert from "react-native-alert";
+// 获取屏幕尺寸
+const {width, height} = Dimensions.get('window');
 
 export default class PLPMine extends Component {
     static navigatorStyle = {

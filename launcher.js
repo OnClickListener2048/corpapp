@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {navToBootstrap,navToMainTab} from './app/navigation';
+import {navToMainTab} from './app/navigation';
 import  './app/storage/UserInfoStore';
 import './app/util/LoginJumpSingleton';
 import './app/util/NetInfoSingleton';
