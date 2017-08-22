@@ -49,7 +49,7 @@ test('mock function 的返回值', () => {
 
 const sum3 = jest.fn().mockImplementation(
     (a, b) => {
-        return a * b;
+        return a + b;
     }
 );
 test('mock function 的模拟实现', () => {
