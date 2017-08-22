@@ -5,38 +5,33 @@
 
 import React, {Component} from 'react';
 import {
-    AppRegistry,
-    StyleSheet,
-    Text,
+    BackAndroid,
+    DeviceEventEmitter,
     Image,
     Keyboard,
-    View,
-    TextInput,
-    DeviceEventEmitter, TouchableOpacity,
-    KeyboardAvoidingView, TouchableWithoutFeedback,
-    InteractionManager,
+    KeyboardAvoidingView,
     Platform,
-    BackAndroid,
-    ToastAndroid,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    TouchableWithoutFeedback,
+    View,
 } from 'react-native';
 // import ProgressiveInput from 'react-native-progressive-input';
-import ProgressiveInput from '../view/ClearFocusEdit';
 // 引入外部文件
-import CommunalNavBar from '../main/GDCommunalNavBar';
 import TimerButton from "../view/TimerButton";
 import commonStyles from '../css/styles';
 import styles from './css/LoginPageStyle';
 import px2dp from '../util'
 import Toast from 'react-native-root-toast';
-const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import * as apis from '../apis';
-import {navToBootstrap, navToMainTab} from '../navigation';
 import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
-import {DEBUG} from '../config';
+import {DEBUG, SCREEN_WIDTH} from '../config';
 import Alert from "react-native-alert";
-import {SCREEN_WIDTH} from '../config';
+
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
 export default class LoginPage extends Component {
     static navigatorStyle = {

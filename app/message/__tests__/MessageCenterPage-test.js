@@ -91,5 +91,5 @@ test('test _loadMoreData 加载更多', (done) => {
 })
 
 test('test _readed', (done) => {
-
-})
+    done();
+});

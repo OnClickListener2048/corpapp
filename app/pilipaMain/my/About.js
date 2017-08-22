@@ -1,24 +1,16 @@
 /**
-关于App
+ 关于App
  */
-import React, {Component}from 'react';
+import React from 'react';
 
-import {
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    WebView,
-    TouchableWithoutFeedback, TextInput,
-}from 'react-native';
+import {Image, StyleSheet, Text, View,} from 'react-native';
 import px2dp from '../../util/index'
-import {navToBootstrap, navToMainTab} from '../../navigation';
-import Toast from 'react-native-root-toast';
-import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
-const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
+import {SCREEN_WIDTH as width} from '../../config';
 import DeviceInfo from 'react-native-device-info';
 import * as apis from '../../apis';
 import BComponent from '../../base';
+
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
 export default class About extends BComponent {
     static navigatorStyle = {

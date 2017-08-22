@@ -19,12 +19,12 @@ import {
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import styles from '../../VerifyCompanyInfo/css/VerifyCompanyStyle'
+import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
 import CompanyInfoView from '../../commonView/view/CompanyInfoView'
-import VerifyProcessTipView from '../../VerifyCompanyInfo/view/VerifyProcessTipView'
+import VerifyProcessTipView from '../../outWork/VerifyCompanyInfo/view/VerifyProcessTipView'
 import CompanyAddress from "../../commonView/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
-import ProcessBtnView from "../../VerifyCompanyInfo/view/ProcessBtnView";
+import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
 import CompanyAddressView from "./view/CompanyAddressView";
 import PickerWidget from "./view/PickerWidget";
@@ -33,7 +33,7 @@ import * as apis from '../../apis/index';
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
 import DataTimerView from "../../view/DataTimerView";
 import AlertPhotoModal from "../../view/AlertPhotoModal";
-import DottedLine from "../../VerifyCompanyInfo/view/DottedLine";
+import DottedLine from "../VerifyCompanyInfo/view/DottedLine";
 import MultiTextInputView from "./view/MultiTextInputView";
 import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
