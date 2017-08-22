@@ -6,7 +6,6 @@ import 'react-native';
 import React from 'react';
 import MyOutSideWorkItemPage from '../MyOutSideWorkItemPage'
 import {shallow} from 'enzyme';
-import fetchMock from 'fetch-mock';
 
 
 const navigator = Object.create(null);
@@ -14,6 +13,7 @@ const navigator = Object.create(null);
 navigator.setOnNavigatorEvent = jest.fn();
 navigator.setButtons = jest.fn();
 navigator.callback = jest.fn();
+navigator.push=jest.fn();
 
 const wrapper = shallow(
     <MyOutSideWorkItemPage navigator={navigator}/>
@@ -35,17 +35,25 @@ jest.mock('NetInfo', () => {
     }
 });
 
+//提取方法以便复用
+repeatClick=(time,state)=>{
+    wrapper.setProps({allList:'all'});//设置属性值执行if语句
 
-it('MyOutSideWorkItemPage 重复点击', (done) => {
-    instance.props.allList==='all'
     jest.useFakeTimers();
 
     instance._press(null);
-
     setTimeout(() => {
-        instance._press(1);
-    }, 1000);
+        expect(instance.state.canClickBtn).toEqual(state);
+    }, time);
 
     jest.runAllTimers(null);
-    expect(instance.state.canClickBtn, false);
+
+}
+
+it('MyOutSideWorkItemPage 1s内不可以点击', () => {
+    repeatClick(500,false);
+});
+
+it('MyOutSideWorkItemPage 超过1s可点击', () => {
+    repeatClick(2000,true);
 });

@@ -35,16 +35,17 @@ jest.mock('NetInfo', () => {
     }
 });
 
+
 it('componentWillMount执行了', () => {
     expect(instance.state.needLoding).toEqual(true);
 });
 
 
-fetchMock.restore();// 重置数据
-fetchMock.post('*', {"success":true,"code":200,"msg":null,"data":{"inProgressNum":3,"todoNum":0,"totalNum":3},"jest-post": true},);
 
 
 it('测试接口请求后outSourceCountObj状态值设置', (done) => {
+    fetchMock.post('*', {"success":true,"code":200,"msg":null,"data":{"inProgressNum":3,"todoNum":0,"totalNum":3},"jest-post": true},);
+
     instance._loadCount(true);
 
     jest.useRealTimers();//使用真正的定时器用于同步接口请求
@@ -56,3 +57,23 @@ it('测试接口请求后outSourceCountObj状态值设置', (done) => {
 
 });
 
+//提取方法以便复用
+repeatClick=(time,state)=>{
+
+    jest.useFakeTimers();
+    instance._callback(null);
+    setTimeout(() => {
+        expect(instance.state.canClickBtn).toEqual(state);
+    }, time);
+
+    jest.runAllTimers(null);
+
+}
+
+it('MyOutSideWorkPage 1s内不可点击', () => {
+    repeatClick(500,false);
+});
+
+it('MyOutSideWorkPage 超过1s可点击', () => {
+    repeatClick(2000,true);
+});
