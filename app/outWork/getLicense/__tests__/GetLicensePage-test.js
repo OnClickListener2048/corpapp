@@ -58,12 +58,18 @@ it('getLicensePageTest 图片--重复跳转逻辑', () => {
 });
 
 fetchMock.post('*', responseData);
-test('getLicensePage 模拟接口请求是否得到渲染',  async() => {
+it('getLicensePage 模拟接口请求是否得到渲染', (done) => {
     instance._loadData()
-    let data =  await responseData.data;
-    //数据源比较
-    expect(instance.state.detailObj,data);
-    //是否请求失败比较
-    expect(instance.state.loaded,true);
+    jest.useRealTimers();
+    setTimeout(() => {
+        let data =  responseData.data;
+        //数据源比较
+        expect( instance.state.detailObj).toEqual(data);
+        //是否请求失败比较
+        expect( instance.state.loaded).toEqual(true);
+        done();
+        }, 2000);
+
+
 });
 
