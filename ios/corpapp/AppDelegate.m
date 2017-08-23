@@ -24,12 +24,22 @@
 // IMPORTANT: if you're getting an Xcode error that RCCManager.h isn't found, you've probably ran "npm install"
 // with npm ver 2. You'll need to "npm install" with npm 3 (see https://github.com/wix/react-native-navigation/issues/1)
 
+#import "UMMobClick/MobClick.h"
+
 @implementation AppDelegate
 
 static BOOL isProduction = true;  //填写isProdurion  平时测试时为false ，生产时填写 true
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+  
+   /** 友盟统计 */
+  UMConfigInstance.appKey = @"5992c88aa40fa3403a000218";
+  
+  //  UMConfigInstance.eSType=E_UM_GAME;//友盟游戏统计，如不设置默认为应用统计
+  
+  [MobClick startWithConfigure:UMConfigInstance];
+  [MobClick setLogEnabled:YES];
   /** 极光推送 */
   
   if ([[UIDevice currentDevice].systemVersion floatValue] >= 10.0) {

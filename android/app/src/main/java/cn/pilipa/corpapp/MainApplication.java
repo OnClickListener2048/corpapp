@@ -49,18 +49,19 @@ public class MainApplication extends NavigationApplication {
 
     @Nullable
     public List<ReactPackage> createAdditionalReactPackages() {
-              return Arrays.<ReactPackage>asList(
-                  //new MainReactPackage(),
-            new PLPAlertPackage(),
-            new PickerViewPackage(),
-            new PickerPackage(),
-                    //new NavigationReactPackage(),
-                    new RNDeviceInfo(),
-                    new RealmReactPackage(),
-                    new VectorIconsPackage(),
-                    new BlurViewPackage(),
-                      new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG)
-              );
+        return Arrays.<ReactPackage>asList(
+                //new MainReactPackage(),
+                new PLPAlertPackage(),
+                new PickerViewPackage(),
+                new PickerPackage(),
+                //new NavigationReactPackage(),
+                new RNDeviceInfo(),
+                new RealmReactPackage(),
+                new VectorIconsPackage(),
+                new BlurViewPackage(),
+                new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
+                new UmengReactPackage()
+        );
     }
 
 }

@@ -3705,7 +3705,6 @@ react-native-root-toast@^1.1.2:
   resolved "https://registry.yarnpkg.com/react-native-root-toast/-/react-native-root-toast-1.1.2.tgz#1f5a2dad70743a9ab6b5d44674c8dda578523961"
   dependencies:
     react-native-root-siblings "^1.2.1"
-
 "react-native-scrollable-tab-view@github:pilipa-cn/react-native-scrollable-tab-view#v0.7.4-pilipa-2":
   version v0.7.4-pilipa-2
   resolved "https://codeload.github.com/pilipa-cn/react-native-scrollable-tab-view/tar.gz/80783d721693dd733333599884fe52c16c2f41b5"

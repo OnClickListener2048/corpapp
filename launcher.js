@@ -3,6 +3,8 @@ import {navToMainTab} from './app/navigation';
 import  './app/storage/UserInfoStore';
 import './app/util/LoginJumpSingleton';
 import './app/util/NetInfoSingleton';
+import './app/util/UMTool';
+
 import {Navigation} from 'react-native-navigation';
 import { Text } from 'react-native';
 

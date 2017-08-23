@@ -16,7 +16,10 @@ import {
     TouchableOpacity,
     TouchableWithoutFeedback,
     View,
+    ToastAndroid,
 } from 'react-native';
+
+
 // import ProgressiveInput from 'react-native-progressive-input';
 // 引入外部文件
 import TimerButton from "../view/TimerButton";
@@ -312,7 +315,7 @@ export default class LoginPage extends Component {
             return;
         }
         let loading = SActivityIndicator.show(true, "登录中");
-
+        UMTool.onEvent("login");
         apis.login(this.state.mobile, this.state.smsCode).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
