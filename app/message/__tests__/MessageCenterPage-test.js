@@ -1,3 +1,6 @@
+/**
+ * Created by zhuangzihao on 2017/8/22.
+ */
 import 'react-native';
 import React from 'react';
 import fetchMock from 'fetch-mock';
@@ -13,8 +16,8 @@ const wrapper = shallow(
     <MessageCenterPage navigator={navigator}/>
 );
 let instance = wrapper.instance();
-fetchMock.post('*', responseData);
 test('test _loadData下拉刷新 _loadInitData 第一次进入数据初始化', (done) => {
+    fetchMock.post('*', responseData);
     instance._loadData()
     //模拟异步请求数据
     jest.useRealTimers();
@@ -48,6 +51,7 @@ test('test _loadData下拉刷新 _loadInitData 第一次进入数据初始化', 
 })
 //mock 数据必须在15条时才可以进行测试  因为如果不足15条（pageCount）不会进行上滑加载更多 导致数据源和预期数据不一样
 test('test _loadMoreData 加载更多', (done) => {
+    fetchMock.post('*', responseData);
     //首先加载第一页数据
     instance._loadData()
     //模拟异步请求数据
@@ -90,6 +94,34 @@ test('test _loadMoreData 加载更多', (done) => {
     }, 1000);
 })
 
-test('test _readed', (done) => {
+//time 定时器时间  state 是否可点击变量期望的值 funName防重复点击的方法名 stateName是否可点击变量期望的名称
+repeatClick=(time,state,funName,stateName)=>{
+
+    jest.useFakeTimers();
+
+    instance[funName]();
+    setTimeout(() => {
+        expect(instance.state[stateName]).toEqual(state);
+    }, time);
+    jest.runAllTimers(null);
+
+}
+test('test toMyOutSideWork 防止重复点击 isJumping 0.5秒时状态', () => {
+    repeatClick(500,true,'toMyOutSideWork','isJumping')
+
+})
+
+test('test toMyOutSideWork 防止重复点击 2.5秒时状态', () => {
+    repeatClick(2500,false,'toMyOutSideWork','isJumping')
+
+})
+
+test('test toSystemMessagePage 防止重复点击 isJumping 0.5秒时状态', () => {
+    repeatClick(500,true,'toSystemMessagePage','isJumping')
+
+})
+
+test('test toSystemMessagePage 防止重复点击 2.5秒时状态', () => {
+    repeatClick(2500,false,'toSystemMessagePage','isJumping')
 
 })
