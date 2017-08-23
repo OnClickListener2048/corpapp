@@ -16,7 +16,41 @@ const wrapper = shallow(
     <MessageCenterPage navigator={navigator}/>
 );
 let instance = wrapper.instance();
-test('test _loadData下拉刷新 _loadInitData 第一次进入数据初始化', (done) => {
+test('test _loadInitData 第一次进入数据初始化', (done) => {
+    fetchMock.post('*', responseData);
+    instance._loadInitData()
+    //模拟异步请求数据
+    jest.useRealTimers();
+    setTimeout(function() {
+        //mock数据的消息数
+        let cnt = responseData.unReadNum;
+        //消息数比较
+        expect(instance.state.bagetNum).toEqual(cnt);
+        let data = responseData.data
+        for (let  i = 0 ; i < data.length ; i++){
+            let  secData = data[i];
+            secData.rowIndex = i;
+        }
+        //数据源比较
+        expect(instance.state.dataSource._dataBlob.s1).toEqual(data);
+        //下拉刷新状态比较
+        expect(instance.state.isRefreshing).toEqual(false);
+        //请求状态比较
+        expect(instance.state.loaded).toEqual(true);
+        //是否请求失败比较
+        expect(instance.state.faild).toEqual(false);
+        if (data.length == instance.state.pageCount){
+            //正好请求pageCount条时，最后一个数据的ID比较
+            expect(instance.state.lastID).toEqual(data[data.length-1].msgId);
+        }else {
+            //尾部loadingMore状态的比较
+            expect(instance.state.loadingMore).toEqual(2);
+        }
+        done();
+    }, 1000);
+})
+
+test('test _loadData下拉刷新 ', (done) => {
     fetchMock.post('*', responseData);
     instance._loadData()
     //模拟异步请求数据
@@ -106,23 +140,33 @@ repeatClick=(time,state,funName,stateName)=>{
     jest.runAllTimers(null);
 
 }
+//mock toMyOutSideWork  只含有防重复点击的逻辑
+instance.toMyOutSideWork = instance.toSystemMessagePage = (()=>{
+    if (instance.state.isJumping === true){
+        return;
+    }
+    instance.setState({isJumping:true})//防重复点击
+
+    instance.timer = setTimeout(async()=>{
+        await instance.setState({isJumping:false})//1.5秒后可点击
+    },1000)
+});
 test('test toMyOutSideWork 防止重复点击 isJumping 0.5秒时状态', () => {
     repeatClick(500,true,'toMyOutSideWork','isJumping')
-
 })
 
 test('test toMyOutSideWork 防止重复点击 2.5秒时状态', () => {
     repeatClick(2500,false,'toMyOutSideWork','isJumping')
-
 })
 
 test('test toSystemMessagePage 防止重复点击 isJumping 0.5秒时状态', () => {
     repeatClick(500,true,'toSystemMessagePage','isJumping')
-
 })
 
 test('test toSystemMessagePage 防止重复点击 2.5秒时状态', () => {
     repeatClick(2500,false,'toSystemMessagePage','isJumping')
-
 })
 
+test('test _readed 测试已读逻辑', (done) => {
+    
+})
