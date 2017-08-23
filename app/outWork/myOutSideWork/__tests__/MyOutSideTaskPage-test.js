@@ -22,17 +22,12 @@ fetchMock.get('https://app.i-counting.cn/app/v0/outsource/task',
 
 
 it('outSideTaskPageTest', async () => {
-    // fetchMock.get('https://app.i-counting.cn/app/v0/outsource/task', {hello: "world"});
     const response = await fetch('https://app.i-counting.cn/app/v0/outsource/task');
-    // console.log("fetch******=", response.json());
-    // const response = await fetch('http://fake.com');
-    // console.log("fetch response ******=", response);
-    // const response = await HTTPBase.get('http://fake.com', {});
     const result = await response.json();
     expect(result.success).toEqual(true);
 });
 
-//这个不成功
+
 it('outSideTaskPageTest Component should be render', () => {
     //.find(selector) 是 Enzyme shallow Rendering 提供的语法, 用于查找节点
     // 详细用法见 Enzyme 文档 http://airbnb.io/enzyme/docs/api/shallow.html
@@ -41,7 +36,7 @@ it('outSideTaskPageTest Component should be render', () => {
     expect(wrapper.find('companyInfoView').exists());
 });
 
-//这个不成功
+
 it('outSideTaskPageTest Component should be render', () => {
     //.find(selector) 是 Enzyme shallow Rendering 提供的语法, 用于查找节点
     // 详细用法见 Enzyme 文档 http://airbnb.io/enzyme/docs/api/shallow.html

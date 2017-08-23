@@ -56,7 +56,7 @@ onNavigatorEvent(event) { // this is the onPress handler for the two buttons tog
     // console.log('ApplicationCenterPage event.type', event.type);
     if(event.id==='willAppear'){
         console.log('需要刷新吗' +  this.state.needRefresh);
-        if (this.state.needRefresh == true){
+        if (this.state.needRefresh === true){
             this._loadData();
             this.state.needRefresh = false;
 
@@ -74,10 +74,6 @@ _setNeedRefrsh(){
 
 
 _loadData() {
-    console.log("测试无网走没走" );
-
-
-
 
         this.loading  = SActivityIndicator.show(true, "加载中...");
 
@@ -141,7 +137,7 @@ _loadData() {
         this.setState({canClickBtn:false})//防重复点击
         this.timer = setTimeout(async()=>{
             await this.setState({canClickBtn:true})//1.5秒后可点击
-        },1000)
+        },1000);
 
 
         this.state.currentStepId = stepId;

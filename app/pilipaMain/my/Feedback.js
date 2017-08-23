@@ -1,25 +1,18 @@
 /**
-问题反馈
+ 问题反馈
  */
-import React, {Component}from 'react';
+import React from 'react';
 
-import {
-    Alert,
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    TouchableWithoutFeedback, TextInput,
-}from 'react-native';
+import {Alert, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View,} from 'react-native';
 import px2dp from '../../util/index'
-import {navToBootstrap, navToMainTab} from '../../navigation';
 import Toast from 'react-native-root-toast';
-import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
-const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
+import {SCREEN_WIDTH as width} from '../../config';
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
 import * as apis from '../../apis';
 import BComponent from '../../base';
 import errorText from "../../util/ErrorMsg";
+
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 // import Alert from "../../modules/react-native-alert";
 
 export default class Feedback extends BComponent {

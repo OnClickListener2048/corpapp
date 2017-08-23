@@ -10,7 +10,7 @@ import {View, Text,Image,Dimensions,
     Alert,} from 'react-native';
 // import styles from '../style/SubViewStyle'
 
-import DottedLine from '../view/DottedLine'
+import DottedLine from './DottedLine'
 const window = Dimensions.get('window');
 
 export const SCREEN_HEIGHT = window.height;

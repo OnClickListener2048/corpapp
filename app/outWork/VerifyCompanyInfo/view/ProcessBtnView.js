@@ -8,10 +8,10 @@ import {View, Text,Image,Dimensions,
     ToastAndroid,
     Alert,} from 'react-native';
 const window = Dimensions.get('window');
-import SActivityIndicator from '../../modules/react-native-sww-activity-indicator';
-import * as apis from '../../apis';
+import SActivityIndicator from '../../../modules/react-native-sww-activity-indicator/index';
+import * as apis from '../../../apis/index';
 import Toast from 'react-native-root-toast';
-import errorText from '../../util/ErrorMsg';
+import errorText from '../../../util/ErrorMsg';
 
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;

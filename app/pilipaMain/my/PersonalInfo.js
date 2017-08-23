@@ -2,20 +2,10 @@
 个人资料
  */
 
-import React, {Component}from 'react';
+import React from 'react';
 
-import {
-    Alert,
-    Image,
-    StyleSheet,
-    Text,
-    View,
-    TouchableWithoutFeedback,
-}from 'react-native';
-import px2dp from '../../util'
-import {navToBootstrap, navToMainTab} from '../../navigation';
-import Toast from 'react-native-root-toast';
-import {SCREEN_WIDTH as width, SCREEN_HEIGHT as height } from '../../config';
+import {Alert, StyleSheet, Text, View,} from 'react-native';
+import {SCREEN_WIDTH as width} from '../../config';
 import BComponent from '../../base';
 
 export default class PLPMine extends BComponent {

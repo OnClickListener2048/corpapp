@@ -69,12 +69,8 @@ jest.mock('react-native-alert');
 //     }
 // });
 
-
-fetchMock.get('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest": true}'));
-fetchMock.postOnce('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest-post": true}'));
-
 it('can fetch', async () => {
-    // fetchMock.get('http://fake.com', {hello: "world"});
+    fetchMock.get('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest": true}'));
     console.log("fetch******=", fetch);
     const response = await fetch('http://fake.com');
     console.log("fetch response ******=", response);
@@ -85,6 +81,8 @@ it('can fetch', async () => {
 
 // async/await can also be used with `.resolves`.
 it('works with async/await and resolves', async () => {
+    // fetchMock.restore();// 重置数据
+    fetchMock.postOnce('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest-post": true}'));
     // expect.assertions(1);
     // console.log("apis.sendVerifyVCode=", apis.sendVerifyVCode());
     // let result = await apis.sendVerifyVCode();
@@ -95,6 +93,8 @@ it('works with async/await and resolves', async () => {
 
 // The assertion for a promise must be returned.
 it('works with promises', () => {
+    // fetchMock.restore();// 重置数据
+    fetchMock.postOnce('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest-post": true}'));
     expect.assertions(1);
     return apis.sendVerifyVCode().then(data => expect(data.code).toEqual(200));
 });
@@ -139,13 +139,14 @@ it('mobile handle correctly', () => {
     //   expect(tree).toMatchSnapshot();
 });
 
-fetchMock.restore();// 重置数据
-fetchMock.postOnce('*', {
-    "success": false, "code": 500, "msg": "需要图形码", "data": {
-        verify: "a.jpg", verifyText: "需要图形码44"
-    }, "jest-post": true
-});
+
 it('sms code handle correctly',  (done) => {
+    // fetchMock.restore();// 重置数据
+    fetchMock.postOnce('*', {
+        "success": false, "code": 500, "msg": "需要图形码", "data": {
+            verify: "a.jpg", verifyText: "需要图形码44"
+        }, "jest-post": true
+    });
     let instance = wrapper.instance();
     instance.updateMobile('13810397068');
     expect(instance.state.mobile).toEqual('13810397068');

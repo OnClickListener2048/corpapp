@@ -125,3 +125,4 @@ test('test toSystemMessagePage 防止重复点击 2.5秒时状态', () => {
     repeatClick(2500,false,'toSystemMessagePage','isJumping')
 
 })
+
