@@ -69,7 +69,17 @@ it('getLicensePage 模拟接口请求是否得到渲染', (done) => {
         expect( instance.state.loaded).toEqual(true);
         done();
         }, 2000);
+});
 
+it('getLicensePage 模拟在测试期间将测试值注入代码', () => {
+    const myMock = jest.fn();
+    console.log(myMock());
+// > undefined
 
+    myMock.mockReturnValueOnce(10)
+        .mockReturnValueOnce('x')
+        .mockReturnValue(true);
+
+    console.log("哩哩啦啦"+myMock(), myMock(), myMock(), myMock());
 });
 

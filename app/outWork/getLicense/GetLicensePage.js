@@ -136,10 +136,8 @@ export default class GetLicensePage extends BComponent {
         }
     }
 
-
+    //详情状态操作按钮操作
     stepBtnClick(status){
-
-
         let callback = this.props.callback;
         if(callback) {
             callback();
@@ -182,6 +180,7 @@ export default class GetLicensePage extends BComponent {
         }
     }
 
+    //获取详情页所有客户信息
     _loadData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
@@ -226,8 +225,6 @@ export default class GetLicensePage extends BComponent {
                             selectAreaCode:[responseData.data.corpAddressArea.cityId,responseData.data.corpAddressArea.districtId],
                     });
                     console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
-
-
                     if(this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea);
                     }
@@ -250,12 +247,11 @@ export default class GetLicensePage extends BComponent {
         );
     }
 
+    //获取城市数据信息
     _loadAreaData() {
 
         let loading = SActivityIndicator.show(true, "加载中...");
-
         apis.loadDicArea().then(
-
             (responseData) => {
                 SActivityIndicator.hide(loading);
 
@@ -299,6 +295,7 @@ export default class GetLicensePage extends BComponent {
         );
     }
 
+    //提交修改的数据
     _postClientData(cilentObj){
         let loading = SActivityIndicator.show(true, "加载中...");
 
@@ -313,7 +310,6 @@ export default class GetLicensePage extends BComponent {
                 if(responseData !== null && responseData.data !== null) {
 
                     console.log("提交成功" , responseData.data);
-
 
                 }
             },
@@ -331,6 +327,7 @@ export default class GetLicensePage extends BComponent {
     //     return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
     // }
 
+    //客户基本信息显示
     renderTest() {
         if (this.state.loaded === true) {
             console.log(""+this.state.editables);
@@ -370,11 +367,15 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
+    //详情状态
     renderVerifyProcessTipView(){
 
-        return <VerifyProcessTipView ref="verifyProcessTipView" currentNum={this.state.detailObj.progress.finished === 'true' ? 2 : this.state.detailObj.progress.materialConfirm === 'true' ? 1 : 0}/>
+        return <VerifyProcessTipView ref="verifyProcessTipView"
+                                     currentNum={this.state.detailObj.progress.finished === 'true' ? 2 :
+                                         this.state.detailObj.progress.materialConfirm === 'true' ? 1 : 0}/>
     }
 
+    //详情状态操作按钮
     renderVerifyBtnView(){
         return <ProcessBtnView allowEdit={this.state.allowEditInfo === 'true'}
                                stepId={this.state.stepId}
@@ -386,6 +387,7 @@ export default class GetLicensePage extends BComponent {
                                callback={this.stepBtnClick.bind(this)} />
     }
 
+    //营业期限时间显示子组件
     renderBusinessTimeView() {
 
             return <BusinessTimeView
@@ -397,7 +399,7 @@ export default class GetLicensePage extends BComponent {
                 allTimePressBtnSelected={this.state.unlimited}/>
     }
 
-
+    //市区picker弹框
     _showAreaPicker() {
         this.setState({
             isPickerOpen : true,
@@ -427,7 +429,6 @@ export default class GetLicensePage extends BComponent {
 
                     for(let areaSec in areaDic) {
                         let cityName = areaSec;          //市名称
-
                         if (cityName === pickedValue[0]){
                             let districtsArr = areaDic[cityName]; //区数组
 
@@ -446,8 +447,6 @@ export default class GetLicensePage extends BComponent {
                         break;
                     }
                 }
-
-
                 console.log('哈哈自己筛选后==>', this.state.areaCodeIndexArr[0],this.state.areaCodeIndexArr[1]);
 
                 let  cityIndex = this.state.areaCodeIndexArr[0];
@@ -487,7 +486,7 @@ export default class GetLicensePage extends BComponent {
 
     }
 
-
+    //获取城市数据信息
     _addressBtnClick(){
         if (this.state.loadedArea){
             this._showAreaPicker();
@@ -497,14 +496,12 @@ export default class GetLicensePage extends BComponent {
         }
     }
 
-
+    //城市显示子组件
     renderCompanyAddressView(){
         return   <CompanyAddressView
             isFouces={this.state.editables}
             ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
     }
-
-
 
     //输入框回调 法人
     _callbacklegal(content) {
@@ -549,6 +546,7 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
+    //营业期限时间显示逻辑及类型
     _toMyDataTimer(isDateTimePickerVisible){
         console.log("传值=====>>"+isDateTimePickerVisible);
         this.setState({
@@ -562,6 +560,7 @@ export default class GetLicensePage extends BComponent {
 
     }
 
+    //营业期限时间是否限制
     _unlimit(allTimePressBtnSelected){
         this.setState({
             imgVisibles:false,
@@ -572,6 +571,7 @@ export default class GetLicensePage extends BComponent {
         console.log("打印是否限制时间="+this.state.unlimited);
     }
 
+    //图片类型判断：身份证／营业执照
     toAlertModal(photoType){
         if(this.state.editables === false){
             return;
@@ -582,6 +582,7 @@ export default class GetLicensePage extends BComponent {
         this._watchImVisible(photoType);
     }
 
+    //实时更新参数值
     componentWillReceiveProps(props) {
         this.setState({ visible: props.visible,
             photoType:props.photoType,
@@ -590,6 +591,7 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
+    //图片获取完成后的显示和赋值
     _callbackPhoto(image,imgVisibles) {//获取图片
         console.log("callback="+image);
         this.setState({
@@ -633,6 +635,7 @@ export default class GetLicensePage extends BComponent {
 
     }
 
+    //是否有图片，及图片大图展示
     _watchImVisible(photoType){
         let imgVisibles = false;
         console.log("photoTypeWatch="+photoType);
@@ -675,6 +678,8 @@ export default class GetLicensePage extends BComponent {
             imgVisibles:imgVisibles
         })
     }
+
+    //日期按需求格式化
     _dateFormat(fmt) {
         Date.prototype.Format = function (fmt) { //author: meizz
             var o = {
@@ -719,6 +724,7 @@ export default class GetLicensePage extends BComponent {
 
     }
 
+    //虚线显示
     renderLineView(){
 
         return      <View style={[{backgroundColor:'white',width : SCREEN_WIDTH,paddingLeft:15,paddingRight:15, height : 1}]}>
@@ -727,6 +733,7 @@ export default class GetLicensePage extends BComponent {
         </View>
     }
 
+    //保存数据赋值
     _edit(editables){
         if(editables===false){//点击保存，赋值并保存
             console.log("公司地址ID是否唯恐"+this.state.selectAreaCode[0]+","+this.state.selectAreaCode[1]);
@@ -784,6 +791,7 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
+    //客户基本信息是否可编辑栏
     renderCompanyTipView(){
         // let allowEditInfo = this.state.detailObj.allowEditInfo;
 
@@ -823,10 +831,8 @@ export default class GetLicensePage extends BComponent {
     // 企业类型选择
     _corpTypePickerClick() {
         console.log('_corpTypePickerClick');
-
         let loading = SActivityIndicator.show(true, "加载中...");
         this.lastID = null;
-
         apis.loadDicData().then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
@@ -966,14 +972,17 @@ export default class GetLicensePage extends BComponent {
         isDateTimePickerVisibl: false,
     };
 
+    //隐藏时间选择器
     _hideDateTimePicker = () => this.setState({ isDateTimePickerVisible: false });
 
+    //显示时间选择器
     _handleDatePicked = (date) => {
         console.log('A date has been picked: ', date);
         this._callbackData(date,false);
         this._hideDateTimePicker();
     };
 
+    //关闭picker弹窗
     closePicker(){
         Picker.hide();
         this.setState({
@@ -1165,8 +1174,8 @@ export default class GetLicensePage extends BComponent {
 
         return(
                 <View style={styles.container}>
+                    {/*无网显示页面*/}
                     <NoNetEmptyView onClick={() => {this._loadData()}} />
-
                     {/*选择框遮罩*/}
                     <TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 10 : -1}]}
                                       onPress={() => {
@@ -1177,9 +1186,11 @@ export default class GetLicensePage extends BComponent {
                             backgroundColor: this.state.isPickerOpen ? 'black' : 'white'
                         },]}/>
                     </TouchableOpacity>
+                    {/*选择图片弹框*/}
                     {this.state.imgVisibles === true &&
                     <AlertPhotoModal
                         callback={this._callbackPhoto.bind(this)}/>}
+                        {/*iOS时间选择器*/}
                     {this.state.isDateTimePickerVisible === true &&
                     <DataTimerView
                         callback={this._callbackData.bind(this)}/>
@@ -1190,7 +1201,9 @@ export default class GetLicensePage extends BComponent {
         )
     }
 
+    //经营范围跳转
     toMultiTextInput(){
+        //canClickBtn防重复点击
         console.log("canClickBtn="+this.state.canClickBtn);
         if (this.state.canClickBtn === false){
             return;
@@ -1215,6 +1228,7 @@ export default class GetLicensePage extends BComponent {
         });
     }
 
+    //经营范围回调
     _bizRanageContent(bizRange){
 
         if(bizRange!=null){
