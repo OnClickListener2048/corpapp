@@ -201,58 +201,58 @@ export default class MessageCenterPage extends BComponent {
 
         this.setState({isRefreshing: true,
             lastID : null,
-                     });
+        });
 
         apis.loadMessageData(this.state.pageCount,'').then(
 
-        (responseData) => {
-            this.setState({isRefreshing: false});
+            (responseData) => {
+                this.setState({isRefreshing: false});
 
-            let cnt = responseData.unReadNum;
-            if(cnt !== null && cnt >= 0) {
-                this.props.navigator.setTabBadge({
-                    badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
-                });
-
-                this.state.bagetNum = cnt;
-
-                try {// 只支持iOS
-                    JPushModule.setBadge(cnt, (success) => {
-                        console.log("Badge", success)
-                    });
-                } catch (e) {
-                }
-            }
-            if(responseData !== null && responseData.data !== null) {
-                this.messageArr = [];
-                this.messageArr = this.messageArr.concat(responseData.data);
-                // console.log(this.messageArr)
-
-                if (responseData.data.length == this.state.pageCount){
-                    this.setState({loadingMore: 0,
-                        lastID : this.messageArr[this.messageArr.length - 1].msgId
+                let cnt = responseData.unReadNum;
+                if(cnt !== null && cnt >= 0) {
+                    this.props.navigator.setTabBadge({
+                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
                     });
 
-                    // console.log(this.lastID +'你大爷');
-                }else {
-                    this.setState({loadingMore: 2});
+                    this.state.bagetNum = cnt;
+
+                    try {// 只支持iOS
+                        JPushModule.setBadge(cnt, (success) => {
+                            console.log("Badge", success)
+                        });
+                    } catch (e) {
+                    }
+                }
+                if(responseData !== null && responseData.data !== null) {
+                    this.messageArr = [];
+                    this.messageArr = this.messageArr.concat(responseData.data);
+                    // console.log(this.messageArr)
+
+                    if (responseData.data.length == this.state.pageCount){
+                        this.setState({loadingMore: 0,
+                            lastID : this.messageArr[this.messageArr.length - 1].msgId
+                        });
+
+                        // console.log(this.lastID +'你大爷');
+                    }else {
+                        this.setState({loadingMore: 2});
+
+                    }
+
+                    for (let  i = 0 ; i < this.messageArr.length ; i++){
+                        let  secData = this.messageArr[i];
+                        secData.rowIndex = i;
+
+                    }
+
+                    this.setState({
+                        dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
+                        loaded:true,
+                    });
+
+
 
                 }
-
-                for (let  i = 0 ; i < this.messageArr.length ; i++){
-                    let  secData = this.messageArr[i];
-                    secData.rowIndex = i;
-
-                }
-
-                this.setState({
-                    dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
-                    loaded:true,
-                });
-
-
-
-            }
             },
             (e) => {
                 // 关闭刷新动画
@@ -549,16 +549,16 @@ export default class MessageCenterPage extends BComponent {
 
         // Toast.show(a);
 
-            this.props.navigator.push({
-                screen: 'MyOutSideTaskPage',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+        this.props.navigator.push({
+            screen: 'MyOutSideTaskPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
 
-                passProps: {
-                    taskId:outPageId,
-                    toastStr : a,
-                }
-            });
+            passProps: {
+                taskId:outPageId,
+                toastStr : a,
+            }
+        });
 
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
@@ -576,14 +576,14 @@ export default class MessageCenterPage extends BComponent {
             await this.setState({isJumping:false})//1.5秒后可点击
         },1000)
         this.props.navigator.push({
-                screen: 'SystemMessagePage',
-                backButtonTitle: '返回', // 返回按钮的文字 (可选)
-                backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-                title: '系统通知',
-                passProps: {
-                    contentJson:contentJson,
-                }
-            });
+            screen: 'SystemMessagePage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title: '系统通知',
+            passProps: {
+                contentJson:contentJson,
+            }
+        });
 
         if (rowData.read === 'false'){
             this._readed(msgId,rowData);
@@ -603,11 +603,11 @@ export default class MessageCenterPage extends BComponent {
     }
 
     _renderRow(rowData) {
-         // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
+        // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
         // console.log("点击renderRow" + rowData);
         return (
             <TouchableOpacity onPress={() => {
-                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
+                rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
 
                 <MessageCell messageTitle={rowData.title}
                              messageSubTitle = {rowData.subTitle}
@@ -630,39 +630,39 @@ export default class MessageCenterPage extends BComponent {
 
 
     renderFooter(){
-      if (this.state.loadingMore == 1){
-          return(
-              <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
-                  <ActivityIndicator size={'small'}/>
-                  <Text style={{marginLeft: 10}}>加载中...</Text>
+        if (this.state.loadingMore == 1){
+            return(
+                <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+                    <ActivityIndicator size={'small'}/>
+                    <Text style={{marginLeft: 10}}>加载中...</Text>
 
-              </View>
-              );
-    //加载中..
-      }else if (this.state.loadingMore == 0){
-          return (
-              <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
+                </View>
+            );
+            //加载中..
+        }else if (this.state.loadingMore == 0){
+            return (
+                <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
 
-                  <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                  </View>
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
 
-                  <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
-                      {'历史消息'}
-                  </Text>
-                  <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
-                  </View>
-              </View>);
+                    <Text style={{color:'#999999',marginLeft:10,marginRight:10,fontSize:12,alignItems:'center',justifyContent:'center'}}>
+                        {'历史消息'}
+                    </Text>
+                    <View style={{height:1,width:60 ,backgroundColor:'#dcdcdc',alignItems:'center',justifyContent:'center',}}>
+                    </View>
+                </View>);
 
-      }else {
-          return null;
-      }
+        }else {
+            return null;
+        }
     }
 
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
 
-       if (this.state.isNoNetwork == true) {      // 无网络
+        if (this.state.isNoNetwork == true) {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
@@ -680,25 +680,25 @@ export default class MessageCenterPage extends BComponent {
             );
         }else if (this.state.faild == true) {      // 数据加载失败
             return(
-                    <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
-                         <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
-                         <NoMessage
+                    <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                        <NoMessage
                             textContent='加载失败，点击重试'
-                          active={require('../img/load_failed.png')}/>
-                     </View>
-            </TouchableOpacity>
+                            active={require('../img/load_failed.png')}/>
+                    </View>
+                </TouchableOpacity>
             );
         }else if (this.messageArr.length == 0){
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
-                 <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
-                    <NoMessage
-                    textContent='暂无消息'
-                    active={require('../img/no_message.png')}/>
-                  </View>
+                    <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                        <NoMessage
+                            textContent='暂无消息'
+                            active={require('../img/no_message.png')}/>
+                    </View>
                 </TouchableOpacity>
 
             );
@@ -714,31 +714,31 @@ export default class MessageCenterPage extends BComponent {
                              renderRow={this._renderRow.bind(this)}
                              refreshControl = {
                                  <RefreshControl
-                                    refreshing={this.state.isRefreshing}
-                                    onRefresh={this._loadData}
-                                    title={'加载中...'}
-                                    titleColor={'#b1b1b1'}
-                                    colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
-                                    progressBackgroundColor={'#fafafa'}
-                                />
-                    }
+                                     refreshing={this.state.isRefreshing}
+                                     onRefresh={this._loadData}
+                                     title={'加载中...'}
+                                     titleColor={'#b1b1b1'}
+                                     colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
+                                     progressBackgroundColor={'#fafafa'}
+                                 />
+                             }
                 />
-            // onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
-            // onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
-            // //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
-            // // customRefreshView={(refresStatus,offsetY)=>{
-            // //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
-            // // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
-            //
-            // // renderFooter={()=>{return
-            // //     (<View style={{backgroundColor:'blue',height:30}}>
-            // //         <Text>我是footer</Text>
-            // //     </View>)
-            // // }}
-            //
-            // noMoreDataTitle = '  历史消息  '
+                // onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
+                // onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
+                // //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
+                // // customRefreshView={(refresStatus,offsetY)=>{
+                // //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
+                // // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
+                //
+                // // renderFooter={()=>{return
+                // //     (<View style={{backgroundColor:'blue',height:30}}>
+                // //         <Text>我是footer</Text>
+                // //     </View>)
+                // // }}
+                //
+                // noMoreDataTitle = '  历史消息  '
 
-            // customRefreshViewHeight={60} //自定义刷新视图时必须指定高度
+                // customRefreshViewHeight={60} //自定义刷新视图时必须指定高度
 
 
             );

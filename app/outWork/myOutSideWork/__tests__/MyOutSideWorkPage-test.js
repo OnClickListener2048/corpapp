@@ -21,7 +21,7 @@ const wrapper = shallow(
 );
 let instance = wrapper.instance();
 
-// 修正 Invariant Violation: Native module cannot be null.
+//修正 Invariant Violation: Native module cannot be null.
 jest.mock('NetInfo', () => {
     return {
         isConnected: {
