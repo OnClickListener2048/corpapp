@@ -26,7 +26,6 @@ test('test _loadCount 测试消息数是否正确渲染', (done) => {
 
 })
 
-
 test('快照正确渲染', () => {
     const tree = renderer.create(
         <ApplicationCenterPage  navigator={navigator}/>
