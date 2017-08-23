@@ -42,6 +42,9 @@
 		2DCD954D1E0B4F2C00145EB5 /* corpappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* corpappTests.m */; };
 		35BFB7DB03514790937103A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80FA943F36647FB91972A89 /* CoreGraphics.framework */; };
 		3D02EE5B46134FCEA3432D97 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40C8A4E4C39249C3A0FD4352 /* FontAwesome.ttf */; };
+		4CB73ED81F429BD70018C00A /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB73ED71F429BD70018C00A /* UMMobClick.framework */; };
+		4CB73EDE1F429BF40018C00A /* UMNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB73EDD1F429BF40018C00A /* UMNative.m */; };
+		4CB73EE01F429D120018C00A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB73EDF1F429D120018C00A /* libsqlite3.tbd */; };
 		5D819A14183B4952A2A6FE4C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2CDC8C512D04BC8B29A902D /* Ionicons.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		64CB239B6EA94162AD450575 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F00B1389467445BEBA946DA2 /* SystemConfiguration.framework */; };
@@ -380,6 +383,10 @@
 		445F39BCF10344A3B0B679B4 /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4609ED98B60D46B6BA3770EC /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
 		47E94947C4FD49238EBD9AF5 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
+		4CB73ED71F429BD70018C00A /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
+		4CB73EDC1F429BF40018C00A /* UMNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMNative.h; sourceTree = "<group>"; };
+		4CB73EDD1F429BF40018C00A /* UMNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMNative.m; sourceTree = "<group>"; };
+		4CB73EDF1F429D120018C00A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		526969FF7CB441B598FA7868 /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		58C7718BA07243DDB48440E4 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		5BA19F05DDC94B27BF014480 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
@@ -428,6 +435,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4CB73EE01F429D120018C00A /* libsqlite3.tbd in Frameworks */,
+				4CB73ED81F429BD70018C00A /* UMMobClick.framework in Frameworks */,
 				CC2CC0991F31EB340095871E /* libZTAlertView.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -573,6 +582,8 @@
 		13B07FAE1A68108700A75B9A /* corpapp */ = {
 			isa = PBXGroup;
 			children = (
+				4CB73EDC1F429BF40018C00A /* UMNative.h */,
+				4CB73EDD1F429BF40018C00A /* UMNative.m */,
 				CCCACC011F061FBE008FB508 /* corpapp.entitlements */,
 				E3CA32B41EE01A4300220AD6 /* LaunchScreen.xib */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -683,6 +694,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				4CB73ED71F429BD70018C00A /* UMMobClick.framework */,
 				83162DE11EFCC5450031CA7A /* ImageCropPickerSDK */,
 				13B07FAE1A68108700A75B9A /* corpapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -709,6 +721,7 @@
 		97318768840043C8BA430B5D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4CB73EDF1F429D120018C00A /* libsqlite3.tbd */,
 				1F41427D626C48109F82DDCD /* libc++.tbd */,
 				C3AB272067FB42379DF185B7 /* libz.tbd */,
 				5C76485BF86C4964BE08A4EA /* UserNotifications.framework */,
@@ -1355,6 +1368,7 @@
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				4CB73EDE1F429BF40018C00A /* UMNative.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
