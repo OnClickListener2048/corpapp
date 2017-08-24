@@ -486,15 +486,15 @@ export default class GetLicensePage extends BComponent {
     }
 
     //营业期限时间显示逻辑及类型
-    _toMyDataTimer(isDateTimePickerVisible){
-        console.log("传值=====>>"+isDateTimePickerVisible);
+    _toMyDataTimer(timeData){
+        console.log("传值=====>>"+timeData);
         this.setState({
             imgVisibles:false,
         })
-        if(isDateTimePickerVisible!=null) {
+        if(timeData!=null) {
             this.setState({isDateTimePickerVisible: true, visible: false,
-                dateType:isDateTimePickerVisible,});
-            console.log("传值==>>"+isDateTimePickerVisible);
+                dateType:timeData,});
+            console.log("传值==>>"+timeData);
         }
 
     }

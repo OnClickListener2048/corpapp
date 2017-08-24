@@ -106,13 +106,14 @@ const styles = StyleSheet.create({
     codeInput: {
         flex: 1,
         height: px2dp(252),
-        marginLeft: 15,
-        marginRight:15,
+        paddingLeft: 15,
+        paddingRight:15,
         padding: 0,
         fontSize: px2dp(28),
         color:'#323232',
         fontSize: px2dp(30),
         alignSelf: 'center',
+        backgroundColor: 'white',
     },
 
 
