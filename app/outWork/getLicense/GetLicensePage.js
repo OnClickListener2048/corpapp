@@ -338,9 +338,6 @@ export default class GetLicensePage extends BComponent {
                                     SalesName={this.state.detailObj.salesmanName}
                                     SalesPhone={this.state.detailObj.salesmanPhone}
                                     isFocusData={this.state.editables}
-                                    callbackCom={this._callbackComp.bind(this)}
-                                    callbackCon={this._callbackCon.bind(this)}
-                                    callbackPho={this._callbackPho.bind(this)}
             />
         }
     }
@@ -355,26 +352,6 @@ export default class GetLicensePage extends BComponent {
                 textEditable={this.state.editables}/>
             )
 
-    }
-    //输入框回调 公司名
-    _callbackComp(content) {
-        this.setState({
-            corpName:content,//公司名称
-        });
-    }
-
-    //输入框回调 联系人
-    _callbackCon(content) {
-        this.setState({
-            contactName:content,
-        });
-    }
-
-    //输入框回调 联系电话
-    _callbackPho(content) {
-        this.setState({
-            contactPhone:content,
-        });
     }
 
     //详情状态
@@ -732,10 +709,10 @@ export default class GetLicensePage extends BComponent {
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
                 "city"	: this.state.selectAreaCode[0],        //市ID
-                "contactName":	this.state.contactName,    //联系人名称
-                "contactPhone":	this.state.contactPhone,    //联系人电话
+                "contactName":	this.refs.companyInfoView.state.ContactsName,    //联系人名称
+                "contactPhone":	this.refs.companyInfoView.state.ContactsPhone,    //联系人电话
                 "corpAddress":	this.state.corpAddress,     //公司地址
-                "corpName":	this.state.corpName,          //公司名称
+                "corpName":	this.refs.companyInfoView.state.companyName,          //公司名称
                 "corpType":	this.state.corpTypeId,          //企业类型ID
                 "district":	this.state.selectAreaCode[1],          //县或区
                 "endDate":	this.state.endDate,//营业期限结束日期
@@ -986,9 +963,6 @@ export default class GetLicensePage extends BComponent {
                     {<View >
                         {this.renderTest()}
                     </View>}
-                    {/*{<View >*/}
-                    {/*{this.customerMessage()}*/}
-                    {/*</View>}*/}
                     {this.renderInput('legal','法人',this.state.detailObj.legalEntity)}
 
                     <View style={styles.identityCardPhoto}>
@@ -1050,31 +1024,19 @@ export default class GetLicensePage extends BComponent {
                         </View>
                     </View>
                     <View style={{paddingTop: 10,backgroundColor:'white'}}>
-                        {this.state.editables === true ?
-                            <TouchableOpacity onPress={() => {
-                                this.toMultiTextInput()
-                            }}>
-
-                                <View
-                                    style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
-                                    <MultiTextInputView
-                                        ref="MultiTextInputView"
-                                        textName={'经营范围'}
-                                        callback={this._callbackbiz.bind(this)}
-                                        content={this.state.bizRange}
-                                        textEditable={this.state.editables}/>
-                                </View>
-                            </TouchableOpacity> :
-                            <View
-                                style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
-                                <MultiTextInputView
-                                    ref="MultiTextInputView"
-                                    textName={'经营范围'}
-                                    callback={this._callbackbiz.bind(this)}
-                                    content={this.state.bizRange}
-                                    textEditable={this.state.editables}/>
-                            </View> }
-
+                    <TouchableOpacity
+                        activeOpacity={this.state.editables===true?0.5:1}
+                        onPress={() => { this.toMultiTextInput()}}>
+                        <View
+                            style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
+                            <MultiTextInputView
+                                ref="MultiTextInputView"
+                                textName={'经营范围'}
+                                callback={this._callbackbiz.bind(this)}
+                                content={this.state.bizRange}
+                                textEditable={this.state.editables}/>
+                        </View>
+                    </TouchableOpacity>
                     </View>
 
                     <View style={[styles.identityCardPhoto, {height: 150}]}>
@@ -1148,14 +1110,15 @@ export default class GetLicensePage extends BComponent {
 
     //经营范围跳转
     toMultiTextInput(){
-        //canClickBtn防重复点击
+        if(this.state.editables === false ){
+            return;
+        }
+            //canClickBtn防重复点击
         console.log("canClickBtn="+this.state.canClickBtn);
         if (this.state.canClickBtn === false){
             return;
         }
-
         this.state.canClickBtn = false;
-
         this.timer = setTimeout(async()=>{
             await this.setState({canClickBtn:true})//1.5秒后可点击
         },1000)
