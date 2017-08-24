@@ -321,12 +321,7 @@ export default class GetLicensePage extends BComponent {
         );
     }
 
-
-    // renderExpenseItem(item , i) {
-    //     return <RegisterCompanyCell key={i} detail={item} isFirst={i == 0} isLast={i == details.length - 1}/>;
-    // }
-
-    //客户基本信息显示
+    //客户-公司基本信息显示
     renderTest() {
         if (this.state.loaded === true) {
             console.log(""+this.state.editables);
@@ -490,14 +485,6 @@ export default class GetLicensePage extends BComponent {
             ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
     }
 
-    //输入框回调 经营范围
-    _callbackbiz(content) {
-        console.log("输入框树枝jing="+content);
-        this.setState({
-            bizRange:content,//经营范围
-        });
-    }
-
     //营业期限时间显示逻辑及类型
     _toMyDataTimer(isDateTimePickerVisible){
         console.log("传值=====>>"+isDateTimePickerVisible);
@@ -631,30 +618,9 @@ export default class GetLicensePage extends BComponent {
         })
     }
 
-    //日期按需求格式化
-    _dateFormat(fmt) {
-        Date.prototype.Format = function (fmt) { //author: meizz
-            var o = {
-                "M+": this.getMonth() + 1, //月份
-                "d+": this.getDate(), //日
-                "h+": this.getHours(), //小时
-                "m+": this.getMinutes(), //分
-                "s+": this.getSeconds(), //秒
-                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-                "S": this.getMilliseconds() //毫秒
-            };
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-            for (var k in o)
-                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-            return fmt;
-        }
-        console.log(">>>>>"+fmt.Format("yyyy-MM-dd"));
-        return fmt.Format("yyyy-MM-dd");
-    }
-
     _callbackData(date,isDateTimePickerVisible){//获取日期
         if(date!="") {
-            var dateFormat = this._dateFormat(date);
+            var dateFormat = this.refs.dataTimer._dateFormat(date);
             if (this.state.dateType == "firstTime") {
                 this.setState({
                     isDateTimePickerVisible: isDateTimePickerVisible,
@@ -945,7 +911,6 @@ export default class GetLicensePage extends BComponent {
     if(this.state.loaded===true){
             console.log( '点击else');
             return(
-
                 <ScrollView style={styles.container}>
                     {Platform.OS === 'android' &&
                     <DateTimePicker
@@ -1027,14 +992,11 @@ export default class GetLicensePage extends BComponent {
                     <TouchableOpacity
                         activeOpacity={this.state.editables===true?0.5:1}
                         onPress={() => { this.toMultiTextInput()}}>
-                        <View
-                            style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
+                        <View style={{backgroundColor: 'white', height: 60, marginTop: 10}}>
                             <MultiTextInputView
                                 ref="MultiTextInputView"
                                 textName={'经营范围'}
-                                callback={this._callbackbiz.bind(this)}
-                                content={this.state.bizRange}
-                                textEditable={this.state.editables}/>
+                                content={this.state.bizRange}/>
                         </View>
                     </TouchableOpacity>
                     </View>
@@ -1100,6 +1062,7 @@ export default class GetLicensePage extends BComponent {
                         {/*iOS时间选择器*/}
                     {this.state.isDateTimePickerVisible === true &&
                     <DataTimerView
+                        ref="dataTimer"
                         callback={this._callbackData.bind(this)}/>
                     }
 

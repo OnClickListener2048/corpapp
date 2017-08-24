@@ -17,8 +17,7 @@ export default class MultiTextInputView extends Component {
     constructor(props) {
         super(props);
         this.state = { content: this.props.content,
-        textName:this.props.textName,
-            textEditable:this.props.textEditable};
+        textName:this.props.textName};
         this.setBiz = this.setBiz.bind(this);
 
     }
@@ -27,13 +26,7 @@ export default class MultiTextInputView extends Component {
         //style: PropTypes.object,
         textName: PropTypes.string,
         content:PropTypes.string,
-        textEditable:PropTypes.bool,
     };
-
-    _inputContent(content){
-        if(this.props.callback)
-            this.props.callback(content);
-    }
 
     setBiz(bizRange) {
         this.setState({content : bizRange});
