@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00739ED3822743159E0DCF0E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D05F33EB41984C048DF6E6B3 /* MaterialIcons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -317,13 +318,6 @@
 			remoteGlobalIDString = 5DBEB1501B18CEA900B34395;
 			remoteInfo = RNVectorIcons;
 		};
-		E31EA0751EDEB7BE009567EE /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9CB2E2DC110644D98AC07E3E /* RealmReact.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F60690131CA2766F0003FB26;
-			remoteInfo = RealmReact;
-		};
 		E31EA0A21EDEBA46009567EE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = E5BA526E11EC41D098372A7A /* RNBlur.xcodeproj */;
@@ -401,7 +395,6 @@
 		83162DE31EFCC5450031CA7A /* RSKImageCropper.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RSKImageCropper.framework; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
 		99F39C20519D4E478DB4352D /* ZTAlertView.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = ZTAlertView.xcodeproj; path = "../node_modules/react-native-alert/ios/ZTAlertView.xcodeproj"; sourceTree = "<group>"; };
-		9CB2E2DC110644D98AC07E3E /* RealmReact.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RealmReact.xcodeproj; path = "../node_modules/realm/react-native/ios/RealmReact.xcodeproj"; sourceTree = "<group>"; };
 		9F5B65A9E8AA44BEAC6307E9 /* libRCTJPushModule.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTJPushModule.a; sourceTree = "<group>"; };
 		A2CDC8C512D04BC8B29A902D /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		B80FA943F36647FB91972A89 /* CoreGraphics.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -655,7 +648,6 @@
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				E5BA526E11EC41D098372A7A /* RNBlur.xcodeproj */,
 				D72E095FBA70460B976BC928 /* RNVectorIcons.xcodeproj */,
-				9CB2E2DC110644D98AC07E3E /* RealmReact.xcodeproj */,
 				3E93F6B273514AAAAA80D9F5 /* RNDeviceInfo.xcodeproj */,
 				EFB551CEB7F94865B4EF767B /* ReactNativeNavigation.xcodeproj */,
 				FE682726094E43ACAD36A1B6 /* RCTJPushModule.xcodeproj */,
@@ -702,6 +694,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				B1D9F262BAFF41A79A3608BF /* Resources */,
 				97318768840043C8BA430B5D /* Frameworks */,
+				CC2C572A1F4EBABB00FD565A /* Recovered References */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -755,6 +748,21 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		CC2C572A1F4EBABB00FD565A /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				EF014DFBD66A4B17A12A21E4 /* libRNBlur.a */,
+				640B128369894EABBAC72FB3 /* libRNVectorIcons.a */,
+				47E94947C4FD49238EBD9AF5 /* libRealmReact.a */,
+				5BA19F05DDC94B27BF014480 /* libRNDeviceInfo.a */,
+				3285B430641E4A70B33ECBF4 /* libReactNativeNavigation.a */,
+				9F5B65A9E8AA44BEAC6307E9 /* libRCTJPushModule.a */,
+				CA3C5CECE05A4F17A69B0972 /* libimageCropPicker.a */,
+				4609ED98B60D46B6BA3770EC /* libRCTBEEPickerManager.a */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		CC304DA81F31EAAA0061CB00 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -791,14 +799,6 @@
 			isa = PBXGroup;
 			children = (
 				E31EA0711EDEB7BE009567EE /* libRNVectorIcons.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		E31EA0721EDEB7BE009567EE /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E31EA0761EDEB7BE009567EE /* libRealmReact.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -992,10 +992,6 @@
 				{
 					ProductGroup = E3065E0D1EF0E23700294B0D /* Products */;
 					ProjectRef = EFB551CEB7F94865B4EF767B /* ReactNativeNavigation.xcodeproj */;
-				},
-				{
-					ProductGroup = E31EA0721EDEB7BE009567EE /* Products */;
-					ProjectRef = 9CB2E2DC110644D98AC07E3E /* RealmReact.xcodeproj */;
 				},
 				{
 					ProductGroup = E31EA0851EDEBA46009567EE /* Products */;
@@ -1247,13 +1243,6 @@
 			fileType = archive.ar;
 			path = libRNVectorIcons.a;
 			remoteRef = E31EA0701EDEB7BE009567EE /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		E31EA0761EDEB7BE009567EE /* libRealmReact.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libRealmReact.a;
-			remoteRef = E31EA0751EDEB7BE009567EE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		E31EA0A31EDEBA46009567EE /* libRNBlur.a */ = {
@@ -1542,7 +1531,7 @@
 					"$(SRCROOT)/../node_modules/react-native-alert/ios/ZTAlertView/**",
 				);
 				INFOPLIST_FILE = corpapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1584,7 +1573,7 @@
 					"$(SRCROOT)/../node_modules/react-native-alert/ios/ZTAlertView/**",
 				);
 				INFOPLIST_FILE = corpapp/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
