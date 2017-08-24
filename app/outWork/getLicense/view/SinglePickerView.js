@@ -10,7 +10,6 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
-import TextInputView from "./TextInputView";
 
 const window = Dimensions.get('window');
 export const height = window.height;

@@ -24,10 +24,6 @@ export default class CompanyInfoView extends Component {
         textEditable:PropTypes.bool,
     };
 
-    _inputContent(content){
-        this.props.callback(content);
-    }
-
     render(){
         return(
             <View style={styles.container}>
@@ -43,7 +39,6 @@ export default class CompanyInfoView extends Component {
                                    onChangeText={
                                        (legalPerson) => {
                                            this.setState({content:legalPerson});
-                                           this._inputContent(legalPerson);
                                        }
                                    }/>
                     </View>

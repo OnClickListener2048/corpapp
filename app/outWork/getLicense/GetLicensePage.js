@@ -56,7 +56,6 @@ export default class GetLicensePage extends BComponent {
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
 
-
     constructor(props) {
         super(props);
 
@@ -346,6 +345,17 @@ export default class GetLicensePage extends BComponent {
         }
     }
 
+    //输入框子组件
+    renderInput(textType,textName,textContent){
+        return(
+            <TextInputView
+                ref={textType}
+                textName={textName}
+                content={textContent}
+                textEditable={this.state.editables}/>
+            )
+
+    }
     //输入框回调 公司名
     _callbackComp(content) {
         this.setState({
@@ -503,41 +513,6 @@ export default class GetLicensePage extends BComponent {
             ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
     }
 
-    //输入框回调 法人
-    _callbacklegal(content) {
-        console.log("输入框树枝fa="+content);
-        this.setState({
-            legalEntity:content,//法人
-        });
-    }
-    //输入框回调 注册号
-    _callbackreg(content) {
-        console.log("输入框树枝zhu="+content);
-        this.setState({
-            regId:content,//注册号
-        });
-    }
-    //输入框回调 国税登记号
-    _callbacknation(content) {
-        console.log("输入框树枝guo ="+content);
-        this.setState({
-            nationalTaxId:content,//国税登记号
-        });
-    }
-    //输入框回调 地税登记号
-    _callbackdetail(content) {
-        console.log("输入框树枝di="+content);
-        this.setState({
-            localTaxId:content,//地税登记号
-        });
-    }
-    //输入框回调 注册资金
-    _callbackregFunds(content) {
-        console.log("输入框树枝jin="+content);
-        this.setState({
-            regFunds:content,//注册资金
-        });
-    }
     //输入框回调 经营范围
     _callbackbiz(content) {
         console.log("输入框树枝jing="+content);
@@ -766,11 +741,11 @@ export default class GetLicensePage extends BComponent {
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
                 "industry":	this.state.industryId,           //所属行业ID
-                "legalEntity":	this.state.legalEntity,//法人
-                "localTaxId":	this.state.localTaxId,//地税登记号
-                "nationalTaxId":	this.state.nationalTaxId,//国税登记号
-                "regFunds":	this.state.regFunds,//注册资金
-                "regId":	this.state.regId,//注册号
+                "legalEntity":	this.refs.legal.state.content,//法人
+                "localTaxId":	this.refs.detail.state.content,//地税登记号
+                "nationalTaxId":	this.refs.nation.state.content,//国税登记号
+                "regFunds":	this.refs.regfunds.state.content,//注册资金
+                "regId":	this.refs.reg.state.content,//注册号
                 "startDate":	this.state.startDate,//营业期限开始日期
                 "stepId":	this.state.stepId,          //步骤 ID
                 "taskId":	this.state.taskId,          //任务ID, 必填
@@ -946,8 +921,6 @@ export default class GetLicensePage extends BComponent {
                     for(let i = 0 ; i < pickerData.length ; i++) {
                         let subInfoStr = pickerData[i];
                         console.log('到这里' + subInfoStr + pickedValue[0] + '个数' +  pickerData.length + '相等吗?' + subInfoStr === pickedValue[0]);
-
-
                         if (subInfoStr === pickedValue[0]) {
                             isRefresh = true;
                             break;
@@ -1006,27 +979,18 @@ export default class GetLicensePage extends BComponent {
                     }
                     {this.renderVerifyProcessTipView()}
                     {this.renderVerifyBtnView()}
-
-
                     {<View style={[{height: 15}]}></View>}
                     {this.renderCompanyTipView()}
                     {this.renderLineView()}
 
                     {<View >
                         {this.renderTest()}
-
                     </View>}
-
                     {/*{<View >*/}
                     {/*{this.customerMessage()}*/}
-
                     {/*</View>}*/}
+                    {this.renderInput('legal','法人',this.state.detailObj.legalEntity)}
 
-                    <TextInputView
-                        textName={'法人'}
-                        callback={this._callbacklegal.bind(this)}
-                        content={this.state.detailObj.legalEntity}
-                        textEditable={this.state.editables}/>
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
                         <TouchableOpacity onPress={() => {
@@ -1050,43 +1014,25 @@ export default class GetLicensePage extends BComponent {
                     </View>
                     <View
                         style={{paddingTop: 5, backgroundColor: 'white'}}>
-                        <TextInputView
-                            textName={'注册号'}
-                            callback={this._callbackreg.bind(this)}
-                            content={this.state.detailObj.regId}
-                            textEditable={this.state.editables}/>
+                        {this.renderInput('reg','注册号',this.state.detailObj.regId)}
                     </View>
                     <View
                         style={{paddingTop: 15, backgroundColor: 'white'}}>
-                        <TextInputView
-                            textName={'国税登记号'}
-                            callback={this._callbacknation.bind(this)}
-                            content={this.state.detailObj.nationalTaxId}
-                            textEditable={this.state.editables}/>
+                        {this.renderInput('nation','国税登记号',this.state.detailObj.nationalTaxId)}
                     </View>
                     <View
                         style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
-                        <TextInputView
-                            textName={'地税登记号'}
-                            callback={this._callbackdetail.bind(this)}
-                            content={this.state.detailObj.localTaxId}
-                            textEditable={this.state.editables}/>
+                        {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
                     </View>
-
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
                                       onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
                                       onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
-
                     {this.renderBusinessTimeView()}
 
                     <View style={{paddingTop: 0, backgroundColor: 'white'}}>
-                        <TextInputView
-                            textName={'注册资金'}
-                            callback={this._callbackregFunds.bind(this)}
-                            content={this.state.detailObj.regFunds}
-                            textEditable={this.state.editables}/>
+                        {this.renderInput('regfunds','注册资金',this.state.detailObj.regFunds)}
                     </View>
                     {this.renderCompanyAddressView()}
                     {/*公司地址输入框*/}
@@ -1171,7 +1117,6 @@ export default class GetLicensePage extends BComponent {
     }
 
     render() {
-
         return(
                 <View style={styles.container}>
                     {/*无网显示页面*/}
@@ -1243,6 +1188,4 @@ export default class GetLicensePage extends BComponent {
         }
 
     }
-
-
 }
