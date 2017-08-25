@@ -126,6 +126,8 @@ export default class  CompanyAddressView extends Component{
 
 
     setArea(data:[],dataId:[]) {
+
+        //
         this.state.selectAreaCode = dataId;
         if (data.length == 1 && data[0].length > 0 ){
             this.setState({city:data[0]});
