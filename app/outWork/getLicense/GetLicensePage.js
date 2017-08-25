@@ -798,7 +798,7 @@ export default class GetLicensePage extends BComponent {
                                 this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
                                     <ImageLoad
                                         style={{ marginTop: 15, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        loadingStyle={{ size: 'small', color: 'black' }}
                                         source={{ uri:this.state.detailObj.idCards[0]+"" }}
                                         placeholderSource={require('../../img/reverse.png')}/> :
                                     <Image source={require('../../img/reverse.png')} style={{marginTop: 15}}/>}
@@ -874,7 +874,7 @@ export default class GetLicensePage extends BComponent {
                                 this.state.detailObj.bizLics !== null && this.state.detailObj.bizLics.length!==0 ?
                                     <ImageLoad
                                         style={{ marginTop: 20, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'large', color: 'blue' }}
+                                        loadingStyle={{ size: 'small', color: 'black' }}
                                         source={{ uri:this.state.detailObj.bizLics[0]+"" }}
                                         placeholderSource={require('../../img/blicense.png')}/>  :
                                     <Image source={require('../../img/blicense.png')} style={{marginTop: 20}}/>

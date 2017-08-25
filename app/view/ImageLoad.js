@@ -14,7 +14,7 @@ class ImageLoad extends React.Component {
     };
 
     static defaultProps = {
-        isShowActivity: false,
+        isShowActivity: true,
     };
 
     constructor(props) {
@@ -61,7 +61,7 @@ class ImageLoad extends React.Component {
                                     this.props.isShowActivity ?
                                         <ActivityIndicator
                                             size={this.props.loadingStyle ? this.props.loadingStyle.size : 'small'}
-                                            color={this.props.loadingStyle ? this.props.loadingStyle.color : 'white'}
+                                            color={this.props.loadingStyle ? this.props.loadingStyle.color : 'black'}
                                         /> :
                                         null
                             }
