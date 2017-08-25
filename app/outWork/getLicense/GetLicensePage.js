@@ -6,7 +6,6 @@
 import React, { Component,PropTypes,} from 'react';
 import Picker from 'react-native-picker';
 import errorText from '../../util/ErrorMsg';
-
 import {
     Alert,
     Text,
@@ -15,10 +14,8 @@ import {
     Dimensions, Image, TouchableOpacity, NativeModules,
     KeyboardAvoidingView, TextInput,Platform,
     DeviceEventEmitter
-
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
 import CompanyInfoView from '../../commonView/view/CompanyInfoView'
 import VerifyProcessTipView from '../../outWork/VerifyCompanyInfo/view/VerifyProcessTipView'
@@ -27,8 +24,6 @@ import TextInputView from "./view/TextInputView";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
 import CompanyAddressView from "./view/CompanyAddressView";
-import PickerWidget from "./view/PickerWidget";
-
 import * as apis from '../../apis/index';
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
 import DataTimerView from "../../view/DataTimerView";
@@ -43,12 +38,9 @@ import BComponent from '../../base/index';
 import NoNetView from "../../base/NoNetView";
 import NoMessage from "../../commonView/NoMessage";
 import NoNetEmptyView from "../../base/NoNetEmptyView";
-
 const window = Dimensions.get('window');
-
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
-
 
 export default class GetLicensePage extends BComponent {
     static navigatorStyle = {
@@ -109,7 +101,6 @@ export default class GetLicensePage extends BComponent {
             canClickBtn : true,
         };
         this._loadData = this._loadData.bind(this);
-        this._loadAreaData = this._loadAreaData.bind(this);
         this._postClientData = this._postClientData.bind(this);
         this._bizRanageContent = this._bizRanageContent.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -225,7 +216,7 @@ export default class GetLicensePage extends BComponent {
                     });
                     console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
                     if(this.refs.companyAddressView) {
-                            this.refs.companyAddressView.setArea(this.state.selectArea);
+                            this.refs.companyAddressView.setArea(this.state.selectArea,this.state.selectAreaCode);
                     }
 
                     this.props.navigator.setTitle({
@@ -240,54 +231,6 @@ export default class GetLicensePage extends BComponent {
                 this.setState({
                     loaded:false,
                 });
-                console.log("获取失败" , e);
-                Toast.show(errorText( e ));
-            },
-        );
-    }
-
-    //获取城市数据信息
-    _loadAreaData() {
-
-        let loading = SActivityIndicator.show(true, "加载中...");
-        apis.loadDicArea().then(
-            (responseData) => {
-                SActivityIndicator.hide(loading);
-
-                if(responseData !== null && responseData.data !== null) {
-
-                   this.state.loadedArea = true;
-                    this.state.areaArr = [];
-                    this.state.areaCodeArr = [];
-
-                    for(let index in responseData.data) {
-
-                        let  secDic = new Object();
-                        secDic["" + index + ""] = responseData.data[index].name;
-
-                        if (responseData.data[index].name.length == 0){
-                            secDic["" + index + ""] = ['(空)']
-                        }
-
-                        this.state.areaArr = this.state.areaArr.concat(secDic);
-
-                        let  secCodeDic = new Object();
-                        secCodeDic["" + responseData.data[index].code + ""] = responseData.data[index].codes;
-
-                        if (responseData.data[index].name.length == 0){
-                            secCodeDic["" + responseData.data[index].code + ""] = ['']
-                        }
-
-                        this.state.areaCodeArr = this.state.areaCodeArr.concat(secCodeDic);
-
-                    }
-
-                    this._showAreaPicker();
-
-                }
-            },
-            (e) => {
-                SActivityIndicator.hide(loading);
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
             },
@@ -381,108 +324,22 @@ export default class GetLicensePage extends BComponent {
                 allTimePressBtnSelected={this.state.unlimited}/>
     }
 
-    //市区picker弹框
-    _showAreaPicker() {
-        this.setState({
-            isPickerOpen : true,
-            imgVisibles:false,
-        });
-        Picker.init({
-            pickerConfirmBtnText: '确认',
-            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
-            pickerCancelBtnText: '取消',
-            pickerCancelBtnColor: [0, 0 ,0, 1],
-            pickerTitleText: '请选择注册地',
-            pickerData: this.state.areaArr,
-            pickerBg :  [0xff, 0xff ,0xff, 1],
-           // pickerToolBarBg : [0xff, 0xff ,0xff, 1],
-            // pickerData: pickerData,
-            selectedValue: this.state.selectArea,
-            onPickerConfirm: pickedValue => {
-                //因为若什么都不选择的时候是不会走onPickerSelect方法的 但是会走此方法把默认的值传过来 即不管选择与否都会走这个方法
-                //所以直接在这个方法里面拿到选择的地址名称(pickeValue就是['北京','朝阳区']),去遍历codeId找到选择的'市Id','区Id'
-                this.setState({
-                    isPickerOpen : false,
-                });
-
-                for (let  i = 0 ; i < this.state.areaArr.length ; i++){
-                    let isBreak = false;
-                    let  areaDic = this.state.areaArr[i];
-
-                    for(let areaSec in areaDic) {
-                        let cityName = areaSec;          //市名称
-                        if (cityName === pickedValue[0]){
-                            let districtsArr = areaDic[cityName]; //区数组
-
-                            for (let  j = 0 ; j < districtsArr.length ; j++) {
-                                let districtName = districtsArr[j];
-                                if (districtName === pickedValue[1]) {
-                                    this.state.areaCodeIndexArr = [i,j];
-                                    break;
-                                }
-                            }
-                            isBreak = true;
-                            break;
-                        }
-                    }
-                    if (isBreak){
-                        break;
-                    }
-                }
-                console.log('哈哈自己筛选后==>', this.state.areaCodeIndexArr[0],this.state.areaCodeIndexArr[1]);
-
-                let  cityIndex = this.state.areaCodeIndexArr[0];
-                let  districtIndex = this.state.areaCodeIndexArr[1];
-
-                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市Id' : ['区Id','区Id']}}
-
-                for(let secCode in secDic) {
-                    let cityCodeId = secCode;          //市id
-                    let districtArr = secDic[secCode]; //区数组
-                    let districtCodeId = districtArr[districtIndex];
-                    this.state.selectAreaCode = [cityCodeId,districtCodeId];
-                    this.setState({
-                        city:cityCodeId,
-                        district:districtCodeId,
-                    });
-                }
-
-                if(this.refs.companyAddressView) {
-                    this.refs.companyAddressView.setArea(pickedValue);
-                }
-
-            },
-            onPickerCancel: pickedValue => {
-                // console.log('area', pickedValue);
-                this.setState({
-                    isPickerOpen : false,
-                });
-            },
-            onPickerSelect: (pickedValue, pickedIndex) => {
-                // this.state.areaCodeTmpIndexArr = pickedIndex;
-
-                // console.log('Select Area areaCodeTmpIndexArr', pickedValue, pickedIndex , this.state.areaCodeTmpIndexArr );
-            }
-        });
-        Picker.show();
-
-    }
-
     //获取城市数据信息
     _addressBtnClick(){
-        if (this.state.loadedArea){
-            this._showAreaPicker();
-            return;
-        }else {
-            this._loadAreaData();
-        }
+        console.log("输出城市弹框是否显示",this.refs.companyAddressView.state.isPickerOpen);
+        this.setState({
+            imgVisibles:false,
+            isPickerOpen : this.refs.companyAddressView.state.isPickerOpen,
+        })
     }
 
     //城市显示子组件
     renderCompanyAddressView(){
         return   <CompanyAddressView
             isFouces={this.state.editables}
-            ref="companyAddressView" city={'市'} district={'区'} callback={this._addressBtnClick.bind(this)}/>
+            ref="companyAddressView" city={'市'} district={'区'}
+            callback={this._addressBtnClick.bind(this)}
+        />
     }
 
     //营业期限时间显示逻辑及类型
@@ -654,7 +511,7 @@ export default class GetLicensePage extends BComponent {
     //保存数据赋值
     _edit(editables){
         if(editables===false){//点击保存，赋值并保存
-            console.log("公司地址ID是否唯恐"+this.state.selectAreaCode[0]+","+this.state.selectAreaCode[1]);
+            console.log("公司地址ID是否唯恐"+this.refs.companyAddressView.state.selectAreaCode[0]+","+this.refs.companyAddressView.state.selectAreaCode[1]);
             console.log("==========1");
             // TODO 有效性检查
             if(this.state.selectAreaCode.length !== 2) {
@@ -674,13 +531,13 @@ export default class GetLicensePage extends BComponent {
 
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
-                "city"	: this.state.selectAreaCode[0],        //市ID
+                "city"	: this.refs.companyAddressView.state.selectAreaCode[0],        //市ID
                 "contactName":	this.refs.companyInfoView.state.ContactsName,    //联系人名称
                 "contactPhone":	this.refs.companyInfoView.state.ContactsPhone,    //联系人电话
                 "corpAddress":	this.state.corpAddress,     //公司地址
                 "corpName":	this.refs.companyInfoView.state.companyName,          //公司名称
                 "corpType":	this.state.corpTypeId,          //企业类型ID
-                "district":	this.state.selectAreaCode[1],          //县或区
+                "district":	this.refs.companyAddressView.state.selectAreaCode[1],          //县或区
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
                 "industry":	this.state.industryId,           //所属行业ID
@@ -964,10 +821,12 @@ export default class GetLicensePage extends BComponent {
                         {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
                     </View>
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
-                                      onPress={this._industryPickerClick.bind(this)} enable={this.state.editables}/>
+                                      onPress={this._industryPickerClick.bind(this)}
+                                      enable={this.state.editables}/>
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
-                                      onPress={this._corpTypePickerClick.bind(this)} enable={this.state.editables}/>
+                                      onPress={this._corpTypePickerClick.bind(this)}
+                                      enable={this.state.editables}/>
                     {this.renderBusinessTimeView()}
 
                     <View style={{paddingTop: 0, backgroundColor: 'white'}}>
@@ -1073,6 +932,9 @@ export default class GetLicensePage extends BComponent {
 
     //经营范围跳转
     toMultiTextInput(){
+        this.setState({
+            imgVisibles:false,
+        })
         if(this.state.editables === false ){
             return;
         }

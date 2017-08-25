@@ -10,6 +10,10 @@ import {
     Image,
     Dimensions,
 } from 'react-native';
+import SActivityIndicator from '../../../modules/react-native-sww-activity-indicator/index';
+import Toast from 'react-native-root-toast';
+import * as apis from '../../../apis/index';
+import Picker from 'react-native-picker';
 
 const window = Dimensions.get('window');
 export const height = window.height;
@@ -97,13 +101,19 @@ export default class  CompanyAddressView extends Component{
             city:this.props.city,
             district:this.props.district,
             isFouces:this.props.isFouces,
+            loadedArea:this.props.loadedArea,
+            areaArr:this.props.areaArr,
+            areaCodeArr:this.props.areaCodeArr,
+            isPickerOpen:this.props.isPickerOpen,
+            selectArea:this.props.selectArea,
+            areaCodeIndexArr:this.props.areaCodeIndexArr,
+            selectAreaCode:this.props.selectAreaCode,
             // city:'市',
             // district:'区',
         }
 
         console.log("this.props.city=" + this.props.city);
-        this._rightTimePress = this._rightTimePress.bind(this);
-        this._leftTimePress = this._leftTimePress.bind(this);
+        this._timePress = this._timePress.bind(this);
         this.setArea = this.setArea.bind(this);
     }
 
@@ -115,8 +125,8 @@ export default class  CompanyAddressView extends Component{
     };
 
 
-    setArea(data:[]) {
-
+    setArea(data:[],dataId:[]) {
+        this.state.selectAreaCode = dataId;
         if (data.length == 1 && data[0].length > 0 ){
             this.setState({city:data[0]});
         }else if (data.length > 1){
@@ -125,16 +135,160 @@ export default class  CompanyAddressView extends Component{
         }
     }
 
-    _leftTimePress(){
-        this.props.callback();
+    _timePress(){
+        if (this.state.loadedArea){
+            this._showAreaPicker();
 
+            return;
+        }else {
+            this._loadAreaData();
+        }
     };
 
-    _rightTimePress(){
+    //获取城市数据信息
+    _loadAreaData() {
+
+        let loading = SActivityIndicator.show(true, "加载中...");
+        apis.loadDicArea().then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+
+                if(responseData !== null && responseData.data !== null) {
+
+                    this.state.loadedArea = true;
+                    this.state.areaArr = [];
+                    this.state.areaCodeArr = [];
+
+                    for(let index in responseData.data) {
+
+                        let  secDic = new Object();
+                        secDic["" + index + ""] = responseData.data[index].name;
+
+                        if (responseData.data[index].name.length == 0){
+                            secDic["" + index + ""] = ['(空)']
+                        }
+
+                        this.state.areaArr = this.state.areaArr.concat(secDic);
+
+                        let  secCodeDic = new Object();
+                        secCodeDic["" + responseData.data[index].code + ""] = responseData.data[index].codes;
+
+                        if (responseData.data[index].name.length == 0){
+                            secCodeDic["" + responseData.data[index].code + ""] = ['']
+                        }
+
+                        this.state.areaCodeArr = this.state.areaCodeArr.concat(secCodeDic);
+
+                    }
+
+                    this._showAreaPicker();
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("获取失败" , e);
+                Toast.show(errorText( e ));
+            },
+        );
+    }
+
+    componentWillReceiveProps(props) {
+
+        if(this.state.isPickerOpen===false){
+            this.setState({
+                isPickerOpen:true,
+                });
+            this.props.callback();
+        }
+    }
+
+    //市区picker弹框
+    _showAreaPicker() {
+        this.setState({
+            isPickerOpen : true,
+        });
         this.props.callback();
-    };
+        Picker.init({
+            pickerConfirmBtnText: '确认',
+            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
+            pickerCancelBtnText: '取消',
+            pickerCancelBtnColor: [0, 0 ,0, 1],
+            pickerTitleText: '请选择注册地',
+            pickerData: this.state.areaArr,
+            pickerBg :  [0xff, 0xff ,0xff, 1],
+            // pickerToolBarBg : [0xff, 0xff ,0xff, 1],
+            // pickerData: pickerData,
+            selectedValue: this.state.selectArea,
+            onPickerConfirm: pickedValue => {
+                //因为若什么都不选择的时候是不会走onPickerSelect方法的 但是会走此方法把默认的值传过来 即不管选择与否都会走这个方法
+                //所以直接在这个方法里面拿到选择的地址名称(pickeValue就是['北京','朝阳区']),去遍历codeId找到选择的'市Id','区Id'
+                this.setState({
+                    isPickerOpen : false,
+                });
 
+                for (let  i = 0 ; i < this.state.areaArr.length ; i++){
+                    let isBreak = false;
+                    let  areaDic = this.state.areaArr[i];
 
+                    for(let areaSec in areaDic) {
+                        let cityName = areaSec;          //市名称
+                        if (cityName === pickedValue[0]){
+                            let districtsArr = areaDic[cityName]; //区数组
+
+                            for (let  j = 0 ; j < districtsArr.length ; j++) {
+                                let districtName = districtsArr[j];
+                                if (districtName === pickedValue[1]) {
+                                    this.state.areaCodeIndexArr = [i,j];
+                                    break;
+                                }
+                            }
+                            isBreak = true;
+                            break;
+                        }
+                    }
+                    if (isBreak){
+                        break;
+                    }
+                }
+                console.log('哈哈自己筛选后==>', this.state.areaCodeIndexArr[0],this.state.areaCodeIndexArr[1]);
+
+                let  cityIndex = this.state.areaCodeIndexArr[0];
+                let  districtIndex = this.state.areaCodeIndexArr[1];
+
+                let secDic = this.state.areaCodeArr[cityIndex];  //找到市所在的一组数据 {'市Id' : ['区Id','区Id']}}
+
+                for(let secCode in secDic) {
+                    let cityCodeId = secCode;          //市id
+                    let districtArr = secDic[secCode]; //区数组
+                    let districtCodeId = districtArr[districtIndex];
+                    this.state.selectAreaCode = [cityCodeId,districtCodeId];
+                    this.setState({
+                        city:cityCodeId,
+                        district:districtCodeId,
+                    });
+                }
+                //设置地址文字
+                    this.setArea(pickedValue,this.state.selectAreaCode);
+                this.props.callback();
+            },
+            onPickerCancel: pickedValue => {
+                // console.log('area', pickedValue);
+                this.setState({
+                    isPickerOpen : false,
+
+                });
+                this.props.callback();
+
+            },
+            onPickerSelect: (pickedValue, pickedIndex) => {
+                // this.state.areaCodeTmpIndexArr = pickedIndex;
+
+                // console.log('Select Area areaCodeTmpIndexArr', pickedValue, pickedIndex , this.state.areaCodeTmpIndexArr );
+            }
+        });
+        Picker.show();
+    }
 
     render() {
 
@@ -146,7 +300,7 @@ export default class  CompanyAddressView extends Component{
                 <View style={styles.rightViewStyle}>
                     {this.props.isFouces?
                     <View style={ styles.rightRowViewStyle}>
-                        <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._leftTimePress()}}>
+                        <TouchableOpacity  style={ styles.leftdownDrapViewStyle}  onPress={() => {this._timePress()}}>
                         {/*<View style={ styles.leftdownDrapViewStyle}>*/}
                             <Image source={require('../../../img/down.png')}/>
                             <Text  numberOfLines={1} style={[{textAlign:'center',marginRight: 5,fontSize:15, justifyContent: 'center',flex: 1,color: '#323232',}]}>{this.state.city}</Text>
@@ -156,7 +310,7 @@ export default class  CompanyAddressView extends Component{
 
 
                         {/*<View style={[{height: 1, backgroundColor:'#e6e6e6',marginLeft: 10, marginRight:10,width:20}]}></View>*/}
-                        <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {this._rightTimePress()}}>
+                        <TouchableOpacity style={ styles.rightdownDrapViewStyle} onPress={() => {this._timePress()}}>
 
                         {/*<View style={ styles.rightdownDrapViewStyle}>*/}
                             <Image source={require('../../../img/down.png')}/>
