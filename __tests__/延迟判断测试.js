@@ -1,4 +1,4 @@
-// 异步等待的测试, 参考: https://github.com/facebook/jest/issues/42
+// 延迟等待判断的测试, 参考: https://github.com/facebook/jest/issues/42
 // 注意done参数一定不要漏掉了
 
 test("takes a long time", function(done) {
