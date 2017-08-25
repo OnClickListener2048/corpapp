@@ -87,9 +87,7 @@ export default class MessageCenterPage extends BComponent {
     rowIDs: []
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
-        // if(event.id==='willAppear'){
 
-        // }
         console.log('看看到这里没有00', this.state.isJumping);
 
     }
