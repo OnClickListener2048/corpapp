@@ -27,7 +27,7 @@ import com.tencent.bugly.crashreport.CrashReport;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication{
     // 设置为 true 将不弹出 toast
     private boolean SHUTDOWN_TOAST = true;
     // 设置为 true 将不打印 log

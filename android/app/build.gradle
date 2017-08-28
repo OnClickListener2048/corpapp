@@ -152,6 +152,7 @@ task createBundle(type: Exec) {
 
 
 //apply from: "../../node_modules/react-native/react.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
 //apply from: "./react.gradle"
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -215,11 +216,20 @@ android {
         debug {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.pilipa
+            // CodePush updates should not be tested in Debug mode
+
         }
+
+        releaseStaging {
+            signingConfig signingConfigs.pilipa
+            buildConfigField "String", "17mGjN4PGSFNrOUG7edLyFhO9wiK9b70aa67-488c-47ba-93f9-417f7531312e", '"'+properties.getProperty("code_push_key_production")+'"'
+         }
 
         release {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.pilipa
+            buildConfigField "String", "f-OXQ0CPf6wJRBXNMUCURY2iQL399b70aa67-488c-47ba-93f9-417f7531312e", '"'+properties.getProperty("code_push_key_staging")+'"'
+
         }
     }
     // applicationVariants are e.g. debug, release
