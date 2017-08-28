@@ -8,7 +8,7 @@ import JPushModule from 'jpush-react-native';
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
-
+import CodePush from 'react-native-code-push'
 // import {
 //     SwRefreshScrollView, //支持下拉刷新的ScrollView
 //     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
@@ -87,7 +87,10 @@ export default class MessageCenterPage extends BComponent {
     rowIDs: []
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
+        // console.log('ApplicationCenterPage event.type', event.type);
+        // if(event.id==='willAppear'){
 
+        // }
         console.log('看看到这里没有00', this.state.isJumping);
 
     }
@@ -396,6 +399,10 @@ export default class MessageCenterPage extends BComponent {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         // 跳转登录页的通知
+        //热更新相关
+        CodePush.sync()
+
+
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
             console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
