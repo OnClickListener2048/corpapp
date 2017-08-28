@@ -23,6 +23,7 @@ import com.facebook.soloader.SoLoader;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
 import java.util.List;
@@ -60,8 +61,15 @@ public class MainApplication extends NavigationApplication{
                 new VectorIconsPackage(),
                 new BlurViewPackage(),
                 new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-                new UmengReactPackage()
+                new UmengReactPackage(),
+                new CodePush("17mGjN4PGSFNrOUG7edLyFhO9wiK9b70aa67-488c-47ba-93f9-417f7531312e", MainApplication.this, BuildConfig.DEBUG)
         );
     }
+
+    @Override
+    public String getJSBundleFile() {
+        return CodePush.getJSBundleFile();
+    }
+
 
 }
