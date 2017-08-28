@@ -19,7 +19,6 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import styles from '../VerifyCompanyInfo/css/VerifyCompanyStyle'
 import CompanyInfoView from '../../commonView/view/CompanyInfoView'
 import VerifyProcessTipView from '../../outWork/VerifyCompanyInfo/view/VerifyProcessTipView'
-import CompanyAddress from "../../commonView/view/CompanyAddress";
 import TextInputView from "./view/TextInputView";
 import ProcessBtnView from "../VerifyCompanyInfo/view/ProcessBtnView";
 import BusinessTimeView from "./view/BusinessTimeView";
@@ -33,9 +32,7 @@ import MultiTextInputView from "./view/MultiTextInputView";
 import SinglePickerView from "./view/SinglePickerView";
 import Toast from 'react-native-root-toast';
 import ImageLoad from "../../view/ImageLoad";
-import WatchImageModal from "./view/WatchImageModal";
 import BComponent from '../../base/index';
-import NoNetView from "../../base/NoNetView";
 import NoMessage from "../../commonView/NoMessage";
 import NoNetEmptyView from "../../base/NoNetEmptyView";
 const window = Dimensions.get('window');
@@ -50,10 +47,7 @@ export default class GetLicensePage extends BComponent {
 
     constructor(props) {
         super(props);
-
         this.state = {
-            renderUnderline: true,
-            currentStep : 0,
             imgVisibles:this.props.imgVisibles,//是否显示选择图片弹窗
             reImage: null,
             linImage:null,
@@ -93,18 +87,15 @@ export default class GetLicensePage extends BComponent {
             taskId:this.props.taskId,          //任务ID, 必填
             unlimited:false,        //营业期限不限
             loadedArea:false,
-            areaArr:[],
             selectArea:[],  //选择的地址信息 ['北京', '朝阳区']  用这个判断到底有没有市区选择 如果没有也没用默认值的话 说明未选择
-            areaCodeArr:[],
             selectAreaCode:[],  //选择地址的 id 保存的时候用
-            areaCodeIndexArr:[],
             canClickBtn : true,
         };
+
         this._loadData = this._loadData.bind(this);
         this._postClientData = this._postClientData.bind(this);
         this._bizRanageContent = this._bizRanageContent.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
-
     }
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
@@ -133,9 +124,6 @@ export default class GetLicensePage extends BComponent {
             callback();
         }
 
-        this.setState({
-            // currentStep:status + 1,
-        });
         if(this.refs.verifyProcessTipView) {
             this.refs.verifyProcessTipView.setCurrentNum(status);
         }
@@ -160,7 +148,6 @@ export default class GetLicensePage extends BComponent {
 
     componentWillMount() {
         this._loadData();
-
     }
 
     //关闭弹窗
@@ -188,7 +175,6 @@ export default class GetLicensePage extends BComponent {
                         allowEditInfo:responseData.data.allowEditInfo,
                         inProgressEdit :(responseData.data.allowEditInfo==='true'&&responseData.data.progress.materialConfirm==='true'),
                         loaded:true,
-                            // bizLics:	responseData.data.bizLics,//营业执照
                             bizRange:	responseData.data.bizRange,//经营范围
                             city	: responseData.data.corpAddressArea.cityId,        //市
                             contactName:	responseData.data.contactName,    //联系人名称
@@ -199,7 +185,6 @@ export default class GetLicensePage extends BComponent {
                             corpTypeId:responseData.data.corpTypeId,
                             district:	responseData.data.corpAddressArea.districtId,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
-                            // idCards:	responseData.data.idCards,//身份证正反两面(目前只用一张),file组件
                             industry:	responseData.data.industry,           //所属行业
                             industryId:responseData.data.industryId,
                             legalEntity:	responseData.data.legalEntity,//法人
@@ -214,7 +199,6 @@ export default class GetLicensePage extends BComponent {
                             selectArea : [responseData.data.corpAddressArea.city,responseData.data.corpAddressArea.district],
                             selectAreaCode:[responseData.data.corpAddressArea.cityId,responseData.data.corpAddressArea.districtId],
                     });
-                    console.log(this.state.allowEditInfo+",=,"+this.state.detailObj.progress.materialConfirm)
                     if(this.refs.companyAddressView) {
                             this.refs.companyAddressView.setArea(this.state.selectArea,this.state.selectAreaCode);
                     }
@@ -333,6 +317,22 @@ export default class GetLicensePage extends BComponent {
         })
     }
 
+    //获取行业选择数据信息
+    _industryBtnClick(){
+        this.setState({
+            imgVisibles:false,
+            isPickerOpen : this.refs.industrypicker.state.isPickerOpen,
+        })
+    }
+
+    //获取企业类型数据信息
+    _corpTypeBtnClick(){
+        this.setState({
+            imgVisibles:false,
+            isPickerOpen : this.refs.corpTypepicker.state.isPickerOpen,
+        })
+    }
+
     //城市显示子组件
     renderCompanyAddressView(){
         return   <CompanyAddressView
@@ -407,13 +407,11 @@ export default class GetLicensePage extends BComponent {
                 type: 'reImage/jpeg',
                 name: 'reImage.jpg',
             };
-            console.log("图片地址显示image==="+image);
 
             this.setState({
                 reImage: image,
                 imgVisibles:imgVisibles,
                 idCards:rePhoto,
-                // idCards:image,
             });
         }else{
             let linPhoto = {
@@ -425,7 +423,6 @@ export default class GetLicensePage extends BComponent {
                 linImage: image,
                 imgVisibles:imgVisibles,
                 bizLics:linPhoto,
-                // bizLics:image,
             });
         }
 
@@ -536,11 +533,11 @@ export default class GetLicensePage extends BComponent {
                 "contactPhone":	this.refs.companyInfoView.state.ContactsPhone,    //联系人电话
                 "corpAddress":	this.state.corpAddress,     //公司地址
                 "corpName":	this.refs.companyInfoView.state.companyName,          //公司名称
-                "corpType":	this.state.corpTypeId,          //企业类型ID
+                "corpType":	this.refs.corpTypepicker.state.corpTypeId,          //企业类型ID
                 "district":	this.refs.companyAddressView.state.selectAreaCode[1],          //县或区
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
-                "industry":	this.state.industryId,           //所属行业ID
+                "industry":	this.refs.industrypicker.state.industryId,           //所属行业ID
                 "legalEntity":	this.refs.legal.state.content,//法人
                 "localTaxId":	this.refs.detail.state.content,//地税登记号
                 "nationalTaxId":	this.refs.nation.state.content,//国税登记号
@@ -603,144 +600,6 @@ export default class GetLicensePage extends BComponent {
         </View>)}
     }
 
-    // 企业类型选择
-    _corpTypePickerClick() {
-        console.log('_corpTypePickerClick');
-        let loading = SActivityIndicator.show(true, "加载中...");
-        this.lastID = null;
-        apis.loadDicData().then(
-            (responseData) => {
-                SActivityIndicator.hide(loading);
-                if(responseData !== null && responseData.data !== null
-                    && responseData.data.corpType !== null ) {
-
-                    let industryNames = [];
-                    responseData.data.corpType.forEach(key => industryNames.push(key.Text) );
-                    let corpType = this.state.corpType;
-
-                    let selectedValue = [''];
-                    if(corpType !== undefined) {
-                        selectedValue = [corpType];
-                    }
-
-                    this._showSinglePicker(industryNames, selectedValue,
-                        '请选择企业类型', (value) => {
-                            this.setState({corpType: value});
-                            console.log('选中企业类型' + value);
-                            responseData.data.corpType.forEach(key => {
-                                if(key.Text == value) {
-                                    //Toast.show('选中' + value + ",id=" + key.Id);
-                                    this.setState({corpTypeId: key.Id});
-                                }
-                            } );
-                        });
-                }
-            },
-            (e) => {
-                SActivityIndicator.hide(loading);
-                console.log("获取失败" , e);
-                Toast.show(errorText( e ));
-            },
-        );
-    }
-
-    // 行业选择
-    _industryPickerClick() {
-        console.log('_industryPickerClick');
-
-        let loading = SActivityIndicator.show(true, "加载中...");
-        this.lastID = null;
-
-        apis.loadDicData().then(
-            (responseData) => {
-                SActivityIndicator.hide(loading);
-                if(responseData !== null && responseData.data !== null
-                    && responseData.data.industry !== null ) {
-
-                    let industryNames = [];
-                    responseData.data.industry.forEach(key => industryNames.push(key.Text) );
-                    let industry = this.state.industry;
-
-                    let selectedValue = [''];
-                    if(industry !== undefined) {
-                        selectedValue = [industry];
-                    }
-
-                    this._showSinglePicker(industryNames, selectedValue,
-                        '请选择所属行业', (value) => {
-                        this.setState({industry: value});
-                        responseData.data.industry.forEach(key => {
-                            if(key.Text == value) {
-                                //Toast.show('选中' + value + ",id=" + key.Id);
-                                this.setState({industryId: key.Id});
-                            }
-                        } );
-                    });
-                }
-            },
-            (e) => {
-                SActivityIndicator.hide(loading);
-                console.log("获取失败" , e);
-                Toast.show(errorText( e ));
-            },
-        );
-    }
-
-    // 显示单列选择框, 参数为类型
-    _showSinglePicker(pickerData, selectedValue, title:string,
-                      confirmValueCallback:Function) {
-        this.setState({
-            isPickerOpen : true,
-            imgVisibles:false,
-        });
-        // selectedValue = ['a', 2];
-        Picker.init({
-            pickerTitleText: title,
-            pickerConfirmBtnText: '确认',
-            pickerConfirmBtnColor: [0xe5, 0x15 ,0x1d, 1],
-            pickerCancelBtnText: '取消',
-            pickerCancelBtnColor: [0, 0 ,0, 1],
-            pickerBg :  [0xff, 0xff ,0xff, 1],
-            pickerData: pickerData,
-            selectedValue: selectedValue,
-            onPickerCancel: pickedValue => {
-                this.setState({
-                    isPickerOpen : false,
-                });
-            },
-            onPickerConfirm: (pickedValue, pickedIndex) => {
-                    this.setState({
-                        isPickerOpen : false,
-                    });
-                 console.log('Confirm Area', pickedValue[0], pickedIndex);
-
-                let isRefresh = false;
-
-                if (pickedValue.length > 0){
-
-                    for(let i = 0 ; i < pickerData.length ; i++) {
-                        let subInfoStr = pickerData[i];
-                        console.log('到这里' + subInfoStr + pickedValue[0] + '个数' +  pickerData.length + '相等吗?' + subInfoStr === pickedValue[0]);
-                        if (subInfoStr === pickedValue[0]) {
-                            isRefresh = true;
-                            break;
-                        }
-                    }
-
-                }
-
-                if (confirmValueCallback && isRefresh == true){
-                    confirmValueCallback(pickedValue);
-                    console.log('到这里2');
-
-                }
-
-            },
-        });
-        Picker.show();
-
-    }
-
     state = {
         isDateTimePickerVisibl: false,
     };
@@ -781,7 +640,6 @@ export default class GetLicensePage extends BComponent {
                     {<View style={[{height: 15}]}></View>}
                     {this.renderCompanyTipView()}
                     {this.renderLineView()}
-
                     {<View >
                         {this.renderTest()}
                     </View>}
@@ -805,8 +663,6 @@ export default class GetLicensePage extends BComponent {
 
                         </TouchableOpacity>
 
-                        {/*<Image source={require('../../img/obverse.png')} style={{marginLeft:27,marginTop:15,*/}
-                        {/*justifyContent:'flex-end'}}/>*/}
                     </View>
                     <View
                         style={{paddingTop: 5, backgroundColor: 'white'}}>
@@ -821,11 +677,15 @@ export default class GetLicensePage extends BComponent {
                         {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
                     </View>
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
-                                      onPress={this._industryPickerClick.bind(this)}
+                                      ref="industrypicker"
+                                      callback={this._industryBtnClick.bind(this)}
+                                      pickerType = {'industry'}
                                       enable={this.state.editables}/>
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
-                                      onPress={this._corpTypePickerClick.bind(this)}
+                                      ref="corpTypepicker"
+                                      callback={this._corpTypeBtnClick.bind(this)}
+                                      pickerType = {'corpType'}
                                       enable={this.state.editables}/>
                     {this.renderBusinessTimeView()}
 
@@ -966,9 +826,7 @@ export default class GetLicensePage extends BComponent {
 
         if(bizRange!=null){
             console.log("返回经营范围="+bizRange);
-            this.setState({
-                bizRange: bizRange
-            })
+            this.setState({bizRange: bizRange})
 
             if(this.refs.MultiTextInputView) {
                 this.refs.MultiTextInputView.setBiz(bizRange);
