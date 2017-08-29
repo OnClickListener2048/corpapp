@@ -2,7 +2,6 @@
 import { Navigation } from 'react-native-navigation';
 
 // 引用外部文件
-import Main from './pilipaMain/PLPMain';
 import LoginPage from './user/LoginPage';
 import MessageCenterPage from './message/MessageCenterPage';
 import SystemMessagePage from './message/SystemMessagePage';
@@ -28,7 +27,6 @@ export default function () {
     let reg = Navigation.registerComponent;
     reg('AreaPicker', () => AreaPicker);
     reg('demo/ImageZoom', () => ImageZoomTest);
-    reg('Main', () => Main);
     reg('user.LoginPage', () => LoginPage);
     reg('ApplicationCenterPage', () => ApplicationCenterPage);
     reg('MessageCenterPage', () => MessageCenterPage);
