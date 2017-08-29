@@ -25,6 +25,7 @@ export default class SinglePickerView extends Component {
         this.state = {
             hint: this.props.hint,
             value: this.props.value,
+            valueId: this.props.valueId,
             pickerType:this.props.pickerType,
             loadedArea:false,
             corpIndustryValue:null,//企业类型，所属行业集合
@@ -80,6 +81,7 @@ export default class SinglePickerView extends Component {
 
                     if(pickerType==='industry'&& responseData.data.industry !== null){//行业选择
                         const industry = this.state.value;
+                        this.setState({industryId: this.props.valueId});
                         if(industry !== undefined) {
                             this.selectedValue = [industry];
                         }
@@ -97,6 +99,7 @@ export default class SinglePickerView extends Component {
                             });
                     }else if(pickerType==='corpType'&& responseData.data.corpType !== null){//企业类型
                         const corpType = this.state.value;
+                        this.setState({corpTypeId: this.props.valueId});
                         if(corpType !== undefined) {
                             this.selectedValues = [corpType];
                         }

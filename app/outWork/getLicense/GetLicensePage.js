@@ -677,12 +677,14 @@ export default class GetLicensePage extends BComponent {
                         {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
                     </View>
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
+                                      valueId={this.state.industryId}
                                       ref="industrypicker"
                                       callback={this._industryBtnClick.bind(this)}
                                       pickerType = {'industry'}
                                       enable={this.state.editables}/>
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
+                                      valueId={this.state.corpTypeId}
                                       ref="corpTypepicker"
                                       callback={this._corpTypeBtnClick.bind(this)}
                                       pickerType = {'corpType'}
