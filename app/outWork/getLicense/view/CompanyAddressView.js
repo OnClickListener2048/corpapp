@@ -138,13 +138,13 @@ export default class  CompanyAddressView extends Component{
     }
 
     _timePress(){
-        if (this.state.loadedArea){
-            this._showAreaPicker();
-
-            return;
-        }else {
+        // if (this.state.loadedArea){
+        //     this._showAreaPicker();
+        //
+        //     return;
+        // }else {
             this._loadAreaData();
-        }
+        // }
     };
 
     //获取城市数据信息
