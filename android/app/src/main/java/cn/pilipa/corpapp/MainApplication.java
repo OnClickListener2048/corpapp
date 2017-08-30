@@ -39,6 +39,7 @@ public class MainApplication extends NavigationApplication{
         return BuildConfig.DEBUG;
     }
 
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -62,7 +63,7 @@ public class MainApplication extends NavigationApplication{
                 new BlurViewPackage(),
                 new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
                 new UmengReactPackage(),
-                new CodePush("17mGjN4PGSFNrOUG7edLyFhO9wiK9b70aa67-488c-47ba-93f9-417f7531312e", MainApplication.this, BuildConfig.DEBUG)
+                new CodePush("f-OXQ0CPf6wJRBXNMUCURY2iQL399b70aa67-488c-47ba-93f9-417f7531312e", MainApplication.this, BuildConfig.DEBUG)
         );
     }
 

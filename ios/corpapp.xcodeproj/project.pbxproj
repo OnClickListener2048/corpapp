@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00739ED3822743159E0DCF0E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D05F33EB41984C048DF6E6B3 /* MaterialIcons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -69,7 +70,7 @@
 		CC61DBB250EB4D718226FC4E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C76485BF86C4964BE08A4EA /* UserNotifications.framework */; };
 		CC6C3EE41F18CA5B008447F9 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6C3EE21F18CA4F008447F9 /* Bugly.framework */; };
 		CC705E2F1F4FC243005EC699 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F41427D626C48109F82DDCD /* libc++.tbd */; };
-		CCF58AD51F4FC8BC00387DC0 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCF58AD21F4FC84100387DC0 /* libCodePush.a */; };
+		CCAC26091F56622C005BB468 /* libCodePush.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CCAC26081F566220005BB468 /* libCodePush.a */; };
 		CCF58AD61F4FC8CE00387DC0 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 83497FF41EFCDF9900AD114E /* libimageCropPicker.a */; };
 		CCF58AD71F4FC8E200387DC0 /* libRCTBEEPickerManager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 836BAB5E1F02668900E3CB04 /* libRCTBEEPickerManager.a */; };
 		E3CA32B61EE01A4300220AD6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3CA32B41EE01A4300220AD6 /* LaunchScreen.xib */; };
@@ -289,19 +290,12 @@
 			remoteGlobalIDString = CC2128051F2F1A7500262541;
 			remoteInfo = ZTAlertView;
 		};
-		CCF58AD11F4FC84100387DC0 /* PBXContainerItemProxy */ = {
+		CCAC26071F566220005BB468 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CCF58ACC1F4FC84000387DC0 /* CodePush.xcodeproj */;
+			containerPortal = CCAC26031F566220005BB468 /* CodePush.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = CodePush;
-		};
-		CCF58AD31F4FC84100387DC0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CCF58ACC1F4FC84000387DC0 /* CodePush.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6463C8241EBA0CB60095B8CD;
-			remoteInfo = "CodePush-tvOS";
 		};
 		CCF58B2C1F4FCF7800387DC0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -424,8 +418,8 @@
 		C9F55FAB37B44CBD958D6AB0 /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CA3C5CECE05A4F17A69B0972 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		CC6C3EE21F18CA4F008447F9 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
+		CCAC26031F566220005BB468 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		CCCACC011F061FBE008FB508 /* corpapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = corpapp.entitlements; path = corpapp/corpapp.entitlements; sourceTree = "<group>"; };
-		CCF58ACC1F4FC84000387DC0 /* CodePush.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CodePush.xcodeproj; path = "../node_modules/react-native-code-push/ios/CodePush.xcodeproj"; sourceTree = "<group>"; };
 		CFD3BB77481F4C0BB6B897B0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		D05F33EB41984C048DF6E6B3 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		D72E095FBA70460B976BC928 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -451,9 +445,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCAC26091F56622C005BB468 /* libCodePush.a in Frameworks */,
 				CCF58AD71F4FC8E200387DC0 /* libRCTBEEPickerManager.a in Frameworks */,
 				CCF58AD61F4FC8CE00387DC0 /* libimageCropPicker.a in Frameworks */,
-				CCF58AD51F4FC8BC00387DC0 /* libCodePush.a in Frameworks */,
 				CC705E2F1F4FC243005EC699 /* libc++.tbd in Frameworks */,
 				4CB73EE01F429D120018C00A /* libsqlite3.tbd in Frameworks */,
 				4CB73ED81F429BD70018C00A /* UMMobClick.framework in Frameworks */,
@@ -658,7 +652,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CCF58ACC1F4FC84000387DC0 /* CodePush.xcodeproj */,
+				CCAC26031F566220005BB468 /* CodePush.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -797,11 +791,10 @@
 			name = "Recovered References";
 			sourceTree = "<group>";
 		};
-		CCF58ACD1F4FC84000387DC0 /* Products */ = {
+		CCAC26041F566220005BB468 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CCF58AD21F4FC84100387DC0 /* libCodePush.a */,
-				CCF58AD41F4FC84100387DC0 /* libCodePush.a */,
+				CCAC26081F566220005BB468 /* libCodePush.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -977,8 +970,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = CCF58ACD1F4FC84000387DC0 /* Products */;
-					ProjectRef = CCF58ACC1F4FC84000387DC0 /* CodePush.xcodeproj */;
+					ProductGroup = CCAC26041F566220005BB468 /* Products */;
+					ProjectRef = CCAC26031F566220005BB468 /* CodePush.xcodeproj */;
 				},
 				{
 					ProductGroup = 83497FF01EFCDF9900AD114E /* Products */;
@@ -1268,18 +1261,11 @@
 			remoteRef = CC304DCC1F31EAAB0061CB00 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CCF58AD21F4FC84100387DC0 /* libCodePush.a */ = {
+		CCAC26081F566220005BB468 /* libCodePush.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libCodePush.a;
-			remoteRef = CCF58AD11F4FC84100387DC0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CCF58AD41F4FC84100387DC0 /* libCodePush.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libCodePush.a;
-			remoteRef = CCF58AD31F4FC84100387DC0 /* PBXContainerItemProxy */;
+			remoteRef = CCAC26071F566220005BB468 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CCF58B2D1F4FCF7800387DC0 /* libRealmReact.a */ = {
@@ -1914,7 +1900,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODEPUSH_KEY = "3sbXB8JnByOorscxhE3iYN5LKLh19b70aa67-488c-47ba-93f9-417f7531312e";
+				CODEPUSH_KEY = "2R-ZGMMzipS_-81OYFT0wlesMhIq9b70aa67-488c-47ba-93f9-417f7531312e";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1950,7 +1936,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODEPUSH_KEY = "OxTQ1qs7bQQg-LJxSJ7coZisDu3p9b70aa67-488c-47ba-93f9-417f7531312e";
+				CODEPUSH_KEY = "Sm9plE6-TQBw9URV5phDkjmGgUik9b70aa67-488c-47ba-93f9-417f7531312e";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
