@@ -767,15 +767,16 @@ export default class GetLicensePage extends BComponent {
                     {/*无网显示页面*/}
                     <NoNetEmptyView onClick={() => {this._loadData()}} />
                     {/*选择框遮罩*/}
-                    <TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 5 : -1}]}
-                                      onPress={() => {
-                                          this.closePicker()
-                                      }}>
+                    {Platform.OS==='ios'&&<TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 5 : -1}]}
+                                                            onPress={() => {
+                                                                this.closePicker()
+                                                            }}>
                         <View style={[styles.menuShadow, {
                             zIndex: this.state.isPickerOpen ? 5 : -1,
                             backgroundColor: this.state.isPickerOpen ? 'black' : 'white'
                         },]}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
+
                     {/*选择图片弹框*/}
                     {this.state.imgVisibles === true &&
                     <AlertPhotoModal

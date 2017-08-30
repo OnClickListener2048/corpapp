@@ -71,7 +71,7 @@ export default class SinglePickerView extends Component {
             (responseData) => {
                 SActivityIndicator.hide(loading);
                 if(responseData !== null && responseData.data !== null){
-                    // this.state.loadedArea = true;
+                    this.state.loadedArea = true;
                     this.industryNames = [];
                     this.corpTypeNames = [];
                     this.setState({corpIndustryValue:responseData.data,});
