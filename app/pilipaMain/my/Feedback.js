@@ -11,6 +11,7 @@ import SActivityIndicator from '../../modules/react-native-sww-activity-indicato
 import * as apis from '../../apis';
 import BComponent from '../../base';
 import errorText from "../../util/ErrorMsg";
+import SubmitButton from "../../view/ui/SubmitButton";
 
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 // import Alert from "../../modules/react-native-alert";
@@ -87,13 +88,9 @@ export default class Feedback extends BComponent {
                     </Text>
                 </View>
 
-                <TouchableWithoutFeedback onPress={() => {this._doFeedback()}}>
-                    <View style={[styles.buttonView,
-                        {backgroundColor: (
-                            (this.state.messageValid ) ? '#ef0c35' : '#e6e6e6')}]}>
-                        <Text style={styles.submitButtonText}>提交</Text>
-                    </View>
-                </TouchableWithoutFeedback>
+                <SubmitButton onPress={() => {this._doFeedback()}} isEnabled={this.state.messageValid}
+                              text="提交反馈"
+                />
 
             </View>
             </TouchableWithoutFeedback>

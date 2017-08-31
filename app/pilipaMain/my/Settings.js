@@ -23,6 +23,7 @@ import settingStyles from './css/SettingsPageStyle';
 import BComponent from '../../base';
 // import Alert from "../../modules/react-native-alert";
 import errorText from '../../util/ErrorMsg';
+import SubmitButton from "../../view/ui/SubmitButton";
 
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
@@ -169,18 +170,9 @@ export default class Settings extends BComponent {
                             </View>
                         </View>
 
-
-                        <TouchableWithoutFeedback onPress={() => {
-                            this._doSubmit()
-                        }}>
-                            <View style={[styles.buttonView,
-                                {
-                                    backgroundColor: (
-                                        (this.state.oldSmsCodeValid || (this.state.newSmsCodeValid && this.state.newMobileValid ) ) ? '#ef0c35' : '#e6e6e6')
-                                }]}>
-                                <Text style={styles.submitButtonText}>{this.state.submitButtonText}</Text>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        <SubmitButton onPress={() => {this._doSubmit()}} isEnabled={this.state.oldSmsCodeValid || (this.state.newSmsCodeValid && this.state.newMobileValid )}
+                                      text={this.state.submitButtonText}
+                        />
 
                     </View>
 

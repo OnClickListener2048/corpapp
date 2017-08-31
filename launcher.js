@@ -19,7 +19,7 @@ navToMainTab();
 
 // Navigation.startSingleScreenApp({
 //     screen: {
-//         screen: 'demo/ImageZoom',
+//         screen: 'demo/ButtonExample',
 //         title: '图片缩放',
 //     },
 //     portraitOnlyMode: true,

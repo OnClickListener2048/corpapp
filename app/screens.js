@@ -22,11 +22,13 @@ import AreaPicker from "../picker_demo";
 import ImageZoomTest from "../picker_demo/ImageZoomTest";
 import MultiTextInputPage from "./outWork/getLicense/view/MultiTextInputPage";
 import WatchImageModalPage from "./outWork/getLicense/view/WatchImageModalPage";
+import ButtonExample from "../picker_demo/ButtonExample";
 
 export default function () {
     let reg = Navigation.registerComponent;
     reg('AreaPicker', () => AreaPicker);
     reg('demo/ImageZoom', () => ImageZoomTest);
+    reg('demo/ButtonExample', () => ButtonExample);
     reg('user.LoginPage', () => LoginPage);
     reg('ApplicationCenterPage', () => ApplicationCenterPage);
     reg('MessageCenterPage', () => MessageCenterPage);
