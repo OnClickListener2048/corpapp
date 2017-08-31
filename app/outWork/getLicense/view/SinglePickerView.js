@@ -18,8 +18,6 @@ const window = Dimensions.get('window');
 export const height = window.height;
 export const width = window.width;
 
-const SCREEN_WIDTH = Dimensions.get('window').width;
-
 
 export default class SinglePickerView extends Component {
     constructor(props) {
@@ -27,6 +25,7 @@ export default class SinglePickerView extends Component {
         this.state = {
             hint: this.props.hint,
             value: this.props.value,
+            valueId: this.props.valueId,
             pickerType:this.props.pickerType,
             loadedArea:false,
             corpIndustryValue:null,//企业类型，所属行业集合
@@ -73,13 +72,16 @@ export default class SinglePickerView extends Component {
                 SActivityIndicator.hide(loading);
                 if(responseData !== null && responseData.data !== null){
                     this.state.loadedArea = true;
+                    this.industryNames = [];
+                    this.corpTypeNames = [];
                     this.setState({corpIndustryValue:responseData.data,});
                     responseData.data.industry.forEach(key => this.industryNames.push(key.Text) );
                     responseData.data.corpType.forEach(key => this.corpTypeNames.push(key.Text) );
 
 
                     if(pickerType==='industry'&& responseData.data.industry !== null){//行业选择
-                        let industry = this.state.value;
+                        const industry = this.state.value;
+                        this.setState({industryId: this.props.valueId});
                         if(industry !== undefined) {
                             this.selectedValue = [industry];
                         }
@@ -96,7 +98,8 @@ export default class SinglePickerView extends Component {
                                 } );
                             });
                     }else if(pickerType==='corpType'&& responseData.data.corpType !== null){//企业类型
-                        let corpType = this.state.value;
+                        const corpType = this.state.value;
+                        this.setState({corpTypeId: this.props.valueId});
                         if(corpType !== undefined) {
                             this.selectedValues = [corpType];
                         }
@@ -177,6 +180,7 @@ export default class SinglePickerView extends Component {
         });
         this.props.callback();
         // selectedValue = ['a', 2];
+
         Picker.init({
             pickerTitleText: title,
             pickerConfirmBtnText: '确认',
@@ -224,12 +228,12 @@ export default class SinglePickerView extends Component {
             },
         });
         Picker.show();
-
     }
 
     render() {
         const {hint, enable} = this.props;
         return (
+
             <View
                 style={styles.container}>
                 <Text style={styles.leftTipStyle}>{this.props.hint}</Text>
@@ -285,7 +289,6 @@ export default class SinglePickerView extends Component {
 
                 </View>
 
-
             </View>
         );
     }
@@ -299,11 +302,10 @@ const styles = StyleSheet.create({
         paddingBottom: 2,
         backgroundColor: 'white'
     },
-
     textShowStyle: {
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,
-        width: SCREEN_WIDTH- 110,
+        width: width- 110,
         backgroundColor:'white',
         flex:1,
         marginBottom:18,
@@ -338,7 +340,7 @@ const styles = StyleSheet.create({
     leftdownDrapViewStyle: {
         flexDirection: 'row-reverse',
         alignItems: 'center',
-        width : SCREEN_WIDTH-115,
+        width : width-115,
         flex: 1,
         marginLeft: 4.5,
         marginRight: 0,

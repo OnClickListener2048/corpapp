@@ -5,8 +5,8 @@ import React, {PropTypes,Component} from 'react';
 import {View, Text,Image,Dimensions,
     StyleSheet,
     TouchableOpacity,
-    ToastAndroid,
-    Alert,} from 'react-native';
+    ToastAndroid,} from 'react-native';
+import Alert from "react-native-alert";
 const window = Dimensions.get('window');
 import SActivityIndicator from '../../../modules/react-native-sww-activity-indicator/index';
 import * as apis from '../../../apis/index';

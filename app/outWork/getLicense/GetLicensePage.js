@@ -677,12 +677,14 @@ export default class GetLicensePage extends BComponent {
                         {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
                     </View>
                     <SinglePickerView hint={'所属行业'} value={this.state.industry}
+                                      valueId={this.state.industryId}
                                       ref="industrypicker"
                                       callback={this._industryBtnClick.bind(this)}
                                       pickerType = {'industry'}
                                       enable={this.state.editables}/>
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
+                                      valueId={this.state.corpTypeId}
                                       ref="corpTypepicker"
                                       callback={this._corpTypeBtnClick.bind(this)}
                                       pickerType = {'corpType'}
@@ -765,15 +767,16 @@ export default class GetLicensePage extends BComponent {
                     {/*无网显示页面*/}
                     <NoNetEmptyView onClick={() => {this._loadData()}} />
                     {/*选择框遮罩*/}
-                    <TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 10 : -1}]}
-                                      onPress={() => {
-                                          this.closePicker()
-                                      }}>
+                    {Platform.OS==='ios'&&<TouchableOpacity style={[styles.menuTouch, {zIndex: this.state.isPickerOpen ? 5 : -1}]}
+                                                            onPress={() => {
+                                                                this.closePicker()
+                                                            }}>
                         <View style={[styles.menuShadow, {
-                            zIndex: this.state.isPickerOpen ? 10 : -1,
+                            zIndex: this.state.isPickerOpen ? 5 : -1,
                             backgroundColor: this.state.isPickerOpen ? 'black' : 'white'
                         },]}/>
-                    </TouchableOpacity>
+                    </TouchableOpacity>}
+
                     {/*选择图片弹框*/}
                     {this.state.imgVisibles === true &&
                     <AlertPhotoModal
