@@ -11,7 +11,7 @@ import { Text } from 'react-native';
 Text.defaultProps.allowFontScaling=false;// 全部禁用字体缩放
 
 // 测试准备, 关闭Warning框
-console.disableYellowBox = true;
+console.disableYellowBox = false;
 console.warn('YellowBox is disabled.');
 console.log("NetInfoSingleton", NetInfoSingleton.isConnected);
 
