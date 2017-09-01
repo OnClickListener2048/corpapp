@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import {navToMainTab} from './app/navigation';
-import  './app/storage/UserInfoStore';
-import './app/util/LoginJumpSingleton';
-import './app/util/NetInfoSingleton';
-import './app/util/UMTool';
+import {navToMainTab} from './navigation';
+import './storage/UserInfoStore';
+import './util/LoginJumpSingleton';
+import './util/NetInfoSingleton';
+import './util/UMTool';
 
 import {Navigation} from 'react-native-navigation';
 import { Text } from 'react-native';
