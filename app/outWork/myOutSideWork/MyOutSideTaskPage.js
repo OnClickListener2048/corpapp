@@ -4,19 +4,14 @@
 import React, { Component,PropTypes } from 'react';
 
 import {
-    Text,
     View,
     ScrollView,
-    Dimensions,
     TouchableOpacity,
-    InteractionManager,
-    DeviceEventEmitter,
     Image
 } from 'react-native';
 
 import styles from './css/MyOutSideTaskStyle'
 import CompanyInfoView from '../../commonView/view/CompanyInfoView'
-import CommunalNavBar from '../../main/GDCommunalNavBar';
 import RegisterCompanyCell from '../../commonView/view/RegisterCompanyCell'
 import * as apis from '../../apis/index';
 import SActivityIndicator from '../../modules/react-native-sww-activity-indicator/index';
@@ -34,16 +29,15 @@ export default class MyOutSideTaskPage extends BComponent{
     constructor(props) {
         super(props);
         this.state = {
-            loaded:false,                   // 是否初始化 ListView
+            loadedStatus : '',  // loadedSucess,loadedFaild
             taskId:this.props.taskId,
-            loadFaild:false,                   // 是否初始化 ListView
             currentStepId : '',
             toastStr : this.props.toastStr,
             canClickBtn : true,
             needRefresh : false,  //在willViewAppear里面需不需要重新请求数据
         };
         this._loadData = this._loadData.bind(this);
-        this._setNeedRefrsh = this._setNeedRefrsh.bind(this);
+        this._needCallBack = this._needCallBack.bind(this);
 
         this.stepsArr = [];
         this.info;
@@ -64,7 +58,7 @@ onNavigatorEvent(event) { // this is the onPress handler for the two buttons tog
     }
 }
 
-_setNeedRefrsh(){
+_needCallBack(){
     this.state.needRefresh = true;
     let callback = this.props.callback;
     if(callback) {
@@ -88,8 +82,7 @@ _loadData() {
 
                     this.stepsArr = this.stepsArr.concat(responseData.data.steps);
                     this.setState({
-                        loadFaild : false,
-                        loaded:true,
+                        loadedStatus : 'loadedSucess',
                     });
                     this.props.navigator.setTitle({
                         title: this.info.taskName, // the new title of the screen as appears in the nav bar
@@ -105,8 +98,7 @@ _loadData() {
                 SActivityIndicator.hide(this.loading);
 
                 this.setState({
-                    loaded : true,
-                    loadFaild:true,
+                    loadedStatus : 'loadedFaild',
                 });
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
@@ -134,7 +126,7 @@ _loadData() {
             return;
         }
 
-        this.setState({canClickBtn:false})//防重复点击
+        this.setState({canClickBtn:false});//防重复点击
         this.timer = setTimeout(async()=>{
             await this.setState({canClickBtn:true})//1.5秒后可点击
         },1000);
@@ -149,21 +141,12 @@ _loadData() {
                 passProps: {
                     stepId:stepId,
                     taskId:this.props.taskId,
-                    callback : this._setNeedRefrsh
+                    callback : this._needCallBack
                 }
             });
     }
 
-    renderExpenseItem(item , i) {
 
-        return (
-            <TouchableOpacity onPress={() => {
-                this.toLicense(this.stepsArr[i].stepId)}}>
-                <RegisterCompanyCell key={i} detail={item} textColor={(this.stepsArr[i].stepStatus === '进行中' || this.stepsArr[i].stepStatus === '已结束'|| this.stepsArr[i].stepStatus === '已完成') ? '#E5151d' : '#323232'}
-                                     processState={this.stepsArr[i].stepStatus} isFirst={i == 0} isLast={i == this.stepsArr.length - 1}/>
-            </TouchableOpacity>
-        )
-    }
 
     renderCompanyInfoView() {
         return  <CompanyInfoView ref="companyInfoView"
@@ -175,14 +158,27 @@ _loadData() {
                 />
     }
 
+
+    renderExpenseItem(item , i) {
+
+        return (
+            <TouchableOpacity key = {i} onPress={() => {
+                this.toLicense(this.stepsArr[i].stepId)}}>
+
+                <RegisterCompanyCell key={i} detail={item} textColor={(this.stepsArr[i].stepStatus === '进行中' || this.stepsArr[i].stepStatus === '已结束'|| this.stepsArr[i].stepStatus === '已完成') ? '#E5151d' : '#323232'}
+                                     processState={this.stepsArr[i].stepStatus} isFirst={i === 0} isLast={i === this.stepsArr.length - 1}/>
+            </TouchableOpacity>
+        )
+    }
+
     renderScrollView() {
-        if (this.state.loaded === false) {      // 无数据
+        if (this.state.loadedStatus === '') {      // 无数据
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
 
                 </View>
             );
-        }else if(this.state.loadFaild === true){
+        }else if(this.state.loadedStatus === 'loadedFaild'){
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                     <TouchableOpacity onPress={() => { this._loadData() }}>
@@ -215,9 +211,10 @@ _loadData() {
         }
     }
 
+
     render() {
         return(
-            <NoNetView  onClick={() => this._loadData()} enable={!(this.state.loaded === true && this.state.loadFaild === false)}>
+            <NoNetView  onClick={() => this._loadData()} enable={ this.state.loadedStatus === 'loadedFaild'}>
 
             <View style={styles.container}>
                 {this.renderScrollView()}

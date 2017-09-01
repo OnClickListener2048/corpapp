@@ -47,7 +47,7 @@ export default class DottedLine extends Component {
 
             {
                 arr.map((item, index) => {
-                    return <View style={{width: this.props.grayWidth ,width:this.props.grayWidth , marginRight:this.props.whiteWidth,backgroundColor:'#c8c8c8'}}>
+                    return <View key = {index} style={{width: this.props.grayWidth ,width:this.props.grayWidth , marginRight:this.props.whiteWidth,backgroundColor:'#c8c8c8'}}>
                     </View>
                 })
             }
