@@ -81,7 +81,7 @@ class VerifyProcessTipView extends Component{
 
     _renderLineView(){
 
-        return <DottedLine style={{height : 1, flex: 1,alignItems:'center',justifyContent:'center', backgroundColor :'#c8c8c8'}}
+        return <DottedLine  style={{height : 1, flex: 1,alignItems:'center',justifyContent:'center', backgroundColor :'#c8c8c8'}}
                            dottedLineWidth={(SCREEN_WIDTH - (15 + 20)* 3 - 43 * 2)/2} grayWidth={2} whiteWidth={2}/>
     }
 
