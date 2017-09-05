@@ -1,1 +1,1 @@
-import './launcher'
+import './app/launcher'

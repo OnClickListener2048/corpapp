@@ -33,6 +33,7 @@ import InternetStatusView from '../modules/react-native-internet-status-view';
 import {Navigation} from 'react-native-navigation';
 import {DEBUG, SCREEN_WIDTH} from '../config';
 import Alert from "react-native-alert";
+import SubmitButton from "../view/ui/SubmitButton";
 
 const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
@@ -586,15 +587,19 @@ export default class LoginPage extends Component {
 
                         </View>
 
-                        <TouchableWithoutFeedback onPress={this._doLogin}>
-                            <View style={[styles.buttonview,
-                                {
-                                    backgroundColor: (
-                                        (this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')
-                                }]}>
-                                <Text style={styles.logintext}>登录</Text>
-                            </View>
-                        </TouchableWithoutFeedback>
+                        {/*<TouchableWithoutFeedback onPress={this._doLogin}>*/}
+                            {/*<View style={[styles.buttonview,*/}
+                                {/*{*/}
+                                    {/*backgroundColor: (*/}
+                                        {/*(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid  ) ? '#ef0c35' : '#e6e6e6')*/}
+                                {/*}]}>*/}
+                                {/*<Text style={styles.logintext}>登录</Text>*/}
+                            {/*</View>*/}
+                        {/*</TouchableWithoutFeedback>*/}
+
+                        <SubmitButton onPress={this._doLogin} isEnabled={(this.state.mobileValid && this.state.acceptLic && this.state.smsCodeValid)}
+                        text="登录"
+                        />
 
                     </KeyboardAvoidingView>
 

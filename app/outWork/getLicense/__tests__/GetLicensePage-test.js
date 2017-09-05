@@ -7,6 +7,7 @@ import React from 'react';
 import fetchMock from 'fetch-mock';
 import {shallow} from 'enzyme';
 import responseData from './getLicenseData.json'
+import renderer from 'react-test-renderer';
 
 
 fetchMock.get('https://app.i-counting.cn/app/v0/outsource/task/step',
@@ -81,5 +82,16 @@ it('getLicensePage 模拟在测试期间将测试值注入代码', () => {
         .mockReturnValue(true);
 
     console.log("哩哩啦啦"+myMock(), myMock(), myMock(), myMock());
+});
+
+// jest --updateSnapshot 更新快照
+it('快照正确渲染', () => {
+    const tree = renderer.create(
+        <GetLicensePage  navigator={navigator}/>
+    ).toJSON();
+    expect(tree).toMatchSnapshot();
+    // 只能操作属性
+    tree.props.detailObj = '{"allowEditInfo":"true","bizLics":["https://qd.pilipa.cn/FileUploads/Order/BusinessLicense/201708/BodyPart_98b0dc29-d6d2-463e-b8d0-7e7b6ea1b833.jpg"],"bizRange":"sfdgq","bizTime":{"startDate":"2017-08-25","endDate":"2017-08-27","unlimited":"false"},"contactName":"sdfgvbbbje","contactPhone":"16167286689","corpAddress":"sdfgw","corpAddressArea":{"cityId":"110100","districtId":"110115","city":"北京市","district":"大兴区"},"corpName":"sfgdscvv","corpTypeId":1,"corpType":"小规模","idCards":[],"industryId":2,"industry":"工业","legalEntity":"Ssswcvv","localTaxId":"1ddde","nationalTaxId":"1hhh","progress":{"finished":"false","inProgress":false,"materialConfirm":"true"},"regFunds":"12","regId":"111111s","salesmanName":"zhangsa","salesmanPhone":"13581665456","stepContact":"贾雪婷","stepId":2565,"stepName":"核实名称","taskId":533,"taskName":"通办任务2","taskStatus":"进行中"}';
+    expect(tree).toMatchSnapshot();
 });
 

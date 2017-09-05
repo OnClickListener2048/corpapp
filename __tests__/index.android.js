@@ -1,6 +1,6 @@
 import 'react-native';
 import React from 'react';
-import Index from '../launcher';
+import Index from '../app/launcher';
 
 jest.mock('react-native-navigation');
 // jest.mock('NetInfo', () => {

@@ -179,10 +179,10 @@ export default class BusinessTimeView extends Component{
 
     }
 
-    _hideAlert(isDateTimePickerVisible){
-        console.log("传值====="+isDateTimePickerVisible);
+    _hideAlert(timeData){
+        console.log("传值====="+timeData);
 
-        this.props.callback(isDateTimePickerVisible);
+        this.props.callback(timeData);
     }
 
     render() {

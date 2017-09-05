@@ -2,7 +2,6 @@
 import { Navigation } from 'react-native-navigation';
 
 // 引用外部文件
-import Main from './pilipaMain/PLPMain';
 import LoginPage from './user/LoginPage';
 import MessageCenterPage from './message/MessageCenterPage';
 import SystemMessagePage from './message/SystemMessagePage';
@@ -23,12 +22,13 @@ import AreaPicker from "../picker_demo";
 import ImageZoomTest from "../picker_demo/ImageZoomTest";
 import MultiTextInputPage from "./outWork/getLicense/view/MultiTextInputPage";
 import WatchImageModalPage from "./outWork/getLicense/view/WatchImageModalPage";
+import ButtonExample from "../picker_demo/ButtonExample";
 
 export default function () {
     let reg = Navigation.registerComponent;
     reg('AreaPicker', () => AreaPicker);
     reg('demo/ImageZoom', () => ImageZoomTest);
-    reg('Main', () => Main);
+    reg('demo/ButtonExample', () => ButtonExample);
     reg('user.LoginPage', () => LoginPage);
     reg('ApplicationCenterPage', () => ApplicationCenterPage);
     reg('MessageCenterPage', () => MessageCenterPage);

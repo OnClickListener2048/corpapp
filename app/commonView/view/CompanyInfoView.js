@@ -67,18 +67,6 @@ export default class CompanyInfoView extends React.Component {
 
     }
 
-    _inputContentCom(contentComp){
-        this.props.callbackCom(contentComp);
-    }
-
-    _inputContentCon(contentCon){
-        this.props.callbackCon(contentCon);
-    }
-
-    _inputContentPho(contentPho){
-        this.props.callbackPho(contentPho);
-    }
-
     setRefresh(refresh,companyName,ContactsName,ContactsPhone) {
             this.setState({isRefresh : refresh,
             companyName:companyName,
@@ -127,7 +115,6 @@ export default class CompanyInfoView extends React.Component {
                                     onChangeText={
                                         (legalPerson) => {
                                             this.setState({companyName: legalPerson});
-                                            this._inputContentCom(legalPerson);
                                         }
                                     }/>
                             </View>:
@@ -166,7 +153,6 @@ export default class CompanyInfoView extends React.Component {
                                     onChangeText={
                                         (legalPerson) => {
                                             this.setState({ContactsName: legalPerson});
-                                            this._inputContentCon(legalPerson);
                                         }
                                     }/>
                             </View>:
@@ -202,7 +188,6 @@ export default class CompanyInfoView extends React.Component {
                                 onChangeText={
                                     (legalPerson) => {
                                         this.setState({ContactsPhone: legalPerson});
-                                        this._inputContentPho(legalPerson);
                                     }
                                 }/>
                         </View>:

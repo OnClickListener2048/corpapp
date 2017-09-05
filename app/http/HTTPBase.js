@@ -97,6 +97,53 @@ HTTPBase._handleResponse = async function(responseJson) {
 }
 
 /**
+ * GET请求, 不与当前业务有任何关联, 不使用HttpDNS.
+ *
+ * @param url
+ * @param params {} 表单参数
+ * @param headers 自定义头信息
+ *
+ * @return {Promise}
+ *
+ * */
+HTTPBase.getRaw = async function (url, params= {}, headers= null) {
+    if (params) {
+        let paramsArray = [];
+
+        // 获取 params 内所有的 key
+        let paramsKeyArray = Object.keys(params);
+        // 通过 forEach 方法拿到数组中每个元素,将元素与参数的值进行拼接处理,并且放入 paramsArray 中
+        paramsKeyArray.forEach(key => paramsArray.push(key + '=' + params[key]));
+        // 网址拼接
+        if (url.search(/\?/) === -1) {
+            url += '?' + paramsArray.join('&');
+        } else {
+            url += paramsArray.join('&');
+        }
+    }
+
+    console.log(new Date().toString() + "======> ", url, "\n");
+    let response = await this._fetch(url, {
+        method:'GET',
+        headers:headers
+    });
+
+    console.log(new Date().toString() + "<<<<<<== " , response.statusText);
+
+    if (!response.ok) {
+        let text = await response.text();
+        console.log("will throw ", text);
+        // throw new Error(text);
+        return Promise.reject(text);
+    }
+
+    let responseText = await response.text();
+    console.log("response text:",  responseText, "\n");
+    return responseText;
+};
+
+
+/**
  * GET请求
  *
  * @param url
@@ -278,6 +325,7 @@ HTTPBase._makeErrorMsg =  function (response) {
 HTTPBase._commonHeaders =  function (headers) : Object {
     let finalHeaders = new Object();
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
+    finalHeaders.Host = 'app.i-counting.cn';
     if(headers) {
         // 获取 headers 内所有的 key
         let headersKeyArray = Object.keys(headers);

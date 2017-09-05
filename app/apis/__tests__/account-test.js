@@ -34,31 +34,33 @@ import fetchMock from 'fetch-mock';
  at Object._callee8$ (app/http/HTTPBase.js:307:53)
  */
 
-const sum = jest.fn();
 
 test('mock function', () => {
+    const sum = jest.fn();
     let val = sum(1, 2);
     console.log(val);
 });
 
-const sum2 = jest.fn().mockReturnValue('8');
+
 test('mock function 的返回值', () => {
-    let val = sum2(1, 2);
+    const sum = jest.fn().mockReturnValue('8');
+    let val = sum(1, 2);
     console.log(val);
 });
 
-const sum3 = jest.fn().mockImplementation(
-    (a, b) => {
-        return a + b;
-    }
-);
+
 test('mock function 的模拟实现', () => {
+    const sum3 = jest.fn().mockImplementation(
+        (a, b) => {
+            return a + b;
+        }
+    );
     let val = sum3(4, 5);
     expect( sum3(4, 5)).toBe(9);
 });
 
-fetchMock.post('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest": true}'));
-test('account', async () => {
+test('account api', async () => {
+    fetchMock.post('*', JSON.parse('{"success":true,"code":200,"msg":null,"data":null, "jest": true}'));
     let response = await login("13810397064", "123456");
     console.log(response);
 });
