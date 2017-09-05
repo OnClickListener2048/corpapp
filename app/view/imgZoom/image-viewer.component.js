@@ -297,7 +297,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
                 console.log("图片显示=成功="+image.url);
                 return (React.createElement(react_native_image_pan_zoom_1.default, {
-                    // key: index,
+                        key: index,
                         style: this.styles.modalContainer,
                         cropWidth: this.width,
                         cropHeight: this.height,
