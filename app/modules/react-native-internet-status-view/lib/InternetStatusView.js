@@ -10,7 +10,8 @@ import {
     Text,
     NetInfo,
     Animated,
-    Easing
+    Easing,
+    Platform
 } from 'react-native'
 const React = require('react')
 const styles = require('./InternetStatusViewStyles')
@@ -64,7 +65,7 @@ var InternetStatusView = React.createClass({
     var errorTextContainer = this.props.style || styles.errorTextContainer
     return (
       <Animated.View style={[errorTextContainer, {height: this.state.heightValue}]} >
-        <Text style={styles.errorTextShow}>{textToDisplay}</Text>
+        <Animated.Text style={[styles.errorTextShow,Platform.OS === 'ios'?{height: this.state.heightValue,lineHeight:this.state.heightValue}:{height: this.state.heightValue,textAlignVertical:'center'}]}>{textToDisplay}</Animated.Text>
       </Animated.View>
     )
   }
