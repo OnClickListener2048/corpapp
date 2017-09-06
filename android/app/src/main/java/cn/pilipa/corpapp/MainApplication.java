@@ -63,7 +63,7 @@ public class MainApplication extends NavigationApplication{
                 new BlurViewPackage(),
                 new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
                 new UmengReactPackage(),
-                new CodePush("f-OXQ0CPf6wJRBXNMUCURY2iQL399b70aa67-488c-47ba-93f9-417f7531312e", MainApplication.this, BuildConfig.DEBUG)
+                new CodePush("nAUClmgp3lGQfnnroHsXKtA2CDQAb9c43031-f8df-47b3-8e35-085700d8d99a", MainApplication.this, BuildConfig.DEBUG)
         );
     }
 

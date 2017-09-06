@@ -222,13 +222,13 @@ android {
 
         releaseStaging {
             signingConfig signingConfigs.pilipa
-            buildConfigField "String", "CODEPUSH_KEY", '"17mGjN4PGSFNrOUG7edLyFhO9wiK9b70aa67-488c-47ba-93f9-417f7531312e"'
+            buildConfigField "String", "CODEPUSH_KEY", '"nAUClmgp3lGQfnnroHsXKtA2CDQAb9c43031-f8df-47b3-8e35-085700d8d99a"'
          }
 
         release {
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             signingConfig signingConfigs.pilipa
-            buildConfigField "String", "CODEPUSH_KEY", '"f-OXQ0CPf6wJRBXNMUCURY2iQL399b70aa67-488c-47ba-93f9-417f7531312e"'
+            buildConfigField "String", "CODEPUSH_KEY", '"qbbXHzX_4T4UnnQpbncnNOiL4qPnb9c43031-f8df-47b3-8e35-085700d8d99a"'
 
         }
     }
