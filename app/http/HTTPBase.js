@@ -325,7 +325,7 @@ HTTPBase._makeErrorMsg =  function (response) {
 HTTPBase._commonHeaders =  function (headers) : Object {
     let finalHeaders = new Object();
     // finalHeaders.append('Cookie', ''); // TODO 登录时的头信息, userAgent
-    finalHeaders.Host = 'app.i-counting.cn';
+    // finalHeaders.Host = 'app.i-counting.cn'; // TODO 加了会异常.
     if(headers) {
         // 获取 headers 内所有的 key
         let headersKeyArray = Object.keys(headers);
