@@ -9,18 +9,8 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
 
-// import {
-//     SwRefreshScrollView, //支持下拉刷新的ScrollView
-//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
-//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
-//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
-// } from '../../node_modules/react-native-swRefresh-master'
-
-// import UltimateListView from "../../node_modules/react-native-ultimate-listview";
 
 import {
-    AppRegistry,
-    StyleSheet,
     Text,
     View,
     ListView,
@@ -29,7 +19,6 @@ import {
     ActivityIndicatorIOS,
     AlertIOS,
     Dimensions,
-    InteractionManager,
     DeviceEventEmitter,
     RefreshControl,
     ActivityIndicator
@@ -51,40 +40,36 @@ import BComponent from '../base';
 export default class MessageCenterPage extends BComponent {
 
     constructor(props) {
-        super(props)
+        super(props);
         this.state = {
             dataSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
-            loaded:false,                   // 是否初始化 ListView
-            faild : false,
+            loadedStatus : '',  // loadedSucess,loadedFaild
             bagetNum : 0,
-            loadingMore : 0,
-            isRefreshing: false,
-            isNoNetwork : false,
-            isJumping : false,
+            loadingMore : 0,     //footer状态即上拉刷新的状态
+            isRefreshing: false,//为了防止上拉下拉冲突
+            isJumping : false, //防止重复点击
             isLoading : false,
+            isNoNetwork : false,
             lastID : null,
             pageCount : 15,
-        }
+        };
 
         this.messageArr = [];
         this._loadInitData = this._loadInitData.bind(this);
-
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this._initJPush = this._initJPush.bind(this);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
     static navigatorStyle = {
         navBarHidden: true, // 隐藏默认的顶部导航栏
     };
 
-    dataBlob: {}
-    sectionIDs: []
-    rowIDs: []
+
 
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
@@ -98,7 +83,6 @@ export default class MessageCenterPage extends BComponent {
 
     // 载入初始化数据
     _loadInitData() {
-        // console.log("判断有无网" + NetInfoSingleton.isConnected);
 
         if(!NetInfoSingleton.isConnected) {
             this.setState({
@@ -122,7 +106,7 @@ export default class MessageCenterPage extends BComponent {
                 let cnt = responseData.unReadNum;
                 if(cnt !== null && cnt >= 0) {
                     this.props.navigator.setTabBadge({
-                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                        badge: cnt === 0 ? null : cnt // 数字气泡提示, 设置为null会删除
                     });
 
                     this.state.bagetNum = cnt;
@@ -146,11 +130,10 @@ export default class MessageCenterPage extends BComponent {
 
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
-                        faild: false,
-                        loaded:true,
+                        loadedStatus:'loadedSucess',
                     });
 
-                    if (responseData.data.length == this.state.pageCount){
+                    if (responseData.data.length === this.state.pageCount){
                         this.setState({
                             lastID: this.messageArr[this.messageArr.length - 1].msgId,
                         });
@@ -169,15 +152,13 @@ export default class MessageCenterPage extends BComponent {
                 if ( this.messageArr.length > 0){
                     // 关闭刷新动画
                     this.setState({
-                        loaded:true,
-                        faild: false,
+                        loadedStatus : 'loadedSucess',
 
                     });
                 }else {
                     // 关闭刷新动画
                     this.setState({
-                        loaded:true,
-                        faild: true,
+                        loadedStatus : 'loadedFaild',
                     });
 
                 }
@@ -211,7 +192,7 @@ export default class MessageCenterPage extends BComponent {
                 let cnt = responseData.unReadNum;
                 if(cnt !== null && cnt >= 0) {
                     this.props.navigator.setTabBadge({
-                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                        badge: cnt === 0 ? null : cnt // 数字气泡提示, 设置为null会删除
                     });
 
                     this.state.bagetNum = cnt;
@@ -228,7 +209,7 @@ export default class MessageCenterPage extends BComponent {
                     this.messageArr = this.messageArr.concat(responseData.data);
                     // console.log(this.messageArr)
 
-                    if (responseData.data.length == this.state.pageCount){
+                    if (responseData.data.length === this.state.pageCount){
                         this.setState({loadingMore: 0,
                             lastID : this.messageArr[this.messageArr.length - 1].msgId
                         });
@@ -247,7 +228,8 @@ export default class MessageCenterPage extends BComponent {
 
                     this.setState({
                         dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
-                        loaded:true,
+                        loadedStatus : 'loadedSucess',
+
                     });
 
 
@@ -290,7 +272,7 @@ export default class MessageCenterPage extends BComponent {
                 let cnt = responseData.unReadNum;
                 if(cnt !== null && cnt >= 0) {
                     this.props.navigator.setTabBadge({
-                        badge: cnt == 0 ? null : cnt // 数字气泡提示, 设置为null会删除
+                        badge: cnt === 0 ? null : cnt // 数字气泡提示, 设置为null会删除
                     });
 
                     this.state.bagetNum = cnt;
@@ -310,18 +292,17 @@ export default class MessageCenterPage extends BComponent {
 
                 this.messageArr = this.messageArr.concat(responseData.data);
 
-                if (responseData.data.length == this.state.pageCount){
+                if (responseData.data.length === this.state.pageCount){
 
                     this.setState({loadingMore: 0,
                         lastID : this.messageArr[this.messageArr.length - 1].msgId});
 
-                    // console.log(this.lastID +'你大爷');
                 }else {
                     this.setState({loadingMore: 2});
 
                 }
 
-                console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.state.lastID + '结束');
+                //console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.state.lastID + '结束');
 
                 for (let  i = 0 ; i < this.messageArr.length ; i++){
                     let  secData = this.messageArr[i];
@@ -330,8 +311,8 @@ export default class MessageCenterPage extends BComponent {
 
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
-                    loaded:true,
-                    isLoading : false
+                    isLoading : false,
+                    loadedStatus : 'loadedSucess',
                 });
 
 
@@ -357,9 +338,6 @@ export default class MessageCenterPage extends BComponent {
             (responseData) => {
 
                 rowData.read = 'true';
-
-                let  a =  this.messageArr[rowData.rowIndex];
-                // console.log("点击成功了" + a.read);
                 let data = [];
                 this.messageArr.forEach(row => {
                     data.push(Object.assign({}, row));
@@ -383,7 +361,6 @@ export default class MessageCenterPage extends BComponent {
 
                 this.setState({
                     dataSource: this.state.dataSource.cloneWithRows(this.messageArr),
-                    loaded:true,
                 });
 
 
@@ -402,7 +379,7 @@ export default class MessageCenterPage extends BComponent {
         // 跳转登录页的通知
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
-            console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
+            //console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
             loginJumpSingleton.goToLogin(this.props.navigator);
         });
 
@@ -442,9 +419,7 @@ export default class MessageCenterPage extends BComponent {
                 JPushModule.notifyJSDidLoad();
 
                 JPushModule.addReceiveOpenNotificationListener((message) => {
-                    //this.setState({pushMsg: message});
                     console.log("点击通知消息: " + JSON.stringify(message));
-                    // Toast.show('点击通知消息: ' + JSON.stringify(message));
                 });
                 // JPushModule.addReceiveNotificationListener((message) => {
                 //     console.log("receive notification: " + JSON.stringify(message));
@@ -499,19 +474,16 @@ export default class MessageCenterPage extends BComponent {
         }
 
 
-        this.setState({isJumping:true})//防重复点击
-
-        console.log('看看到这里没有' + this.state.isJumping);
+        this.setState({isJumping:true});
+        //防重复点击
 
         this.timer = setTimeout(async()=>{
             await this.setState({isJumping:false})//1.5秒后可点击
-        },1000)
+        },1000);
 
 
         let jumpUri = JSON.parse(rowData.content).jumpUri;
-        // console.log('jumpUrijumpUri ===' + jumpUri);
 
-        // let jumpUri = 'outsource?id=36&sec=12';
         let arr=jumpUri.split('?');
 
         let outPageId = '';
@@ -547,8 +519,6 @@ export default class MessageCenterPage extends BComponent {
         let a = 'arrCount' + arr.length + 'msgId' + rowData.msgId  + 'content信息' + rowData.content + 'outPageId' + outPageId  + 'paramsStr' + paramsStr1 + 'paramsArrLength'
             + paramsArr1.length + 'subParam' + subParam1 + 'specArr' + specArr1.length;
 
-        // Toast.show(a);
-
         this.props.navigator.push({
             screen: 'MyOutSideTaskPage',
             backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -571,10 +541,11 @@ export default class MessageCenterPage extends BComponent {
         if (this.state.isJumping === true){
             return;
         }
-        this.setState({isJumping:true})//防重复点击
+        this.setState({isJumping:true});
+        //防重复点击
         this.timer = setTimeout(async()=>{
             await this.setState({isJumping:false})//1.5秒后可点击
-        },1000)
+        },1000);
         this.props.navigator.push({
             screen: 'SystemMessagePage',
             backButtonTitle: '返回', // 返回按钮的文字 (可选)
@@ -596,15 +567,9 @@ export default class MessageCenterPage extends BComponent {
         );
     }
 
-    static renderbadTitleItem() {
-        return (
-            <Text style={[styles.navbarTitleItemStyle,{fontSize:18,color:'#323232'}]}>获取失败</Text>
-        );
-    }
 
     _renderRow(rowData) {
-        // console.log('row===' + rowData.rowIndex); //手动添加的数据 不要误会真的有这个属性哦!
-        // console.log("点击renderRow" + rowData);
+
         return (
             <TouchableOpacity onPress={() => {
                 rowData.type === 'outservice'? this.toMyOutSideWork(rowData.msgId,rowData) : this.toSystemMessagePage(rowData.content,rowData.msgId,rowData); }}>
@@ -619,18 +584,8 @@ export default class MessageCenterPage extends BComponent {
         );
     }
 
-    _endReached(){
-
-        this.timer = setTimeout(
-            () => {
-                this._loadMoreData();
-            },1000);
-    }
-
-
-
     renderFooter(){
-        if (this.state.loadingMore == 1){
+        if (this.state.loadingMore === 1){
             return(
                 <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
                     <ActivityIndicator size={'small'}/>
@@ -639,7 +594,7 @@ export default class MessageCenterPage extends BComponent {
                 </View>
             );
             //加载中..
-        }else if (this.state.loadingMore == 0){
+        }else if (this.state.loadingMore === 0){
             return (
                 <View style={{height:40,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
 
@@ -662,7 +617,7 @@ export default class MessageCenterPage extends BComponent {
     // 根据网络状态决定是否渲染 ListView
     renderListView() {
 
-        if (this.state.isNoNetwork == true) {      // 无网络
+        if (this.state.isNoNetwork === true) {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
@@ -673,12 +628,13 @@ export default class MessageCenterPage extends BComponent {
                     </View>
                 </TouchableOpacity>
             );
-        }else if (this.state.loaded === false) {      // 没什么错但是还没开始请求数据
+        }else if (this.state.loadedStatus === '') {      // 没什么错但是还没开始请求数据
+
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
                 </View>
             );
-        }else if (this.state.faild == true) {      // 数据加载失败
+        }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
@@ -689,7 +645,7 @@ export default class MessageCenterPage extends BComponent {
                     </View>
                 </TouchableOpacity>
             );
-        }else if (this.messageArr.length == 0){
+        }else if (this.messageArr.length === 0){
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
@@ -723,23 +679,6 @@ export default class MessageCenterPage extends BComponent {
                                  />
                              }
                 />
-                // onRefresh={this._loadData.bind(this)}//设置下拉刷新的方法 传递参数end函数 当刷新操作结束时
-                // onLoadMore={this._loadMoreData.bind(this)} //设置上拉加载执行的方法 传递参数end函数 当刷新操作结束时 end函数可接受一个bool值参数表示刷新结束后是否已经无更多数据了。
-                // //isShowLoadMore={false} //可以通过state控制是否显示上拉加载组件，可用于数据不足一屏或者要求数据全部加载完毕时不显示上拉加载控件
-                // // customRefreshView={(refresStatus,offsetY)=>{
-                // //     return (<Text>{'状态:'+refresStatus+','+offsetY}</Text>)
-                // // }} //自定义下拉刷新视图参数，refresStatus是上面引入的RefreshStatus类型，对应刷新状态各个状态。offsetY对应下拉的偏移量,可用于定制动画。自定义视图必须通过customRefreshViewHeight指定高度
-                //
-                // // renderFooter={()=>{return
-                // //     (<View style={{backgroundColor:'blue',height:30}}>
-                // //         <Text>我是footer</Text>
-                // //     </View>)
-                // // }}
-                //
-                // noMoreDataTitle = '  历史消息  '
-
-                // customRefreshViewHeight={60} //自定义刷新视图时必须指定高度
-
 
             );
         }
