@@ -66,7 +66,6 @@ _needCallBack(){
     }
 }
 
-
 _loadData() {
 
         this.loading  = SActivityIndicator.show(true, "加载中...");

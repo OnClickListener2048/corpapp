@@ -60,6 +60,7 @@ export default class MessageCenterPage extends BComponent {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
+        this.toSearchPage = this.toSearchPage.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this._initJPush = this._initJPush.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -466,6 +467,30 @@ export default class MessageCenterPage extends BComponent {
 
     }
 
+    toSearchPage(){
+        if (this.state.isJumping === true){
+            return;
+        }
+
+
+        this.setState({isJumping:true});
+        //防重复点击
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({isJumping:false})//1.5秒后可点击
+        },1000);
+
+
+        this.props.navigator.push({
+            screen: 'SearchPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title: '搜索',
+
+        });
+
+    }
+
     // 跳转到外勤通知页
     toMyOutSideWork(msgId,rowData) {
         // console.log(this.props.navigator.subarray().length);
@@ -566,6 +591,18 @@ export default class MessageCenterPage extends BComponent {
             <Text style={[styles.navbarTitleItemStyle,{fontSize:18,color:'#323232'}]}>消息中心</Text>
         );
     }
+
+    _renderHeader(rowData){
+        return(
+            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 60 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+
+                <View style={{width : SCREEN_WIDTH , height : 60 }}>
+
+                </View>
+             </TouchableOpacity>
+
+        );
+    };
 
 
     _renderRow(rowData) {
@@ -668,6 +705,7 @@ export default class MessageCenterPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderRow.bind(this)}
+                             renderHeader={this._renderHeader.bind(this)}
                              refreshControl = {
                                  <RefreshControl
                                      refreshing={this.state.isRefreshing}

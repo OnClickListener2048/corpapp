@@ -6,6 +6,7 @@ import LoginPage from './user/LoginPage';
 import MessageCenterPage from './message/MessageCenterPage';
 import SystemMessagePage from './message/SystemMessagePage';
 
+import SearchPage from './message/SearchPage';
 import ApplicationCenterPage from './aplicationCenter/ApplicationCenterPage';
 import Mine from './pilipaMain/PLPMine';
 import MyOutSideWorkPage from "./outWork/myOutSideWork/MyOutSideWorkPage";
@@ -46,5 +47,6 @@ export default function () {
     reg('pilipaMain.my.About', () => About);
     reg('pilipaMain.my.Settings', () => Settings);
     reg('WatchImageModalPage', () => WatchImageModalPage);
+    reg('SearchPage', () => SearchPage);
 
 }
