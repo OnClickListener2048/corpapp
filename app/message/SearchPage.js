@@ -34,16 +34,17 @@ export default class SearchPage extends BComponent {
 
         this.state = {
             loadedStatus : '',  // loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch
-            queryText:'北京',//搜索框输入信息
-            count:'15',//索引返回数据条数
+            count:'10',//索引返回数据条数
             taskId:'118',//主任务ID
             isNoNetwork : false,
             isJumping : false, //防止重复点击
-
+            lastID:'',//分页所需最后一项ID
+            searchData: new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2}),
         };
 
         this.searchInfoArr = [];
-        this.indexInfoArr = [];
+        this.indexInfoArr = [];//推荐索引数据
 
         this._loadIndexData = this._loadIndexData.bind(this);
         this._loadSearchData = this._loadSearchData.bind(this);
@@ -66,29 +67,29 @@ export default class SearchPage extends BComponent {
             isNoNetwork:false,
         });
 
-        this.setState({
-            lastID: null
-        });
-
         apis.loadSearchIndex(indexStr,this.state.count).then(
             (responseData) => {
+                if(responseData!==null&& responseData.data !== null){
+                    this.indexInfoArr = [];
+                    this.indexInfoArr= this.indexInfoArr.concat(responseData.data);
+                    this.setState({
+                        searchData: this.state.searchData.cloneWithRows(this.indexInfoArr),
+                        loadedStatus : 'loadedIndex',
+                    });
+                    if(responseData.data.length===0){
+                        this.setState({
+                            loadedStatus : 'loadedSearch',
+                        });
+                    }
+                }
 
             },
             (e) => {
 
-                if ( this.messageArr.length > 0){
-                    // 关闭刷新动画
-                    this.setState({
-                        loadedStatus : 'loadedSucess',
-
-                    });
-                }else {
-                    // 关闭刷新动画
                     this.setState({
                         loadedStatus : 'loadedFaild',
                     });
 
-                }
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
             },
@@ -96,7 +97,6 @@ export default class SearchPage extends BComponent {
     }
 
     //点击确定，具体任务列表
-
     _loadSearchData(searchStr){
 
         if(!NetInfoSingleton.isConnected) {
@@ -226,6 +226,13 @@ export default class SearchPage extends BComponent {
     }
 
 
+    //点击某个推荐项，进入查询详细列表页
+    _pressIndexData(str,taskId){
+        this.setState({
+            taskId:taskId,
+        })
+        this._loadSearchData(str);
+    }
 
     _renderHeader(rowData){
         return(
@@ -239,7 +246,13 @@ export default class SearchPage extends BComponent {
     _renderIndexRow(rowData) {
 
         return (
-            <view style={styles.rowStyle}></view>
+            <TouchableOpacity onPress={() => {
+                this._pressIndexData(rowData.corpName,rowData.taskId)
+            }}>
+            <View style={styles.rowStyle}>
+                <Text style={{fontSize:15,color:'black'}}>{rowData.corpName}</Text>
+            </View>
+            </TouchableOpacity>
         );
     }
 
@@ -256,7 +269,7 @@ export default class SearchPage extends BComponent {
 
 
     renderListView() {
-
+        console.log(this.indexInfoArr.length+"==="+this.state.loadedStatus);
         if (this.state.isNoNetwork === true) {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
@@ -307,27 +320,16 @@ export default class SearchPage extends BComponent {
 
             return(
                 <ListView    style={[{flex : 1 }]}
-                             dataSource={this.state.dataSource}
-                             onEndReached={this._loadMoreData}
-                             renderFooter={this.renderFooter}
+                             dataSource={this.state.searchData}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}
                              renderHeader={this._renderHeader.bind(this)}
-                             refreshControl = {
-                                 <RefreshControl
-                                     refreshing={this.state.isRefreshing}
-                                     onRefresh={this._loadData}
-                                     title={'加载中...'}
-                                     titleColor={'#b1b1b1'}
-                                     colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
-                                     progressBackgroundColor={'#fafafa'}
-                                 />
-                             }
                 />
 
             );
-        }else {         // 有数据
+        }
+        else {         // 有数据
             return(
 
                 <ListView    style={[{flex : 1 }]}
@@ -339,14 +341,14 @@ export default class SearchPage extends BComponent {
                              renderRow={this._renderSearchRow.bind(this)}
                              renderHeader={this._renderHeader.bind(this)}
                              refreshControl = {
-                                 <RefreshControl
-                                     refreshing={this.state.isRefreshing}
-                                     onRefresh={this._loadData}
-                                     title={'加载中...'}
-                                     titleColor={'#b1b1b1'}
-                                     colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
-                                     progressBackgroundColor={'#fafafa'}
-                                 />
+                                <RefreshControl
+                                    refreshing={this.state.isRefreshing}
+                                    onRefresh={this._loadData}
+                                    title={'加载中...'}
+                                    titleColor={'#b1b1b1'}
+                                    colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
+                                    progressBackgroundColor={'#fafafa'}
+                                />
                              }
                 />
 

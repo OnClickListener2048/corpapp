@@ -21,6 +21,6 @@ export function loadSearchIndex( queryText = '',count = '') {
 }
 
 //点击确定获取具体数据
-export function loadSearchData(queryText = '' ,sinceId='') {
-    return postApi('/app/v0/message/markRead', {queryText,countsinceId});
+export function loadSearchData(queryText = '' ,count = '',sinceId='') {
+    return postApi('/app/v0/outsource/search', {queryText,count,sinceId});
 }
