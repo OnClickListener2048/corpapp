@@ -12,9 +12,7 @@ export const SCREEN_WIDTH = window.width;
 const styles = StyleSheet.create({
         container: {
             flex: 1,
-            // backgroundColor: '#FAFAFA',
-            backgroundColor: 'orange',
-
+             backgroundColor: '#FAFAFA',
             flexDirection: 'column'
         },
 

@@ -42,7 +42,7 @@ export default class SearchPage extends BComponent {
             isNoNetwork : false,
             isJumping : false, //防止重复点击
             lastID:'',//分页所需最后一项ID
-            searchData:  new ListView.DataSource({
+            dataIndexSource:  new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             lastID : null,
             loadingMore : 0,     //footer状态即上拉刷新的状态
@@ -68,38 +68,35 @@ export default class SearchPage extends BComponent {
 
         //搜索索引
         _loadIndexData(indexStr){
-            if(!NetInfoSingleton.isConnected) {
-                this.setState({
-                    isNoNetwork:true,
-                });
-                return;
-            }
-            this.setState({
-                isNoNetwork:false,
-            });
 
             apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
+
+
                     if(responseData!==null&& responseData.data !== null){
-                        this.indexInfoArr = [];
-                        this.indexInfoArr= this.indexInfoArr.concat(responseData.data);
-                        this.setState({
-                            searchData: this.state.searchData.cloneWithRows(this.indexInfoArr),
-                            loadedStatus : 'loadedIndex',
-                        });
-                        if(responseData.data.length===0){
+
+                        if (responseData.length > 0){
+                            this.indexInfoArr = [];
+                            this.indexInfoArr= this.indexInfoArr.concat(responseData.data);
                             this.setState({
-                                loadedStatus : 'loadedSearch',
+                                dataIndexSource: this.state.dataIndexSource.cloneWithRows(this.indexInfoArr),
+                                loadedStatus : 'loadedIndex',
                             });
+                            if(responseData.data.length===0){
+                                this.setState({
+                                    loadedStatus : 'loadedSearch',
+                                });
+                            }
                         }
+
+
+
                     }
 
                 },
                 (e) => {
 
-                    this.setState({
-                        loadedStatus : 'loadedFaild',
-                    });
+
 
                     console.log("获取失败" , e);
                     Toast.show(errorText( e ));
@@ -109,6 +106,8 @@ export default class SearchPage extends BComponent {
 
     //点击确定，具体任务列表
     _loadSearchData(searchStr){
+
+            console.log('停止之后的搜索'+searchStr);
 
         if(!NetInfoSingleton.isConnected) {
             this.setState({
@@ -534,7 +533,7 @@ export default class SearchPage extends BComponent {
 
             return(
                 <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
-                             dataSource={this.state.searchData}
+                             dataSource={this.state.dataIndexSource}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}

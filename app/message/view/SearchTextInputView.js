@@ -14,6 +14,7 @@ export default class SearchTextInputView extends Component {
             textEditable:this.props.textEditable
         };
         lastText = '';
+        this._enterBtnClick = this._enterBtnClick.bind(this);
 
     }
 
@@ -50,6 +51,18 @@ export default class SearchTextInputView extends Component {
         }
     }
 
+    _enterBtnClick(){
+        //用户确定了搜索的内容
+        //把此内容做缓存操作
+        if(this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.props.callback('search',lastText);
+
+
+
+    }
+
     render(){
         return(
 
@@ -58,7 +71,12 @@ export default class SearchTextInputView extends Component {
                            value={this.state.content}
                            editable={this.props.textEditable}
                            onChange={this._changeText.bind(this)}
-                           style={styles.textInput} placeholder='' returnKeyType='next'
+
+                           onSubmitEditing={() => {
+                               this._enterBtnClick
+                               //this._verifyVCode();
+                           }}
+                           style={styles.textInput} placeholder='' returnKeyType='done'
                 />
             </View>
 
