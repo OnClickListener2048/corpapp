@@ -41,7 +41,7 @@ export default class SearchPage extends BComponent {
 
         this.searchInfoArr = [];
         this.indexInfoArr = [];
-
+        this._loadSearchData = this._loadSearchData.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -68,6 +68,7 @@ export default class SearchPage extends BComponent {
 
         apis.loadSearchIndex(this.state.queryText,this.state.count).then(
             (responseData) => {
+                SActivityIndicator.hide(loading);
 
             },
             (e) => {
@@ -111,6 +112,7 @@ export default class SearchPage extends BComponent {
 
         apis.loadSearchData(this.state.queryText,this.state.taskId).then(
             (responseData) => {
+                SActivityIndicator.hide(loading);
 
             },
             (e) => {
