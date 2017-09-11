@@ -2,9 +2,9 @@
  * Created by jinglan on 2017/9/11.
  */
 import React, {Component,PropTypes} from 'react';
-import {Text, TextInput, View, Platform, Image,} from "react-native";
+import {Text, TextInput, View, Platform, Image,TouchableOpacity} from "react-native";
 
-export default class SearchTextInputView extends Component {
+export default class SearchView extends Component {
 
     constructor(props) {
         super(props);
@@ -31,7 +31,7 @@ export default class SearchTextInputView extends Component {
 
         lastText = event.nativeEvent.text;
         if(this.timer) {
-           clearTimeout(this.timer);
+            clearTimeout(this.timer);
         }
 
         this.timer = setTimeout(()=>{
@@ -45,7 +45,7 @@ export default class SearchTextInputView extends Component {
 
         this.props.callback('index',lastText);
 
-       //搜索相关索引信息
+        //搜索相关索引信息
         if(this.timer) {
             clearTimeout(this.timer);
         }
@@ -64,8 +64,8 @@ export default class SearchTextInputView extends Component {
     }
 
     /*
-    *
-    * <Image
+     *
+     * <Image
      source={require('../../img/bigk.png')}
      style={[styles.textInput]}>
      </Image>
@@ -76,10 +76,10 @@ export default class SearchTextInputView extends Component {
             <View style={styles.textInputContainer}>
                 <View style={styles.circleView}>
 
-                    <Image
-                        source={require('../../img/search.png')}
-                        style={[styles.searchImg]}>
-                    </Image>
+                <Image
+                    source={require('../../img/search.png')}
+                    style={[styles.searchImg]}>
+                </Image>
                 <TextInput underlineColorAndroid='transparent'
                            value={this.state.content}
                            editable={this.props.textEditable}
@@ -91,7 +91,14 @@ export default class SearchTextInputView extends Component {
                            }}
                            style={styles.textInput} placeholder='' returnKeyType='done'
                 />
-                </View>
+            </View>
+
+                <TouchableOpacity onPress={this.btnClick}>
+                    <View  style={styles.cancleBtnStyle}>
+                        <Text style={{fontSize:18, textAlign:'center', justifyContent: 'center',color:'#323232'}}>
+                           取消</Text>
+                    </View>
+                </TouchableOpacity>
 
             </View>
 
@@ -109,19 +116,6 @@ export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
-
-        flexDirection: 'column'
-    },
-    companyInfoViewContainer: {
-        width: SCREEN_WIDTH,
-        height:130,
-        backgroundColor: 'gray',
-        flexDirection: 'column'
-        // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
-    },
 
     // phone input box
     textInputContainer: {
@@ -129,7 +123,8 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         marginLeft: 0,
         // width: SCREEN_WIDTH,
-         backgroundColor: '#FAFAFA',
+        backgroundColor: '#FAFAFA',
+
         flexDirection: 'row',
         alignItems:'center'
     },
@@ -148,7 +143,6 @@ const styles = StyleSheet.create({
         borderColor:'#E6E6E6',
         backgroundColor: 'white',
 
-        color:'#323232',
         fontSize: 15,
         flexDirection: 'row',
 
@@ -171,47 +165,29 @@ const styles = StyleSheet.create({
 
         marginLeft: 6,
 
-        borderColor:'orange',
 
         color:'#323232',
         fontSize: 15,
     },
 
-    legalPersonStyle: {
-        marginTop : 5,
-        width: SCREEN_WIDTH - 30,
-        // flex: 1,
-        height: 30,
-        flexDirection: 'row',
-        justifyContent:'space-between'
-    },
+    cancleBtnStyle: {
 
-    registerNumStyle: {
-        marginTop : 5,
-        width: SCREEN_WIDTH - 30,
-        // flex: 1,
+        width: 40,
         height: 30,
-        flexDirection: 'row',
-        justifyContent:'space-between'
-    },
 
-    companyInfoRowSubViewStyle: {
-        maxWidth: SCREEN_WIDTH/2 - 15,
-        width: SCREEN_WIDTH/2 - 15,
-        height: 30,
-        marginLeft : 0,
-        marginRight : 0,
-        flexDirection: 'row',
-    },
-    companyInfoRowPhoneStyle: {
-        maxWidth: SCREEN_WIDTH/2 - 15,
-        width: SCREEN_WIDTH/2 - 15,
-        height: 30,
-        marginLeft : 0,
-        marginRight : 0,
-        flexDirection: 'row',
-        justifyContent:'flex-end'
+        marginLeft: 11,
+        marginRight: 11,
 
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    bottomLineStyle: {
+
+        width: SCREEN_WIDTH,
+        height: 1,
+        backgroundColor:'black',
+        marginTop:43
     }
+
 
 });

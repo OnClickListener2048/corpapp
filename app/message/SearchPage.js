@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import BComponent from '../base';
 import styles from './css/SearchPageStyle'
-import SearchTextInputView from './view/SearchTextInputView'
+import SearchTextInputView from './view/SearchView'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
