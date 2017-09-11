@@ -15,7 +15,7 @@ export default class SearchIndexCell extends React.Component {
     }
 
     static propTypes = {
-        taskId: PropTypes.number,
+        taskId: PropTypes.string,
         corpName: PropTypes.string,
         corpStr: PropTypes.string
     };
