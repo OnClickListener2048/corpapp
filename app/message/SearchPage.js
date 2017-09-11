@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import BComponent from '../base';
 import styles from './css/SearchPageStyle'
+import SearchTextInputView from './view/SearchTextInputView'
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
@@ -37,7 +38,7 @@ export default class SearchPage extends BComponent {
     render() {
         return (
             <View style={styles.container}>
-
+                <SearchTextInputView/>
 
             </View>
         );
