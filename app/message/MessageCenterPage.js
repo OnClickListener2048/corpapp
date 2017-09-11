@@ -215,7 +215,6 @@ export default class MessageCenterPage extends BComponent {
                             lastID : this.messageArr[this.messageArr.length - 1].msgId
                         });
 
-                        // console.log(this.lastID +'你大爷');
                     }else {
                         this.setState({loadingMore: 2});
 
