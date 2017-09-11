@@ -171,22 +171,20 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion 24
     buildToolsVersion "23.0.3"
-
     defaultConfig {
         applicationId "cn.pilipa.corpapp"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
         manifestPlaceholders = [
-                JPUSH_APPKEY: "e8f5ec679b9976aa36858ebb",	// JPush 的APPKey
-                APP_CHANNEL: "developer-default"		//JPush 应用渠道号
+                JPUSH_APPKEY: "e8f5ec679b9976aa36858ebb",    // JPush 的APPKey
+                APP_CHANNEL : "developer-default"        //JPush 应用渠道号
         ]
     }
-
     signingConfigs {
         pilipa {
             storeFile file("corpapp.keystore")
@@ -195,14 +193,12 @@ android {
             keyPassword "pilipa"
         }
     }
-
-        packagingOptions {
-            exclude 'META-INF/DEPENDENCIES'
-            exclude 'META-INF/NOTICE'
-            exclude 'META-INF/LICENSE'
-            exclude 'META-INF/rxjava.properties'
-        }
-
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/rxjava.properties'
+    }
     splits {
         abi {
             reset()
@@ -227,7 +223,7 @@ android {
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             println('abi = ' + abi);
 
@@ -235,15 +231,16 @@ android {
 
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
-                        versionCodes.get(abi) * 1048576 + manifestParser.getVersionCode()// defaultConfig.versionCode
+                        versionCodes.get(abi) * 1048576 + manifestParser.getVersionCode()
+// defaultConfig.versionCode
             }
 
             //修改生成的apk名字
             def oldFile = output.outputFile
 
-            def versionName =manifestParser.getVersionName()
+            def versionName = manifestParser.getVersionName()
 //            def newName = "pi_v_" + defaultConfig.versionName;
-            def newName = "pi_" + abi + "_v" + versionName + "_" + releaseTime() ;
+            def newName = "pi_" + abi + "_v" + versionName + "_" + releaseTime();
             if (variant.buildType.name == 'release') {
                 def releaseApkName = newName + '.apk'
                 output.outputFile = new File(oldFile.parent, releaseApkName)
@@ -253,6 +250,8 @@ android {
 //                output.outputFile = new File(oldFile.parent, releaseApkName)
 //            }
         }
+    }
+    productFlavors {
     }
 }
 
@@ -269,15 +268,17 @@ dependencies {
     compile project(':realm')
     compile project(':react-native-vector-icons')
     compile project(':react-native-blur')
-    compile fileTree(dir: "libs", include: ["*.jar"])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':jpush-react-native')
     compile project(':jcore-react-native')
-    compile "com.android.support:appcompat-v7:24.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile 'com.android.support:appcompat-v7:24.0.1'
+    compile 'com.facebook.react:react-native:+'
+    // From node_modules
     //注释掉原有bugly的仓库
     compile 'com.android.support:multidex:1.0.1'
-//    compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
-    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+    //    compile 'com.tencent.bugly:crashreport:latest.release'//其中latest.release指代最新版本号，也可以指定明确的版本号，例如2.3.2
+    compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
     compile 'com.umeng.analytics:analytics:latest.integration'
 }
 
