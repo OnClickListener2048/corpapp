@@ -27,10 +27,20 @@ const styles = StyleSheet.create({
         rowStyle: {
             marginTop: 15,
             height : 69,
-            backgroundColor: '#FAFAFA',
+            width:SCREEN_WIDTH,
+            backgroundColor: 'green',
             flexDirection: 'column',
 
         },
+
+    searchRowStyle: {
+        marginTop: 15,
+        height : 69,
+        width:SCREEN_WIDTH,
+        backgroundColor: 'blue',
+        flexDirection: 'column',
+
+    },
         realRowStyle: {
             marginLeft: 27.5,
             marginRight: 15,

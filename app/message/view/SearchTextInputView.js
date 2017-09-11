@@ -40,6 +40,8 @@ export default class SearchTextInputView extends Component {
 
 
     _search(){
+        this.props.callback();
+
        //搜索相关索引信息
         if(this.timer) {
             clearTimeout(this.timer);
