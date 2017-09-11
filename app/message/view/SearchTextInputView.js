@@ -11,7 +11,9 @@ export default class SearchTextInputView extends Component {
         this.state = { content: this.props.content,
             textName:this.props.textName,
 
-            textEditable:this.props.textEditable};
+            textEditable:this.props.textEditable
+        };
+        lastText = '';
 
     }
 
@@ -23,7 +25,6 @@ export default class SearchTextInputView extends Component {
 
     };
 
-    lastText = '';
 
     _changeText(event){
 
@@ -40,7 +41,8 @@ export default class SearchTextInputView extends Component {
 
 
     _search(){
-        this.props.callback();
+
+        this.props.callback('index',lastText);
 
        //搜索相关索引信息
         if(this.timer) {
@@ -50,20 +52,16 @@ export default class SearchTextInputView extends Component {
 
     render(){
         return(
-            <View style={styles.container}>
-                <View style={styles.registerNumStyle}>
 
-                    <View style={styles.textInputContainer}>
-                            <TextInput underlineColorAndroid='transparent'
-                                       value={this.state.content}
-                                       editable={this.props.textEditable}
-                                       onChange={this._changeText.bind(this)}
-                                       style={styles.textInput} placeholder='' returnKeyType='next'
-                                      />
-                    </View>
-                </View>
-
+            <View style={styles.textInputContainer}>
+                <TextInput underlineColorAndroid='transparent'
+                           value={this.state.content}
+                           editable={this.props.textEditable}
+                           onChange={this._changeText.bind(this)}
+                           style={styles.textInput} placeholder='' returnKeyType='next'
+                />
             </View>
+
 
         )};
 
