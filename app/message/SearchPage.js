@@ -21,6 +21,7 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
 import Toast from 'react-native-root-toast';
+import SearchIndexCell from "./view/SearchIndexCell";
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
@@ -249,9 +250,11 @@ export default class SearchPage extends BComponent {
             <TouchableOpacity onPress={() => {
                 this._pressIndexData(rowData.corpName,rowData.taskId)
             }}>
-            <View style={styles.rowStyle}>
-                <Text style={{fontSize:15,color:'black'}}>{rowData.corpName}</Text>
-            </View>
+            <SearchIndexCell
+                taskId= {rowData.taskId}
+                corpName={rowData.corpName}
+                corpStr={'北京'}
+            />
             </TouchableOpacity>
         );
     }
@@ -261,7 +264,7 @@ export default class SearchPage extends BComponent {
         return (
             <TouchableOpacity onPress={() => {
                this.toMyOutSideWork(rowData)}}>
-            <view style={styles.searchRowStyle}></view>
+            <View style={styles.searchRowStyle}></View>
             </TouchableOpacity>
 
         );
