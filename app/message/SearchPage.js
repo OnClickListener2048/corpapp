@@ -20,6 +20,7 @@ import SearchTextInputView from './view/SearchTextInputView'
 import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
+import Toast from 'react-native-root-toast';
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
@@ -33,7 +34,9 @@ export default class SearchPage extends BComponent {
 
         this.state = {
             loadedStatus : '',  // loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch
-
+            queryText:'北京',//搜索框输入信息
+            count:'15',//索引返回数据条数
+            taskId:'118',//主任务ID
         };
 
         this.searchInfoArr = [];
@@ -42,13 +45,94 @@ export default class SearchPage extends BComponent {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
-    _loadIndexData(){
-
+    componentDidMount() {
+        this._loadSearchData();
     }
 
+    //搜索索引
+    _loadIndexData(){
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                isNoNetwork:true,
+            });
+            return;
+        }
+        this.setState({
+            isNoNetwork:false,
+        });
 
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.setState({
+            lastID: null
+        });
+
+        apis.loadSearchIndex(this.state.queryText,this.state.count).then(
+            (responseData) => {
+
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+
+                if ( this.messageArr.length > 0){
+                    // 关闭刷新动画
+                    this.setState({
+                        loadedStatus : 'loadedSucess',
+
+                    });
+                }else {
+                    // 关闭刷新动画
+                    this.setState({
+                        loadedStatus : 'loadedFaild',
+                    });
+
+                }
+                console.log("获取失败" , e);
+                Toast.show(errorText( e ));
+            },
+        );
+    }
+
+    //点击确定，具体任务列表
     _loadSearchData(){
+        if(!NetInfoSingleton.isConnected) {
+            this.setState({
+                isNoNetwork:true,
+            });
+            return;
+        }
+        this.setState({
+            isNoNetwork:false,
+        });
 
+        let loading = SActivityIndicator.show(true, "加载中...");
+        this.setState({
+            lastID: null
+        });
+
+        apis.loadSearchData(this.state.queryText,this.state.taskId).then(
+            (responseData) => {
+
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+
+                if ( this.messageArr.length > 0){
+                    // 关闭刷新动画
+                    this.setState({
+                        loadedStatus : 'loadedSucess',
+
+                    });
+                }else {
+                    // 关闭刷新动画
+                    this.setState({
+                        loadedStatus : 'loadedFaild',
+                    });
+
+                }
+                console.log("获取失败" , e);
+                Toast.show(errorText( e ));
+            },
+        );
 
     }
 
