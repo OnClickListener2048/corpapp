@@ -37,20 +37,24 @@ export default class SearchPage extends BComponent {
             queryText:'北京',//搜索框输入信息
             count:'15',//索引返回数据条数
             taskId:'118',//主任务ID
+            isNoNetwork : false,
+            isJumping : false, //防止重复点击
+
         };
 
         this.searchInfoArr = [];
         this.indexInfoArr = [];
+        this._loadIndexData = this._loadIndexData.bind(this);
+        this._loadSearchData = this._loadSearchData.bind(this);
+        this.toMyOutSideWork = this.toMyOutSideWork.bind(this);
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
-    componentDidMount() {
-        this._loadSearchData();
-    }
+
 
     //搜索索引
-    _loadIndexData(){
+    _loadIndexData(indexStr){
         if(!NetInfoSingleton.isConnected) {
             this.setState({
                 isNoNetwork:true,
@@ -66,7 +70,7 @@ export default class SearchPage extends BComponent {
             lastID: null
         });
 
-        apis.loadSearchIndex(this.state.queryText,this.state.count).then(
+        apis.loadSearchIndex(indexStr,this.state.count).then(
             (responseData) => {
 
             },
@@ -93,7 +97,9 @@ export default class SearchPage extends BComponent {
     }
 
     //点击确定，具体任务列表
-    _loadSearchData(){
+
+    _loadSearchData(searchStr){
+
         if(!NetInfoSingleton.isConnected) {
             this.setState({
                 isNoNetwork:true,
@@ -109,7 +115,7 @@ export default class SearchPage extends BComponent {
             lastID: null
         });
 
-        apis.loadSearchData(this.state.queryText,this.state.taskId).then(
+        apis.loadSearchData(searchStr,this.state.taskId).then(
             (responseData) => {
 
             },
@@ -132,7 +138,90 @@ export default class SearchPage extends BComponent {
                 console.log("获取失败" , e);
                 Toast.show(errorText( e ));
             },
-        );
+        )
+    }
+
+
+
+    _callBackWithSelectType(type,str){
+
+        console.log('信息' + type +str)
+        //type : 'index'; 'search'
+
+        if (type === 'index'){
+            this._loadIndexData(str);
+        }else if (type === 'search'){
+
+            this._loadSearchData(str);
+
+        }
+
+
+
+    }
+
+
+    toMyOutSideWork(rowData) {
+        if (this.state.isJumping === true){
+            return;
+        }
+
+
+        this.setState({isJumping:true});
+        //防重复点击
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({isJumping:false})//1.5秒后可点击
+        },1000);
+
+
+        let jumpUri = JSON.parse(rowData.content).jumpUri;
+
+        let arr=jumpUri.split('?');
+
+        let outPageId = '';
+        let paramsStr1 = '';
+        let paramsArr1 = [];
+        let subParam1 = '';
+        let specArr1 = [];
+
+        if (arr.length > 1){
+            paramsStr1 = arr[1];
+            paramsArr1=paramsStr1.split('&');
+
+            let paramsStr = arr[1];
+            let paramsArr=paramsStr.split('&');
+
+            for (let i = 0 ; i < paramsArr.length ; i++) {
+                subParam1 = paramsArr[i];
+
+                let subParam = paramsArr[i];
+                specArr1 = subParam.split('=');
+
+                let specArr = subParam.split('=');
+                if (specArr.length > 1) {
+
+                    if (specArr[0] === 'id') {
+                        outPageId = specArr[1];
+                        break;
+                    }
+                }
+            }
+        }
+
+
+
+        this.props.navigator.push({
+            screen: 'MyOutSideTaskPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+
+            passProps: {
+                taskId:outPageId,
+            }
+        });
+
+
 
     }
 
@@ -140,12 +229,8 @@ export default class SearchPage extends BComponent {
 
     _renderHeader(rowData){
         return(
-            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 60 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+            <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
 
-                <View style={{width : SCREEN_WIDTH , height : 60 }}>
-
-                </View>
-            </TouchableOpacity>
 
         );
     };
@@ -161,7 +246,11 @@ export default class SearchPage extends BComponent {
     _renderSearchRow(rowData) {
 
         return (
+            <TouchableOpacity onPress={() => {
+               this.toMyOutSideWork(rowData)}}>
             <view style={styles.searchRowStyle}></view>
+            </TouchableOpacity>
+
         );
     }
 
@@ -173,6 +262,8 @@ export default class SearchPage extends BComponent {
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
+                        <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
+
                         <NoMessage
                             textContent='网络错误,点击重新开始'
                             active={require('../img/network_error.png')}/>
@@ -183,11 +274,14 @@ export default class SearchPage extends BComponent {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
+
                 </View>
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
@@ -263,7 +357,6 @@ export default class SearchPage extends BComponent {
     render() {
         return (
             <View style={styles.container}>
-                <SearchTextInputView  callback={this._loadIndexData.bind(this)}/>
                 {this.renderListView()}
 
             </View>
