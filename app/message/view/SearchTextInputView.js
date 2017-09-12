@@ -149,7 +149,6 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
 
         color:'#323232',
-        fontSize: 15,
         flexDirection: 'row',
 
     },

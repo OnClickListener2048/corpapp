@@ -27,7 +27,7 @@ import SearchInfoCell from './view/SearchInfoCell';
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
-        navBarHidden: false, // 隐藏默认的顶部导航栏
+        navBarHidden: true, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
 
@@ -329,7 +329,9 @@ export default class SearchPage extends BComponent {
         console.log('信息' + type +str)
         //type : 'index'; 'search'
 
-        if (type === 'index'){
+        if (type === 'cancle'){
+            this.props.navigator.pop()
+        }else if (type === 'index'){
            // this._loadSearchData(str);
 
             this._loadIndexData(str);
@@ -417,14 +419,6 @@ export default class SearchPage extends BComponent {
         this._loadSearchData(str);
     }
 
-    _renderHeader(rowData){
-        return(
-            <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
-
-
-        );
-    };
-
     renderFooter(){
         if (this.state.loadingMore === 1){
             return(
@@ -488,7 +482,6 @@ export default class SearchPage extends BComponent {
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
-                        <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
 
                         <NoMessage
                             textContent='网络错误,点击重新开始'
@@ -500,14 +493,12 @@ export default class SearchPage extends BComponent {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
 
                 </View>
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-                    <SearchTextInputView style={[{height:60  }]} callback={this._callBackWithSelectType.bind(this)}/>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
@@ -537,7 +528,6 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}
-                             renderHeader={this._renderHeader.bind(this)}
                 />
 
             );
@@ -552,7 +542,6 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderSearchRow.bind(this)}
-                             renderHeader={this._renderHeader.bind(this)}
                              refreshControl = {
 
                                  <RefreshControl
@@ -570,9 +559,26 @@ export default class SearchPage extends BComponent {
         }
     }
 
+    rendertopView() {
+            return (
+                <view style={styles.searchViewContainer}/>
+
+            );
+        }
+
+    renderSearchView() {
+        return (
+            < SearchTextInputView style={styles.searchViewContainer} callback={this._callBackWithSelectType.bind(this)}/>
+
+        );
+    }
+
     render() {
         return (
             <View style={styles.container}>
+                {/*{this.rendertopView()}*/}
+                {this.renderSearchView()}
+
                 {this.renderListView()}
 
             </View>

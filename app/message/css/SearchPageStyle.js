@@ -11,13 +11,25 @@ export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 const styles = StyleSheet.create({
         container: {
-            flex: 1,
-             backgroundColor: '#FAFAFA',
+            flex:1,
+
+            backgroundColor: '#FAFAFA',
             flexDirection: 'column'
         },
 
 
-        listViewcontainer: {
+        searchViewContainer: {
+            marginTop: 0,
+            height : 64,
+            width:SCREEN_WIDTH
+        },
+    // topViewStyle: {
+    //     marginTop: 0,
+    //     height : 20,
+    //     width:SCREEN_WIDTH
+    // },
+
+    listViewcontainer: {
             flex: 1,
             backgroundColor: '#FAFAFA',
             flexDirection: 'column'

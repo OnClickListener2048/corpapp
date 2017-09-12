@@ -15,6 +15,8 @@ export default class SearchView extends Component {
         };
         lastText = '';
         this._enterBtnClick = this._enterBtnClick.bind(this);
+        this._cancleBtnClick = this._cancleBtnClick.bind(this);
+
 
     }
 
@@ -43,15 +45,26 @@ export default class SearchView extends Component {
 
     _search(){
 
-        this.props.callback('index',lastText);
 
         //搜索相关索引信息
         if(this.timer) {
             clearTimeout(this.timer);
         }
+        this.props.callback('index',lastText);
+
+    }
+
+    _cancleBtnClick(){
+
+        if(this.timer) {
+            clearTimeout(this.timer);
+        }
+        this.props.callback('cancle');
     }
 
     _enterBtnClick(){
+
+console.log('点击了确定按钮');
         //用户确定了搜索的内容
         //把此内容做缓存操作
         if(this.timer) {
@@ -87,13 +100,12 @@ export default class SearchView extends Component {
 
                            onSubmitEditing={() => {
                                this._enterBtnClick
-                               //this._verifyVCode();
                            }}
                            style={styles.textInput} placeholder='' returnKeyType='done'
                 />
             </View>
 
-                <TouchableOpacity onPress={this.btnClick}>
+                <TouchableOpacity onPress={this._cancleBtnClick}>
                     <View  style={styles.cancleBtnStyle}>
                         <Text style={{fontSize:18, textAlign:'center', justifyContent: 'center',color:'#323232'}}>
                            取消</Text>
@@ -119,7 +131,7 @@ const styles = StyleSheet.create({
 
     // phone input box
     textInputContainer: {
-        height: 44,
+        height: 64,
         width: SCREEN_WIDTH,
         marginLeft: 0,
         // width: SCREEN_WIDTH,
@@ -135,7 +147,7 @@ const styles = StyleSheet.create({
         height: 44 - 7 - 7,
 
         marginLeft: 15,
-        marginTop: 7,
+        marginTop: 27,
         marginBottom: 7,
 
         borderWidth:0.5,
@@ -143,7 +155,6 @@ const styles = StyleSheet.create({
         borderColor:'#E6E6E6',
         backgroundColor: 'white',
 
-        fontSize: 15,
         flexDirection: 'row',
 
     },
@@ -174,7 +185,7 @@ const styles = StyleSheet.create({
 
         width: 40,
         height: 30,
-
+        marginTop:17,
         marginLeft: 11,
         marginRight: 11,
 
@@ -186,7 +197,7 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         height: 1,
         backgroundColor:'black',
-        marginTop:43
+        marginTop:63
     }
 
 
