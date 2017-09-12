@@ -50,8 +50,8 @@ export default class SearchView extends Component {
         if(this.timer) {
             clearTimeout(this.timer);
         }
-        // this.props.callback('index',lastText);
-        this.props.callback('index','北京');
+        this.props.callback('index',lastText);
+        // this.props.callback('index','北京');
 
     }
 
@@ -71,8 +71,8 @@ console.log('点击了确定按钮');
         if(this.timer) {
             clearTimeout(this.timer);
         }
-        // this.props.callback('search',lastText);
-        this.props.callback('search','北京');
+        this.props.callback('search',lastText);
+        // this.props.callback('search','北京');
 
 
 

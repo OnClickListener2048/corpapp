@@ -353,7 +353,24 @@ export default class SearchPage extends BComponent {
            this._loadIndexData(str);
 
         }else if (type === 'search'){
-
+            var inputStrData = {
+                "corpName":str,
+                "stepId":"",
+                "stepName":"",
+                "taskId":"",
+                "taskName":"",
+                "taskStatus":"",
+                "connector":"",
+                "createDate":""};
+            if(SearchHistoryStore.filtered('AllData', 'corpName="'+str+'"').length===0){
+                //保存到历史数据
+                SearchHistoryStore.singleCreate('AllData', inputStrData);
+            }else{
+                //删除一条数据
+                SearchHistoryStore.removeSingleData('AllData', 'corpName="'+str+'"');
+                //保存到历史数据
+                SearchHistoryStore.singleCreate('AllData', inputStrData);
+            }
             this._loadSearchData(str);
 
         }
@@ -465,8 +482,15 @@ export default class SearchPage extends BComponent {
 
     //清空历史纪录点击按钮
     renderHistoryFooter(){
-        if(SearchHistoryStore.loadAll('AllData').length===0)
+        if(SearchHistoryStore.loadAll('AllData').length===0){
+            return(<View style={{flex : 1 , backgroundColor:'#FAFAFA',marginTop:30 }}>
+                <NoMessage
+                    textContent='暂无历史搜索记录'
+                    active={require('../img/record.png')}/>
+            </View>)
             return;
+
+        }
         return(
             <ClearHistoryButton
                 text="清空历史搜索"
@@ -482,7 +506,6 @@ export default class SearchPage extends BComponent {
         return(
             <SearchIndexCell
                 corpName={'历史搜索'}
-                corpStr={'历史搜索'}
                 color="#c8c8c8"
             />
         )
@@ -527,7 +550,6 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
-                corpStr={'北京'}
             />
             </TouchableOpacity>
         );
@@ -541,7 +563,6 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
-                    corpStr={'北京'}
                 />
             </TouchableOpacity>
         );
