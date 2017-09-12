@@ -17,14 +17,15 @@ export default class SearchIndexCell extends React.Component {
     static propTypes = {
         taskId: PropTypes.string,
         corpName: PropTypes.string,
-        corpStr: PropTypes.string
+        corpStr: PropTypes.string,
+        color:PropTypes.string,
     };
 
     render() {
         return(
             <View style={styles.container}>
             <View style={styles.rowStyle}>
-                <Text style={styles.textstyle}>{this.props.corpName}</Text>
+                <Text style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}>{this.props.corpName}</Text>
             </View>
             </View>
         )

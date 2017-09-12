@@ -461,11 +461,26 @@ export default class SearchPage extends BComponent {
 
     //清空历史纪录点击按钮
     renderHistoryFooter(){
+        if(SearchHistoryStore.loadAll('AllData').length===0)
+            return;
         return(
             <ClearHistoryButton
                 text="清空历史纪录"
                 onPress={() => {
                     this._clearHistory()}}/>
+        )
+    }
+
+    //历史纪录头部信息
+    renderHistoryHeader(){
+        if(SearchHistoryStore.loadAll('AllData').length===0)
+            return;
+        return(
+            <SearchIndexCell
+                corpName={'历史搜索'}
+                corpStr={'历史搜索'}
+                color="#c8c8c8"
+            />
         )
     }
 
@@ -587,6 +602,7 @@ export default class SearchPage extends BComponent {
                 <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
                              dataSource={this.state.dataHistorySource}
                              renderFooter={this.renderHistoryFooter.bind(this)}
+                             renderHeader={this.renderHistoryHeader.bind(this)}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}
