@@ -13,6 +13,7 @@ import {
     TouchableOpacity,
     InteractionManager,
     RefreshControl,
+    TouchableWithoutFeedback,
     WebView
 } from 'react-native';
 import BComponent from '../base';
@@ -26,6 +27,7 @@ import SearchIndexCell from './view/SearchIndexCell';
 import SearchInfoCell from './view/SearchInfoCell';
 import SubmitButton from "../view/ui/SubmitButton";
 import ClearHistoryButton from "./view/ClearHistoryButton";
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
@@ -84,7 +86,7 @@ export default class SearchPage extends BComponent {
         //搜索索引
         _loadIndexData(indexStr){
 
-            apis.loadSearchIndex('北京',this.state.count).then(
+            apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
 
 
@@ -437,6 +439,8 @@ export default class SearchPage extends BComponent {
     //点击某个推荐项，进入查询详细列表页
     _pressIndexData(rowData){
         //保存到历史数据
+
+
         SearchHistoryStore.singleCreate('AllData', rowData);
         this.setState({
             taskId:rowData.taskId,
@@ -457,6 +461,8 @@ export default class SearchPage extends BComponent {
         });
 
         this._loadSearchData(rowData.corpName);
+        dismissKeyboard();
+
     }
 
     //清空历史纪录点击按钮
@@ -653,6 +659,7 @@ export default class SearchPage extends BComponent {
 
     render() {
         return (
+
             <View style={styles.container}>
                 {/*{this.rendertopView()}*/}
                 {this.renderSearchView()}
@@ -660,6 +667,8 @@ export default class SearchPage extends BComponent {
                 {this.renderListView()}
 
             </View>
+
+
         );
     }
 }

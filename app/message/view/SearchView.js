@@ -3,7 +3,7 @@
  */
 import React, {Component,PropTypes} from 'react';
 import {Text, TextInput, View, Platform, Image,TouchableOpacity} from "react-native";
-
+const dismissKeyboard = require('dismissKeyboard');     // 获取键盘回收方法
 export default class SearchView extends Component {
 
     constructor(props) {
@@ -50,7 +50,8 @@ export default class SearchView extends Component {
         if(this.timer) {
             clearTimeout(this.timer);
         }
-        this.props.callback('index',lastText);
+        // this.props.callback('index',lastText);
+        this.props.callback('index','北京');
 
     }
 
@@ -70,7 +71,8 @@ console.log('点击了确定按钮');
         if(this.timer) {
             clearTimeout(this.timer);
         }
-        this.props.callback('search',lastText);
+        // this.props.callback('search',lastText);
+        this.props.callback('search','北京');
 
 
 
@@ -101,9 +103,11 @@ console.log('点击了确定按钮');
                            onChange={this._changeText.bind(this)}
                            multiline={false}
                            onSubmitEditing={() => {
-                               this._enterBtnClick()
+                               this._enterBtnClick();
+                               dismissKeyboard();
+
                            }}
-                           style={styles.textInput} placeholder='' returnKeyType='done'
+                           style={styles.textInput} placeholder='' returnKeyType='search' returnKeyLabel='搜索'
                 />
             </View>
 
