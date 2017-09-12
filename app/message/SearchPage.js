@@ -24,6 +24,8 @@ import NoMessage from '../commonView/NoMessage';
 import Toast from 'react-native-root-toast';
 import SearchIndexCell from './view/SearchIndexCell';
 import SearchInfoCell from './view/SearchInfoCell';
+import SubmitButton from "../view/ui/SubmitButton";
+import ClearHistoryButton from "./view/ClearHistoryButton";
 
 export default class SearchPage extends BComponent {
     static navigatorStyle = {
@@ -36,7 +38,7 @@ export default class SearchPage extends BComponent {
         super(props);
 
         this.state = {
-            loadedStatus : '',  // loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch
+            loadedStatus : '',  // loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch,loadedHistory
             count:'10',//索引返回数据条数
             taskId:'118',//主任务ID
             isNoNetwork : false,
@@ -44,6 +46,9 @@ export default class SearchPage extends BComponent {
             lastID:'',//分页所需最后一项ID
             dataIndexSource:  new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
+            dataHistorySource:new ListView.DataSource({
+                rowHasChanged: (row1, row2) => row1 !== row2}),
+            lastID : null,
             loadingMore : 0,     //footer状态即上拉刷新的状态
             isRefreshing: false,//为了防止上拉下拉冲突
             dataSearcgSource: new ListView.DataSource({
@@ -60,15 +65,21 @@ export default class SearchPage extends BComponent {
         this._loadSearchFirstPageData = this._loadSearchFirstPageData.bind(this);
         this._loadMoreSearchInfoData = this._loadMoreSearchInfoData.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
+        this._clearHistory = this._clearHistory.bind(this);
+
+
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
 
-        // componentDidMount() {
-        //     var vaule = SearchHistoryStore.loadAll('AddSchame');
-        //     console.log("===>>>>"+JSON.parse(vaule));
-        // }
+        componentDidMount() {
+            //历史纪录显示
+            this.setState({
+                dataHistorySource: this.state.dataHistorySource.cloneWithRows(SearchHistoryStore.loadAll('AllData')),
+                loadedStatus : 'loadedHistory',
+            });
+        }
 
         //搜索索引
         _loadIndexData(indexStr){
@@ -411,9 +422,21 @@ export default class SearchPage extends BComponent {
 
     }
 
+    //清空历史纪录
+    _clearHistory(){
+        console.log("==清空历史纪录==");
+        SearchHistoryStore.removeAllData('AllData');
+        //历史纪录显示
+        this.setState({
+            dataHistorySource: this.state.dataHistorySource.cloneWithRows(SearchHistoryStore.loadAll('AllData')),
+            loadedStatus : 'loadedHistory',
+        });
+    }
+
 
     //点击某个推荐项，进入查询详细列表页
     _pressIndexData(rowData){
+        //保存到历史数据
         SearchHistoryStore.singleCreate('AllData', rowData);
         this.setState({
             taskId:rowData.taskId,
@@ -432,7 +455,18 @@ export default class SearchPage extends BComponent {
             dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),
             loadedStatus : 'loadedIndex',
         });
-        // this._loadSearchData(rowData.corpName);
+
+        this._loadSearchData(rowData.corpName);
+    }
+
+    //清空历史纪录点击按钮
+    renderHistoryFooter(){
+        return(
+            <ClearHistoryButton
+                text="清空历史纪录"
+                onPress={() => {
+                    this._clearHistory()}}/>
+        )
     }
 
     renderFooter(){
@@ -541,6 +575,18 @@ export default class SearchPage extends BComponent {
             return(
                 <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
                              dataSource={this.state.dataIndexSource}
+                             enableEmptySections={true}
+                             onEndReachedThreshold={10}
+                             renderRow={this._renderIndexRow.bind(this)}
+                />
+
+            );
+        }else if (this.state.loadedStatus === 'loadedHistory'){
+
+            return(
+                <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
+                             dataSource={this.state.dataHistorySource}
+                             renderFooter={this.renderHistoryFooter.bind(this)}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}
