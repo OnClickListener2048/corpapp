@@ -14,6 +14,7 @@ import {
     InteractionManager,
     RefreshControl,
     TouchableWithoutFeedback,
+    ActivityIndicator,
     WebView
 } from 'react-native';
 import BComponent from '../base';
@@ -44,33 +45,29 @@ export default class SearchPage extends BComponent {
             count:'10',//索引返回数据条数
             taskId:'118',//主任务ID
             isNoNetwork : false,
+            isLoading : false,  //防止快速上拉刷新
             isJumping : false, //防止重复点击
-            lastID:'',//分页所需最后一项ID
+            lastID:null,//分页所需最后一项ID
             dataIndexSource:  new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
             dataHistorySource:new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
-            lastID : null,
             loadingMore : 0,     //footer状态即上拉刷新的状态
             isRefreshing: false,//为了防止上拉下拉冲突
-            dataSearcgSource: new ListView.DataSource({
+            dataSearchSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
         };
 
         this.searchInfoArr = [];
         this.indexInfoArr = [];//推荐索引数据
-        this.searchStr;
+        this.searchStr = '';
         this._pressIndexData = this._pressIndexData.bind(this);
         this._loadIndexData = this._loadIndexData.bind(this);
         this._loadSearchData = this._loadSearchData.bind(this);
         this._toMyOutSideWork = this._toMyOutSideWork.bind(this);
-        this._loadSearchFirstPageData = this._loadSearchFirstPageData.bind(this);
         this._loadMoreSearchInfoData = this._loadMoreSearchInfoData.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this._clearHistory = this._clearHistory.bind(this);
-
-
-
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
@@ -154,15 +151,19 @@ export default class SearchPage extends BComponent {
 
                 this.searchInfoArr = [];
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
-                if (responseData.data.length === this.state.count){
+
+                console.log('看看数据' + responseData.data.length +'=' +this.state.count + this.searchInfoArr[this.searchInfoArr.length - 1].taskId);
+
+                if (responseData.data.length == this.state.count){
                     this.setState({loadingMore: 0,
-                        lastID : this.searchInfoArr[this.searchInfoArr.length - 1].msgId
+                        lastID : this.searchInfoArr[this.searchInfoArr.length - 1].taskId
                     });
 
                 }else {
                     this.setState({loadingMore: 2});
 
                 }
+
 
                 for (let  i = 0 ; i < this.searchInfoArr.length ; i++){
                     let  secData = this.searchInfoArr[i];
@@ -171,7 +172,7 @@ export default class SearchPage extends BComponent {
                 }
 
                 this.setState({
-                    dataSearcgSource: this.state.dataSearcgSource.cloneWithRows(this.searchInfoArr),
+                    dataSearchSource: this.state.dataSearchSource.cloneWithRows(this.searchInfoArr),
                     loadedStatus : 'loadedSearch',
 
                 });
@@ -192,81 +193,15 @@ export default class SearchPage extends BComponent {
         )
     }
 
-    _loadSearchFirstPageData() {
-        let  searchStr = this.searchStr;
-
-        if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
-            this.setState({isRefreshing: false});
-            return;
-        }
-
-
-        this.setState({isRefreshing: true,
-            lastID : null,
-        });
-
-        apis.loadSearchData(searchStr,this.state.count,null).then(
-
-            (responseData) => {
-                this.setState({isRefreshing: false});
-
-                let cnt = responseData.unReadNum;
-                if(cnt !== null && cnt >= 0) {
-                    this.props.navigator.setTabBadge({
-                        badge: cnt === 0 ? null : cnt // 数字气泡提示, 设置为null会删除
-                    });
-
-                    this.state.bagetNum = cnt;
-
-                    try {// 只支持iOS
-                        JPushModule.setBadge(cnt, (success) => {
-                            console.log("Badge", success)
-                        });
-                    } catch (e) {
-                    }
-                }
-                if(responseData !== null && responseData.data !== null) {
-                    this.searchInfoArr = [];
-                    this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
-
-                    if (responseData.data.length === this.state.pageCount){
-                        this.setState({loadingMore: 0,
-                            lastID : this.searchInfoArr[this.searchInfoArr.length - 1].msgId
-                        });
-
-                    }else {
-                        this.setState({loadingMore: 2});
-
-                    }
-
-                    for (let  i = 0 ; i < this.searchInfoArr.length ; i++){
-                        let  secData = this.searchInfoArr[i];
-                        secData.rowIndex = i;
-
-                    }
-
-                    this.setState({
-                        dataSearcgSource: this.state.dataSearcgSource.cloneWithRows(this.searchInfoArr),
-                        loadedStatus : 'loadedSucess',
-
-                    });
-
-
-
-                }
-            },
-            (e) => {
-                // 关闭刷新动画
-                this.setState({isRefreshing: false});
-                Toast.show(errorText( e ));
-            },
-        );
-    }
 
 
     _loadMoreSearchInfoData() {
         let  searchStr = this.searchStr;
+
+
+
+        console.log('加载更多呀' + searchStr + 'laseId' + this.state.lastID + 'loading' + this.state.isLoading);
+
 
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
@@ -290,62 +225,41 @@ export default class SearchPage extends BComponent {
         apis.loadSearchData(searchStr,this.state.count,this.state.lastID).then(
 
             (responseData) => {
-                let cnt = responseData.unReadNum;
-                if(cnt !== null && cnt >= 0) {
-                    this.props.navigator.setTabBadge({
-                        badge: cnt === 0 ? null : cnt // 数字气泡提示, 设置为null会删除
-                    });
-
-                    this.state.bagetNum = cnt;
-
-                    try {// 只支持iOS
-                        JPushModule.setBadge(cnt, (success) => {
-                            console.log("Badge", success)
-                        });
-                    } catch (e) {
-                    }
-                }
-
-                this.setState({
-                    lastID : null
-                });
 
 
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
-                if (responseData.data.length === this.state.pageCount){
+                if (responseData.data.length === this.state.count){
 
-                    this.setState({loadingMore: 0,
-                        lastID : this.searchInfoArr[this.searchInfoArr.length - 1].msgId});
+                    this.setState({
+                        loadingMore: 0,
+                        lastID : this.searchInfoArr[this.searchInfoArr.length - 1].taskId
+
+                    });
 
                 }else {
-                    this.setState({loadingMore: 2});
 
-                }
+                    this.setState({
+                        loadingMore: 2,
+                        lastID : null
+                    });
 
-                //console.log("最新数据" + responseData.data.length + '条' + 'lastId' + this.state.lastID + '结束');
-
-                for (let  i = 0 ; i < this.searchInfoArr.length ; i++){
-                    let  secData = this.searchInfoArr[i];
-                    secData.rowIndex = i;
                 }
 
                 this.setState({
-                    dataSearcgSource: this.state.dataSearcgSource.cloneWithRows(this.searchInfoArr),
+                    dataSearchSource: this.state.dataSearchSource.cloneWithRows(this.searchInfoArr),
                     isLoading : false,
-                    loadedStatus : 'loadedSucess',
-                });
+                    loadedStatus : 'loadedSearch',
 
+                });
 
 
             },
             (e) => {
-                // 关闭刷新动画
-                console.log("获取失败" , e);
+                关闭刷新动画
                 this.setState({
                     isLoading : false
                 });
-                // Toast.show('获取失败' + JSON.stringify(e));
             },
         );
     }
@@ -663,8 +577,8 @@ export default class SearchPage extends BComponent {
             return(
 
                 <ListView    style={[{flex : 1 }]}
-                             dataSource={this.state.dataSearcgSource}
-                             onEndReached={this._loadMoreData}
+                             dataSource={this.state.dataSearchSource}
+                             onEndReached={this._loadMoreSearchInfoData}
                              renderFooter={this.renderFooter}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
