@@ -7,6 +7,7 @@ import {StyleSheet,View, Text,Platform,Image,Dimensions} from 'react-native';
 const window = Dimensions.get('window');
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
+// import TextHighlight from 'react-native-text-highlight';
 
 export default class SearchIndexCell extends React.Component {
     constructor(props) {
@@ -18,13 +19,24 @@ export default class SearchIndexCell extends React.Component {
         taskId: PropTypes.string,
         corpName: PropTypes.string,
         color:PropTypes.string,
+        corpStr:PropTypes.string,
     };
 
     render() {
         return(
             <View style={styles.container}>
             <View style={styles.rowStyle}>
-                <Text style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}>{this.props.corpName}</Text>
+                <Text
+                    style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}>
+                    {this.props.corpName}</Text>
+
+                {/*<TextHighlight*/}
+                    {/*highlight={this.props.corpStr}*/}
+                    {/*highlightStyle={{*/}
+                        {/*color: 'green'*/}
+                    {/*}}*/}
+                    {/*style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}>*/}
+                    {/*{this.props.corpName}</TextHighlight>*/}
             </View>
             </View>
         )

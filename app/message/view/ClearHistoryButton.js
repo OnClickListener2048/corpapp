@@ -18,14 +18,6 @@ export default class ClearHistoryButton extends Component {
                     {this.props.text}
                 </Text>
             </TouchableOpacity>
-            // <Button
-            //     style={styles.buttonViewEnabled}
-            //     disabledStyle={styles.buttonView}
-            //     onPress={this.props.onPress}
-            //     isDisabled={false}
-            //     textStyle={styles.loginText}>
-            //     {this.props.text}
-            // </Button>
         );
     }
 }

@@ -503,6 +503,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 corpName={'历史搜索'}
                 color="#c8c8c8"
+                corpStr=" 北京"
             />
         )
     }
@@ -546,6 +547,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
+                corpStr=" 北京"
             />
             </TouchableOpacity>
         );
@@ -559,6 +561,7 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
+                    corpStr=" 北京"
                 />
             </TouchableOpacity>
         );
