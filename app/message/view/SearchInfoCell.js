@@ -2,8 +2,10 @@
  * Created by jinglan on 2017/9/11.
  */
 import React, {PropTypes} from 'react';
-import {View, Text,Platform,Image} from 'react-native';
-import styles from '../css/MessageCenterStyle'
+import {View, Text,Platform,Image,StyleSheet, Dimensions} from 'react-native';
+const window = Dimensions.get('window');
+export const SCREEN_HEIGHT = window.height;
+export const SCREEN_WIDTH = window.width;
 
 export default class SearchInfoCell extends React.Component {
     constructor(props) {
@@ -12,7 +14,7 @@ export default class SearchInfoCell extends React.Component {
     }
 
     static propTypes = {
-        messageIcon: PropTypes.number,
+        messageName: PropTypes.string,
         messageTitle: PropTypes.string,
         messageSubTitle: PropTypes.string,
         messageTime: PropTypes.string
@@ -20,49 +22,89 @@ export default class SearchInfoCell extends React.Component {
 
     render() {
         // const { style} = this.props
-        const {messageTitle, messageSubTitle,messageTime,messageIcon} = this.props
+        const {messageTitle, messageSubTitle,messageTime,messageName} = this.props
         return (
             <View
                 style={styles.rowStyle}>
 
+                <View
+                    style={styles.titleViewStyle}>
+
+                    <Text
+                        textAlign='left'
+                        numberOfLines={1}
+                        style={[{fontSize: 14,flex:1,marginTop: Platform.OS==='ios'?5:0, marginLeft : 0 ,color : '#646464'}] }>{messageTitle}</Text>
+
+                    <Text
+                        textAlign='right'
+                        style={[{fontSize: 14,marginTop: Platform.OS==='ios'?5:0, marginRight : 0 ,color : '#646464'}] }>{messageName}</Text>
+
+
+                </View>
 
 
                 <View
-                    style={styles.realRowStyle}>
-                    <Image
-                        source={require('../../img/bigk.png')}
-                        style={[styles.messageBottomStyle]}>
-                        <View
-                            style={styles.titleViewStyle}>
+                    style={styles.subtitleViewStyle}>
+                    <Text
+                        textAlign='left'
+                        numberOfLines={1}
+                        style={[{fontSize: 14,flex:1,marginTop: Platform.OS==='ios'?4:0, marginLeft : 0 ,color : '#646464'}] }>{messageSubTitle}</Text>
 
-                            <Text
-                                textAlign='left'
-                                numberOfLines={1}
-                                style={[{fontSize: 15,marginTop: Platform.OS==='ios'?15:12, marginLeft : 0 ,color : '#323232'}] }>{messageTitle}</Text>
+                    <Text
+                        textAlign='right'
+                        style={[{fontSize: 14,marginTop: Platform.OS==='ios'?4:0, marginRight : 0 ,color : '#646464'}] }>{messageTime}</Text>
 
-                            <Text
-                                textAlign='left'
-                                numberOfLines={1}
-                                style={[{fontSize: 12,marginTop: 10, marginLeft :0 , color : '#969696'}] }>{messageSubTitle}</Text>
-                        </View>
-                        <Text
-                            textAlign='right'
-                            style={styles.timeTitleStyle}>{messageTime}</Text>
-                    </Image>
+
                 </View>
-                <Image
-                    source={messageIcon}
-                    style={[{
-                        resizeMode: "contain",
-                        position:'absolute',
-                        width: 25,
-                        height:25,
-                        marginLeft:17,
-                        marginTop:12,
-                    }]}
-                />
+
+
+
             </View>
         )
     }
 }
 
+
+const styles = StyleSheet.create({
+
+
+    rowStyle: {
+        height : 80,
+        marginLeft: 15,
+        width:SCREEN_WIDTH - 30,
+        backgroundColor: '#FAFAFA',
+        flexDirection: 'column',
+        borderBottomColor:'#dcdcdc',
+        borderBottomWidth:0.5,
+
+    },
+
+
+    titleViewStyle: {
+        marginTop: 12,
+        marginLeft: 0,
+        marginRight: 0,
+        width:SCREEN_WIDTH - 30,
+        height : 24,
+        flexDirection: 'row',
+    },
+
+    subtitleViewStyle: {
+        marginTop: 5,
+        marginLeft: 0,
+        marginRight: 0,
+        width:SCREEN_WIDTH - 30,
+        height : 24,
+        flexDirection: 'row',
+
+    },
+
+    lineViewContainer: {
+        height: 0.5,
+        width: SCREEN_WIDTH - 30,
+        marginLeft: 15,
+        // marginTop:79,
+        backgroundColor: '#E6E6E6',
+    },
+
+})

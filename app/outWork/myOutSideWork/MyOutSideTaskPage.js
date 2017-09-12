@@ -110,6 +110,7 @@ _loadData() {
     }
 
     componentWillUnmount() {
+
         try {
             if(this.loading) {
                 console.log("外勤任务 componentWillUnmount()");

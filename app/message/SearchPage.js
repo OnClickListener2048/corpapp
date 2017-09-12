@@ -59,11 +59,11 @@ export default class SearchPage extends BComponent {
 
         this.searchInfoArr = [];
         this.indexInfoArr = [];//推荐索引数据
-
+        this.searchStr;
         this._pressIndexData = this._pressIndexData.bind(this);
         this._loadIndexData = this._loadIndexData.bind(this);
         this._loadSearchData = this._loadSearchData.bind(this);
-        this.toMyOutSideWork = this.toMyOutSideWork.bind(this);
+        this._toMyOutSideWork = this._toMyOutSideWork.bind(this);
         this._loadSearchFirstPageData = this._loadSearchFirstPageData.bind(this);
         this._loadMoreSearchInfoData = this._loadMoreSearchInfoData.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
@@ -121,8 +121,9 @@ export default class SearchPage extends BComponent {
         }
 
     //点击确定，具体任务列表
-    _loadSearchData(searchStr){
+    _loadSearchData(){
 
+            let  searchStr = this.searchStr;
         console.log('确定搜索内容之后的搜索'+searchStr);
 
         if(!NetInfoSingleton.isConnected) {
@@ -185,6 +186,7 @@ export default class SearchPage extends BComponent {
     }
 
     _loadSearchFirstPageData() {
+        let  searchStr = this.searchStr;
 
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
@@ -257,6 +259,8 @@ export default class SearchPage extends BComponent {
 
 
     _loadMoreSearchInfoData() {
+        let  searchStr = this.searchStr;
+
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
             return;
@@ -371,13 +375,15 @@ export default class SearchPage extends BComponent {
                 //保存到历史数据
                 SearchHistoryStore.singleCreate('AllData', inputStrData);
             }
+            this.searchStr = str;
             this._loadSearchData(str);
+
 
         }
     }
 
 
-    toMyOutSideWork(rowData) {
+    _toMyOutSideWork(rowData) {
         if (this.state.isJumping === true){
             return;
         }
@@ -390,41 +396,6 @@ export default class SearchPage extends BComponent {
         },1000);
 
 
-        let jumpUri = JSON.parse(rowData.content).jumpUri;
-
-        let arr=jumpUri.split('?');
-
-        let outPageId = '';
-        let paramsStr1 = '';
-        let paramsArr1 = [];
-        let subParam1 = '';
-        let specArr1 = [];
-
-        if (arr.length > 1){
-            paramsStr1 = arr[1];
-
-            paramsArr1=paramsStr1.split('&');
-
-            let paramsStr = arr[1];
-            let paramsArr=paramsStr.split('&');
-
-            for (let i = 0 ; i < paramsArr.length ; i++) {
-                subParam1 = paramsArr[i];
-
-                let subParam = paramsArr[i];
-                specArr1 = subParam.split('=');
-
-                let specArr = subParam.split('=');
-                if (specArr.length > 1) {
-
-                    if (specArr[0] === 'id') {
-                        outPageId = specArr[1];
-                        break;
-                    }
-                }
-            }
-        }
-
 
 
         this.props.navigator.push({
@@ -433,7 +404,8 @@ export default class SearchPage extends BComponent {
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
 
             passProps: {
-                taskId:outPageId,
+                taskId:rowData.taskId,
+                callback : this._loadSearchData
             }
         });
 
@@ -476,7 +448,24 @@ export default class SearchPage extends BComponent {
         this.setState({
             taskId:rowData.taskId,
         })
-        this._loadSearchData(rowData.corpName);
+        this.searchStr = rowData.corpName;
+        this._loadSearchData();
+
+        var historyArr = [];
+        historyArr= historyArr.concat(SearchHistoryStore.loadAll('AllData'));
+
+        console.log("===>>>>"+SearchHistoryStore.loadAll('AllData')+"==="+historyArr);
+
+
+        // let  a = SearchHistoryStore.loadAll('AllData');
+
+        // console.log("===>>>>"+historyArr+"==="+a.corpName);
+        // SearchHistoryStore.removeAllData('AllData');
+        this.setState({
+            dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),
+            loadedStatus : 'loadedIndex',
+        });
+
         dismissKeyboard();
     }
 
@@ -571,10 +560,17 @@ export default class SearchPage extends BComponent {
     _renderSearchRow(rowData) {
 
         return (
+            <TouchableOpacity onPress={() => {
+                this._toMyOutSideWork(rowData)
+            }}>
             <SearchInfoCell messageTitle={rowData.corpName}
-                         messageSubTitle = {rowData.stepName}
-                         messageTime = {rowData.createDate}
+                            messageSubTitle = {rowData.stepName}
+                            messageTime = {rowData.createDate}
+                            messageName = {rowData.connector}
+
             />
+            </TouchableOpacity>
+
         );
     }
 
@@ -583,7 +579,7 @@ export default class SearchPage extends BComponent {
         console.log(this.indexInfoArr.length+"==="+this.state.loadedStatus);
         if (this.state.isNoNetwork === true) {      // 无网络
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
 
@@ -602,7 +598,7 @@ export default class SearchPage extends BComponent {
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
@@ -632,6 +628,8 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderIndexRow.bind(this)}
+                             keyboardDismissMode='on-drag'
+                             keyboardShouldPersistTaps='always'
                 />
 
             );
@@ -645,6 +643,8 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderHistoryRow.bind(this)}
+                             keyboardDismissMode='on-drag'
+                             keyboardShouldPersistTaps='always'
                 />
 
             );
@@ -659,17 +659,7 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderSearchRow.bind(this)}
-                             refreshControl = {
 
-                                 <RefreshControl
-                                     refreshing={this.state.isRefreshing}
-                                     onRefresh={this._loadSearchFirstPageData}
-                                     title={'加载中...'}
-                                     titleColor={'#b1b1b1'}
-                                     colors={['#ff0000','#00ff00','#0000ff','#3ad564']}
-                                     progressBackgroundColor={'#fafafa'}
-                                 />
-                             }
                 />
 
             );
