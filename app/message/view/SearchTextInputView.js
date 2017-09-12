@@ -80,17 +80,7 @@ export default class SearchTextInputView extends Component {
                         source={require('../../img/search.png')}
                         style={[styles.searchImg]}>
                     </Image>
-                <TextInput underlineColorAndroid='transparent'
-                           value={this.state.content}
-                           editable={this.props.textEditable}
-                           onChange={this._changeText.bind(this)}
 
-                           onSubmitEditing={() => {
-                               this._enterBtnClick
-                               //this._verifyVCode();
-                           }}
-                           style={styles.textInput} placeholder='' returnKeyType='done'
-                />
                 </View>
 
             </View>
@@ -109,19 +99,7 @@ export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: 'white',
 
-        flexDirection: 'column'
-    },
-    companyInfoViewContainer: {
-        width: SCREEN_WIDTH,
-        height:130,
-        backgroundColor: 'gray',
-        flexDirection: 'column'
-        // style={{ marginLeft: 15,marginTop: 15, height: 100, width: 300, flexDirection: 'column', backgroundColor : 'g
-    },
 
     // phone input box
     textInputContainer: {
@@ -129,14 +107,15 @@ const styles = StyleSheet.create({
         width: SCREEN_WIDTH,
         marginLeft: 0,
         // width: SCREEN_WIDTH,
-         backgroundColor: '#FAFAFA',
+         backgroundColor: '#FFFFFF',
+
         flexDirection: 'row',
         alignItems:'center'
     },
 
 
     circleView: {
-        width: SCREEN_WIDTH - 61 - 15,
+        width: SCREEN_WIDTH - 15 - 15,
         height: 44 - 7 - 7,
 
         marginLeft: 15,
@@ -147,8 +126,6 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         borderColor:'#E6E6E6',
         backgroundColor: 'white',
-
-        color:'#323232',
         flexDirection: 'row',
 
     },

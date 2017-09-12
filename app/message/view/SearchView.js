@@ -97,9 +97,9 @@ console.log('点击了确定按钮');
                            value={this.state.content}
                            editable={this.props.textEditable}
                            onChange={this._changeText.bind(this)}
-
+                           multiline={false}
                            onSubmitEditing={() => {
-                               this._enterBtnClick
+                               this._enterBtnClick()
                            }}
                            style={styles.textInput} placeholder='' returnKeyType='done'
                 />

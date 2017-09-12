@@ -111,7 +111,7 @@ export default class SearchPage extends BComponent {
     //点击确定，具体任务列表
     _loadSearchData(searchStr){
 
-            console.log('停止之后的搜索'+searchStr);
+        console.log('确定搜索内容之后的搜索'+searchStr);
 
         if(!NetInfoSingleton.isConnected) {
             this.setState({
@@ -336,9 +336,8 @@ export default class SearchPage extends BComponent {
         if (type === 'cancle'){
             this.props.navigator.pop()
         }else if (type === 'index'){
-           // this._loadSearchData(str);
 
-            this._loadIndexData(str);
+           this._loadIndexData(str);
         }else if (type === 'search'){
 
             this._loadSearchData(str);

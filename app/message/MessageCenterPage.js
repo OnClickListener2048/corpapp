@@ -29,6 +29,8 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 import Platform from "react-native";
+import SearchTextInputView from './view/SearchTextInputView'
+
 
 const window = Dimensions.get('window');
 const moreText = "加载完毕";
@@ -593,11 +595,9 @@ export default class MessageCenterPage extends BComponent {
 
     _renderHeader(rowData){
         return(
-            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 60 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
-                <View style={{width : SCREEN_WIDTH , height : 60 }}>
-
-                </View>
+                <SearchTextInputView/>
              </TouchableOpacity>
 
         );
@@ -655,8 +655,12 @@ export default class MessageCenterPage extends BComponent {
 
         if (this.state.isNoNetwork === true) {      // 无网络
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='网络错误,点击重新开始'
@@ -668,12 +672,19 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                 </View>
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='加载失败，点击重试'
@@ -685,7 +696,10 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='暂无消息'
