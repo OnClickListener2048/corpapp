@@ -465,7 +465,7 @@ export default class SearchPage extends BComponent {
             return;
         return(
             <ClearHistoryButton
-                text="清空历史纪录"
+                text="清空历史搜索"
                 onPress={() => {
                     this._clearHistory()}}/>
         )
@@ -588,7 +588,7 @@ export default class SearchPage extends BComponent {
         }else if (this.indexInfoArr.length > 0 && this.state.loadedStatus === 'loadedIndex'){
 
             return(
-                <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
+                <ListView    style={[{flex : 1 ,backgroundColor:'#FAFAFA'}]}
                              dataSource={this.state.dataIndexSource}
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
@@ -599,7 +599,7 @@ export default class SearchPage extends BComponent {
         }else if (this.state.loadedStatus === 'loadedHistory'){
 
             return(
-                <ListView    style={[{flex : 1 ,backgroundColor:'gray'}]}
+                <ListView    style={[{flex : 1 ,backgroundColor:'#FAFAFA'}]}
                              dataSource={this.state.dataHistorySource}
                              renderFooter={this.renderHistoryFooter.bind(this)}
                              renderHeader={this.renderHistoryHeader.bind(this)}

@@ -39,15 +39,16 @@ const styles = StyleSheet.create({
     },
 
     buttonViewEnabled: {
-        backgroundColor: '#ef0c35',
+        backgroundColor: '#FAFAFA',
         margin: 0,
         borderRadius: 6,
         justifyContent: 'center',
         alignSelf: 'center',
         height: px2dp(88),
-        width: px2dp(500),
+        width: px2dp(550),
         marginTop: px2dp(45),
-        borderWidth: 0,
+        borderWidth: 0.5,
+        borderColor:'#DCDCDD'
     },
 
     buttonEnableView: {
@@ -63,7 +64,7 @@ const styles = StyleSheet.create({
 
     loginText: {
         fontSize: 15,
-        color: '#FFFFFF',
+        color: '#C8C8C8',
         marginTop: 10,
         marginBottom: 10,
         textAlign: 'center'
