@@ -2,7 +2,7 @@
  * 用户基本信息
  * Created by jiaxueting on 2017/9/11.
  */
-var SearchBase = {};
+var SearchHistoryStore = {};
 
 import Realm from 'realm';
 
@@ -35,10 +35,10 @@ const AddSchame = {
 };
 
 // 初始化realm
-let realm = new Realm({schema:[AllSchame, AddSchame]});
+let realm = new Realm({schema:[AllSchame]});
 
 // 增加
-SearchBase.create = function (schame, data) {
+SearchHistoryStore.create = function (schame, data) {
     realm.write(() => {
         for (let i = 0; i<data.length; i++) {
             let temp = data[i];
@@ -50,7 +50,8 @@ SearchBase.create = function (schame, data) {
 }
 
 // 增加一条
-SearchBase.create = function (schame, data) {
+SearchHistoryStore.singleCreate = function (schame, data) {
+    console.log("增加的数据是否为空="+data+";;"+data.corpName);
     realm.write(() => {
         realm.create(schame, {corpName:data.corpName, stepId:data.stepId, stepName:data.stepName,
             taskId:data.taskId, taskName:data.taskName, taskStatus:data.taskStatus,
@@ -59,12 +60,12 @@ SearchBase.create = function (schame, data) {
 }
 
 // 查询全部数据
-SearchBase.loadAll = function (schame) {
+SearchHistoryStore.loadAll = function (schame) {
     return realm.objects(schame);
 }
 
 // 条件查询
-SearchBase.filtered = function (schame, filtered) {
+SearchHistoryStore.filtered = function (schame, filtered) {
     // 获取对象
     let objects = realm.objects(schame);
     // 筛选
@@ -78,7 +79,7 @@ SearchBase.filtered = function (schame, filtered) {
 }
 
 // 删除所有数据
-SearchBase.removeAllData = function (schame) {
+SearchHistoryStore.removeAllData = function (schame) {
     realm.write(() => {
         // 获取对象
         let objects = realm.objects(schame);
@@ -87,6 +88,6 @@ SearchBase.removeAllData = function (schame) {
     })
 }
 
-global.SearchBase = SearchBase;
+global.SearchHistoryStore = SearchHistoryStore;
 
 

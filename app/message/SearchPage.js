@@ -2,7 +2,7 @@
  * Created by jinglan on 2017/9/8.
  */
 import React, { Component,PropTypes } from 'react';
-
+import '../storage/SearchHistoryStore'
 import {
     StyleSheet,
     Text,
@@ -54,6 +54,7 @@ export default class SearchPage extends BComponent {
         this.searchInfoArr = [];
         this.indexInfoArr = [];//推荐索引数据
 
+        this._pressIndexData = this._pressIndexData.bind(this);
         this._loadIndexData = this._loadIndexData.bind(this);
         this._loadSearchData = this._loadSearchData.bind(this);
         this.toMyOutSideWork = this.toMyOutSideWork.bind(this);
@@ -65,6 +66,10 @@ export default class SearchPage extends BComponent {
     }
 
 
+        // componentDidMount() {
+        //     var vaule = SearchHistoryStore.loadAll('AddSchame');
+        //     console.log("===>>>>"+JSON.parse(vaule));
+        // }
 
         //搜索索引
         _loadIndexData(indexStr){
@@ -87,6 +92,7 @@ export default class SearchPage extends BComponent {
                                     loadedStatus : 'loadedSearch',
                                 });
                             }
+                            console.log("===>>>>"+this.indexInfoArr);
                         }
 
 
@@ -95,8 +101,6 @@ export default class SearchPage extends BComponent {
 
                 },
                 (e) => {
-
-
 
                     console.log("获取失败" , e);
                     Toast.show(errorText( e ));
@@ -410,11 +414,20 @@ export default class SearchPage extends BComponent {
 
 
     //点击某个推荐项，进入查询详细列表页
-    _pressIndexData(str,taskId){
+    _pressIndexData(rowData){
+        SearchHistoryStore.singleCreate('AllData', rowData);
         this.setState({
-            taskId:taskId,
+            taskId:rowData.taskId,
         })
-        this._loadSearchData(str);
+        var historyArr = [];
+        historyArr= historyArr.concat(SearchHistoryStore.loadAll('AllData'));
+        console.log("===>>>>"+historyArr+"==="+SearchHistoryStore.loadAll('AllData').corpName);
+        // SearchHistoryStore.removeAllData('AllData');
+        this.setState({
+            dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),
+            loadedStatus : 'loadedIndex',
+        });
+        // this._loadSearchData(rowData.corpName);
     }
 
     _renderHeader(rowData){
@@ -459,7 +472,7 @@ export default class SearchPage extends BComponent {
 
         return (
             <TouchableOpacity onPress={() => {
-                this._pressIndexData(rowData.corpName,rowData.taskId)
+                this._pressIndexData(rowData)
             }}>
             <SearchIndexCell
                 taskId= {rowData.taskId}
