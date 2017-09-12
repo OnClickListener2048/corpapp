@@ -9,7 +9,7 @@ import Realm from 'realm';
 const AllSchame = {
     name:'AllData',
     properties:{
-        id:'string',
+        taskId:'string',
         corpName:'string',
         stepId:'string',
         stepName:'string',
@@ -28,7 +28,7 @@ SearchHistoryStore.create = function (schame, data) {
     realm.write(() => {
         for (let i = 0; i<data.length; i++) {
             let temp = data[i];
-            realm.create(schame, {id:temp.taskId,corpName:temp.corpName, stepId:temp.stepId, stepName:temp.stepName,
+            realm.create(schame, {taskId:temp.taskId,corpName:temp.corpName, stepId:temp.stepId, stepName:temp.stepName,
                  taskName:temp.taskName, taskStatus:temp.taskStatus,
                 connector:temp.connector,createDate:temp.createDate});
         }
@@ -39,7 +39,7 @@ SearchHistoryStore.create = function (schame, data) {
 SearchHistoryStore.singleCreate = function (schame, data) {
     console.log("增加的数据是否为空="+data+";;"+data.corpName);
     realm.write(() => {
-        realm.create(schame, {id:data.taskId,corpName:data.corpName, stepId:data.stepId, stepName:data.stepName,
+        realm.create(schame, {taskId:data.taskId,corpName:data.corpName, stepId:data.stepId, stepName:data.stepName,
              taskName:data.taskName, taskStatus:data.taskStatus,
             connector:data.connector,createDate:data.createDate},true);
     })
