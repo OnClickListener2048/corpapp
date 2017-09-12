@@ -77,8 +77,15 @@ export default class SearchPage extends BComponent {
 
         componentDidMount() {
             //历史纪录显示
+
+            let arr = SearchHistoryStore.loadAll('AllData');
+            let data = [];
+            for (let i = arr.length - 1 ; i > 0 ; i--) {
+                data.push(arr[i]);
+            }
+
             this.setState({
-                dataHistorySource: this.state.dataHistorySource.cloneWithRows(SearchHistoryStore.loadAll('AllData')),
+                dataHistorySource: this.state.dataHistorySource.cloneWithRows(data),
                 loadedStatus : 'loadedHistory',
             });
         }
