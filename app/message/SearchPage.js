@@ -436,25 +436,20 @@ export default class SearchPage extends BComponent {
 
     //点击某个推荐项，进入查询详细列表页
     _pressIndexData(rowData){
-        //保存到历史数据
-        SearchHistoryStore.singleCreate('AllData', rowData);
+        console.log("查询数据"+SearchHistoryStore.filtered('AllData', 'id="'+rowData.taskId+'"'));
+        if(SearchHistoryStore.filtered('AllData', 'id="'+rowData.taskId+'"').length===0){
+            //保存到历史数据
+            SearchHistoryStore.singleCreate('AllData', rowData);
+        }else{
+            //删除一条数据
+            SearchHistoryStore.removeSingleData('AllData', 'id="'+rowData.taskId+'"');
+            //保存到历史数据
+            SearchHistoryStore.singleCreate('AllData', rowData);
+        }
+
         this.setState({
             taskId:rowData.taskId,
         })
-        var historyArr = [];
-        historyArr= historyArr.concat(SearchHistoryStore.loadAll('AllData'));
-
-        console.log("===>>>>"+SearchHistoryStore.loadAll('AllData')+"==="+historyArr);
-
-
-        // let  a = SearchHistoryStore.loadAll('AllData');
-
-        // console.log("===>>>>"+historyArr+"==="+a.corpName);
-        // SearchHistoryStore.removeAllData('AllData');
-        this.setState({
-            dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),
-            loadedStatus : 'loadedIndex',
-        });
 
         this._loadSearchData(rowData.corpName);
     }
