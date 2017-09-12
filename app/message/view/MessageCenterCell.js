@@ -51,7 +51,7 @@ export default class MessageCenterCell extends React.Component {
                         style={styles.timeTitleStyle}>{messageTime}</Text>
                     </Image>
                 </View>
-        <Image
+                <Image
             source={messageIcon}
             style={[{
                 resizeMode: "contain",

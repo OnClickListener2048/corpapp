@@ -86,7 +86,9 @@ console.log('点击了确定按钮');
     render(){
         return(
 
-            <View style={styles.textInputContainer}>
+            <View style={styles.backViewContainer}>
+                <View style={styles.textInputContainer}>
+
                 <View style={styles.circleView}>
 
                 <Image
@@ -111,7 +113,9 @@ console.log('点击了确定按钮');
                            取消</Text>
                     </View>
                 </TouchableOpacity>
-
+                </View>
+                <View style={styles.lineViewContainer}>
+                </View>
             </View>
 
 
@@ -140,6 +144,30 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems:'center'
     },
+
+
+    backViewContainer: {
+        height: 65,
+        width: SCREEN_WIDTH,
+        marginLeft: 0,
+        // width: SCREEN_WIDTH,
+        backgroundColor: '#FFFFFF',
+
+        flexDirection: 'column',
+        alignItems:'center'
+    },
+
+    lineViewContainer: {
+        height: 0.5,
+        width: SCREEN_WIDTH,
+        marginLeft: 0,
+        // width: SCREEN_WIDTH,
+        backgroundColor: '#E6E6E6',
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+
+
 
 
     circleView: {

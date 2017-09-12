@@ -2,7 +2,7 @@
  * Created by jinglan on 2017/9/11.
  */
 import React, {Component,PropTypes} from 'react';
-import {Text, TextInput, View, Platform, Image,} from "react-native";
+import {Text, TextInput, View, Platform, Image} from "react-native";
 
 export default class SearchTextInputView extends Component {
 
@@ -72,8 +72,9 @@ export default class SearchTextInputView extends Component {
      */
     render(){
         return(
+            <View style={styles.backViewContainer}>
 
-            <View style={styles.textInputContainer}>
+              <View style={styles.textInputContainer}>
                 <View style={styles.circleView}>
 
                     <Image
@@ -83,6 +84,21 @@ export default class SearchTextInputView extends Component {
 
                 </View>
 
+            </View>
+                <View style={styles.lineViewContainer}>
+                </View>
+                {/*<Image*/}
+                    {/*source={require('../../img/yinying.png')}*/}
+                    {/*style={[{*/}
+                        {/*resizeMode: "contain",*/}
+                        {/*position:'absolute',*/}
+                        {/*width: SCREEN_WIDTH,*/}
+                        {/*height:1,*/}
+                        {/*marginLeft:0,*/}
+                        {/*flexDirection: 'row',*/}
+                        {/*alignItems:'center'*/}
+                    {/*}]}*/}
+                {/*/>*/}
             </View>
 
 
@@ -102,6 +118,28 @@ const styles = StyleSheet.create({
 
 
     // phone input box
+
+    backViewContainer: {
+        height: 45,
+        width: SCREEN_WIDTH,
+        marginLeft: 0,
+        // width: SCREEN_WIDTH,
+        backgroundColor: '#FFFFFF',
+
+        flexDirection: 'column',
+        alignItems:'center'
+    },
+
+    lineViewContainer: {
+        height: 0.5,
+        width: SCREEN_WIDTH,
+        marginLeft: 0,
+        // width: SCREEN_WIDTH,
+        backgroundColor: '#E6E6E6',
+        flexDirection: 'row',
+        alignItems:'center'
+    },
+
     textInputContainer: {
         height: 44,
         width: SCREEN_WIDTH,

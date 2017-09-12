@@ -44,7 +44,6 @@ export default class SearchPage extends BComponent {
             lastID:'',//分页所需最后一项ID
             dataIndexSource:  new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
-            lastID : null,
             loadingMore : 0,     //footer状态即上拉刷新的状态
             isRefreshing: false,//为了防止上拉下拉冲突
             dataSearcgSource: new ListView.DataSource({
@@ -74,7 +73,7 @@ export default class SearchPage extends BComponent {
         //搜索索引
         _loadIndexData(indexStr){
 
-            apis.loadSearchIndex(indexStr,this.state.count).then(
+            apis.loadSearchIndex('北京',this.state.count).then(
                 (responseData) => {
 
 
@@ -128,7 +127,7 @@ export default class SearchPage extends BComponent {
             lastID: null
         });
 
-        apis.loadSearchData('北京',this.state.count,null).then(
+        apis.loadSearchData(searchStr,this.state.count,null).then(
             (responseData) => {
                 SActivityIndicator.hide(loading);
 
@@ -331,21 +330,20 @@ export default class SearchPage extends BComponent {
     _callBackWithSelectType(type,str){
 
         console.log('信息' + type +str)
-        //type : 'index'; 'search'
 
         if (type === 'cancle'){
+
             this.props.navigator.pop()
+
         }else if (type === 'index'){
 
            this._loadIndexData(str);
+
         }else if (type === 'search'){
 
             this._loadSearchData(str);
 
         }
-
-
-
     }
 
 
@@ -354,10 +352,9 @@ export default class SearchPage extends BComponent {
             return;
         }
 
-
         this.setState({isJumping:true});
-        //防重复点击
 
+        //防重复点击
         this.timer = setTimeout(async()=>{
             await this.setState({isJumping:false})//1.5秒后可点击
         },1000);
@@ -375,6 +372,7 @@ export default class SearchPage extends BComponent {
 
         if (arr.length > 1){
             paramsStr1 = arr[1];
+
             paramsArr1=paramsStr1.split('&');
 
             let paramsStr = arr[1];
@@ -422,7 +420,13 @@ export default class SearchPage extends BComponent {
         })
         var historyArr = [];
         historyArr= historyArr.concat(SearchHistoryStore.loadAll('AllData'));
-        console.log("===>>>>"+historyArr+"==="+SearchHistoryStore.loadAll('AllData').corpName);
+
+        console.log("===>>>>"+SearchHistoryStore.loadAll('AllData')+"==="+historyArr);
+
+
+        // let  a = SearchHistoryStore.loadAll('AllData');
+
+        // console.log("===>>>>"+historyArr+"==="+a.corpName);
         // SearchHistoryStore.removeAllData('AllData');
         this.setState({
             dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),

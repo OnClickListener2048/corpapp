@@ -595,7 +595,7 @@ export default class MessageCenterPage extends BComponent {
 
     _renderHeader(rowData){
         return(
-            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
                 <SearchTextInputView/>
              </TouchableOpacity>
@@ -657,7 +657,7 @@ export default class MessageCenterPage extends BComponent {
             return(
 
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
                         <SearchTextInputView/>
                     </TouchableOpacity>
@@ -672,7 +672,7 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
                         <SearchTextInputView/>
                     </TouchableOpacity>
@@ -681,7 +681,7 @@ export default class MessageCenterPage extends BComponent {
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
                         <SearchTextInputView/>
                     </TouchableOpacity>
@@ -696,7 +696,7 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 44 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
 
                         <SearchTextInputView/>
                     </TouchableOpacity>
