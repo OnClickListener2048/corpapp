@@ -120,6 +120,10 @@ export default class SearchPage extends BComponent {
             }
 
             if (indexStr === ''){
+                this.indexInfoArr = [];
+                this.setState({
+                    loadedStatus : '',  //空白页面
+                });
                 return;
             }
 
