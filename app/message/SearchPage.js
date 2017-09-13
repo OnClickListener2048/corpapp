@@ -80,10 +80,11 @@ export default class SearchPage extends BComponent {
 
         componentDidMount() {
             //历史纪录显示
-
+            console.log("====????"+SearchHistoryStore.loadAll('AllData').length);
             let arr = SearchHistoryStore.loadAll('AllData');
             let data = [];
-            for (let i = arr.length - 1 ; i > 0 ; i--) {
+            for (let i = arr.length - 1 ; i >= 0 ; i--) {
+                console.log("====????"+arr[i].corpName);
                 data.push(arr[i]);
             }
             if (data.length > 0) {
@@ -194,8 +195,6 @@ export default class SearchPage extends BComponent {
 
                     this.searchInfoArr = [];
                     this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
-
-
                     if (responseData.data.length === this.state.pageCount) {
                         this.setState({
                             loadingMore: 0,
@@ -206,8 +205,6 @@ export default class SearchPage extends BComponent {
                         this.setState({loadingMore: 2});
 
                     }
-
-
                     for (let i = 0; i < this.searchInfoArr.length; i++) {
                         let secData = this.searchInfoArr[i];
                         secData.rowIndex = i;
@@ -233,8 +230,6 @@ export default class SearchPage extends BComponent {
             },
             (e) => {
                 SActivityIndicator.hide(loading);
-
-
                     // 关闭刷新动画
                     this.setState({
                         loadedStatus : 'loadedFaild',
@@ -266,9 +261,7 @@ export default class SearchPage extends BComponent {
             isLoading : true,
         });
 
-
         apis.loadSearchData(searchStr,this.state.pageCount,this.state.lastID).then(
-
 
             (responseData) => {
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
@@ -336,9 +329,11 @@ export default class SearchPage extends BComponent {
                 "connector":"",
                 "createDate":""};
             if(SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length===0){
+                console.log("没有重复保存"+SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length);
                 //保存到历史数据
                 SearchHistoryStore.singleCreate('AllData', inputStrData);
             }else{
+                console.log("重复保存"+SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length);
                 //删除一条数据
                 SearchHistoryStore.removeSingleData('AllData', 'corpName="'+data+'"');
                 //保存到历史数据
@@ -392,13 +387,12 @@ export default class SearchPage extends BComponent {
 
     //点击某个推荐项，进入查询详细列表页
     _pressIndexData(rowData){
-        console.log("查询数据"+rowData.taskId+SearchHistoryStore.filtered('AllData', 'taskId="'+rowData.taskId+'"'));
-        if(SearchHistoryStore.filtered('AllData', 'taskId="'+rowData.taskId+'"').length===0){
+        if(SearchHistoryStore.filtered('AllData', 'corpName="'+rowData.corpName+'"').length===0){
             //保存到历史数据
             SearchHistoryStore.singleCreate('AllData', rowData);
         }else{
             //删除一条数据
-            SearchHistoryStore.removeSingleData('AllData', 'taskId="'+rowData.taskId+'"');
+            SearchHistoryStore.removeSingleData('AllData', 'corpName="'+rowData.corpName+'"');
             //保存到历史数据
             SearchHistoryStore.singleCreate('AllData', rowData);
         }

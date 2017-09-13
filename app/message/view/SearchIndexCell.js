@@ -27,6 +27,7 @@ export default class SearchIndexCell extends React.Component {
             <View style={styles.container}>
             <View style={styles.rowStyle}>
                 <Highlighter
+                    style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}
                     highlightStyle={{color: 'red'}}
                     searchWords={[this.props.corpStr]}
                     textToHighlight={this.props.corpName}/>

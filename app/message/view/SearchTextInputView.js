@@ -179,18 +179,6 @@ const styles = StyleSheet.create({
 
     },
 
-    textInput: {
-        width: SCREEN_WIDTH - 61 - 15 - 40,
-        height: 44 - 7 - 7,
-
-        marginLeft: 6,
-
-        borderColor:'orange',
-
-        color:'#323232',
-        fontSize: 15,
-    },
-
     legalPersonStyle: {
         marginTop : 5,
         width: SCREEN_WIDTH - 30,
