@@ -320,25 +320,28 @@ export default class SearchPage extends BComponent {
     }
 
     //将输入框数据保存到历史纪录
-    _saveInputData(data){
-        var inputStrData = {
-            "corpName":data,
-            "stepId":"",
-            "stepName":"",
-            "taskId":"",
-            "taskName":"",
-            "taskStatus":"",
-            "connector":"",
-            "createDate":""};
-        if(SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length===0){
-            //保存到历史数据
-            SearchHistoryStore.singleCreate('AllData', inputStrData);
-        }else{
-            //删除一条数据
-            SearchHistoryStore.removeSingleData('AllData', 'corpName="'+data+'"');
-            //保存到历史数据
-            SearchHistoryStore.singleCreate('AllData', inputStrData);
+    _saveInputData(data){//输入框为空时不保存到历史纪录
+        if(data!==''){
+            var inputStrData = {
+                "corpName":data,
+                "stepId":"",
+                "stepName":"",
+                "taskId":"",
+                "taskName":"",
+                "taskStatus":"",
+                "connector":"",
+                "createDate":""};
+            if(SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length===0){
+                //保存到历史数据
+                SearchHistoryStore.singleCreate('AllData', inputStrData);
+            }else{
+                //删除一条数据
+                SearchHistoryStore.removeSingleData('AllData', 'corpName="'+data+'"');
+                //保存到历史数据
+                SearchHistoryStore.singleCreate('AllData', inputStrData);
+            }
         }
+
         this.searchStr = data;
         this._loadSearchData();
     }
