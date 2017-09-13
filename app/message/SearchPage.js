@@ -56,6 +56,10 @@ export default class SearchPage extends BComponent {
             isRefreshing: false,//为了防止上拉下拉冲突
             dataSearchSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
+
+
+            showIndex:true,     //为了防止网络异步的问题 如在搜索框输入停顿后自动搜索索引数据 但是中途用户点击了搜索按钮
+                                // 由于网络异步主任务数据先返回了回来,然后索引的数据返回了回来此时就会显示索引列表而不是我们希望的主任务列表
         };
 
         this.searchInfoArr = [];
@@ -80,35 +84,44 @@ export default class SearchPage extends BComponent {
             for (let i = arr.length - 1 ; i > 0 ; i--) {
                 data.push(arr[i]);
             }
+            if (data.length > 0) {
+                this.setState({
+                 dataHistorySource: this.state.dataHistorySource.cloneWithRows(data),
+                 loadedStatus: 'loadedHistory',
+                });
+            }else {
 
-            this.setState({
-                dataHistorySource: this.state.dataHistorySource.cloneWithRows(data),
-                loadedStatus : 'loadedHistory',
-            });
+
+            }
         }
 
         //搜索索引
         _loadIndexData(indexStr){
+            this.setState({
+                showIndex:true,
+            });
 
             apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
 
 
-                    if(responseData!==null&& responseData.data !== null){
+                    if(responseData!==null&& responseData.data !== null && this.state.showIndex === true){
 
                         if (responseData.data.length > 0){
+
                             this.indexInfoArr = [];
                             this.indexInfoArr= this.indexInfoArr.concat(responseData.data);
                             this.setState({
                                 dataIndexSource: this.state.dataIndexSource.cloneWithRows(this.indexInfoArr),
                                 loadedStatus : 'loadedIndex',
                             });
-                            if(responseData.data.length===0){
-                                this.setState({
-                                    loadedStatus : 'loadedSearch',
-                                });
-                            }
+
                             console.log("===>>>>"+this.indexInfoArr);
+                        }else {
+                            this.setState({
+                                loadedStatus : '',  //空白页面
+                            });
+
                         }
 
 
@@ -117,9 +130,14 @@ export default class SearchPage extends BComponent {
 
                 },
                 (e) => {
-
                     console.log("获取失败" , e);
-                    Toast.show(errorText( e ));
+                    if (this.state.showIndex === true){
+                        this.setState({
+                            loadedStatus : '',  //空白页面
+                        });
+
+                    }
+
                 },
             );
         }
@@ -127,7 +145,7 @@ export default class SearchPage extends BComponent {
     //点击确定，具体任务列表
     _loadSearchData(){
 
-            let  searchStr = this.searchStr;
+        let  searchStr = this.searchStr;
         console.log('确定搜索内容之后的搜索'+searchStr);
 
         if(!NetInfoSingleton.isConnected) {
@@ -138,6 +156,7 @@ export default class SearchPage extends BComponent {
         }
         this.setState({
             isNoNetwork:false,
+            showIndex:false,
         });
 
         let loading = SActivityIndicator.show(true, "加载中...");
@@ -147,35 +166,47 @@ export default class SearchPage extends BComponent {
 
         apis.loadSearchData(searchStr,this.state.count,null).then(
             (responseData) => {
+
                 SActivityIndicator.hide(loading);
+                if (responseData.data.length > 0) {
 
-                this.searchInfoArr = [];
-                this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
+                    this.searchInfoArr = [];
+                    this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
-                console.log('看看数据' + responseData.data.length +'=' +this.state.count + this.searchInfoArr[this.searchInfoArr.length - 1].taskId);
 
-                if (responseData.data.length == this.state.count){
-                    this.setState({loadingMore: 0,
-                        lastID : this.searchInfoArr[this.searchInfoArr.length - 1].taskId
+                    if (responseData.data.length == this.state.count) {
+                        this.setState({
+                            loadingMore: 0,
+                            lastID: this.searchInfoArr[this.searchInfoArr.length - 1].taskId
+                        });
+
+                    } else {
+                        this.setState({loadingMore: 2});
+
+                    }
+
+
+                    for (let i = 0; i < this.searchInfoArr.length; i++) {
+                        let secData = this.searchInfoArr[i];
+                        secData.rowIndex = i;
+
+                    }
+
+                    this.setState({
+                        dataSearchSource: this.state.dataSearchSource.cloneWithRows(this.searchInfoArr),
+                        loadedStatus: 'loadedSearch',
+                        showIndex: true,
+
+                    });
+                }else {
+                    this.searchInfoArr = [];
+
+                    this.setState({
+                        loadedStatus: 'loadedSearch',
+
                     });
 
-                }else {
-                    this.setState({loadingMore: 2});
-
                 }
-
-
-                for (let  i = 0 ; i < this.searchInfoArr.length ; i++){
-                    let  secData = this.searchInfoArr[i];
-                    secData.rowIndex = i;
-
-                }
-
-                this.setState({
-                    dataSearchSource: this.state.dataSearchSource.cloneWithRows(this.searchInfoArr),
-                    loadedStatus : 'loadedSearch',
-
-                });
 
             },
             (e) => {
