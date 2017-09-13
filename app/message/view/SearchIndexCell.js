@@ -33,7 +33,7 @@ export default class SearchIndexCell extends React.Component {
                 {/*<TextHighlight*/}
                     {/*highlight={this.props.corpStr}*/}
                     {/*highlightStyle={{*/}
-                        {/*color: 'green'*/}
+                        {/*color: 'red'*/}
                     {/*}}*/}
                     {/*style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}>*/}
                     {/*{this.props.corpName}</TextHighlight>*/}

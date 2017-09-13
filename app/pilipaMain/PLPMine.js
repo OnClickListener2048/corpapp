@@ -147,6 +147,8 @@ export default class PLPMine extends Component {
                 {
                     text: '确定',
                     onPress: () => {
+                        console.log("==清空历史纪录==");
+                        SearchHistoryStore.removeAllData('AllData');
                         UserInfoStore.getJPushID().then(
                             v => {
                                 apis.unbindJPush(v).then(

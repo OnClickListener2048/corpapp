@@ -458,21 +458,6 @@ export default class SearchPage extends BComponent {
         this.searchStr = rowData.corpName;
         this._loadSearchData();
 
-        var historyArr = [];
-        historyArr= historyArr.concat(SearchHistoryStore.loadAll('AllData'));
-
-        console.log("===>>>>"+SearchHistoryStore.loadAll('AllData')+"==="+historyArr);
-
-
-        // let  a = SearchHistoryStore.loadAll('AllData');
-
-        // console.log("===>>>>"+historyArr+"==="+a.corpName);
-        // SearchHistoryStore.removeAllData('AllData');
-        this.setState({
-            dataIndexSource: this.state.dataIndexSource.cloneWithRows(historyArr),
-            loadedStatus : 'loadedIndex',
-        });
-
         dismissKeyboard();
     }
 
@@ -503,7 +488,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 corpName={'历史搜索'}
                 color="#c8c8c8"
-                corpStr=" 北京"
+                corpStr="陕西"
             />
         )
     }
@@ -547,7 +532,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
-                corpStr=" 北京"
+                corpStr="陕西"
             />
             </TouchableOpacity>
         );
@@ -561,7 +546,7 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
-                    corpStr=" 北京"
+                    corpStr="陕西"
                 />
             </TouchableOpacity>
         );
