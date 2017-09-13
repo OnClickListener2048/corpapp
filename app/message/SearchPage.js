@@ -199,10 +199,6 @@ export default class SearchPage extends BComponent {
         let  searchStr = this.searchStr;
 
 
-
-        console.log('加载更多呀' + searchStr + 'laseId' + this.state.lastID + 'loading' + this.state.isLoading);
-
-
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
             return;
@@ -229,7 +225,7 @@ export default class SearchPage extends BComponent {
 
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
-                if (responseData.data.length === this.state.count){
+                if (responseData.data.length == this.state.count){
 
                     this.setState({
                         loadingMore: 0,
@@ -256,7 +252,7 @@ export default class SearchPage extends BComponent {
 
             },
             (e) => {
-                关闭刷新动画
+                //关闭刷新动画
                 this.setState({
                     isLoading : false
                 });
@@ -296,8 +292,9 @@ export default class SearchPage extends BComponent {
                 //保存到历史数据
                 SearchHistoryStore.singleCreate('AllData', inputStrData);
             }
-            this.searchStr = str;
-            this._loadSearchData(str);
+             this.searchStr = str;
+
+            this._loadSearchData(this.searchStr);
 
 
         }
@@ -326,7 +323,7 @@ export default class SearchPage extends BComponent {
 
             passProps: {
                 taskId:rowData.taskId,
-                callback : this._loadSearchData
+                // callback : this._loadSearchData
             }
         });
 
@@ -350,7 +347,10 @@ export default class SearchPage extends BComponent {
         this.setState({
             taskId:rowData.taskId,
         })
-        this._loadSearchData(rowData.corpName);
+
+        this.searchStr = rowData.corpName;
+
+        this._loadSearchData(this.searchStr);
         dismissKeyboard();
     }
 
@@ -417,7 +417,6 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 corpName={'历史搜索'}
                 color="#c8c8c8"
-                corpStr=" 北京"
             />
         )
     }
@@ -461,7 +460,6 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
-                corpStr=" 北京"
             />
             </TouchableOpacity>
         );
@@ -475,7 +473,6 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
-                    corpStr=" 北京"
                 />
             </TouchableOpacity>
         );
@@ -488,7 +485,7 @@ export default class SearchPage extends BComponent {
                 this._toMyOutSideWork(rowData)
             }}>
             <SearchInfoCell messageTitle={rowData.corpName}
-                            messageSubTitle = {rowData.stepName}
+                            messageSubTitle = {rowData.taskName}
                             messageTime = {rowData.createDate}
                             messageName = {rowData.connector}
 
