@@ -35,8 +35,6 @@ export default class SearchPage extends BComponent {
         navBarHidden: true, // 隐藏默认的顶部导航栏
         tabBarHidden: true, // 默认隐藏底部标签栏
     };
-
-
     constructor(props) {
         super(props);
 
@@ -56,8 +54,6 @@ export default class SearchPage extends BComponent {
             isRefreshing: false,//为了防止上拉下拉冲突
             dataSearchSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
-
-
             showIndex:true,     //为了防止网络异步的问题 如在搜索框输入停顿后自动搜索索引数据 但是中途用户点击了搜索按钮
                                 // 由于网络异步主任务数据先返回了回来,然后索引的数据返回了回来此时就会显示索引列表而不是我们希望的主任务列表
         };
@@ -76,7 +72,6 @@ export default class SearchPage extends BComponent {
     }
 
     componentWillReceiveProps(props) {
-
         this.setState({
            highlightstr:props.highlightstr,
         });
@@ -97,7 +92,6 @@ export default class SearchPage extends BComponent {
                 });
             }else {
 
-
             }
         }
 
@@ -109,7 +103,6 @@ export default class SearchPage extends BComponent {
 
             apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
-
 
                     if(responseData!==null&& responseData.data !== null && this.state.showIndex === true){
 
@@ -230,12 +223,8 @@ export default class SearchPage extends BComponent {
         )
     }
 
-
-
     _loadMoreSearchInfoData() {
         let  searchStr = this.searchStr;
-
-
         if(!NetInfoSingleton.isConnected) {
             Toast.show('暂无网络' );
             return;
@@ -254,12 +243,9 @@ export default class SearchPage extends BComponent {
             isLoading : true,
         });
 
-
         apis.loadSearchData(searchStr,this.state.count,this.state.lastID).then(
 
             (responseData) => {
-
-
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
                 if (responseData.data.length == this.state.count){
@@ -271,12 +257,10 @@ export default class SearchPage extends BComponent {
                     });
 
                 }else {
-
                     this.setState({
                         loadingMore: 2,
                         lastID : null
                     });
-
                 }
 
                 this.setState({
@@ -285,7 +269,6 @@ export default class SearchPage extends BComponent {
                     loadedStatus : 'loadedSearch',
 
                 });
-
 
             },
             (e) => {
@@ -297,11 +280,9 @@ export default class SearchPage extends BComponent {
         );
     }
 
-
     _callBackWithSelectType(type,str){
 
         console.log('信息' + type +str)
-
         if (type === 'cancle'){
 
             this.props.navigator.pop()
@@ -313,32 +294,33 @@ export default class SearchPage extends BComponent {
            this._loadIndexData(str);
 
         }else if (type === 'search'){
-            var inputStrData = {
-                "corpName":str,
-                "stepId":"",
-                "stepName":"",
-                "taskId":"",
-                "taskName":"",
-                "taskStatus":"",
-                "connector":"",
-                "createDate":""};
-            if(SearchHistoryStore.filtered('AllData', 'corpName="'+str+'"').length===0){
-                //保存到历史数据
-                SearchHistoryStore.singleCreate('AllData', inputStrData);
-            }else{
-                //删除一条数据
-                SearchHistoryStore.removeSingleData('AllData', 'corpName="'+str+'"');
-                //保存到历史数据
-                SearchHistoryStore.singleCreate('AllData', inputStrData);
-            }
-             this.searchStr = str;
-
-            this._loadSearchData(this.searchStr);
-
-
+            this._saveInputData(str);
         }
     }
 
+    //将输入框数据保存到历史纪录
+    _saveInputData(data){
+        var inputStrData = {
+            "corpName":data,
+            "stepId":"",
+            "stepName":"",
+            "taskId":"",
+            "taskName":"",
+            "taskStatus":"",
+            "connector":"",
+            "createDate":""};
+        if(SearchHistoryStore.filtered('AllData', 'corpName="'+data+'"').length===0){
+            //保存到历史数据
+            SearchHistoryStore.singleCreate('AllData', inputStrData);
+        }else{
+            //删除一条数据
+            SearchHistoryStore.removeSingleData('AllData', 'corpName="'+data+'"');
+            //保存到历史数据
+            SearchHistoryStore.singleCreate('AllData', inputStrData);
+        }
+        this.searchStr = data;
+        this._loadSearchData();
+    }
 
     _toMyOutSideWork(rowData) {
         if (this.state.isJumping === true){
@@ -352,22 +334,15 @@ export default class SearchPage extends BComponent {
             await this.setState({isJumping:false})//1.5秒后可点击
         },1000);
 
-
-
-
         this.props.navigator.push({
             screen: 'MyOutSideTaskPage',
             backButtonTitle: '返回', // 返回按钮的文字 (可选)
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
-
             passProps: {
                 taskId:rowData.taskId,
                 // callback : this._loadSearchData
             }
         });
-
-
-
     }
 
     //清空历史纪录
@@ -383,13 +358,7 @@ export default class SearchPage extends BComponent {
 
     //点击某个历史纪录项，进入查询详细列表页
     _pressHistoryData(rowData){
-        this.setState({
-            taskId:rowData.taskId,
-        })
-
-        this.searchStr = rowData.corpName;
-
-        this._loadSearchData(this.searchStr);
+        this._saveInputData(rowData.corpName);
         dismissKeyboard();
     }
 
@@ -410,7 +379,6 @@ export default class SearchPage extends BComponent {
         })
         this.searchStr = rowData.corpName;
         this._loadSearchData();
-
         dismissKeyboard();
     }
 
@@ -452,7 +420,6 @@ export default class SearchPage extends BComponent {
                 <View style={{height:60,alignItems:'center',justifyContent:'center',flexDirection:'row'}}>
                     <ActivityIndicator size={'small'}/>
                     <Text style={{marginLeft: 10}}>加载中...</Text>
-
                 </View>
             );
             //加载中..
@@ -477,7 +444,6 @@ export default class SearchPage extends BComponent {
     }
 
     _renderIndexRow(rowData) {
-
         return (
             <TouchableOpacity onPress={() => {
                 this._pressIndexData(rowData)
@@ -506,7 +472,6 @@ export default class SearchPage extends BComponent {
     }
 
     _renderSearchRow(rowData) {
-
         return (
             <TouchableOpacity onPress={() => {
                 this._toMyOutSideWork(rowData)
@@ -515,7 +480,6 @@ export default class SearchPage extends BComponent {
                             messageSubTitle = {rowData.taskName}
                             messageTime = {rowData.createDate}
                             messageName = {rowData.connector}
-
             />
             </TouchableOpacity>
 
@@ -530,7 +494,6 @@ export default class SearchPage extends BComponent {
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
-
                         <NoMessage
                             textContent='网络错误,点击重新开始'
                             active={require('../img/network_error.png')}/>
@@ -540,9 +503,7 @@ export default class SearchPage extends BComponent {
         }else if (this.state.loadedStatus === '') {      // 没什么错但是还没开始请求数据
 
             return(
-                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
-
-                </View>
+                <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}/>
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
@@ -556,10 +517,8 @@ export default class SearchPage extends BComponent {
                 </TouchableOpacity>
             );
         }else if (this.searchInfoArr.length === 0 && this.state.loadedStatus === 'loadedSearch'){
-
             return(
                 //<TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='暂无搜索结果'
@@ -607,7 +566,6 @@ export default class SearchPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderSearchRow.bind(this)}
-
                 />
 
             );
@@ -617,29 +575,22 @@ export default class SearchPage extends BComponent {
     rendertopView() {
             return (
                 <view style={styles.searchViewContainer}/>
-
             );
-        }
+    }
 
     renderSearchView() {
         return (
             < SearchTextInputView style={styles.searchViewContainer} callback={this._callBackWithSelectType.bind(this)}/>
-
         );
     }
 
     render() {
         return (
-
             <View style={styles.container}>
                 {/*{this.rendertopView()}*/}
                 {this.renderSearchView()}
-
                 {this.renderListView()}
-
             </View>
-
-
         );
     }
 }
