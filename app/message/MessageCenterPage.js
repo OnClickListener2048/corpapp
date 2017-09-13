@@ -595,7 +595,7 @@ export default class MessageCenterPage extends BComponent {
 
     _renderHeader(rowData){
         return(
-            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , backgroundColor:'orange' }} onPress={() => {this.toSearchPage()}}>
+            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45  }} onPress={() => {this.toSearchPage()}}>
 
                 <SearchTextInputView/>
              </TouchableOpacity>

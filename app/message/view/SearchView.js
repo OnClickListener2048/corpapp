@@ -205,10 +205,10 @@ const styles = StyleSheet.create({
     textInput: {
         width: SCREEN_WIDTH - 61 - 15 - 40,
         height: 44 - 7 - 7,
-
         marginLeft: 6,
-
-
+        padding:0,
+        marginTop:0,
+        marginBottom:0,
         color:'#323232',
         fontSize: 15,
     },
