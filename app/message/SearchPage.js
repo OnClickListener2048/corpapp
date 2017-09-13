@@ -41,6 +41,8 @@ export default class SearchPage extends BComponent {
         this.state = {
             loadedStatus : '',  //  noNetwork 请求搜索信息没有网络  loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch,loadedHistory
             count:'10',//索引返回数据条数
+            pageCount:15,//主任务数据分页条数
+
             taskId:'118',//主任务ID
             isLoading : false,  //防止快速上拉刷新
             isJumping : false, //防止重复点击
@@ -117,6 +119,10 @@ export default class SearchPage extends BComponent {
                 return;
             }
 
+            if (indexStr === ''){
+                return;
+            }
+
             apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
 
@@ -176,7 +182,7 @@ export default class SearchPage extends BComponent {
             lastID: null
         });
 
-        apis.loadSearchData(searchStr,this.state.count,null).then(
+        apis.loadSearchData(searchStr,this.state.pageCount,null).then(
             (responseData) => {
 
                 SActivityIndicator.hide(loading);
@@ -186,7 +192,7 @@ export default class SearchPage extends BComponent {
                     this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
 
-                    if (responseData.data.length == this.state.count) {
+                    if (responseData.data.length === this.state.pageCount) {
                         this.setState({
                             loadingMore: 0,
                             lastID: this.searchInfoArr[this.searchInfoArr.length - 1].taskId
@@ -256,12 +262,14 @@ export default class SearchPage extends BComponent {
             isLoading : true,
         });
 
-        apis.loadSearchData(searchStr,this.state.count,this.state.lastID).then(
+
+        apis.loadSearchData(searchStr,this.state.pageCount,this.state.lastID).then(
+
 
             (responseData) => {
                 this.searchInfoArr = this.searchInfoArr.concat(responseData.data);
 
-                if (responseData.data.length == this.state.count){
+                if (responseData.data.length === this.state.pageCount){
 
                     this.setState({
                         loadingMore: 0,

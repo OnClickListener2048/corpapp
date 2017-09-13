@@ -38,7 +38,7 @@ export default class SearchView extends Component {
 
         this.timer = setTimeout(()=>{
             this._search()
-        },1000);
+        },600);
 
     }
 
