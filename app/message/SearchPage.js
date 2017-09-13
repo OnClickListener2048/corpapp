@@ -41,10 +41,9 @@ export default class SearchPage extends BComponent {
         super(props);
 
         this.state = {
-            loadedStatus : '',  // loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch,loadedHistory
+            loadedStatus : '',  //  noNetwork 请求搜索信息没有网络  loadedSucess,loadedFaild,loadedIndex 索引列表 ,loadedSearch,loadedHistory
             count:'10',//索引返回数据条数
             taskId:'118',//主任务ID
-            isNoNetwork : false,
             isLoading : false,  //防止快速上拉刷新
             isJumping : false, //防止重复点击
             lastID:null,//分页所需最后一项ID
@@ -96,9 +95,18 @@ export default class SearchPage extends BComponent {
                  loadedStatus: 'loadedHistory',
                 });
             }else {
+                    this.setState({
+                        dataHistorySource: this.state.dataHistorySource.cloneWithRows(SearchHistoryStore.loadAll('AllData')),
+                        loadedStatus : 'loadedHistory',
+                    });
+            }
 
+            if(!NetInfoSingleton.isConnected) {
+                Toast.show('暂无网络');
 
             }
+
+
         }
 
         //搜索索引
@@ -106,6 +114,13 @@ export default class SearchPage extends BComponent {
             this.setState({
                 showIndex:true,
             });
+
+            if(!NetInfoSingleton.isConnected) {
+                this.setState({
+                    loadedStatus : '',  //空白页面
+                });
+                return;
+            }
 
             apis.loadSearchIndex(indexStr,this.state.count).then(
                 (responseData) => {
@@ -156,12 +171,11 @@ export default class SearchPage extends BComponent {
 
         if(!NetInfoSingleton.isConnected) {
             this.setState({
-                isNoNetwork:true,
+                loadedStatus : 'noNetwork',  // 初始页面没有网络 noNetwork
             });
             return;
         }
         this.setState({
-            isNoNetwork:false,
             showIndex:false,
         });
 
@@ -523,9 +537,9 @@ export default class SearchPage extends BComponent {
     }
 
 
+
     renderListView() {
-        console.log(this.indexInfoArr.length+"==="+this.state.loadedStatus);
-        if (this.state.isNoNetwork === true) {      // 无网络
+        if (this.state.loadedStatus === 'noNetwork') {      // 无网络
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
 
@@ -558,15 +572,11 @@ export default class SearchPage extends BComponent {
         }else if (this.searchInfoArr.length === 0 && this.state.loadedStatus === 'loadedSearch'){
 
             return(
-                //<TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
-
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
-                            textContent='暂无搜索结果'
-                            active={require('../img/no_message.png')}/>
+                            textContent='暂无搜索记录'
+                            active={require('../img/norecord.png')}/>
                     </View>
-                //</TouchableOpacity>
-
             );
         }else if (this.indexInfoArr.length > 0 && this.state.loadedStatus === 'loadedIndex'){
 
