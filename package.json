@@ -34,7 +34,8 @@
     "react-native-sww-activity-indicator": "^1.0.4",
     "react-native-tab-navigator": "^0.3.3",
     "react-native-vector-icons": "^4.1.1",
-    "realm": "^1.8.2"
+    "realm": "^1.8.2",
+    "react-native-highlight-words":"^1.0.0"
   },
   "devDependencies": {
     "babel-jest": "*",

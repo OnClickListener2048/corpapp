@@ -57,7 +57,7 @@ export default class SearchPage extends BComponent {
             dataSearchSource: new ListView.DataSource({
                 rowHasChanged: (row1, row2) => row1 !== row2}),
         };
-
+        this.highlightstr='';//需要高亮的文字
         this.searchInfoArr = [];
         this.indexInfoArr = [];//推荐索引数据
         this.searchStr = '';
@@ -71,6 +71,12 @@ export default class SearchPage extends BComponent {
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
+    componentWillReceiveProps(props) {
+
+        this.setState({
+           highlightstr:props.highlightstr,
+        });
+    }
 
         componentDidMount() {
             //历史纪录显示
@@ -270,7 +276,9 @@ export default class SearchPage extends BComponent {
             this.props.navigator.pop()
 
         }else if (type === 'index'){
-
+        this.setState({
+            highlightstr:str,
+        })
            this._loadIndexData(str);
 
         }else if (type === 'search'){
@@ -402,7 +410,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 corpName={'历史搜索'}
                 color="#c8c8c8"
-                corpStr="陕西"
+                corpStr={this.state.highlightstr}
             />
         )
     }
@@ -446,7 +454,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
-                corpStr="陕西"
+                corpStr={this.state.highlightstr}
             />
             </TouchableOpacity>
         );
@@ -460,7 +468,7 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
-                    corpStr="陕西"
+                    corpStr={this.state.highlightstr}
                 />
             </TouchableOpacity>
         );
