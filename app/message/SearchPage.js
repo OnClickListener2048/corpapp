@@ -139,8 +139,6 @@ export default class SearchPage extends BComponent {
 
                         }
 
-
-
                     }
 
                 },
