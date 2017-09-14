@@ -473,6 +473,7 @@ export default class SearchPage extends BComponent {
             <SearchIndexCell
                 taskId= {rowData.taskId}
                 corpName={rowData.corpName}
+                color="#969696"
                 corpStr={this.state.highlightstr}
             />
             </TouchableOpacity>
@@ -487,6 +488,7 @@ export default class SearchPage extends BComponent {
                 <SearchIndexCell
                     taskId= {rowData.taskId}
                     corpName={rowData.corpName}
+                    color="#969696"
                     corpStr={this.state.highlightstr}
                 />
             </TouchableOpacity>

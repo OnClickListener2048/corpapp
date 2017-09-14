@@ -22,13 +22,15 @@ export default class SearchIndexCell extends React.Component {
         corpStr:PropTypes.string,
     };
 
+
+
     render() {
         return(
             <View style={styles.container}>
             <View style={styles.rowStyle}>
                 <Highlighter
                     style={[styles.textstyle,{color:this.props.color!==null?this.props.color:'#969696'}]}
-                    highlightStyle={{color: 'red'}}
+                    highlightStyle={{color: '#E5151D'}}
                     searchWords={[this.props.corpStr]}
                     textToHighlight={this.props.corpName}/>
             </View>
