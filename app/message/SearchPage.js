@@ -168,9 +168,7 @@ export default class SearchPage extends BComponent {
 
     //点击确定，具体任务列表
     _loadSearchData(){
-
         let  searchStr = this.searchStr;
-        console.log('确定搜索内容之后的搜索'+searchStr);
 
         if(!NetInfoSingleton.isConnected) {
             this.setState({
@@ -363,7 +361,6 @@ export default class SearchPage extends BComponent {
             backButtonHidden: false, // 是否隐藏返回按钮 (可选)
             passProps: {
                 taskId:rowData.taskId,
-                // callback : this._loadSearchData
             }
         });
     }
@@ -513,7 +510,7 @@ export default class SearchPage extends BComponent {
     renderListView() {
         if (this.state.loadedStatus === 'noNetwork') {      // 无网络
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => {this._loadSearchData()}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
@@ -529,7 +526,7 @@ export default class SearchPage extends BComponent {
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadSearchData}}>
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => {this._loadSearchData()}}>
 
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
