@@ -82,23 +82,14 @@ export default class SearchTextInputView extends Component {
                         style={[styles.searchImg]}>
                     </Image>
 
+                    <Text style={[{fontSize: 14,marginLeft: 6 , color : '#C8C8C8'}]}>{'搜索'}</Text>
+
                 </View>
 
             </View>
                 <View style={styles.lineViewContainer}>
                 </View>
-                {/*<Image*/}
-                    {/*source={require('../../img/yinying.png')}*/}
-                    {/*style={[{*/}
-                        {/*resizeMode: "contain",*/}
-                        {/*position:'absolute',*/}
-                        {/*width: SCREEN_WIDTH,*/}
-                        {/*height:1,*/}
-                        {/*marginLeft:0,*/}
-                        {/*flexDirection: 'row',*/}
-                        {/*alignItems:'center'*/}
-                    {/*}]}*/}
-                {/*/>*/}
+
             </View>
 
 
@@ -165,7 +156,7 @@ const styles = StyleSheet.create({
         borderColor:'#E6E6E6',
         backgroundColor: 'white',
         flexDirection: 'row',
-
+        alignItems:'center'
     },
 
     searchImg: {
@@ -174,10 +165,13 @@ const styles = StyleSheet.create({
         marginTop:5,
         marginBottom:5,
 
-        width: 20,
-        height: 20,
+        width: 18,
+        height: 18,
 
     },
+
+
+
 
     legalPersonStyle: {
         marginTop : 5,
