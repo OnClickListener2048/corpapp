@@ -80,7 +80,6 @@ export default class MessageCenterPage extends BComponent {
         //     this.isJumping = false;
         //
         // }
-        console.log('看看到这里没有00', this.state.isJumping);
 
     }
 

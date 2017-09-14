@@ -591,12 +591,6 @@ export default class SearchPage extends BComponent {
         }
     }
 
-    rendertopView() {
-            return (
-                <view style={styles.searchViewContainer}/>
-            );
-    }
-
     renderSearchView() {
         return (
             < SearchTextInputView style={styles.searchViewContainer} callback={this._callBackWithSelectType.bind(this)}/>
@@ -606,7 +600,6 @@ export default class SearchPage extends BComponent {
     render() {
         return (
             <View style={styles.container}>
-                {/*{this.rendertopView()}*/}
                 {this.renderSearchView()}
                 {this.renderListView()}
             </View>

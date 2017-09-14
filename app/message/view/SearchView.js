@@ -107,7 +107,7 @@ console.log('点击了确定按钮');
                                dismissKeyboard();
 
                            }}
-                           style={styles.textInput} placeholder='' returnKeyType='search' returnKeyLabel='搜索'
+                           style={styles.textInput} placeholder='搜索' placeholderTextColor={'#C8C8C8'} returnKeyType='search' returnKeyLabel='搜索'
                 />
             </View>
 
@@ -197,8 +197,8 @@ const styles = StyleSheet.create({
         marginTop:5,
         marginBottom:5,
 
-        width: 20,
-        height: 20,
+        width: 18,
+        height: 18,
 
     },
 
