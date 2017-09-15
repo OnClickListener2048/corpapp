@@ -113,7 +113,7 @@ console.log('点击了确定按钮');
 
                 <TouchableOpacity onPress={this._cancleBtnClick}>
                     <View  style={styles.cancleBtnStyle}>
-                        <Text style={{fontSize:18, textAlign:'center', justifyContent: 'center',color:'#323232'}}>
+                        <Text style={{fontSize:15, textAlign:'center', justifyContent: 'center',color:'#323232'}}>
                            取消</Text>
                     </View>
                 </TouchableOpacity>
