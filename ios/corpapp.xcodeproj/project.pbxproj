@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00739ED3822743159E0DCF0E /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D05F33EB41984C048DF6E6B3 /* MaterialIcons.ttf */; };
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
@@ -42,7 +43,6 @@
 		2DCD954D1E0B4F2C00145EB5 /* corpappTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* corpappTests.m */; };
 		35BFB7DB03514790937103A0 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B80FA943F36647FB91972A89 /* CoreGraphics.framework */; };
 		3D02EE5B46134FCEA3432D97 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 40C8A4E4C39249C3A0FD4352 /* FontAwesome.ttf */; };
-		4CB73ED81F429BD70018C00A /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB73ED71F429BD70018C00A /* UMMobClick.framework */; };
 		4CB73EDE1F429BF40018C00A /* UMNative.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CB73EDD1F429BF40018C00A /* UMNative.m */; };
 		4CB73EE01F429D120018C00A /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 4CB73EDF1F429D120018C00A /* libsqlite3.tbd */; };
 		5D819A14183B4952A2A6FE4C /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A2CDC8C512D04BC8B29A902D /* Ionicons.ttf */; };
@@ -72,6 +72,10 @@
 		CC2CC0991F31EB340095871E /* libZTAlertView.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC304DCD1F31EAAB0061CB00 /* libZTAlertView.a */; };
 		CC61DBB250EB4D718226FC4E /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5C76485BF86C4964BE08A4EA /* UserNotifications.framework */; };
 		CC6C3EE41F18CA5B008447F9 /* Bugly.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC6C3EE21F18CA4F008447F9 /* Bugly.framework */; };
+		CC93DE621F6BE77600506964 /* UMMobClick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC93DE581F6BE69900506964 /* UMMobClick.framework */; };
+		CC93DE651F6F5F2000506964 /* AlicloudHttpDNS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC93DE631F6F5F2000506964 /* AlicloudHttpDNS.framework */; };
+		CC93DE661F6F5F2000506964 /* AlicloudUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC93DE641F6F5F2000506964 /* AlicloudUtils.framework */; };
+		CC93DE6A1F6F5F4000506964 /* UTDID.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC93DE691F6F5F4000506964 /* UTDID.framework */; };
 		E3CA32B61EE01A4300220AD6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E3CA32B41EE01A4300220AD6 /* LaunchScreen.xib */; };
 		F29D7CC2925A4496B1913BCB /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 640B128369894EABBAC72FB3 /* libRNVectorIcons.a */; };
 		F58728AF178E429ABB0DFB57 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC4205A0316540A091B34D3E /* CFNetwork.framework */; };
@@ -411,7 +415,6 @@
 		445F39BCF10344A3B0B679B4 /* libresolv.tbd */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libresolv.tbd; path = usr/lib/libresolv.tbd; sourceTree = SDKROOT; };
 		4609ED98B60D46B6BA3770EC /* libRCTBEEPickerManager.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTBEEPickerManager.a; sourceTree = "<group>"; };
 		47E94947C4FD49238EBD9AF5 /* libRealmReact.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRealmReact.a; sourceTree = "<group>"; };
-		4CB73ED71F429BD70018C00A /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
 		4CB73EDC1F429BF40018C00A /* UMNative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMNative.h; sourceTree = "<group>"; };
 		4CB73EDD1F429BF40018C00A /* UMNative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UMNative.m; sourceTree = "<group>"; };
 		4CB73EDF1F429D120018C00A /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
@@ -438,6 +441,10 @@
 		C9F55FAB37B44CBD958D6AB0 /* Security.framework */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		CA3C5CECE05A4F17A69B0972 /* libimageCropPicker.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libimageCropPicker.a; sourceTree = "<group>"; };
 		CC6C3EE21F18CA4F008447F9 /* Bugly.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bugly.framework; sourceTree = "<group>"; };
+		CC93DE581F6BE69900506964 /* UMMobClick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMMobClick.framework; sourceTree = "<group>"; };
+		CC93DE631F6F5F2000506964 /* AlicloudHttpDNS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudHttpDNS.framework; sourceTree = "<group>"; };
+		CC93DE641F6F5F2000506964 /* AlicloudUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AlicloudUtils.framework; sourceTree = "<group>"; };
+		CC93DE691F6F5F4000506964 /* UTDID.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UTDID.framework; sourceTree = "<group>"; };
 		CCCACC011F061FBE008FB508 /* corpapp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = corpapp.entitlements; path = corpapp/corpapp.entitlements; sourceTree = "<group>"; };
 		CFD3BB77481F4C0BB6B897B0 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		D05F33EB41984C048DF6E6B3 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -463,8 +470,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CC93DE621F6BE77600506964 /* UMMobClick.framework in Frameworks */,
+				64CB239B6EA94162AD450575 /* SystemConfiguration.framework in Frameworks */,
+				8BE7B07F46754585BEC43177 /* CoreTelephony.framework in Frameworks */,
+				781B4849C07149BFAC0EFE59 /* libresolv.tbd in Frameworks */,
 				4CB73EE01F429D120018C00A /* libsqlite3.tbd in Frameworks */,
-				4CB73ED81F429BD70018C00A /* UMMobClick.framework in Frameworks */,
+				CC93DE6A1F6F5F4000506964 /* UTDID.framework in Frameworks */,
 				CC2CC0991F31EB340095871E /* libZTAlertView.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
@@ -483,6 +494,7 @@
 				113F564D53C8426DBADB98F8 /* libRNBlur.a in Frameworks */,
 				83162E071EFCC58A0031CA7A /* QBImagePicker.framework in Frameworks */,
 				F29D7CC2925A4496B1913BCB /* libRNVectorIcons.a in Frameworks */,
+				CC93DE651F6F5F2000506964 /* AlicloudHttpDNS.framework in Frameworks */,
 				C4B0F63434064270A0ABC252 /* libRealmReact.a in Frameworks */,
 				C30E55D7A85A41C5AB2173BA /* libc++.tbd in Frameworks */,
 				B3FA13E95A5646C39C757110 /* libz.tbd in Frameworks */,
@@ -490,15 +502,13 @@
 				711112B4FCA941C0850C8841 /* libReactNativeNavigation.a in Frameworks */,
 				78939F4C359E4C0B8AF15107 /* libRCTJPushModule.a in Frameworks */,
 				CC61DBB250EB4D718226FC4E /* UserNotifications.framework in Frameworks */,
-				8BE7B07F46754585BEC43177 /* CoreTelephony.framework in Frameworks */,
 				7DD478755F7F4300A262AE34 /* Security.framework in Frameworks */,
 				F58728AF178E429ABB0DFB57 /* CFNetwork.framework in Frameworks */,
 				7994E563EC8C4389BE5110A8 /* CoreFoundation.framework in Frameworks */,
-				64CB239B6EA94162AD450575 /* SystemConfiguration.framework in Frameworks */,
+				CC93DE661F6F5F2000506964 /* AlicloudUtils.framework in Frameworks */,
 				074A3990333B4F9D9E7C0402 /* Foundation.framework in Frameworks */,
 				0BF6693DA4C040DAA2A556E7 /* UIKit.framework in Frameworks */,
 				83162E091EFCC58A0031CA7A /* RSKImageCropper.framework in Frameworks */,
-				781B4849C07149BFAC0EFE59 /* libresolv.tbd in Frameworks */,
 				35BFB7DB03514790937103A0 /* CoreGraphics.framework in Frameworks */,
 				71196621AF2E41A8ABBAA1CE /* libimageCropPicker.a in Frameworks */,
 				CB74B2B9FECC43B7A3545F60 /* libRCTBEEPickerManager.a in Frameworks */,
@@ -726,7 +736,10 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				4CB73ED71F429BD70018C00A /* UMMobClick.framework */,
+				CC93DE691F6F5F4000506964 /* UTDID.framework */,
+				CC93DE631F6F5F2000506964 /* AlicloudHttpDNS.framework */,
+				CC93DE641F6F5F2000506964 /* AlicloudUtils.framework */,
+				CC93DE581F6BE69900506964 /* UMMobClick.framework */,
 				83162DE11EFCC5450031CA7A /* ImageCropPickerSDK */,
 				13B07FAE1A68108700A75B9A /* corpapp */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
@@ -1627,6 +1640,7 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = corpapp;
@@ -1670,6 +1684,7 @@
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
+					"-ObjC",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cn.pilipa.corpapp;
 				PRODUCT_NAME = corpapp;
