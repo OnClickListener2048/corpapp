@@ -9,6 +9,15 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
 
+import CodePush from 'react-native-code-push'
+// import {
+//     SwRefreshScrollView, //支持下拉刷新的ScrollView
+//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+// } from '../../node_modules/react-native-swRefresh-master'
+
+// import UltimateListView from "../../node_modules/react-native-ultimate-listview";
 
 import {
     Text,
@@ -77,8 +86,7 @@ export default class MessageCenterPage extends BComponent {
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
         // if(event.id==='willAppear'){
-        //     this.isJumping = false;
-        //
+
         // }
 
     }
@@ -378,6 +386,10 @@ export default class MessageCenterPage extends BComponent {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         // 跳转登录页的通知
+        //热更新相关
+        CodePush.sync()
+
+
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
             //console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
