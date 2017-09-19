@@ -39,7 +39,6 @@ export default class SearchInfoCell extends React.Component {
                         textAlign='right'
                         style={[{fontSize: 14,marginTop: Platform.OS==='ios'?5:0, marginRight : 0 ,color : '#646464'}] }>{messageName}</Text>
 
-
                 </View>
 
 

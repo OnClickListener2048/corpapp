@@ -1,6 +1,7 @@
 /**
  * Created by jinglan on 2017/8/18.
  */
+import 'isomorphic-fetch';
 import 'react-native';
 import React from 'react';
 import fetchMock from 'fetch-mock';

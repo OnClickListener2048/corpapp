@@ -3,6 +3,7 @@
  */
 import GetLicensePage from '../GetLicensePage';
 import 'react-native';
+import 'isomorphic-fetch';
 import React from 'react';
 import fetchMock from 'fetch-mock';
 import {shallow} from 'enzyme';
