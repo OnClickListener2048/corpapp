@@ -28,12 +28,13 @@ import com.facebook.soloader.SoLoader;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.microsoft.codepush.react.CodePush;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class MainApplication extends NavigationApplication {
+public class MainApplication extends NavigationApplication{
     // 设置为 true 将不弹出 toast
     private boolean SHUTDOWN_TOAST = true;
     // 设置为 true 将不打印 log
@@ -43,6 +44,7 @@ public class MainApplication extends NavigationApplication {
     public boolean isDebug() {
         return BuildConfig.DEBUG;
     }
+
 
     @Override
     public void onCreate() {
@@ -81,8 +83,15 @@ public class MainApplication extends NavigationApplication {
                 new VectorIconsPackage(),
                 new BlurViewPackage(),
                 new JPushPackage(SHUTDOWN_TOAST, SHUTDOWN_LOG),
-                new UmengReactPackage()
+                new UmengReactPackage(),
+                new CodePush("nAUClmgp3lGQfnnroHsXKtA2CDQAb9c43031-f8df-47b3-8e35-085700d8d99a", MainApplication.this, BuildConfig.DEBUG)
         );
     }
+
+    @Override
+    public String getJSBundleFile() {
+        return CodePush.getJSBundleFile();
+    }
+
 
 }

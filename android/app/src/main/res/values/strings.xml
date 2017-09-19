@@ -1,3 +1,4 @@
 <resources>
+    <string moduleConfig="true" name="reactNativeCodePush_androidDeploymentKey">3sbXB8JnByOorscxhE3iYN5LKLh19b70aa67-488c-47ba-93f9-417f7531312e</string>
     <string name="app_name">Pi</string>
 </resources>
