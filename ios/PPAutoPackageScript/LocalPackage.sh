@@ -39,7 +39,13 @@ info_plist_name="Info"
 
 # 导出ipa所需要的plist文件路径 (默认为AdHocExportOptionsPlist.plist)
 ExportOptionsPlistPath="./PPAutoPackageScript/AdHocExportOptionsPlist.plist"
+
+
+network_path=../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj/project.pbxproj
+
+
 # 返回上一级目录,进入项目工程目录
+
 cd ..
 # 获取项目名称
 project_name=`find . -name *.xcodeproj | awk -F "[/.]" '{print $(NF-1)}'`
@@ -48,6 +54,8 @@ info_plist_path="$project_name/$info_plist_name.plist"
 bundle_version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" $info_plist_path`
 bundle_build_version=`/usr/libexec/PlistBuddy -c "Print CFBundleIdentifier" $info_plist_path`
 bundle_identifier=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $info_plist_path`
+
+
 
 # 删除旧.xcarchive文件
 #rm -rf ~/Desktop/$scheme_name-IPA/$scheme_name.xcarchive
@@ -98,9 +106,13 @@ else
 mkdir -pv $export_path
 fi
 
-
+# 替换下拉刷新控件
 rm -rf ../node_modules/react-native/React/Views/RCTRefreshControl.m
 cp  ../app/modules/RCTRefreshControl.m  ../node_modules/react-native/React/Views/
+
+
+#DNS相关配置信息修改
+sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
 
 
 # 判断编译的项目类型是workspace还是project
