@@ -111,6 +111,11 @@ rm -rf ../node_modules/react-native/React/Views/RCTRefreshControl.m
 cp  ../app/modules/RCTRefreshControl.m  ../node_modules/react-native/React/Views/
 
 
+#替换DNS文件
+rm -rf ../node_modules/react-native/Libraries/Network/RCTHTTPRequestHandler.mm
+cp  ../app/modules/RCTHTTPRequestHandler.mm  ../node_modules/react-native/Libraries/Network/
+
+
 #DNS相关配置信息修改
 sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
 
