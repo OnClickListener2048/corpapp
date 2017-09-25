@@ -7,6 +7,7 @@ exports[`快照正确渲染 1`] = `
   accessibilityTraits={undefined}
   accessible={true}
   hitSlop={undefined}
+  nativeID={undefined}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -28,6 +29,7 @@ exports[`快照正确渲染 1`] = `
   testID={undefined}
 >
   <View
+    collapsable={undefined}
     style={
       Object {
         "alignSelf": "stretch",
@@ -41,10 +43,14 @@ exports[`快照正确渲染 1`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      collapsable={undefined}
+      disabled={false}
       ellipsizeMode="tail"
       style={
         Object {
           "color": "#ffffff",
+          "height": 0,
+          "lineHeight": 0,
           "textAlign": "center",
         }
       }
@@ -240,8 +246,10 @@ exports[`快照正确渲染 1`] = `
           accessibilityLabel={undefined}
           accessibilityTraits={undefined}
           accessible={true}
+          collapsable={undefined}
           hitSlop={undefined}
           isTVSelectable={true}
+          nativeID={undefined}
           onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -278,6 +286,7 @@ exports[`快照正确渲染 1`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
+              disabled={false}
               ellipsizeMode="tail"
               style={
                 Array [
@@ -321,8 +330,10 @@ exports[`快照正确渲染 1`] = `
         accessibilityLabel={undefined}
         accessibilityTraits={undefined}
         accessible={true}
+        collapsable={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
+        nativeID={undefined}
         onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -374,6 +385,7 @@ exports[`快照正确渲染 1`] = `
         <Text
           accessible={true}
           allowFontScaling={true}
+          disabled={false}
           ellipsizeMode="tail"
           style={
             Object {
@@ -389,6 +401,7 @@ exports[`快照正确渲染 1`] = `
         <Text
           accessible={true}
           allowFontScaling={true}
+          disabled={false}
           ellipsizeMode="tail"
           style={
             Object {
@@ -405,24 +418,23 @@ exports[`快照正确渲染 1`] = `
       </View>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
-      accessible={true}
-      hitSlop={undefined}
-      onLayout={undefined}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
         Array [
           Object {
+            "alignItems": "center",
+            "alignSelf": "stretch",
+            "borderRadius": 8,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "height": 44,
+            "justifyContent": "center",
+            "marginBottom": 10,
+          },
+          Object {
             "alignSelf": "center",
-            "backgroundColor": "#e6e6e6",
+            "backgroundColor": "#ef0c35",
             "borderRadius": 6,
+            "borderWidth": 0,
             "height": 44,
             "justifyContent": "center",
             "margin": 0,
@@ -430,24 +442,40 @@ exports[`快照正确渲染 1`] = `
             "width": 250,
           },
           Object {
+            "alignSelf": "center",
             "backgroundColor": "#e6e6e6",
+            "borderRadius": 6,
+            "borderWidth": 0,
+            "height": 44,
+            "justifyContent": "center",
+            "margin": 0,
+            "marginTop": 22.5,
+            "width": 250,
           },
         ]
       }
-      testID={undefined}
     >
       <Text
         accessible={true}
         allowFontScaling={true}
+        disabled={false}
         ellipsizeMode="tail"
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 15,
-            "marginBottom": 10,
-            "marginTop": 10,
-            "textAlign": "center",
-          }
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "flex": 1,
+              "fontSize": 18,
+              "textAlign": "center",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 15,
+              "marginBottom": 10,
+              "marginTop": 10,
+              "textAlign": "center",
+            },
+          ]
         }
       >
         登录
@@ -465,6 +493,7 @@ exports[`快照正确渲染 2`] = `
   accessible={true}
   hitSlop={undefined}
   mobile="12345678000"
+  nativeID={undefined}
   onLayout={undefined}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -486,6 +515,7 @@ exports[`快照正确渲染 2`] = `
   testID={undefined}
 >
   <View
+    collapsable={undefined}
     style={
       Object {
         "alignSelf": "stretch",
@@ -499,10 +529,14 @@ exports[`快照正确渲染 2`] = `
     <Text
       accessible={true}
       allowFontScaling={true}
+      collapsable={undefined}
+      disabled={false}
       ellipsizeMode="tail"
       style={
         Object {
           "color": "#ffffff",
+          "height": 0,
+          "lineHeight": 0,
           "textAlign": "center",
         }
       }
@@ -698,8 +732,10 @@ exports[`快照正确渲染 2`] = `
           accessibilityLabel={undefined}
           accessibilityTraits={undefined}
           accessible={true}
+          collapsable={undefined}
           hitSlop={undefined}
           isTVSelectable={true}
+          nativeID={undefined}
           onLayout={undefined}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -736,6 +772,7 @@ exports[`快照正确渲染 2`] = `
             <Text
               accessible={true}
               allowFontScaling={true}
+              disabled={false}
               ellipsizeMode="tail"
               style={
                 Array [
@@ -779,8 +816,10 @@ exports[`快照正确渲染 2`] = `
         accessibilityLabel={undefined}
         accessibilityTraits={undefined}
         accessible={true}
+        collapsable={undefined}
         hitSlop={undefined}
         isTVSelectable={true}
+        nativeID={undefined}
         onLayout={undefined}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -832,6 +871,7 @@ exports[`快照正确渲染 2`] = `
         <Text
           accessible={true}
           allowFontScaling={true}
+          disabled={false}
           ellipsizeMode="tail"
           style={
             Object {
@@ -847,6 +887,7 @@ exports[`快照正确渲染 2`] = `
         <Text
           accessible={true}
           allowFontScaling={true}
+          disabled={false}
           ellipsizeMode="tail"
           style={
             Object {
@@ -863,24 +904,23 @@ exports[`快照正确渲染 2`] = `
       </View>
     </View>
     <View
-      accessibilityComponentType={undefined}
-      accessibilityLabel={undefined}
-      accessibilityTraits={undefined}
-      accessible={true}
-      hitSlop={undefined}
-      onLayout={undefined}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
       style={
         Array [
           Object {
+            "alignItems": "center",
+            "alignSelf": "stretch",
+            "borderRadius": 8,
+            "borderWidth": 1,
+            "flexDirection": "row",
+            "height": 44,
+            "justifyContent": "center",
+            "marginBottom": 10,
+          },
+          Object {
             "alignSelf": "center",
-            "backgroundColor": "#e6e6e6",
+            "backgroundColor": "#ef0c35",
             "borderRadius": 6,
+            "borderWidth": 0,
             "height": 44,
             "justifyContent": "center",
             "margin": 0,
@@ -888,24 +928,40 @@ exports[`快照正确渲染 2`] = `
             "width": 250,
           },
           Object {
+            "alignSelf": "center",
             "backgroundColor": "#e6e6e6",
+            "borderRadius": 6,
+            "borderWidth": 0,
+            "height": 44,
+            "justifyContent": "center",
+            "margin": 0,
+            "marginTop": 22.5,
+            "width": 250,
           },
         ]
       }
-      testID={undefined}
     >
       <Text
         accessible={true}
         allowFontScaling={true}
+        disabled={false}
         ellipsizeMode="tail"
         style={
-          Object {
-            "color": "#FFFFFF",
-            "fontSize": 15,
-            "marginBottom": 10,
-            "marginTop": 10,
-            "textAlign": "center",
-          }
+          Array [
+            Object {
+              "backgroundColor": "transparent",
+              "flex": 1,
+              "fontSize": 18,
+              "textAlign": "center",
+            },
+            Object {
+              "color": "#FFFFFF",
+              "fontSize": 15,
+              "marginBottom": 10,
+              "marginTop": 10,
+              "textAlign": "center",
+            },
+          ]
         }
       >
         登录
