@@ -11,11 +11,11 @@
  */
 
 
-import HTTP from 'react-native-http';
+import {Http} from 'react-native-http';
 import HttpAdapterCorpApp from './HttpAdapterCorpApp';
 
-HTTP.setAdapter(new HttpAdapterCorpApp());
+Http.setAdapter(new HttpAdapterCorpApp());
 
-export default HTTP;
+export default Http;
 
 // global.HTTPBase = HTTPBase;// 全局可用
