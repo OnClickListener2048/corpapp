@@ -11,3 +11,4 @@ it('httpdns parseDNS correct', async () => {
     let text = await HttpDNS.parseDNS("app.i-counting.cn");
     expect(text).toEqual("47.94.123.10");
 });
+
