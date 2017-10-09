@@ -7,7 +7,7 @@ import {HttpAdapter} from "react-native-http";
 
 export default class HttpAdapterCorpApp extends HttpAdapter {
     // 自定义头信息
-    modifyHeaders (headers) : Object {
+    async modifyHeaders (headers) : Object {
         let finalHeaders = new Headers();
         finalHeaders.append('userAgent', 'corpapp'); // TODO 登录时的头信息, userAgent
         if(headers) {
