@@ -688,7 +688,7 @@ export default class GetLicensePage extends BComponent {
                                       ref="corpTypepicker"
                                       callback={this._corpTypeBtnClick.bind(this)}
                                       pickerType = {'corpType'}
-                                      enable={this.state.editables}/>
+                                      enable={false}/>
                     {this.renderBusinessTimeView()}
 
                     <View style={{paddingTop: 0, backgroundColor: 'white'}}>
