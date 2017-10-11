@@ -116,8 +116,13 @@ rm -rf ../node_modules/react-native/Libraries/Network/RCTHTTPRequestHandler.mm
 cp  ../app/modules/RCTHTTPRequestHandler.mm  ../node_modules/react-native/Libraries/Network/
 
 
+#替换Net相关配置文件
+rm -rf ../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj/project.pbxproj
+cp  ../app/modules/project.pbxproj  ../node_modules/react-native/Libraries/Network/RCTNetwork.xcodeproj/
+
+
 #DNS相关配置信息修改
-sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
+#sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
 
 
 # 判断编译的项目类型是workspace还是project

@@ -4164,6 +4164,10 @@ react-native-highlight-words@^1.0.0:
   dependencies:
     highlight-words-core "^1.0.3"
 
+"react-native-http@github:pilipa-cn/react-native-http#v1.0.3":
+  version "1.0.3"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-http/tar.gz/042045ce4f043207adbc989d9e031438a2fcc106"
+
 "react-native-image-crop-picker@github:pilipa-cn/react-native-image-crop-picker#v0.14.2":
   version "0.14.2"
   resolved "https://codeload.github.com/pilipa-cn/react-native-image-crop-picker/tar.gz/30d06896507b1a9ffee06a728d4b82c5b5311c4d"
@@ -4187,9 +4191,9 @@ react-native-modal@^2.4.0:
     prop-types "15.5.10"
     react-native-animatable "^1.2.0"
 
-"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.135":
-  version "1.1.134_1"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/ff91ead24b19722e673090de77d17bb76b30fec0"
+"react-native-navigation@github:pilipa-cn/react-native-navigation#1.1.135_httpdns":
+  version "1.1.135_httpdns"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-navigation/tar.gz/a8739d2bb90a3e2f0893e8adce5f0973c5397be8"
   dependencies:
     lodash "4.x.x"
 
