@@ -64,8 +64,8 @@ export default class GetLicensePage extends BComponent {
             //保存数据类型
             legalEntity:null,//法人
             regId:null,//注册号
-            nationalTaxId:null,//国税登记号
-            localTaxId:null,//地税登记号
+            nationalTaxId:null,//国税登记号 q
+            localTaxId:null,//地税登记号 q
             regFunds:null,//注册资金
             bizRange:this.props.bizRange,//经营范围
             bizLics:null,//营业执照
@@ -81,7 +81,7 @@ export default class GetLicensePage extends BComponent {
             corpType:"私营",          //企业类型
             corpTypeId: null, // 企业类型ID
             district:"朝阳区",          //县或区
-            industry:"IT",         //所属行业
+            industry:"IT",         //所属行业   q
             industryId: null, // 所属行业ID
             stepId:this.props.stepId,          //步骤 ID
             taskId:this.props.taskId,          //任务ID, 必填
@@ -668,20 +668,20 @@ export default class GetLicensePage extends BComponent {
                         style={{paddingTop: 5, backgroundColor: 'white'}}>
                         {this.renderInput('reg','注册号',this.state.detailObj.regId)}
                     </View>
-                    <View
-                        style={{paddingTop: 15, backgroundColor: 'white'}}>
-                        {this.renderInput('nation','国税登记号',this.state.detailObj.nationalTaxId)}
-                    </View>
-                    <View
-                        style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>
-                        {this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}
-                    </View>
-                    <SinglePickerView hint={'所属行业'} value={this.state.industry}
-                                      valueId={this.state.industryId}
-                                      ref="industrypicker"
-                                      callback={this._industryBtnClick.bind(this)}
-                                      pickerType = {'industry'}
-                                      enable={this.state.editables}/>
+                    {/*<View*/}
+                        {/*style={{paddingTop: 15, backgroundColor: 'white'}}>*/}
+                        {/*{this.renderInput('nation','国税登记号',this.state.detailObj.nationalTaxId)}*/}
+                    {/*</View>*/}
+                    {/*<View*/}
+                        {/*style={{paddingTop: 15,paddingBottom:15, backgroundColor: 'white'}}>*/}
+                        {/*{this.renderInput('detail','地税登记号',this.state.detailObj.localTaxId)}*/}
+                    {/*</View>*/}
+                    {/*<SinglePickerView hint={'所属行业'} value={this.state.industry}*/}
+                                      {/*valueId={this.state.industryId}*/}
+                                      {/*ref="industrypicker"*/}
+                                      {/*callback={this._industryBtnClick.bind(this)}*/}
+                                      {/*pickerType = {'industry'}*/}
+                                      {/*enable={this.state.editables}/>*/}
 
                     <SinglePickerView hint={'企业类型'} value={this.state.corpType}
                                       valueId={this.state.corpTypeId}

@@ -4164,9 +4164,9 @@ react-native-highlight-words@^1.0.0:
   dependencies:
     highlight-words-core "^1.0.3"
 
-"react-native-http@github:pilipa-cn/react-native-http#v1.0.3":
-  version "1.0.3"
-  resolved "https://codeload.github.com/pilipa-cn/react-native-http/tar.gz/042045ce4f043207adbc989d9e031438a2fcc106"
+"react-native-http@github:pilipa-cn/react-native-http#v1.0.6":
+  version "1.0.6"
+  resolved "https://codeload.github.com/pilipa-cn/react-native-http/tar.gz/1d7698ab26dc6626a888951dacfe7d46f4a327a7"
 
 "react-native-image-crop-picker@github:pilipa-cn/react-native-image-crop-picker#v0.14.2":
   version "0.14.2"
