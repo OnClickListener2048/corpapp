@@ -21,14 +21,14 @@ export let SCHEME = 'https';
 
  export let DOMAIN_API = 'app.i-counting.cn';
 //export let DOMAIN_API = 'x-crm.i-counting.cn';
-if(DEBUG) {// 测试环境变量, 上线时应删除
+// if(DEBUG) {// 测试环境变量, 上线时应删除
     SCHEME = 'https';
     // DOMAIN_API = '192.168.100.234:8081';
     //https://www.baidu.com
     //  DOMAIN_API = 'app.i-counting.cn';
     DOMAIN_API = 'x-crm.i-counting.cn';
     //DOMAIN_API = '47.94.123.10';
-}
+// }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
 // export let WWW_BASE_URL = `${SCHEME}://${DOMAIN_WWW}`;
