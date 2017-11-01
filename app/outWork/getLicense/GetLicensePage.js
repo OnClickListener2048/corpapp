@@ -64,8 +64,8 @@ export default class GetLicensePage extends BComponent {
             //保存数据类型
             legalEntity:null,//法人
             regId:null,//注册号
-            nationalTaxId:null,//国税登记号 q
-            localTaxId:null,//地税登记号 q
+            // nationalTaxId:null,//国税登记号 q
+            // localTaxId:null,//地税登记号 q
             regFunds:null,//注册资金
             bizRange:this.props.bizRange,//经营范围
             bizLics:null,//营业执照
@@ -81,8 +81,8 @@ export default class GetLicensePage extends BComponent {
             corpType:"私营",          //企业类型
             corpTypeId: null, // 企业类型ID
             district:"朝阳区",          //县或区
-            industry:"IT",         //所属行业   q
-            industryId: null, // 所属行业ID
+            // industry:"IT",         //所属行业   q
+            // industryId: null, // 所属行业ID
             stepId:this.props.stepId,          //步骤 ID
             taskId:this.props.taskId,          //任务ID, 必填
             unlimited:false,        //营业期限不限
@@ -185,11 +185,11 @@ export default class GetLicensePage extends BComponent {
                             corpTypeId:responseData.data.corpTypeId,
                             district:	responseData.data.corpAddressArea.districtId,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
-                            industry:	responseData.data.industry,           //所属行业
-                            industryId:responseData.data.industryId,
+                            // industry:	responseData.data.industry,           //所属行业
+                            // industryId:responseData.data.industryId,
                             legalEntity:	responseData.data.legalEntity,//法人
-                            localTaxId:	responseData.data.localTaxId,//地税登记号
-                            nationalTaxId:	responseData.data.nationalTaxId,//国税登记号
+                            // localTaxId:	responseData.data.localTaxId,//地税登记号
+                            // nationalTaxId:	responseData.data.nationalTaxId,//国税登记号
                             regFunds:	responseData.data.regFunds,//注册资金
                             regId:	responseData.data.regId,//注册号
                             startDate:	responseData.data.bizTime.startDate,//营业期限开始日期
@@ -516,10 +516,10 @@ export default class GetLicensePage extends BComponent {
                 return;
             }
 
-            if(this.state.industryId === null) {
-                Alert.alert('请选择所属行业');
-                return;
-            }
+            // if(this.state.industryId === null) {
+            //     Alert.alert('请选择所属行业');
+            //     return;
+            // }
 
             if(this.state.corpTypeId === null) {
                 Alert.alert('请选择企业类型');
@@ -537,10 +537,10 @@ export default class GetLicensePage extends BComponent {
                 "district":	this.refs.companyAddressView.state.selectAreaCode[1],          //县或区
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
-                "industry":	this.refs.industrypicker.state.industryId,           //所属行业ID
+                // "industry":	this.refs.industrypicker.state.industryId,           //所属行业ID
                 "legalEntity":	this.refs.legal.state.content,//法人
-                "localTaxId":	this.refs.detail.state.content,//地税登记号
-                "nationalTaxId":	this.refs.nation.state.content,//国税登记号
+                // "localTaxId":	this.refs.detail.state.content,//地税登记号
+                // "nationalTaxId":	this.refs.nation.state.content,//国税登记号
                 "regFunds":	this.refs.regfunds.state.content,//注册资金
                 "regId":	this.refs.reg.state.content,//注册号
                 "startDate":	this.state.startDate,//营业期限开始日期
