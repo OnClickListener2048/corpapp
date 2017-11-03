@@ -184,7 +184,6 @@ export default class MessageCenterPage extends BComponent {
     _loadData() {
 
         if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
             this.setState({isRefreshing: false});
             return;
         }
@@ -250,7 +249,6 @@ export default class MessageCenterPage extends BComponent {
                 this.setState({isRefreshing: false});
 
                 console.log("获取失败" , e);
-                Toast.show(errorText( e ));
             },
         );
     }
