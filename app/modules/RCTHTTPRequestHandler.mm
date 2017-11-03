@@ -71,7 +71,7 @@ RCT_EXPORT_MODULE()
     error = getaddrinfo([hostName UTF8String], NULL, NULL, &result);
     if(error != 0) {
         NSLog(@"error in getaddrinfo:%d", error);
-        return nil;
+        return YES;
     }
     for(res = result; res!=NULL; res = res->ai_next) {
         char hostname[1025] = "";
