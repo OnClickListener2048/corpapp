@@ -758,6 +758,7 @@ export default class GetLicensePage extends BComponent {
 
     //经营范围跳转
     toMultiTextInput(){
+        
         this.setState({
             imgVisibles:false,
         })
