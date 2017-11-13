@@ -8,7 +8,7 @@ console.log('__DEV__开发模式', __DEV__);// 说明: __DEV__ 的值是自动�
 // 参考: https://stackoverflow.com/questions/34315274/react-native-detect-dev-or-production-env
 
 export const DEBUG = __DEV__;
-export const IN_DEBUGGER = DEBUG && !!window.navigator.userAgent;
+// export const IN_DEBUGGER = DEBUG && !!window.navigator.userAgent;
 console.log('DEBUG=', DEBUG);// 说明: __DEV__ 的值是自动设置的, 无需import
 export const RN_VERSION = '1.3.0';
 
@@ -19,13 +19,16 @@ export const SCREEN_HEIGHT = height;
 // 线上API服务器接口地址 app.i-counting.cn
 export let SCHEME = 'https';
 
-export let DOMAIN_API = 'app.i-counting.cn';
-if(DEBUG) {// 测试环境变量, 上线时应删除
-    SCHEME = 'https';
+ export let DOMAIN_API = 'app.i-counting.cn';
+//export let DOMAIN_API = 'x-crm.i-counting.cn';
+// if(DEBUG) {// 测试环境变量, 上线时应删除
+//     SCHEME = 'https';
     // DOMAIN_API = '192.168.100.234:8081';
-    DOMAIN_API = 'app.i-counting.cn';
+    //https://www.baidu.com
+    //  DOMAIN_API = 'app.i-counting.cn';
     // DOMAIN_API = 'x-crm.i-counting.cn';
-}
+    //DOMAIN_API = '47.94.123.10';
+// }
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
 // export let WWW_BASE_URL = `${SCHEME}://${DOMAIN_WWW}`;

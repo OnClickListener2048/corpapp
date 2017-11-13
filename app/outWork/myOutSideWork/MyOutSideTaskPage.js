@@ -66,7 +66,6 @@ _needCallBack(){
     }
 }
 
-
 _loadData() {
 
         this.loading  = SActivityIndicator.show(true, "加载中...");
@@ -111,6 +110,7 @@ _loadData() {
     }
 
     componentWillUnmount() {
+
         try {
             if(this.loading) {
                 console.log("外勤任务 componentWillUnmount()");

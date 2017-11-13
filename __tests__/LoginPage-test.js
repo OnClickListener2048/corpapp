@@ -1,9 +1,10 @@
 import 'react-native';
 import React from 'react';
-// import 'isomorphic-fetch';
+import 'isomorphic-fetch';
 import fetchMock from 'fetch-mock';
 import * as apis from '../app/apis';
 import LoginPage from '../app/user/LoginPage';
+
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {shallow} from 'enzyme';
@@ -120,6 +121,7 @@ it('timerButton Component should be render', () => {
 it('mobile handle correctly', () => {
     // console.log("wrapper======>", wrapper);
     let instance = wrapper.instance();
+    console.log("instance======>", wrapper);
     instance.componentDidMount();
     console.log("instance.refs.timerButton======>", instance.refs.timerButton);
     // instance.refs.timerButton = {state : {counting: false}};

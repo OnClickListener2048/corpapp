@@ -12,6 +12,10 @@
 #ifdef NSFoundationVersionNumber_iOS_9_x_Max
 #import <UserNotifications/UserNotifications.h>
 #endif
+#import <CodePush.h>
+
+
+#import <AlicloudHttpDNS/AlicloudHttpDNS.h>
 
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -73,9 +77,12 @@ static BOOL isProduction = true;  //填写isProdurion  平时测试时为false �
   NSURL *jsCodeLocation;
 
 #ifdef DEBUG
-  jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+ jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
+  
+  //jsCodeLocation = [NSURL URLWithString:@"http://localhost:8081/index.ios.bundle?platform=ios&dev=true"];
+
 #else
-  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
+  jsCodeLocation = [CodePush bundleURL];
 #endif
   
 //  jsCodeLocation = [[NSBundle mainBundle] URLForResource:@"main" withExtension:@"jsbundle"];
@@ -99,6 +106,32 @@ static BOOL isProduction = true;  //填写isProdurion  平时测试时为false �
    self.window.rootViewController = rootViewController;
    [self.window makeKeyAndVisible];
    */
+  
+  
+  
+  /** httpdns */
+  // 初始化HTTPDNS
+  // 设置AccoutID
+  HttpDnsService *httpdns = [[HttpDnsService alloc] initWithAccountID:116532];
+  //鉴权方式初始化
+  //HttpDnsService *httpdns = [[HttpDnsService alloc] initWithAccountID:0000 secretKey:@"XXXX"];
+  
+  // 为HTTPDNS服务设置降级机制
+  //  [httpdns setDelegateForDegradationFilter:self];
+  // 允许返回过期的IP
+  [httpdns setExpiredIPEnabled:YES];
+  // 打开HTTPDNS Log，线上建议关闭
+  [httpdns setLogEnabled:YES];
+  /*
+   *  设置HTTPDNS域名解析请求类型(HTTP/HTTPS)，若不调用该接口，默认为HTTP请求；
+   *  SDK内部HTTP请求基于CFNetwork实现，不受ATS限制。
+   */
+  [httpdns setHTTPSRequestEnabled:YES];
+  // edited  @"x-crm.i-counting.cn" @"app.i-counting.cn",
+  NSArray *preResolveHosts = @[@"app.i-counting.cn",@"x-crm.i-counting.cn"];
+  // NSArray* preResolveHosts = @[@"pic1cdn.igetget.com"];
+  // 设置预解析域名列表
+  [httpdns setPreResolveHosts:preResolveHosts];
   
   return YES;
 }

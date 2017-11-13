@@ -14,3 +14,13 @@ export function loadMessageReaded( msgId = '') {
 export function loadMessageTotalReaded( ) {
     return postApi('/app/v0/message/list/count');
 }
+
+//索引获取数据
+export function loadSearchIndex( queryText = '',count = '') {
+    return postApi('/app/v0/outsource/search', {queryText,count});
+}
+
+//点击确定获取具体数据
+export function loadSearchData(queryText = '' ,count = '',sinceId='') {
+    return postApi('/app/v0/outsource/search', {queryText,count,sinceId});
+}

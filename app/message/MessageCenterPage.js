@@ -9,6 +9,15 @@ import * as apis from '../apis';
 import SActivityIndicator from '../modules/react-native-sww-activity-indicator';
 import NoMessage from '../commonView/NoMessage';
 
+import CodePush from 'react-native-code-push'
+// import {
+//     SwRefreshScrollView, //支持下拉刷新的ScrollView
+//     SwRefreshListView, //支持下拉刷新和上拉加载的ListView
+//     RefreshStatus, //刷新状态 用于自定义下拉刷新视图时使用
+//     LoadMoreStatus //上拉加载状态 用于自定义上拉加载视图时使用
+// } from '../../node_modules/react-native-swRefresh-master'
+
+// import UltimateListView from "../../node_modules/react-native-ultimate-listview";
 
 import {
     Text,
@@ -29,6 +38,8 @@ import CommunalNavBar from '../main/GDCommunalNavBar';
 import styles from './css/MessageCenterStyle'
 import MessageCell from './view/MessageCenterCell'
 import Platform from "react-native";
+import SearchTextInputView from './view/SearchTextInputView'
+
 
 const window = Dimensions.get('window');
 const moreText = "加载完毕";
@@ -60,6 +71,7 @@ export default class MessageCenterPage extends BComponent {
         this._loadData = this._loadData.bind(this);
         this._loadMoreData = this._loadMoreData.bind(this);
         this.toSystemMessagePage = this.toSystemMessagePage.bind(this);
+        this.toSearchPage = this.toSearchPage.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
         this._initJPush = this._initJPush.bind(this);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -74,10 +86,8 @@ export default class MessageCenterPage extends BComponent {
     onNavigatorEvent(event) { // this is the onPress handler for the two buttons together
         // console.log('ApplicationCenterPage event.type', event.type);
         // if(event.id==='willAppear'){
-        //     this.isJumping = false;
-        //
+
         // }
-        console.log('看看到这里没有00', this.state.isJumping);
 
     }
 
@@ -174,7 +184,6 @@ export default class MessageCenterPage extends BComponent {
     _loadData() {
 
         if(!NetInfoSingleton.isConnected) {
-            Toast.show('暂无网络' );
             this.setState({isRefreshing: false});
             return;
         }
@@ -214,7 +223,6 @@ export default class MessageCenterPage extends BComponent {
                             lastID : this.messageArr[this.messageArr.length - 1].msgId
                         });
 
-                        // console.log(this.lastID +'你大爷');
                     }else {
                         this.setState({loadingMore: 2});
 
@@ -241,7 +249,6 @@ export default class MessageCenterPage extends BComponent {
                 this.setState({isRefreshing: false});
 
                 console.log("获取失败" , e);
-                Toast.show(errorText( e ));
             },
         );
     }
@@ -377,6 +384,10 @@ export default class MessageCenterPage extends BComponent {
         // Toast.show('componentDidMount ' + Platform.OS + (Platform.OS === 'android'),
         //     {position: Toast.positions.TOP, duration: Toast.durations.LONG, backgroundColor: 'green'});
         // 跳转登录页的通知
+        //热更新相关
+        CodePush.sync()
+
+
         this.subscription = DeviceEventEmitter.addListener('goLoginPage', (data)=>{
             // navToLogin();
             //console.log('goLoginPage loginJumpSingleton.isJumpingLogin=', loginJumpSingleton.isJumpingLogin)
@@ -463,6 +474,30 @@ export default class MessageCenterPage extends BComponent {
 
     componentWillMount() {
         this._loadInitData();
+
+    }
+
+    toSearchPage(){
+        if (this.state.isJumping === true){
+            return;
+        }
+
+
+        this.setState({isJumping:true});
+        //防重复点击
+
+        this.timer = setTimeout(async()=>{
+            await this.setState({isJumping:false})//1.5秒后可点击
+        },1000);
+
+
+        this.props.navigator.push({
+            screen: 'SearchPage',
+            backButtonTitle: '返回', // 返回按钮的文字 (可选)
+            backButtonHidden: false, // 是否隐藏返回按钮 (可选)
+            title: '搜索',
+
+        });
 
     }
 
@@ -567,6 +602,16 @@ export default class MessageCenterPage extends BComponent {
         );
     }
 
+    _renderHeader(rowData){
+        return(
+            <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45  }} onPress={() => {this.toSearchPage()}}>
+
+                <SearchTextInputView/>
+             </TouchableOpacity>
+
+        );
+    };
+
 
     _renderRow(rowData) {
 
@@ -619,8 +664,12 @@ export default class MessageCenterPage extends BComponent {
 
         if (this.state.isNoNetwork === true) {      // 无网络
             return(
-                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
 
+                <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , }} onPress={() => {this.toSearchPage()}}>
+
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='网络错误,点击重新开始'
@@ -632,12 +681,19 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <View style={[{flex : 1 , backgroundColor:'#FFFFFF' }]}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45  }} onPress={() => {this.toSearchPage()}}>
+
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                 </View>
             );
         }else if (this.state.loadedStatus === 'loadedFaild') {      // 数据加载失败
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 , }} onPress={() => {this.toSearchPage()}}>
 
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='加载失败，点击重试'
@@ -649,7 +705,10 @@ export default class MessageCenterPage extends BComponent {
 
             return(
                 <TouchableOpacity style={{flex : 1 , backgroundColor:'#FFFFFF'}} onPress={() => { this._loadInitData()}}>
+                    <TouchableOpacity style={{width : SCREEN_WIDTH , height : 45 }} onPress={() => {this.toSearchPage()}}>
 
+                        <SearchTextInputView/>
+                    </TouchableOpacity>
                     <View style={{flex : 1 , backgroundColor:'#FFFFFF' }}>
                         <NoMessage
                             textContent='暂无消息'
@@ -668,6 +727,7 @@ export default class MessageCenterPage extends BComponent {
                              enableEmptySections={true}
                              onEndReachedThreshold={10}
                              renderRow={this._renderRow.bind(this)}
+                             renderHeader={this._renderHeader.bind(this)}
                              refreshControl = {
                                  <RefreshControl
                                      refreshing={this.state.isRefreshing}

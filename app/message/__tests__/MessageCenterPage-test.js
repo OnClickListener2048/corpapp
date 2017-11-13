@@ -48,7 +48,7 @@ test('test _loadInitData 第一次进入数据初始化', (done) => {
         }
         done();
     }, 1000);
-})
+});
 
 test('test _loadData下拉刷新 ', (done) => {
     fetchMock.post('*', responseData);

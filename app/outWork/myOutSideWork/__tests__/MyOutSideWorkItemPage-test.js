@@ -4,6 +4,7 @@
 
 import 'react-native';
 import React from 'react';
+import 'isomorphic-fetch';
 import MyOutSideWorkItemPage from '../MyOutSideWorkItemPage'
 import {shallow} from 'enzyme';
 import fetchMock from 'fetch-mock';
