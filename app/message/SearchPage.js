@@ -220,11 +220,8 @@ export default class SearchPage extends BComponent {
 
                     this.setState({
                         loadedStatus: 'loadedSearch',
-
                     });
-
                 }
-
             },
             (e) => {
                 SActivityIndicator.hide(loading);
