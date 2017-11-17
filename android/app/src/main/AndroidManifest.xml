@@ -65,7 +65,10 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:configChanges="keyboardHidden|orientation|screenSize|locale"
             android:theme="@android:style/Theme.Translucent" />
-        
+
+        <!-- 小米全面屏适配 -->
+        <meta-data android:name="android.max_aspect" android:value="2.1" />
+
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="${APP_CHANNEL}"/>
