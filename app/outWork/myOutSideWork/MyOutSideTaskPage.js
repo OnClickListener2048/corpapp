@@ -19,6 +19,7 @@ import NoMessage from "../../commonView/NoMessage";
 import Toast from 'react-native-root-toast';
 import BComponent from "../../base/index";
 import NoNetView from "../../base/NoNetView";
+import errorText from '../../util/ErrorMsg';
 
 export default class MyOutSideTaskPage extends BComponent{
     static navigatorStyle = {
