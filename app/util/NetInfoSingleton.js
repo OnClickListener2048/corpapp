@@ -21,10 +21,10 @@ export default class NetInfoSingleton {
         if (!instance) {
             instance = this;
 
-            NetInfo.isConnected.fetch().done((isConnected) => {
-                this.isConnected = isConnected;
-                console.log('NetInfoSingleton: fetch isConnected=', isConnected);
-            })
+            // NetInfo.isConnected.fetch().done((isConnected) => {
+            //     this.isConnected = isConnected;
+            //     console.log('NetInfoSingleton: fetch isConnected=', this.isConnected);
+            // });
 
             this._updateConnectionStatus = this._updateConnectionStatus.bind(this);
             NetInfo.isConnected.addEventListener('change', this._updateConnectionStatus);
