@@ -39,6 +39,7 @@ export default class SinglePickerView extends Component {
         this.corpTypeNames = [];
         this.selectedValues = [''];
         this.selectedValue = [''];
+        this.setState({corpTypeId: this.props.valueId});
         console.log("this.props.city=" + this.props.city);
 
         // this._Press = this._Press.bind(this);
@@ -163,7 +164,6 @@ export default class SinglePickerView extends Component {
     }
 
     componentWillReceiveProps(props) {
-
         if(this.state.isPickerOpen===false){
             this.setState({
                 isPickerOpen:true,
