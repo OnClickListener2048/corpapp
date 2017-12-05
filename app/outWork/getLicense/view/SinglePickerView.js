@@ -32,14 +32,13 @@ export default class SinglePickerView extends Component {
             industry:this.props.industry,
             corpType:this.props.corpType,
             industryId:this.props.industryId,
-            corpTypeId:this.props.corpTypeId,
+            corpTypeId:this.props.valueId,
             isPickerOpen:false,
         }
         this.industryNames = [];
         this.corpTypeNames = [];
         this.selectedValues = [''];
         this.selectedValue = [''];
-        this.setState({corpTypeId: this.props.valueId});
         console.log("this.props.city=" + this.props.city);
 
         // this._Press = this._Press.bind(this);
