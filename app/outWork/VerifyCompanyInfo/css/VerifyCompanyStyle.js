@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     textInputWrapper: {
-        minHeight: px2dp(30),
-        maxHeight:100,
+        // minHeight: px2dp(30),
+        // maxHeight:100,
         width: SCREEN_WIDTH-115,
         borderBottomColor: '#dcdcdc',
         borderBottomWidth: 0.5,

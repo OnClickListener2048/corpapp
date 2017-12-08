@@ -32,7 +32,7 @@ export default class SinglePickerView extends Component {
             industry:this.props.industry,
             corpType:this.props.corpType,
             industryId:this.props.industryId,
-            corpTypeId:this.props.corpTypeId,
+            corpTypeId:this.props.valueId,
             isPickerOpen:false,
         }
         this.industryNames = [];
@@ -163,7 +163,6 @@ export default class SinglePickerView extends Component {
     }
 
     componentWillReceiveProps(props) {
-
         if(this.state.isPickerOpen===false){
             this.setState({
                 isPickerOpen:true,

@@ -5,6 +5,7 @@
 
 import React, { Component,PropTypes,} from 'react';
 import Picker from 'react-native-picker';
+import {AutoGrowingTextInput} from 'react-native-autogrow-textinput';
 import errorText from '../../util/ErrorMsg';
 import {
     Alert,
@@ -659,9 +660,9 @@ export default class GetLicensePage extends BComponent {
                     </View>
                     {this.renderCompanyAddressView()}
                     {/*公司地址输入框*/}
-                    <View style={{height:30,width:SCREEN_WIDTH,paddingTop:5,backgroundColor:'white'}}>
+                    <View style={{width:SCREEN_WIDTH,paddingTop:5,backgroundColor:'white'}}>
                         <View style={[styles.textInputWrapper,]}>
-                            <TextInput underlineColorAndroid='transparent'
+                            <AutoGrowingTextInput underlineColorAndroid='transparent'
                                        value={this.state.corpAddress}
                                        editable={this.state.editables}
                                        style={styles.textInput} placeholder='' returnKeyType='next'
