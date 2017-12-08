@@ -157,7 +157,7 @@ exit 1
 fi
 
 echo "\033[32m*************************  开始导出ipa文件  *************************  \033[0m"
-xcodebuild  -exportArchive \
+xcodebuild  -exportArchive -allowProvisioningUpdates \
             -archivePath ${export_archive_path} \
             -exportPath ${export_ipa_path} \
             -exportOptionsPlist ${ExportOptionsPlistPath}
