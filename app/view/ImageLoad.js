@@ -4,6 +4,7 @@
 import React, { PropTypes } from 'react';
 import { Image, ActivityIndicator,Dimensions } from 'react-native';
 const window = Dimensions.get('window');
+import  TimerMixin from "react-timer-mixin";
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
@@ -23,7 +24,21 @@ class ImageLoad extends React.Component {
             isLoaded: false,
             isError: false,
             isWatch:this.props.isWatch,
+            animating: true,
         };
+    }
+
+    //图片加载超时（暂定5秒）
+    setToggleTimeout() {
+        TimerMixin.setTimeout(() => {
+            this.setState({animating:false});
+            // this.setState({animating: !this.state.animating});
+            this.setToggleTimeout();
+        }, 5000);
+    }
+
+    componentDidMount() {
+        this.setToggleTimeout();
     }
 
     onLoadEnd(){
@@ -39,6 +54,7 @@ class ImageLoad extends React.Component {
     }
 
     render() {
+        console.log("图片地址="+this.props.source);
         return(
             <Image
                 onLoadEnd={this.onLoadEnd.bind(this)}
@@ -60,6 +76,7 @@ class ImageLoad extends React.Component {
                                 this.props.children  ? this.props.children :
                                     this.props.isShowActivity ?
                                         <ActivityIndicator
+                                            animating={this.state.animating}
                                             size={this.props.loadingStyle ? this.props.loadingStyle.size : 'small'}
                                             color={this.props.loadingStyle ? this.props.loadingStyle.color : 'black'}
                                         /> :

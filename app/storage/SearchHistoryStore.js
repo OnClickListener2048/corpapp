@@ -39,7 +39,8 @@ SearchHistoryStore.create = function (schame, data) {
 SearchHistoryStore.singleCreate = function (schame, data) {
     console.log("增加的数据是否为空="+data+";;"+data.corpName);
     realm.write(() => {
-        realm.create(schame, {taskId:data.taskId,corpName:data.corpName, stepId:data.stepId, stepName:data.stepName,
+        realm.create(schame, {taskId:data.taskId,corpName:data.corpName, stepId:data.stepId,
+            stepName:data.stepName,
              taskName:data.taskName, taskStatus:data.taskStatus,
             connector:data.connector,createDate:data.createDate},true);
     })

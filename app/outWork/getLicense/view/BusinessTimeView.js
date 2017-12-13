@@ -217,7 +217,7 @@ export default class BusinessTimeView extends Component{
                                     flex: 1,
                                     color: '#323232',
                                     fontSize:15
-                                }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate  + ""}</Text>
+                                }]}>{this.props.firstDate==='0001-01-01'||this.props.firstDate===''?'无期限':this.props.firstDate  + ""}</Text>
 
                             </TouchableOpacity>:
                             <View style={ styles.leftdownDrapViewStyle}>
@@ -227,7 +227,7 @@ export default class BusinessTimeView extends Component{
                                     flex: 1,
                                     color: '#323232',
                                     fontSize:15
-                                }]}>{this.props.firstDate==='0001-01-01'?'无期限':this.props.firstDate + ""}</Text>
+                                }]}>{this.props.firstDate==='0001-01-01'||this.props.firstDate===''?'无期限':this.props.firstDate + ""}</Text>
 
                             </View>
                         }
@@ -243,7 +243,7 @@ export default class BusinessTimeView extends Component{
                                 flex: 1,
                                 color: '#323232',
                                 fontSize:15
-                            }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
+                            }]}>{this.props.lastDate==='0001-01-01'||this.props.lastDate===''?'无期限':this.props.lastDate + ""}</Text>
                         </TouchableOpacity>:
                             <View style={ styles.rightdownDrapViewStyle}>
                                 <Text numberOfLines={1} style={[{
@@ -252,7 +252,7 @@ export default class BusinessTimeView extends Component{
                                     flex: 1,
                                     color: '#323232',
                                     fontSize:15
-                                }]}>{this.props.lastDate==='0001-01-01'?'无期限':this.props.lastDate + ""}</Text>
+                                }]}>{this.props.lastDate==='0001-01-01'||this.props.lastDate===''?'无期限':this.props.lastDate + ""}</Text>
                             </View>
                         }
                     </View>

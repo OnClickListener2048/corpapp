@@ -503,11 +503,16 @@ export default class GetLicensePage extends BComponent {
         if(editables===false){//点击保存，赋值并保存
             console.log("公司地址ID是否唯恐"+this.refs.companyAddressView.state.selectAreaCode[0]+","+this.refs.companyAddressView.state.selectAreaCode[1]);
             console.log("==========1");
+            if(this.state.startDate === '') {
+                Alert.alert('请选择营业期限开始日期');
+                return;
+            }
             // TODO 有效性检查
             if(this.state.selectAreaCode.length !== 2) {
                 Alert.alert('请选择公司地址');
                 return;
             }
+
 
             let saveObject={"bizLics":	this.state.bizLics,//营业执照
                 "bizRange":	this.state.bizRange,//经营范围
@@ -603,7 +608,7 @@ export default class GetLicensePage extends BComponent {
     renderScroolInfoView(){
 
     if(this.state.loaded===true){
-            console.log( '点击else');
+            console.log( '点击else'+this.state.detailObj.idCards[0]);
             return(
                 <ScrollView style={styles.container}>
                     {Platform.OS === 'android' &&
@@ -636,7 +641,7 @@ export default class GetLicensePage extends BComponent {
                                         style={{ marginTop: 15, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'small', color: 'black' }}
                                         source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                        placeholderSource={require('../../img/reverse.png')}/> :
+                                        placeholderSource={require('../../img/empty-image.png')}/> :
                                     <Image source={require('../../img/reverse.png')} style={{marginTop: 15}}/>}
 
                         </TouchableOpacity>
@@ -702,7 +707,7 @@ export default class GetLicensePage extends BComponent {
                                         style={{ marginTop: 20, height: 75, width: 110 }}
                                         loadingStyle={{ size: 'small', color: 'black' }}
                                         source={{ uri:this.state.detailObj.bizLics[0]+"" }}
-                                        placeholderSource={require('../../img/blicense.png')}/>  :
+                                        placeholderSource={require('../../img/empty-image.png')}/>  :
                                     <Image source={require('../../img/blicense.png')} style={{marginTop: 20}}/>
                             }
 
