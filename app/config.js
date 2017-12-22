@@ -29,6 +29,7 @@ export let DOMAIN_API = 'erp.pilipa.cn';
     // DOMAIN_API = 'x-crm.i-counting.cn';
     //DOMAIN_API = '47.94.123.10';
 // }
+DOMAIN_API = 'x-crm.i-counting.cn';
 
 export let API_BASE_URL = `${SCHEME}://${DOMAIN_API}`;// API服务基础地址
 // export let WWW_BASE_URL = `${SCHEME}://${DOMAIN_WWW}`;
