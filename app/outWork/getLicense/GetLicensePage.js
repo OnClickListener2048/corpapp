@@ -58,6 +58,8 @@ export default class GetLicensePage extends BComponent {
             detailObj:{},
             loaded:null,
             editables:false,//不可编辑
+            canEditPhoto:false,//不可编辑
+
             allowEditInfo:false,//登陆人员权限，是否可编辑
             inProgressEdit:false,//开始任务才可编辑
             isPickerOpen:false,//地址和类型选择器是否打开
@@ -199,6 +201,13 @@ export default class GetLicensePage extends BComponent {
                     this.props.navigator.setTitle({
                         title: this.state.detailObj.stepName // the new title of the screen as appears in the nav bar
                     });
+
+
+                    if (this.state.canEditPhoto === false&&this.state.inProgressEdit===true){
+                        this._editPhoto(true)
+
+                    }
+
 
                     console.log("detailObj赋值="+this.state.detailObj.bizTime);
                 }
@@ -362,7 +371,7 @@ export default class GetLicensePage extends BComponent {
 
     //图片类型判断：身份证／营业执照
     toAlertModal(photoType){
-        if(this.state.editables === false){
+        if(this.state.canEditPhoto === false){
             return;
         }
         this.setState({isDateTimePickerVisible:false,
@@ -499,7 +508,10 @@ export default class GetLicensePage extends BComponent {
     }
 
     //保存数据赋值
-    _edit(editables){
+
+
+
+    _editPhoto(editables){
         if(editables===false){//点击保存，赋值并保存
             console.log("公司地址ID是否唯恐"+this.refs.companyAddressView.state.selectAreaCode[0]+","+this.refs.companyAddressView.state.selectAreaCode[1]);
             console.log("==========1");
@@ -532,21 +544,18 @@ export default class GetLicensePage extends BComponent {
                 "stepId":	this.state.stepId,          //步骤 ID
                 "taskId":	this.state.taskId,          //任务ID, 必填
                 "unlimited":this.state.unlimited, }       //营业期限不限
-            console.log("提交=="+saveObject.regFunds+"???"+saveObject);
             this._postClientData(saveObject);
         }
-        console.log("==========2");
-
         //否则不可更改任务进度
         if(this.refs.ProcessBtnView) {
-            console.log("==========3"+editables);
             this.refs.ProcessBtnView.setProcessInfo(editables);
         }
         this.setState({
-            editables:editables,
+            canEditPhoto:editables,
             imgVisibles:false,
         });
     }
+
 
     //客户基本信息是否可编辑栏
     renderCompanyTipView(){
@@ -556,30 +565,6 @@ export default class GetLicensePage extends BComponent {
             return  (<View style={[{ height:58, width : SCREEN_WIDTH,backgroundColor:'#FFFFFF',justifyContent:'space-between',flexDirection:'row',alignItems: 'center'}]}>
             <Text style={{fontSize:18,marginLeft:15,marginTop:20,marginBottom:20, textAlign:'left', justifyContent: 'center',color:'#323232'}}>{'客户基本信息'}</Text>
 
-            {this.state.editables === false&&this.state.inProgressEdit===true&&
-                <TouchableOpacity onPress={() => {
-                    this._edit(true)
-                }}
-                style={{width:50,height:40,marginRight: 15,justifyContent:'center',alignItems:'flex-end'}}>
-                <Image source={require("../../img/editor.png")}/>
-                </TouchableOpacity> }
-            {this.state.editables === true&&this.state.inProgressEdit===true&&
-                <TouchableOpacity onPress={() => {
-                    this._edit(false)
-                }}style={{width:50,height:40,marginRight:15}}>
-                    <View style={{
-                        height: 40,
-                        width: 50,
-                        borderRadius: 2.5,
-                        alignItems: 'center',
-                        backgroundColor: '#e5151b',
-                        justifyContent: 'center'
-                    }}>
-                        <Text style={{fontSize: 15, textAlign: 'center', justifyContent: 'center', color: '#FFFFFF'}}>
-                            {'保存'}</Text>
-                    </View>
-                </TouchableOpacity>
-            }
         </View>)}
     }
 
