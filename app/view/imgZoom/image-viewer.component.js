@@ -295,7 +295,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             //     height *= HeightPixel;
             // }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
-                console.log("图片显示=成功="+image.url);
+                console.log("图片显示=成功="+image.url+"///"+this.state.imageSizes[index].width+"///"+this.state.imageSizes[index].height);
                 return (React.createElement(react_native_image_pan_zoom_1.default, {
                         key: index,
                         style: this.styles.modalContainer,
@@ -310,7 +310,8 @@ let ImageViewer = class ImageViewer extends React.Component {
                         onClick: this.handleClick.bind(this),
                         onDoubleClick: this.handleDoubleClick.bind(this)
                     },
-                    React.createElement(react_native_1.Image, {fadeDuration:0,style: [this.styles.imageStyle, { width: width, height: height }], source: { uri: image.url }})));
+                    React.createElement(react_native_1.Image, {fadeDuration:0,style: [this.styles.imageStyle, { width: width, height: height }],
+                        source: (this.state.imageSizes[index].width&&this.state.imageSizes[index].height)?{ uri: image.url }:require('../../img/empty-image.png')})));
             }
             else {
                 switch (imageInfo.status) {
