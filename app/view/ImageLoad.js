@@ -1,14 +1,14 @@
 /**
  * Created by jiaxueting on 2017/7/3.
  */
-import React, { PropTypes } from 'react';
+import React, { Component,PropTypes } from 'react';
 import { Image, ActivityIndicator,Dimensions } from 'react-native';
 const window = Dimensions.get('window');
 import  TimerMixin from "react-timer-mixin";
 export const SCREEN_HEIGHT = window.height;
 export const SCREEN_WIDTH = window.width;
 
-class ImageLoad extends React.Component {
+class ImageLoad extends Component {
     static propTypes = {
         isShowActivity: PropTypes.bool,
         isWatch:PropTypes.bool,
@@ -24,7 +24,7 @@ class ImageLoad extends React.Component {
             isLoaded: false,
             isError: false,
             isWatch:this.props.isWatch,
-            animating: true,
+            animating: false,
         };
     }
 
@@ -32,14 +32,14 @@ class ImageLoad extends React.Component {
     setToggleTimeout() {
         TimerMixin.setTimeout(() => {
             this.setState({animating:false});
-            // this.setState({animating: !this.state.animating});
+            this.setState({animating: !this.state.animating});
             this.setToggleTimeout();
         }, 5000);
     }
 
-    componentDidMount() {
-        this.setToggleTimeout();
-    }
+    // componentDidMount() {
+    //     this.setToggleTimeout();
+    // }
 
     onLoadEnd(){
         this.setState({

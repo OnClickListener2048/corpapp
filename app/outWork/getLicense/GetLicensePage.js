@@ -66,6 +66,7 @@ export default class GetLicensePage extends BComponent {
 
             //保存数据类型
             legalEntity:null,//法人
+            PersonCardID:null,//法人身份证号
             regId:null,//注册号
             regFunds:null,//注册资金
             bizRange:this.props.bizRange,//经营范围
@@ -185,7 +186,8 @@ export default class GetLicensePage extends BComponent {
                             district:	responseData.data.corpAddressArea.districtId,          //县或区
                             endDate:	responseData.data.bizTime.endDate,//营业期限结束日期
                             legalEntity:	responseData.data.legalEntity,//法人
-                            regFunds:	responseData.data.regFunds,//注册资金
+                        PersonCardID: responseData.data.PersonCardID,//法人身份证号
+                        regFunds:	responseData.data.regFunds,//注册资金
                             regId:	responseData.data.regId,//注册号
                             startDate:	responseData.data.bizTime.startDate,//营业期限开始日期
                             stepId:	responseData.data.stepId,          //步骤 ID
@@ -402,6 +404,7 @@ export default class GetLicensePage extends BComponent {
             })
             return;
         }
+        let imageObj={};
         if(this.state.photoType=="reverse"){
 
             let rePhoto = {
@@ -415,6 +418,13 @@ export default class GetLicensePage extends BComponent {
                 imgVisibles:imgVisibles,
                 idCards:rePhoto,
             });
+            imageObj = {
+                "idCards":	rePhoto,//身份证正反两面(目前只用一张),file组件
+                "stepId":	this.state.stepId,          //步骤 ID
+                "taskId":	this.state.taskId,          //任务ID, 必填
+
+            }
+                this._postClientImage(imageObj);
         }else{
             let linPhoto = {
                 uri: image.uri,
@@ -426,8 +436,43 @@ export default class GetLicensePage extends BComponent {
                 imgVisibles:imgVisibles,
                 bizLics:linPhoto,
             });
+            imageObj = {
+                "bizLics":	linPhoto,//身份证正反两面(目前只用一张),file组件
+                "stepId":	this.state.stepId,          //步骤 ID
+                "taskId":	this.state.taskId,          //任务ID, 必填
+
+            }
+            this._postClientImage(imageObj);
+
         }
 
+    }
+
+    //提交修改的数据
+    _postClientImage(imageType){
+        let loading = SActivityIndicator.show(true, "加载中...");
+
+        apis.postClientImage(imageType).then(
+            (responseData) => {
+                SActivityIndicator.hide(loading);
+                console.log("提交成功cc" , responseData);
+                Toast.show('提交成功');
+                this.setState({
+                    loaded:true,
+                });
+                if(responseData !== null && responseData.data !== null) {
+
+                    console.log("提交成功" , responseData.data);
+
+                }
+            },
+            (e) => {
+                SActivityIndicator.hide(loading);
+                console.log("提交失败" , e);
+
+                Toast.show(errorText( e ));
+            },
+        );
     }
 
     //是否有图片，及图片大图展示
@@ -538,6 +583,7 @@ export default class GetLicensePage extends BComponent {
                 "endDate":	this.state.endDate,//营业期限结束日期
                 "idCards":	this.state.idCards,//身份证正反两面(目前只用一张),file组件
                 "legalEntity":	this.refs.legal.state.content,//法人
+                "PersonCardID":this.state.PersonCardID,//法人身份证号
                 "regFunds":	this.refs.regfunds.state.content,//注册资金
                 "regId":	this.refs.reg.state.content,//注册号
                 "startDate":	this.state.startDate,//营业期限开始日期
@@ -612,6 +658,7 @@ export default class GetLicensePage extends BComponent {
                         {this.renderTest()}
                     </View>}
                     {this.renderInput('legal','法人',this.state.detailObj.legalEntity)}
+                    {this.renderInput('legal','身份证号',this.state.detailObj.PersonCardID)}
 
                     <View style={styles.identityCardPhoto}>
                         <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>

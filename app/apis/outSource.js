@@ -72,3 +72,13 @@ export function loadDicData() {
 export function postClientMessage(clientObj) {
     return postApi('/app/v0/outsource/task/step/save',clientObj);
 }
+
+
+/**
+ * 我的外勤-主任务-步骤详情-保存修改图片
+ * @param imageType
+ * @returns {Promise}
+ */
+export function postClientImage(imageType) {
+    return postApi('/app/v0/outsource/task/step/saveimg',imageType);
+}
