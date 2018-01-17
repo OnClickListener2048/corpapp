@@ -21,6 +21,8 @@ let ImageViewer = class ImageViewer extends React.Component {
     constructor() {
         super(...arguments);
         this.state = new typings.State();
+        this.isLoaded= false;
+        this.isError= false;
         this.fadeAnim = new react_native_1.Animated.Value(0);
         this.standardPositionX = 0;
         this.positionXNumber = 0;
@@ -271,12 +273,21 @@ let ImageViewer = class ImageViewer extends React.Component {
         this.forceUpdate();
         this.jumpToCurrentImage();
     }
+
+    onLoadEnd(){
+        this.setState({
+            isLoaded: true
+        });
+    }
+
+    onError(){
+        this.setState({
+            isError: true
+        });
+    }
     getContent() {
         console.log("图片显示=--");
         const ImageElements = this.props.imageUrls.map((image, index) => {
-
-            // let width = this.state.imageSizes[index] && this.state.imageSizes[index].width;
-            // let height = this.state.imageSizes[index] && this.state.imageSizes[index].height;
             let width = SCREEN_WIDTH;
             let height = SCREEN_HEIGHT-68;
             const imageInfo = this.state.imageSizes[index];
@@ -295,7 +306,7 @@ let ImageViewer = class ImageViewer extends React.Component {
             //     height *= HeightPixel;
             // }
             if (imageInfo.status === 'success' && this.props.enableImageZoom) {
-                console.log("图片显示=成功="+image.url+"///"+this.state.imageSizes[index].width+"///"+this.state.imageSizes[index].height);
+                console.log("图片显示=成功="+image.url);
                 return (React.createElement(react_native_image_pan_zoom_1.default, {
                         key: index,
                         style: this.styles.modalContainer,
@@ -311,7 +322,13 @@ let ImageViewer = class ImageViewer extends React.Component {
                         onDoubleClick: this.handleDoubleClick.bind(this)
                     },
                     React.createElement(react_native_1.Image, {fadeDuration:0,style: [this.styles.imageStyle, { width: width, height: height }],
-                        source: (this.state.imageSizes[index].width&&this.state.imageSizes[index].height)?{ uri: image.url }:require('../../img/empty-image.png')})));
+                        onLoadEnd:this.onLoadEnd.bind(this),
+                        onError:this.onError.bind(this),
+                        source:{ uri: image.url }},
+                        (this.state.isLoaded && !this.state.isError ? null :
+                        React.createElement(react_native_1.Image, {fadeDuration:0,style: [this.styles.imageStyle, { width: width, height: height }],
+                            source:  require('../../img/empty-image.png')}))
+                        )));
             }
             else {
                 switch (imageInfo.status) {

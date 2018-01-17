@@ -54,7 +54,7 @@ class ImageLoad extends Component {
     }
 
     render() {
-        console.log("图片地址="+this.props.source);
+        console.log("图片地址="+this.props.source+this.state.isLoaded+this.state.isError);
         return(
             <Image
                 onLoadEnd={this.onLoadEnd.bind(this)}

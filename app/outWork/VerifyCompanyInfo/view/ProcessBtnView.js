@@ -94,9 +94,9 @@ class ProcessBtnView extends Component{
 
     btnClick() {
         console.log("点击="+this.props.isSave+",,"+this.state.isSave);
-        if(this.state.isSave===true){
-            Toast.show('请保存客户基本信息');
-        }else{
+        // if(this.state.isSave===true){
+        //     Toast.show('请保存客户基本信息');
+        // }else{
             Alert.alert(this.state.currentNum === 0 ?  '确认材料齐全' : '确认任务完成', '',
                 [
                     {text: '取消', onPress: () => console.log('Cancel'), style: 'cancel'},
@@ -106,7 +106,7 @@ class ProcessBtnView extends Component{
                     },]
                 , {cancelable: false}
             );
-        }
+        // }
 
     }
 
