@@ -4,7 +4,7 @@
 import React, {Component} from 'react';
 import {Dimensions, TouchableOpacity,
     DeviceEventEmitter,
-    InteractionManager,Platform} from 'react-native';
+    InteractionManager,Platform,ScrollView} from 'react-native';
 import {loadOutSourceCount} from "../apis/outSource";
 import {
     Text,
@@ -135,7 +135,7 @@ export default class ApplicationCenterPage extends Component{
     render() {
         console.log("应用中心render="+this.state.bdNum);
         return(
-        <View style={styles.container}>
+        <ScrollView style={styles.container}>
 
             <CommunalNavBar
 
@@ -197,7 +197,7 @@ export default class ApplicationCenterPage extends Component{
 
             </View>
 
-        </View>
+        </ScrollView>
         );
     }
 }
