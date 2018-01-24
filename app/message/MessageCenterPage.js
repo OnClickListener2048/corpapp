@@ -168,15 +168,15 @@ export default class MessageCenterPage extends BComponent {
                 }else {
                     // 关闭刷新动画
                     this.setState({
-                        loadedStatus : 'loadedFaild',
+                        //提审问题把这里改了 其实应该显示错误 loadedStatus : 'loadedFaild',
+                        loadedStatus : 'loadedSucess',
+
                     });
 
                 }
                 this.props.navigator.setTabBadge({
                     badge: null // 数字气泡提示, 设置为null会删除
                 });
-                console.log("获取失败" , e);
-                Toast.show(errorText( e ));
             },
         );
     }
