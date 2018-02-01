@@ -658,27 +658,27 @@ export default class GetLicensePage extends BComponent {
                         {this.renderTest()}
                     </View>}
                     {this.renderInput('legal','法人',this.state.detailObj.legalEntity)}
-                    {this.renderInput('legal','身份证号',this.state.detailObj.PersonCardID)}
+                    {/*{this.renderInput('legal','身份证号',this.state.detailObj.PersonCardID)}*/}
 
-                    <View style={styles.identityCardPhoto}>
-                        <Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>
-                        <TouchableOpacity onPress={() => {
-                            this.toAlertModal("reverse")
-                        }}
-                        activeOpacity={this.state.editables === true ?0.5:1}>
-                            {this.state.reImage != null ?
-                                <Image source={this.state.reImage} fadeDuration={0} style={{marginTop: 15, height: 75, width: 110}}/> :
-                                this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?
-                                    <ImageLoad
-                                        style={{ marginTop: 15, height: 75, width: 110 }}
-                                        loadingStyle={{ size: 'small', color: 'black' }}
-                                        source={{ uri:this.state.detailObj.idCards[0]+"" }}
-                                        placeholderSource={require('../../img/empty-image.png')}/> :
-                                    <Image source={require('../../img/reverse.png')} style={{marginTop: 15}}/>}
+                    {/*<View style={styles.identityCardPhoto}>*/}
+                        {/*<Text style={{marginLeft: 15, fontSize: 15, marginTop: 10,color:'#323232',width:85}}>身份证</Text>*/}
+                        {/*<TouchableOpacity onPress={() => {*/}
+                            {/*this.toAlertModal("reverse")*/}
+                        {/*}}*/}
+                        {/*activeOpacity={this.state.editables === true ?0.5:1}>*/}
+                            {/*{this.state.reImage != null ?*/}
+                                {/*<Image source={this.state.reImage} fadeDuration={0} style={{marginTop: 15, height: 75, width: 110}}/> :*/}
+                                {/*this.state.detailObj.idCards != null &&this.state.detailObj.idCards.length!=0?*/}
+                                    {/*<ImageLoad*/}
+                                        {/*style={{ marginTop: 15, height: 75, width: 110 }}*/}
+                                        {/*loadingStyle={{ size: 'small', color: 'black' }}*/}
+                                        {/*source={{ uri:this.state.detailObj.idCards[0]+"" }}*/}
+                                        {/*placeholderSource={require('../../img/empty-image.png')}/> :*/}
+                                    {/*<Image source={require('../../img/reverse.png')} style={{marginTop: 15}}/>}*/}
 
-                        </TouchableOpacity>
+                        {/*</TouchableOpacity>*/}
 
-                    </View>
+                    {/*</View>*/}
                     <View
                         style={{paddingTop: 5, backgroundColor: 'white'}}>
                         {this.renderInput('reg','注册号',this.state.detailObj.regId)}
