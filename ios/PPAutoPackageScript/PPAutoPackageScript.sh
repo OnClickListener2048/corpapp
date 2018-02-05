@@ -122,7 +122,7 @@ cp  ../app/modules/project.pbxproj  ../node_modules/react-native/Libraries/Netwo
 
 
 #DNS相关配置信息修改
-#sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
+sed -i ""  "s/FRAMEWORK_SEARCH_PATHS = \"\"/FRAMEWORK_SEARCH_PATHS = \"\$\(SRCROOT\)\/..\/..\/..\/..\/ios\"/g" $network_path
 
 
 # 判断编译的项目类型是workspace还是project
